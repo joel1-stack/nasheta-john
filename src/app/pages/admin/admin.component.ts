@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -35,11 +34,11 @@ export class AdminComponent implements OnInit, OnDestroy {
   adminUrl: SafeResourceUrl;
   private keyHandler = (e: KeyboardEvent) => { if (e.key === 'Escape') this.closeAdmin(); };
 
-  constructor(private sanitizer: DomSanitizer, private router: Router) {
-    this.adminUrl = this.sanitizer.bypassSecurityTrustResourceUrl('assets/admin/blog-form.html');
+  constructor(private sanitizer: DomSanitizer) {
+    this.adminUrl = this.sanitizer.bypassSecurityTrustResourceUrl('assets/admin/blog-tool.html');
   }
 
-  ngOnInit() { document.addEventListener('keydown', this.keyHandler); }
-  ngOnDestroy() { document.removeEventListener('keydown', this.keyHandler); }
-  closeAdmin() { this.router.navigate(['/']); }
+  ngOnInit() { document.body.style.overflow = 'hidden'; document.addEventListener('keydown', this.keyHandler); }
+  ngOnDestroy() { document.body.style.overflow = ''; document.removeEventListener('keydown', this.keyHandler); }
+  closeAdmin() { window.history.back(); }
 }

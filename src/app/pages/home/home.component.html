@@ -1,0 +1,212 @@
+<!-- HERO -->
+<section class="hero page-enter">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="hero-inner container">
+    <div class="hero-text">
+      <div class="hero-badge">iGaming Content Specialist</div>
+      <h1 class="hero-h1">
+        Hello, I'm<br>
+        <span class="name-line">Nasheta John.</span>
+        <br>
+        <span class="tagline-line">I bring iGaming content<br>to life.</span>
+      </h1>
+      <p class="hero-desc">
+        Over a decade writing casino guides, slot reviews, sports betting articles, and sweepstakes
+        content — I help iGaming brands build authority, rank higher, and connect with real players.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/portfolio" class="btn-gold">View My Work</a>
+        <a routerLink="/contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="photo-frame">
+        <img src="assets/images/nasheta.jpeg" alt="Nasheta John" class="hero-photo">
+        <div class="photo-ring"></div>
+        <div class="photo-badge">
+          <span class="pb-num">10+</span>
+          <span class="pb-text">Years in<br>iGaming</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- LOGO TICKER -->
+<div class="logo-ticker">
+  <div class="ticker-label">Trusted by industry leaders</div>
+  <div class="ticker-track-wrap">
+    <div class="ticker-track">
+      <div class="ticker-item" *ngFor="let logo of logos">
+        <img [src]="logo.src" [alt]="logo.alt">
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="ticker-item" *ngFor="let logo of logos">
+        <img [src]="logo.src" [alt]="logo.alt">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES PREVIEW -->
+<section class="services-preview">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="s-label">What I Do</span>
+      <h2 class="s-title">Specialist Services for <span class="gold">iGaming Brands</span></h2>
+      <p class="s-desc">From single-market operators to global platforms — I craft content that works.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card reveal" *ngFor="let s of services">
+        <div class="svc-icon">{{ s.icon }}</div>
+        <h3 class="svc-title">{{ s.title }}</h3>
+        <p class="svc-desc">{{ s.desc }}</p>
+        <a routerLink="/services" class="svc-link">Learn More</a>
+      </div>
+    </div>
+    <div class="svc-cta reveal">
+      <a routerLink="/services" class="btn-outline">View All Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section bg-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal" *ngFor="let s of stats">
+        <div class="stat-num counter" [attr.data-count]="s.val" [attr.data-suffix]="s.suffix">0</div>
+        <div class="stat-label">{{ s.label }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<section class="about-strip">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img reveal">
+        <img src="assets/images/nasheta2.jpeg" alt="Nasheta John at work">
+        <div class="about-tag">Open to Collaborations</div>
+      </div>
+      <div class="about-content reveal">
+        <span class="s-label">About Me</span>
+        <h2 class="s-title">A Decade Dedicated to<br><span class="ac">iGaming Content</span></h2>
+        <p class="s-desc" style="margin-bottom:1.25rem;">
+          I started as a content writer and grew into a specialist — working across online gambling,
+          sports betting, and sweepstakes content in African, European, and global markets.
+        </p>
+        <p class="s-desc" style="margin-bottom:2rem;">
+          Today I work with operators, affiliates, and content agencies to produce material that meets
+          regulatory standards, drives SEO performance, and genuinely resonates with players.
+        </p>
+        <div class="author-proof-card">
+          <img src="assets/images/author-cobber.jpeg" alt="Nasheta John author profile on Cobber Casino">
+          <div class="ap-copy">
+            <div class="ap-label">Author Feature</div>
+            <div class="ap-title">Verified author profile on Cobber Casino</div>
+          </div>
+        </div>
+        <a routerLink="/career" class="btn-primary">View My Career</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO PREVIEW -->
+<section class="portfolio-preview bg-section">
+  <div class="container">
+    <div class="section-head reveal" style="text-align:center;">
+      <span class="s-label">Portfolio</span>
+      <h2 class="s-title">Content That <span class="gold">Speaks for Itself</span></h2>
+      <p class="s-desc" style="margin:0 auto;">Organised by category — click through to see real samples.</p>
+    </div>
+    <div class="port-cats reveal">
+      <a routerLink="/portfolio" class="port-cat">
+        <div class="pc-icon">🎰</div>
+        <div class="pc-name">Casino Reviews</div>
+        <div class="pc-count">Samples Available</div>
+      </a>
+      <a routerLink="/portfolio" class="port-cat">
+        <div class="pc-icon">🎲</div>
+        <div class="pc-name">Slot Reviews</div>
+        <div class="pc-count">Samples Available</div>
+      </a>
+      <a routerLink="/portfolio" class="port-cat">
+        <div class="pc-icon">⚽</div>
+        <div class="pc-name">Sports Betting</div>
+        <div class="pc-count">Samples Available</div>
+      </a>
+      <a routerLink="/portfolio" class="port-cat">
+        <div class="pc-icon">🏆</div>
+        <div class="pc-name">Sweepstakes</div>
+        <div class="pc-count">Samples Available</div>
+      </a>
+      <a routerLink="/portfolio" class="port-cat">
+        <div class="pc-icon">🎮</div>
+        <div class="pc-name">eSports Content</div>
+        <div class="pc-count">Samples Available</div>
+      </a>
+      <a routerLink="/portfolio" class="port-cat">
+        <div class="pc-icon">🔗</div>
+        <div class="pc-name">Outreach Posts</div>
+        <div class="pc-count">Samples Available</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-head reveal" style="text-align:center;">
+      <span class="s-label">Social Proof</span>
+      <h2 class="s-title">What Industry Leaders <span class="ac">Are Saying</span></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal" *ngFor="let t of testimonials">
+        <div class="testi-top">
+          <div class="testi-avatar">{{ t.avatar }}</div>
+          <div>
+            <div class="testi-name">{{ t.name }}</div>
+            <div class="testi-role">{{ t.role }}</div>
+          </div>
+        </div>
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testi-text">"{{ t.text }}"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band-section">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div class="cta-orb-1"></div>
+      <div class="cta-orb-2"></div>
+      <div class="cta-content">
+        <span class="s-label" style="text-align:center;display:block;">Ready to Start?</span>
+        <h2 class="cta-title">Let's Create Content that Hits<br>the Jackpot Every Time</h2>
+        <p class="cta-desc">Casino reviews, sports betting guides, or a full content strategy — I'm ready to deliver.</p>
+        <div class="cta-btns">
+          <a routerLink="/contact" class="btn-gold">Start a Project</a>
+          <a routerLink="/portfolio" class="btn-outline">Browse Samples</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

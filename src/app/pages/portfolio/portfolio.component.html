@@ -1,0 +1,88 @@
+<div class="page-enter">
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="hero-bg">
+    <div class="ph-orb ph-orb-1"></div>
+    <div class="ph-orb ph-orb-2"></div>
+  </div>
+  <div class="container">
+    <span class="s-label">My Work</span>
+    <h1 class="s-title">Content <span class="gold">Portfolio</span></h1>
+    <p class="s-desc">Over a decade of iGaming content — organised by category. Click any category to explore real samples, then access the full folder on Google Drive.</p>
+  </div>
+</div>
+
+<!-- PORTFOLIO GRID (image-based, like Femi) -->
+<section class="portfolio-section">
+  <div class="container">
+    <div class="port-grid">
+      <button class="port-card" *ngFor="let cat of categories" type="button" (click)="openCategory(cat.id)">
+        <div class="port-img">
+          <img [src]="cat.image" [alt]="cat.label" loading="lazy">
+          <div class="port-overlay">
+            <div class="po-ic">{{ cat.icon }}</div>
+            <div class="po-t">View Samples →</div>
+          </div>
+        </div>
+        <div class="port-body">
+          <div class="port-kicker">{{ cat.label }}</div>
+          <div class="port-desc">{{ cat.desc }}</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVE CATEGORY PANEL -->
+<section class="panel-section" id="samples">
+  <div class="container">
+    <div class="port-main">
+      <div class="cat-header">
+        <div class="cat-icon-lg">{{ active.icon }}</div>
+        <div>
+          <h2 class="cat-title">{{ active.label }}</h2>
+          <p class="cat-desc">{{ active.desc }}</p>
+        </div>
+      </div>
+
+      <div class="samples-grid">
+        <div class="sample-card" *ngFor="let s of active.samples; let i = index">
+          <div class="sample-num">{{ (i + 1).toString().padStart(2,'0') }}</div>
+          <div class="sample-body">
+            <div class="sample-title">{{ s.title }}</div>
+            <div class="sample-tags">
+              <span class="tag" *ngFor="let t of s.tags">{{ t }}</span>
+            </div>
+          </div>
+          <div class="sample-meta">
+            <span class="word-count">{{ s.words }} words</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-cta">
+        <div class="drive-cta-inner">
+          <div>
+            <div class="drive-title">Full Sample Folder</div>
+            <div class="drive-sub">Access all {{ active.label }} samples on Google Drive</div>
+          </div>
+          <a [href]="active.drive" target="_blank" class="btn-gold">Open in Drive</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="port-cta-section">
+  <div class="container">
+    <div class="port-cta-band">
+      <h2>Need Content Like This for Your Brand?</h2>
+      <p>Let's discuss your project — I'll deliver quality content that meets your standards.</p>
+      <a routerLink="/contact" class="btn-gold">Start a Project</a>
+    </div>
+  </div>
+</section>
+
+</div>

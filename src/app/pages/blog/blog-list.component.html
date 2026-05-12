@@ -1,0 +1,49 @@
+<div class="page-enter">
+  <div class="page-hero">
+    <div class="hero-bg">
+      <div class="ph-orb ph-orb-1"></div>
+      <div class="ph-orb ph-orb-2"></div>
+    </div>
+    <div class="container">
+      <span class="s-label">Blog</span>
+      <h1 class="s-title">Latest <span class="gold">Articles</span> & Insights</h1>
+      <p class="s-desc">Education-first iGaming writing — clean, practical, and built for real readers (not “newspaper” clutter).</p>
+    </div>
+  </div>
+
+  <section class="blog-section">
+    <div class="container">
+      <div class="filters">
+        <button
+          class="f-btn"
+          *ngFor="let c of categories"
+          [class.active]="active === c"
+          (click)="setCategory(c)"
+          type="button"
+        >
+          {{ c }}
+        </button>
+      </div>
+
+      <div class="blog-grid">
+        <a class="blog-card" *ngFor="let p of posts" [routerLink]="['/blog', p.slug]">
+          <div class="img">
+            <img [src]="p.coverImage" [alt]="p.title" loading="lazy" />
+          </div>
+          <div class="body">
+            <div class="meta">
+              <span class="cat">{{ p.category }}</span>
+              <span class="dot">•</span>
+              <span class="date">{{ p.dateISO }}</span>
+              <span class="rt">{{ p.readMinutes }} min read</span>
+            </div>
+            <h3>{{ p.title }}</h3>
+            <p class="ex">{{ p.excerpt }}</p>
+            <div class="read">Read Article →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+

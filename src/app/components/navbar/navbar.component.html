@@ -1,0 +1,25 @@
+<nav class="navbar" [class.scrolled]="scrolled">
+  <a routerLink="/" class="nav-logo" (click)="closeMenu()">
+    <div class="logo-mark">
+      <span class="logo-n">N</span><span class="logo-j">J</span>
+    </div>
+    <div class="logo-text">
+      <span class="lt-name">Nasheta John</span>
+      <span class="lt-title">iGaming Specialist</span>
+    </div>
+  </a>
+
+  <ul class="nav-links" [class.open]="menuOpen">
+    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()">Home</a></li>
+    <li><a routerLink="/blog" routerLinkActive="active" (click)="closeMenu()">Blog</a></li>
+    <li><a routerLink="/portfolio" routerLinkActive="active" (click)="closeMenu()">Portfolio</a></li>
+    <li><a routerLink="/services" routerLinkActive="active" (click)="closeMenu()">Services</a></li>
+    <li><a routerLink="/career" routerLinkActive="active" (click)="closeMenu()">Career</a></li>
+    <li><a routerLink="/skills" routerLinkActive="active" (click)="closeMenu()">Skills</a></li>
+    <li><a routerLink="/contact" routerLinkActive="active" class="nav-cta" (click)="closeMenu()">Hire Me</a></li>
+  </ul>
+
+  <button class="hamburger" [class.open]="menuOpen" (click)="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>

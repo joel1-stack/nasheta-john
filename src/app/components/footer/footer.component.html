@@ -1,0 +1,84 @@
+<footer>
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="f-brand">
+          <div class="footer-logo" (click)="onSecretClick()">
+            <div class="logo-mark">
+              <span class="logo-n">N</span><span class="logo-j">J</span>
+            </div>
+            <div class="logo-text">
+              <span class="lt-name">Nasheta John</span>
+              <span class="lt-title">iGaming Content Specialist</span>
+            </div>
+          </div>
+          <p class="f-tagline">Transforming iGaming narratives into content that converts — one word at a time.</p>
+
+          <div class="communicate-wrap">
+            <button class="communicate-btn" (click)="toggle()">
+              Let's Communicate
+              <span class="arr" [class.up]="contactOpen">&#8595;</span>
+            </button>
+            <div class="contact-panel" [class.open]="contactOpen">
+              <a *ngFor="let c of contacts" [href]="c.href" target="_blank" class="contact-item">
+                <div class="ci-icon" [class]="c.icon">{{ c.abbr }}</div>
+                <div>
+                  <div class="ci-label">{{ c.label }}</div>
+                  <div class="ci-value">{{ c.value }}</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nav -->
+        <div class="f-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a routerLink="/">Home</a></li>
+            <li><a routerLink="/blog">Blog</a></li>
+            <li><a routerLink="/portfolio">Portfolio</a></li>
+            <li><a routerLink="/services">Services</a></li>
+            <li><a routerLink="/career">Career</a></li>
+            <li><a routerLink="/skills">Skills</a></li>
+            <li><a routerLink="/contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="f-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a routerLink="/services">iGaming Content Writing</a></li>
+            <li><a routerLink="/services">African Market Consultation</a></li>
+            <li><a routerLink="/services">Content Strategy</a></li>
+            <li><a routerLink="/portfolio">Casino Reviews</a></li>
+            <li><a routerLink="/portfolio">Slot Reviews</a></li>
+            <li><a routerLink="/portfolio">Sports Betting</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="f-col">
+          <h4>Get in Touch</h4>
+          <ul>
+            <li><a href="mailto:nashetajohn&#64;gmail.com">nashetajohn&#64;gmail.com</a></li>
+            <li><a href="https://wa.me/254112157383" target="_blank">+254 112 157 383</a></li>
+            <li><a href="https://www.linkedin.com/in/nashetajohnigaming/" target="_blank">LinkedIn Profile</a></li>
+            <li><a href="https://t.me/salvagejohn" target="_blank">Telegram</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <span>© {{ year }} Nasheta John. All rights reserved.</span>
+      <span class="f-made">iGaming Content Specialist — Nairobi, Kenya</span>
+    </div>
+  </div>
+</footer>

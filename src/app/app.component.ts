@@ -8,6 +8,10 @@ import { FooterComponent } from './components/footer/footer.component';
   standalone: true,
   imports: [RouterOutlet, NavbarComponent, FooterComponent],
   template: `
+    <video class="site-bg-video" autoplay muted loop playsinline>
+      <source src="assets/images/backgoundfull.mp4" type="video/mp4">
+    </video>
+    <div class="site-bg-overlay"></div>
     <app-navbar></app-navbar>
     <main>
       <div class="page-loader" [class.on]="loading" aria-hidden="true">
@@ -21,6 +25,21 @@ import { FooterComponent } from './components/footer/footer.component';
     <app-footer></app-footer>
   `,
   styles: [`
+    :host { display: block; position: relative; }
+    .site-bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+    .site-bg-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,15,13,0.78);
+      z-index: -1;
+    }
     main { min-height: 100vh; padding-top: 0; }
     .page-loader {
       position: fixed;

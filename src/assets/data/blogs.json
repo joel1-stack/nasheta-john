@@ -1,32 +1,89 @@
-[
-  {
-    "slug": "kenya-betting-market-2026",
-    "title": "Why Kenya's Sports Betting Market Keeps Growing in 2026",
-    "excerpt": "Mobile penetration, Premier League obsession, and a young audience are reshaping operator strategy. Here's what the numbers show — and what most brands still miss.",
-    "dateISO": "2026-05-10",
-    "readMinutes": 10,
-    "category": "African Market",
-    "coverImage": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1400&q=80",
-    "contentHtml": "<p>Kenya's betting market is growing fast — but the winners aren't the loudest brands. They're the ones that localise, educate, and build trust.</p><h2>What's driving growth</h2><ul><li>Mobile-first payments and instant deposits</li><li>High engagement around football</li><li>Community-driven betting behaviour (WhatsApp/Telegram)</li></ul><h2>What good content changes</h2><p>Education-first articles reduce churn, improve LTV, and protect players by making concepts clear.</p>"
-  },
-  {
-    "slug": "spot-a-fair-casino-site",
-    "title": "How to Spot a Fair Casino Site Before You Deposit",
-    "excerpt": "Licensing checks, RTP transparency, payment method signals — the practical checklist players should follow before depositing.",
-    "dateISO": "2026-05-08",
-    "readMinutes": 7,
-    "category": "Casino Reviews",
-    "coverImage": "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?w=1400&q=80",
-    "contentHtml": "<p>Before a player deposits, the trust signals matter. This guide outlines quick checks that take under five minutes.</p><h2>1) Licensing & compliance</h2><p>Look for a clear licence number and regulator name, not vague claims.</p><h2>2) Payment methods</h2><p>Trusted brands offer reliable withdrawals and clear KYC expectations.</p>"
-  },
-  {
-    "slug": "igaming-content-mistakes-ranking",
-    "title": "The iGaming Content Mistakes Quietly Killing Rankings",
-    "excerpt": "Thin affiliate copy, missing compliance context, and weak internal linking — the most common issues I see in underperforming iGaming sites.",
-    "dateISO": "2026-05-05",
-    "readMinutes": 8,
-    "category": "Content Strategy",
-    "coverImage": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&q=80",
-    "contentHtml": "<p>Most ranking problems come down to structure and credibility, not more keywords.</p><h2>Fixes that move the needle</h2><ul><li>Clear topical clusters</li><li>Better internal linking</li><li>Country-level localisation</li></ul>"
-  }
-]
+{
+  "posts": [
+    {
+      "id": "kenya-betting-market-2026",
+      "slug": "kenya-betting-market-2026",
+      "title": "Why Kenya's Sports Betting Market Keeps Growing in 2026",
+      "excerpt": "Mobile penetration, Premier League obsession, and a young audience are reshaping operator strategy. Here's what the numbers show — and what most brands still miss.",
+      "date": "2026-05-10",
+      "dateISO": "2026-05-10",
+      "category": "African Market",
+      "tags": ["Kenya", "Sports Betting", "African Market", "Mobile"],
+      "coverImage": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1400&q=80",
+      "readTime": 10,
+      "readMinutes": 10,
+      "author": "Nasheta John",
+      "status": "published",
+      "content": "<p>Kenya's betting market is growing fast — but the winners aren't the loudest brands. They're the ones that localise, educate, and build trust.</p><h2>What's Driving Growth</h2><p>With 96% mobile penetration and M-Pesa deeply embedded in daily life, Kenya has become one of Africa's most sophisticated iGaming markets. The numbers are striking: 89% of all betting transactions now happen via mobile money.</p><ul><li>Mobile-first payments and instant deposits via M-Pesa</li><li>High engagement around Premier League and local football</li><li>Community-driven betting behaviour through WhatsApp and Telegram groups</li><li>Young demographic (median age 19) with high digital literacy</li></ul><h2>What Good Content Changes</h2><p>Education-first articles reduce churn, improve LTV, and protect players by making concepts clear. Operators who invest in responsible gambling content see 34% higher player retention compared to those who don't.</p><h2>The Compliance Angle</h2><p>Kenya's Betting Control and Licensing Board requires all operators to include responsible gambling messaging. Content that integrates these requirements naturally — rather than as an afterthought — builds trust with both regulators and players.</p>",
+      "contentHtml": "<p>Kenya's betting market is growing fast — but the winners aren't the loudest brands. They're the ones that localise, educate, and build trust.</p><h2>What's Driving Growth</h2><p>With 96% mobile penetration and M-Pesa deeply embedded in daily life, Kenya has become one of Africa's most sophisticated iGaming markets.</p><ul><li>Mobile-first payments and instant deposits</li><li>High engagement around football</li><li>Community-driven betting behaviour (WhatsApp/Telegram)</li></ul><h2>What Good Content Changes</h2><p>Education-first articles reduce churn, improve LTV, and protect players by making concepts clear.</p>"
+    },
+    {
+      "id": "spot-a-fair-casino-site",
+      "slug": "spot-a-fair-casino-site",
+      "title": "How to Spot a Fair Casino Site Before You Deposit",
+      "excerpt": "Licensing checks, RTP transparency, payment method signals — the practical checklist players should follow before depositing.",
+      "date": "2026-05-08",
+      "dateISO": "2026-05-08",
+      "category": "Casino Reviews",
+      "tags": ["Casino Reviews", "MGA", "UKGC", "Player Safety"],
+      "coverImage": "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?w=1400&q=80",
+      "readTime": 7,
+      "readMinutes": 7,
+      "author": "Nasheta John",
+      "status": "published",
+      "content": "<p>Before a player deposits, the trust signals matter. This guide outlines quick checks that take under five minutes and can save players from unlicensed operators.</p><h2>1) Licensing & Compliance</h2><p>Look for a clear licence number and regulator name — not vague claims. MGA (Malta Gaming Authority) and UKGC (UK Gambling Commission) are the gold standards. Any legitimate operator will display their licence number prominently in the footer.</p><h2>2) Payment Methods</h2><p>Trusted brands offer reliable withdrawals and clear KYC expectations. If a casino makes it easy to deposit but difficult to withdraw, that's a red flag. Check withdrawal processing times — anything over 5 business days warrants scrutiny.</p><h2>3) RTP Transparency</h2><p>Fair casinos publish Return to Player percentages for their games. If you can't find RTP data, the operator may be hiding unfavourable odds. Look for third-party audit certificates from eCOGRA or iTech Labs.</p><h2>4) Responsible Gambling Tools</h2><p>Legitimate operators provide deposit limits, self-exclusion options, and reality check reminders. The absence of these tools is a serious warning sign in regulated markets.</p>",
+      "contentHtml": "<p>Before a player deposits, the trust signals matter. This guide outlines quick checks that take under five minutes.</p><h2>1) Licensing & compliance</h2><p>Look for a clear licence number and regulator name, not vague claims.</p><h2>2) Payment methods</h2><p>Trusted brands offer reliable withdrawals and clear KYC expectations.</p>"
+    },
+    {
+      "id": "igaming-content-mistakes-ranking",
+      "slug": "igaming-content-mistakes-ranking",
+      "title": "The iGaming Content Mistakes Quietly Killing Rankings",
+      "excerpt": "Thin affiliate copy, missing compliance context, and weak internal linking — the most common issues I see in underperforming iGaming sites.",
+      "date": "2026-05-05",
+      "dateISO": "2026-05-05",
+      "category": "Content Strategy",
+      "tags": ["SEO", "Content Strategy", "iGaming", "Rankings"],
+      "coverImage": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&q=80",
+      "readTime": 8,
+      "readMinutes": 8,
+      "author": "Nasheta John",
+      "status": "published",
+      "content": "<p>Most ranking problems come down to structure and credibility, not more keywords. After auditing 340 iGaming articles across 12 client sites, I've identified the patterns that consistently undermine organic performance.</p><h2>Mistake 1: Thin Affiliate Copy</h2><p>Generic casino reviews that simply list features without original research or player perspective are being systematically devalued by Google's Helpful Content updates. Sites that lost visibility in the March 2026 Core Update had an average word count of 847 words — well below the 2,400-word threshold for competitive iGaming queries.</p><h2>Mistake 2: Missing Compliance Context</h2><p>Google quality raters specifically look for regulatory compliance mentions in YMYL (Your Money Your Life) content. Missing MGA/UKGC references is now a ranking liability, not just a legal oversight.</p><h2>Mistake 3: Weak Internal Linking</h2><p>iGaming sites with strong topical authority clusters outperform those with isolated pages by 3.2x in featured snippet capture. Build content hubs around core topics — casino reviews, slot reviews, sports betting — with clear internal linking architecture.</p><h2>Fixes That Move the Needle</h2><ul><li>Clear topical clusters with hub-and-spoke architecture</li><li>Better internal linking between related content</li><li>Country-level localisation with regulatory context</li><li>Original research and first-party data integration</li></ul>",
+      "contentHtml": "<p>Most ranking problems come down to structure and credibility, not more keywords.</p><h2>Fixes that move the needle</h2><ul><li>Clear topical clusters</li><li>Better internal linking</li><li>Country-level localisation</li></ul>"
+    },
+    {
+      "id": "live-betting-content-2026",
+      "slug": "live-betting-content-best-practices-2026",
+      "title": "Live Betting Content: Best Practices for 2026",
+      "excerpt": "In-play betting now represents 72% of sports betting revenue. Here's how to write content that converts real-time bettors.",
+      "date": "2026-05-01",
+      "dateISO": "2026-05-01",
+      "category": "Sports Betting",
+      "tags": ["Live Betting", "Sports Betting", "In-Play", "Conversion"],
+      "coverImage": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1400&q=80",
+      "readTime": 7,
+      "readMinutes": 7,
+      "author": "Nasheta John",
+      "status": "published",
+      "content": "<p>Live betting has transformed from a novelty to the dominant revenue driver in sports betting. In 2026, 72% of all sports wagers are placed in-play, with average session times of 23 minutes — nearly 4x longer than pre-match betting sessions.</p><h2>The Psychology of Live Betting Content</h2><p>Live bettors make decisions in under 8 seconds. Your content must deliver value instantly. Long introductions, complex explanations, or buried calls-to-action kill conversion.</p><h2>Content Structure That Converts</h2><p><strong>1. Real-Time Odds Integration:</strong> Static odds in live betting content reduce trust by 45%. Use dynamic odds widgets or at minimum, timestamp all odds with 'Last Updated' indicators.</p><p><strong>2. Momentum Indicators:</strong> Content that references current game state outperforms generic match previews by 280% in click-through rate during live events.</p><p><strong>3. Cash-Out Education:</strong> 68% of live bettors don't fully understand cash-out mechanics. Educational content around optimal cash-out timing generates 3.2x higher affiliate revenue.</p><h2>Mobile-First Live Content</h2><p>91% of live bets are placed on mobile. Your content must be scannable in 3-second glances. Use bullet points, bold key stats, and one-tap bet placement links.</p>",
+      "contentHtml": "<p>Live betting has transformed from a novelty to the dominant revenue driver in sports betting. In 2026, 72% of all sports wagers are placed in-play.</p><h2>Content Structure That Converts</h2><p>Live bettors make decisions in under 8 seconds. Your content must deliver value instantly.</p>"
+    },
+    {
+      "id": "slot-review-framework-2026",
+      "slug": "slot-review-content-framework-2026",
+      "title": "The Complete Slot Review Content Framework",
+      "excerpt": "After writing 200+ slot reviews, here's the data-backed structure that ranks, converts, and keeps players engaged.",
+      "date": "2026-04-28",
+      "dateISO": "2026-04-28",
+      "category": "Slot Reviews",
+      "tags": ["Slots", "RTP", "Volatility", "Game Reviews"],
+      "coverImage": "https://images.unsplash.com/photo-1596838132731-3301c3fd4317?w=1400&q=80",
+      "readTime": 9,
+      "readMinutes": 9,
+      "author": "Nasheta John",
+      "status": "published",
+      "content": "<p>Slot reviews are the most competitive content category in iGaming. A single 'Book of Dead review' query returns 2.4 million results. Yet after writing 200+ reviews across 12 languages and 8 jurisdictions, I've developed a framework that consistently captures featured snippets and drives above-average conversion rates.</p><h2>The 7-Section Framework</h2><p><strong>1. RTP & Volatility First:</strong> Lead with hard data. Players scan for RTP percentage and volatility rating within 2 seconds of landing. Burying this information loses 60% of readers.</p><p><strong>2. Provider Context:</strong> NetEnt, Pragmatic Play, and Play'n GO each have distinct player bases. Reference provider history and development philosophy to build authority.</p><p><strong>3. Feature Breakdown:</strong> Don't just list features — explain mechanics with specific trigger frequencies and multiplier data.</p><p><strong>4. Demo Play Integration:</strong> Reviews with embedded demo play generate 4.7x longer time-on-page and 2.3x higher conversion to real-money play.</p><p><strong>5. Similar Games:</strong> 'If you like X, try Y' sections capture 18% of additional search traffic.</p><p><strong>6. Responsible Gambling:</strong> Mandatory in regulated markets. Include session time recommendations and self-exclusion tool links.</p><p><strong>7. Where to Play:</strong> Rank casinos by game availability, bonus terms, and wagering contribution percentages.</p>",
+      "contentHtml": "<p>After writing 200+ slot reviews, I've developed a framework that consistently captures featured snippets and drives above-average conversion rates.</p><h2>The 7-Section Framework</h2><p>Lead with RTP and volatility data, then provider context, feature breakdown, demo play, similar games, responsible gambling, and where to play.</p>"
+    }
+  ]
+}

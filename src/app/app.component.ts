@@ -9,7 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
   imports: [RouterOutlet, NavbarComponent, FooterComponent],
   template: `
     <video class="site-bg-video" autoplay muted loop playsinline>
-      <source src="assets/images/background.mp4" type="video/mp4">
+      <source src="https://res.cloudinary.com/REPLACE_WITH_YOUR_CLOUD_NAME/video/upload/background.mp4" type="video/mp4">
     </video>
     <div class="site-bg-overlay"></div>
     <app-navbar></app-navbar>

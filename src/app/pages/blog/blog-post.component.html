@@ -1,35 +1,85 @@
-<div class="page-enter" *ngIf="post">
-  <article class="post">
-    <header class="hero">
-      <img class="cover" [src]="post.coverImage" [alt]="post.title" />
-      <div class="overlay"></div>
+<div class="page-enter" *ngIf="!loading">
+
+  <div *ngIf="post; else notFound">
+    <!-- Hero -->
+    <header class="post-hero">
+      <div class="hero-img" *ngIf="post.coverImage">
+        <img [src]="post.coverImage" [alt]="post.title">
+        <div class="hero-overlay"></div>
+      </div>
       <div class="container hero-inner">
-        <div class="kicker">{{ post.category }}</div>
+        <span class="post-cat">{{ post.category }}</span>
         <h1>{{ post.title }}</h1>
-        <div class="meta">
-          <span>{{ post.dateISO }}</span>
-          <span class="dot">•</span>
-          <span>{{ post.readMinutes }} min read</span>
+        <div class="post-meta">
+          <span>{{ post.date || post.dateISO | date:'MMMM d, yyyy' }}</span>
+          <span class="dot">·</span>
+          <span>{{ post.readTime || post.readMinutes }} min read</span>
+        </div>
+        <div class="author-row">
+          <div class="av">NJ</div>
+          <div>
+            <div class="av-name">{{ post.author }}</div>
+            <div class="av-title">Senior iGaming Content Strategist</div>
+          </div>
+          <div class="share-btns">
+            <button (click)="share('twitter')" class="sh-btn" title="Share on X">𝕏</button>
+            <button (click)="share('linkedin')" class="sh-btn" title="Share on LinkedIn">in</button>
+            <button (click)="copyLink()" class="sh-btn" title="Copy link">🔗</button>
+          </div>
         </div>
       </div>
     </header>
 
-    <div class="container content">
-      <div class="crumbs">
-        <a routerLink="/blog">← Back to Blog</a>
-      </div>
+    <!-- Content -->
+    <div class="post-content">
+      <div class="container">
+        <a routerLink="/blog" class="back-link">← Back to Blog</a>
+        <div class="prose" [innerHTML]="post.content || post.contentHtml"></div>
 
-      <div class="prose" [innerHTML]="post.contentHtml"></div>
-
-      <div class="author">
-        <div class="av">NJ</div>
-        <div>
-          <div class="nm">Nasheta John</div>
-          <div class="tx">iGaming Content Specialist — Nairobi, Kenya</div>
+        <div class="post-tags" *ngIf="post.tags?.length">
+          <span class="tags-label">Tags:</span>
+          <span *ngFor="let tag of post.tags" class="tag">{{ tag }}</span>
         </div>
-        <a class="cta" routerLink="/contact">Work With Me</a>
       </div>
     </div>
-  </article>
-</div>
 
+    <!-- Related -->
+    <section class="related-section" *ngIf="related.length">
+      <div class="container">
+        <h2>Related Articles</h2>
+        <div class="related-grid">
+          <a *ngFor="let r of related" [routerLink]="['/blog', r.slug]" class="related-card">
+            <div class="rc-img">
+              <img *ngIf="r.coverImage" [src]="r.coverImage" [alt]="r.title" loading="lazy">
+              <span class="rc-cat">{{ r.category }}</span>
+            </div>
+            <div class="rc-body">
+              <h3>{{ r.title }}</h3>
+              <p>{{ r.excerpt | slice:0:100 }}…</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="post-cta">
+      <div class="container">
+        <h2>Need Similar Content for Your Brand?</h2>
+        <p>I create SEO-optimized iGaming content that ranks and converts.</p>
+        <a routerLink="/contact" class="btn-gold">Start a Project →</a>
+      </div>
+    </section>
+  </div>
+
+  <ng-template #notFound>
+    <div class="not-found">
+      <div class="container">
+        <h1>Article Not Found</h1>
+        <p>This article doesn't exist or has been removed.</p>
+        <a routerLink="/blog" class="btn-outline">← Back to Blog</a>
+      </div>
+    </div>
+  </ng-template>
+
+</div>

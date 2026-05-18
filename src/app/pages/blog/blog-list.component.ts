@@ -1,48 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-
-type CategoryFilter = 'All' | string;
+import { FormsModule } from '@angular/forms';
+import { BlogService, BlogPost } from '../../services/blog.service';
 
 @Component({
   selector: 'app-blog-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './blog-list.component.html',
-  styleUrls: ['./blog-list.component.scss'],
+  styleUrls: ['./blog-list.component.scss']
 })
 export class BlogListComponent implements OnInit {
-  allPosts: any[] = [];
+  allPosts: BlogPost[] = [];
+  loading = true;
 
-  categories: CategoryFilter[] = [
-    'All',
-    'African Market',
-    'Casino Reviews',
-    'Slot Reviews',
-    'Sports Betting',
-    'Content Strategy',
-    'Player Education',
-  ];
+  categories = ['All', 'African Market', 'Casino Reviews', 'Slot Reviews', 'Sports Betting', 'Content Strategy', 'Player Education', 'Market Analysis', 'SEO Strategy'];
+  active = 'All';
+  search = '';
 
-  active: CategoryFilter = 'All';
-
-  constructor(private http: HttpClient) {}
+  constructor(private blogService: BlogService) {}
 
   ngOnInit() {
-    this.http.get<any[]>('assets/data/blogs.json').subscribe(data => {
-      this.allPosts = data;
+    this.blogService.getPublishedPosts().subscribe(posts => {
+      this.allPosts = posts;
+      this.loading = false;
     });
   }
 
-  get posts() {
-    const sorted = [...this.allPosts].sort((a, b) => (a.dateISO < b.dateISO ? 1 : -1));
-    if (this.active === 'All') return sorted;
-    return sorted.filter(p => p.category === this.active);
+  get posts(): BlogPost[] {
+    let filtered = this.allPosts;
+    if (this.active !== 'All') filtered = filtered.filter(p => p.category === this.active);
+    if (this.search.trim()) {
+      const q = this.search.toLowerCase();
+      filtered = filtered.filter(p => p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q));
+    }
+    return filtered;
   }
 
-  setCategory(cat: CategoryFilter) {
-    this.active = cat;
-  }
+  setCategory(cat: string) { this.active = cat; }
 }
-

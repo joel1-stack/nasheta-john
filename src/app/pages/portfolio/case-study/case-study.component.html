@@ -1,0 +1,95 @@
+<article class="case-study page-enter" *ngIf="cs">
+
+  <header class="cs-header">
+    <div class="container">
+      <div class="breadcrumbs">
+        <a routerLink="/portfolio">Portfolio</a>
+        <span>/</span>
+        <span>{{ cs.category }}</span>
+      </div>
+      <div class="cs-meta">
+        <span class="cs-cat">{{ cs.category }}</span>
+        <span class="sep">·</span>
+        <span>{{ cs.duration }}</span>
+        <span class="sep">·</span>
+        <span>{{ cs.year }}</span>
+      </div>
+      <h1>{{ cs.title }}</h1>
+      <p class="cs-desc">{{ cs.description }}</p>
+      <div class="client-badge">
+        <span class="cb-label">Client</span>
+        <span class="cb-name">{{ cs.client }}</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="cs-body">
+    <div class="container">
+      <div class="cs-grid">
+        <div class="cs-card challenge">
+          <div class="cs-icon">⚡</div>
+          <h2>The Challenge</h2>
+          <p>{{ cs.challenge }}</p>
+        </div>
+        <div class="cs-card solution">
+          <div class="cs-icon">🎯</div>
+          <h2>The Solution</h2>
+          <p>{{ cs.solution }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-results">
+    <div class="container">
+      <h2>Results</h2>
+      <div class="results-grid">
+        <div class="result-card" *ngFor="let r of cs.results">
+          <div class="rc-header">{{ r.metric }}</div>
+          <div class="rc-body">
+            <div class="ba">
+              <div class="ba-item"><span class="ba-label">Before</span><span class="ba-val">{{ r.before }}</span></div>
+              <span class="ba-arrow">→</span>
+              <div class="ba-item"><span class="ba-label">After</span><span class="ba-val">{{ r.after }}</span></div>
+            </div>
+            <div class="improvement">{{ r.improvement }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-testimonial">
+    <div class="container">
+      <div class="testi-card">
+        <div class="quote-mark">"</div>
+        <blockquote>{{ cs.testimonial.quote }}</blockquote>
+        <div class="testi-author">
+          <div class="ta-av">{{ initials(cs.testimonial.author) }}</div>
+          <div>
+            <div class="ta-name">{{ cs.testimonial.author }}</div>
+            <div class="ta-role">{{ cs.testimonial.role }}, {{ cs.testimonial.company }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-tags">
+    <div class="container">
+      <span *ngFor="let tag of cs.tags" class="tag">{{ tag }}</span>
+    </div>
+  </section>
+
+  <section class="cs-cta">
+    <div class="container">
+      <h2>Want Similar Results?</h2>
+      <p>Let's discuss how I can help your iGaming brand achieve measurable growth.</p>
+      <div class="cta-btns">
+        <a routerLink="/contact" class="btn-gold">Start a Project →</a>
+        <a routerLink="/portfolio" class="btn-outline">← Back to Portfolio</a>
+      </div>
+    </div>
+  </section>
+
+</article>

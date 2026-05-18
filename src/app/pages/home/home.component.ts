@@ -12,10 +12,10 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent implements OnInit, AfterViewInit {
 
   stats = [
-    { val: 120, suffix: '+', label: 'Clients Served' },
     { val: 10,  suffix: '+', label: 'Years Experience' },
+    { val: 120, suffix: '+', label: 'Clients Served' },
     { val: 850, suffix: '+', label: 'Projects Completed' },
-    { val: 38,  suffix: '',  label: 'Author Features' },
+    { val: 15,  suffix: '',  label: 'Markets Covered' },
   ];
 
   testimonials = [

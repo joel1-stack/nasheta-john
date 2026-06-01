@@ -1,7 +1,6 @@
-/* ── Case Study Header ── */
 .cs-header {
   padding: 9rem 0 4rem;
-  background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, #FFFBF5 0%, #FFFFFF 100%);
   border-bottom: 1px solid var(--border);
 }
 
@@ -14,11 +13,11 @@
   color: var(--text-4);
 
   a {
-    color: var(--blue);
+    color: var(--gold-dark);
     font-weight: 600;
 
     &:hover {
-      color: var(--blue-dark);
+      color: var(--red);
     }
   }
 }
@@ -39,7 +38,7 @@
 }
 
 .cs-cat {
-  background: var(--blue);
+  background: var(--grad-red);
   color: #fff;
   font-size: 0.68rem;
   font-weight: 800;
@@ -71,8 +70,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background: var(--green-light);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: var(--gold-light);
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: var(--radius-sm);
   padding: 0.65rem 1.25rem;
 
@@ -82,12 +81,11 @@
   }
 
   .cb-name {
-    color: var(--green);
+    color: var(--gold-dark);
     font-weight: 700;
   }
 }
 
-/* ── Body ── */
 .cs-body {
   padding: 5rem 0;
   background: var(--bg);
@@ -125,15 +123,14 @@
   }
 
   &.challenge {
-    border-left: 4px solid #EF4444;
+    border-left: 4px solid var(--red);
   }
 
   &.solution {
-    border-left: 4px solid var(--green);
+    border-left: 4px solid var(--gold);
   }
 }
 
-/* ── Results ── */
 .cs-results {
   padding: 5rem 0;
   background: var(--bg-soft);
@@ -163,10 +160,10 @@
   box-shadow: var(--shadow-sm);
 
   .rc-header {
-    background: var(--blue-light);
+    background: var(--gold-light);
     padding: 0.85rem 1.25rem;
-    border-bottom: 1px solid rgba(37, 99, 235, 0.1);
-    color: var(--blue);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.15);
+    color: var(--gold-dark);
     font-weight: 700;
     font-size: 0.78rem;
     text-transform: uppercase;
@@ -205,7 +202,7 @@
   }
 
   .ba-arrow {
-    color: var(--blue);
+    color: var(--gold);
     font-size: 1.3rem;
   }
 }
@@ -217,10 +214,12 @@
   font-family: var(--font-d);
   font-weight: 900;
   font-size: 1.05rem;
-  color: var(--green);
+  background: var(--grad-jackpot);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-/* ── Testimonial ── */
 .cs-testimonial {
   padding: 5rem 0;
   background: var(--bg);
@@ -243,8 +242,8 @@
     left: 2rem;
     font-size: 5rem;
     line-height: 1;
-    color: var(--blue);
-    opacity: 0.1;
+    color: var(--gold);
+    opacity: 0.15;
     font-family: Georgia, serif;
   }
 
@@ -267,7 +266,7 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: var(--grad-blue);
+  background: var(--grad-jackpot);
   color: #fff;
   display: flex;
   align-items: center;
@@ -275,7 +274,7 @@
   font-family: var(--font-d);
   font-weight: 900;
   font-size: 0.9rem;
-  box-shadow: var(--shadow-blue);
+  box-shadow: var(--shadow-gold);
 }
 
 .ta-name {
@@ -288,7 +287,6 @@
   color: var(--text-3);
 }
 
-/* ── Tags ── */
 .cs-tags {
   padding: 2rem 0;
   background: var(--bg-soft);
@@ -303,13 +301,12 @@
     font-weight: 700;
     padding: 0.3rem 0.85rem;
     border-radius: var(--radius-full);
-    background: var(--blue-light);
-    color: var(--blue);
-    border: 1px solid rgba(37, 99, 235, 0.15);
+    background: var(--gold-light);
+    color: var(--gold-dark);
+    border: 1px solid rgba(245, 158, 11, 0.2);
   }
 }
 
-/* ── CTA ── */
 .cs-cta {
   padding: 5rem 0;
   text-align: center;

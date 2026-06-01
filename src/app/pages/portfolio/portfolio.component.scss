@@ -1,7 +1,6 @@
-/* ── Page Hero ── */
 .page-hero {
   padding: 9rem 0 5rem;
-  background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, #FFFBF5 0%, #FFFFFF 100%);
   border-bottom: 1px solid var(--border);
   position: relative;
   overflow: hidden;
@@ -14,7 +13,7 @@
     width: 360px;
     height: 360px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -28,7 +27,6 @@
   }
 }
 
-/* ── Portfolio Grid ── */
 .portfolio-section {
   padding: 4rem 0 5rem;
   background: var(--bg);
@@ -53,8 +51,8 @@
 
   &:hover {
     transform: translateY(-8px);
-    border-color: rgba(37, 99, 235, 0.2);
     box-shadow: var(--shadow-xl);
+    border-color: rgba(245, 158, 11, 0.25);
   }
 }
 
@@ -83,7 +81,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: rgba(15, 23, 42, 0.65);
+  background: rgba(15, 23, 42, 0.7);
   opacity: 0;
   transition: opacity 0.3s ease;
   color: #fff;
@@ -123,7 +121,6 @@
   line-height: 1.7;
 }
 
-/* ── Active Panel ── */
 .panel-section {
   padding: 0 0 6rem;
   background: var(--bg);
@@ -143,7 +140,7 @@
   gap: 1.25rem;
   padding: 2rem 2rem 1.5rem;
   border-bottom: 1px solid var(--border);
-  background: var(--bg-soft);
+  background: linear-gradient(135deg, #FFFBF5 0%, #FFF1F2 100%);
 }
 
 .cat-icon-lg {
@@ -151,8 +148,8 @@
   flex-shrink: 0;
   width: 56px;
   height: 56px;
-  background: var(--blue-light);
-  border: 1px solid rgba(37, 99, 235, 0.15);
+  background: var(--gold-light);
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: var(--radius);
   display: flex;
   align-items: center;
@@ -174,7 +171,6 @@
   max-width: 500px;
 }
 
-/* ── Samples ── */
 .samples-grid {
   padding: 1.5rem 2rem;
   display: flex;
@@ -194,8 +190,8 @@
   transition: all var(--ease);
 
   &:hover {
-    background: var(--blue-light);
-    border-color: rgba(37, 99, 235, 0.2);
+    background: var(--gold-light);
+    border-color: rgba(245, 158, 11, 0.25);
     transform: translateX(4px);
   }
 
@@ -231,9 +227,9 @@
     font-weight: 700;
     padding: 0.18rem 0.55rem;
     border-radius: var(--radius-full);
-    background: var(--blue-light);
-    color: var(--blue);
-    border: 1px solid rgba(37, 99, 235, 0.15);
+    background: var(--gold-light);
+    color: var(--gold-dark);
+    border: 1px solid rgba(245, 158, 11, 0.2);
   }
 
   .sample-meta {
@@ -246,7 +242,6 @@
   }
 }
 
-/* ── Drive CTA ── */
 .drive-cta {
   padding: 1.5rem 2rem 2rem;
   border-top: 1px solid var(--border);
@@ -259,8 +254,8 @@
   gap: 1.5rem;
   flex-wrap: wrap;
   padding: 1.5rem 2rem;
-  background: var(--blue-light);
-  border: 1px solid rgba(37, 99, 235, 0.15);
+  background: var(--gold-light);
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-radius: var(--radius);
 }
 
@@ -277,14 +272,13 @@
   color: var(--text-3);
 }
 
-/* ── Port CTA ── */
 .port-cta-section {
   background: var(--bg);
   padding: 0 0 6rem;
 }
 
 .port-cta-band {
-  background: var(--grad-blue);
+  background: var(--grad-jackpot);
   border-radius: var(--radius-lg);
   padding: 4rem 3rem;
   text-align: center;
@@ -298,14 +292,24 @@
   }
 
   p {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 1rem;
     margin-bottom: 2rem;
   }
 }
 
+.port-cta-band .btn-primary {
+  background: #fff;
+  color: var(--red);
+  box-shadow: none;
+
+  &:hover {
+    background: var(--red-light);
+  }
+}
+
 .port-cta-band .btn-outline {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.5);
   color: #fff;
 
   &:hover {

@@ -15,8 +15,6 @@
 }
 
 /* ── Brand ── */
-.f-brand {}
-
 .footer-logo {
   display: flex;
   align-items: center;
@@ -32,7 +30,7 @@
   letter-spacing: -0.02em;
 
   .flm-i {
-    color: var(--blue);
+    color: var(--red);
   }
 
   .flm-g {
@@ -40,7 +38,7 @@
   }
 
   .flm-u {
-    color: var(--green);
+    color: var(--gold);
   }
 }
 
@@ -80,9 +78,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background: rgba(37, 99, 235, 0.15);
-  border: 1px solid rgba(37, 99, 235, 0.35);
-  color: #93C5FD;
+  background: rgba(225, 29, 72, 0.15);
+  border: 1px solid rgba(225, 29, 72, 0.4);
+  color: #FCA5A5;
   font-family: var(--font-d);
   font-weight: 700;
   font-size: 0.88rem;
@@ -92,8 +90,8 @@
   transition: all 0.3s ease;
 
   &:hover {
-    background: rgba(37, 99, 235, 0.25);
-    border-color: rgba(37, 99, 235, 0.6);
+    background: rgba(225, 29, 72, 0.25);
+    border-color: rgba(225, 29, 72, 0.6);
   }
 
   .arr {
@@ -167,9 +165,9 @@
     }
 
     &.em {
-      background: rgba(37, 99, 235, 0.2);
-      color: #93C5FD;
-      border: 1px solid rgba(37, 99, 235, 0.3);
+      background: rgba(225, 29, 72, 0.2);
+      color: #FCA5A5;
+      border: 1px solid rgba(225, 29, 72, 0.3);
     }
 
     &.li {
@@ -212,7 +210,7 @@
     transition: color 0.25s ease;
 
     &:hover {
-      color: #fff;
+      color: var(--gold);
     }
   }
 }
@@ -223,9 +221,9 @@
   gap: 0.5rem;
   margin-top: 1.5rem;
   font-size: 0.78rem;
-  color: rgba(16, 185, 129, 0.8);
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: rgba(245, 158, 11, 0.9);
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
   border-radius: var(--radius-full);
   padding: 0.35rem 0.85rem;
 
@@ -233,8 +231,8 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+    background: var(--gold);
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
     animation: blink 2s ease-in-out infinite;
     flex-shrink: 0;
   }
@@ -256,7 +254,7 @@
   }
 
   .f-right {
-    color: rgba(37, 99, 235, 0.6);
+    color: rgba(245, 158, 11, 0.6);
   }
 }
 

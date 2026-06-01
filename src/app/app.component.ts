@@ -45,9 +45,9 @@ import { FooterComponent } from './components/footer/footer.component';
       letter-spacing: -0.02em;
       display: flex; align-items: center;
     }
-    .pl-i { color: #2563EB; }
+    .pl-i { color: #E11D48; }
     .pl-g { color: #0F172A; }
-    .pl-u { color: #10B981; }
+    .pl-u { color: #F59E0B; }
 
     .pl-bar {
       width: 180px; height: 3px;
@@ -57,7 +57,7 @@ import { FooterComponent } from './components/footer/footer.component';
     .pl-bar span {
       display: block; height: 100%; width: 40%;
       border-radius: 999px;
-      background: linear-gradient(90deg, transparent, #2563EB, #10B981, transparent);
+      background: linear-gradient(90deg, transparent, #E11D48, #F59E0B, #8B5CF6, transparent);
       animation: plMove 900ms ease-in-out infinite;
     }
     @keyframes plMove {

@@ -1,104 +1,123 @@
 <!-- ═══════════════════════════════════════════════════════
-     HERO — Full viewport, big bold, Lipsmm-inspired
+     HERO — Full viewport, big bold, Lipsmm-inspired, WHITE
+     No photo — pure energy through color, type, and floating cards
      ═══════════════════════════════════════════════════════ -->
 <section class="hero">
-  <div class="hero-bg-mesh"></div>
+  <div class="hero-glow hero-glow--red"></div>
+  <div class="hero-glow hero-glow--gold"></div>
+  <div class="hero-glow hero-glow--purple"></div>
   <div class="container">
     <div class="hero-inner">
       <div class="hero-text">
         <div class="hero-badge">
-          <span class="hb-dot"></span>
+          <span class="hb-live"></span>
           Senior iGaming Content Strategist · African Market Specialist
         </div>
         <h1 class="hero-h1">
-          iGaming Content<br>
-          <span class="h1-blue">That Hits the</span><br>
+          <span class="h1-line1">iGaming Content</span><br>
+          <span class="h1-line2">That Hits the</span><br>
           <span class="h1-accent">Jackpot.</span>
         </h1>
         <p class="hero-desc">
-          Casino reviews, sports betting guides, and African market strategy — written by Nasheta John.
-          A decade of iGaming expertise, built to rank, convert, and resonate.
+          Casino reviews, sports betting guides, and African market strategy —
+          written by Nasheta John. A decade of expertise built to rank, convert,
+          and resonate with real players.
         </p>
         <div class="hero-trust">
-          <span class="ht-badge">✓ MGA & UKGC Aware</span>
-          <span class="ht-badge">✓ African Market Expert</span>
-          <span class="ht-badge">✓ RG Certified</span>
+          <span class="ht-badge ht-red">✓ MGA & UKGC Aware</span>
+          <span class="ht-badge ht-gold">✓ African Market Expert</span>
+          <span class="ht-badge ht-purple">✓ 10+ Years iGaming</span>
         </div>
         <div class="hero-actions">
-          <a routerLink="/contact" class="btn-primary">Start a Project</a>
-          <a routerLink="/portfolio" class="btn-outline">Browse My Work</a>
+          <a routerLink="/contact" class="btn-primary hero-cta-main">
+            Start a Project
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a routerLink="/blog" class="btn-outline hero-cta-sec">Read My Blog</a>
         </div>
       </div>
 
-      <div class="hero-visual">
+      <div class="hero-visual" aria-hidden="true">
         <div class="hv-card hv-card-1">
-          <div class="hvc-icon">🎰</div>
+          <div class="hvc-emoji">🎰</div>
           <div class="hvc-label">Casino Reviews</div>
           <div class="hvc-metric">+156% organic visibility</div>
         </div>
         <div class="hv-card hv-card-2">
-          <div class="hvc-icon">⚽</div>
+          <div class="hvc-emoji">⚽</div>
           <div class="hvc-label">Sports Betting</div>
           <div class="hvc-metric">+280% traffic growth</div>
         </div>
         <div class="hv-card hv-card-3">
-          <div class="hvc-icon">🌍</div>
+          <div class="hvc-emoji">🌍</div>
           <div class="hvc-label">African Markets</div>
           <div class="hvc-metric">15+ markets covered</div>
         </div>
         <div class="hv-card hv-card-4">
-          <div class="hvc-icon">🎲</div>
+          <div class="hvc-emoji">🎲</div>
           <div class="hvc-label">Slot Reviews</div>
-          <div class="hvc-metric">3 → 18 featured snippets</div>
+          <div class="hvc-metric">3 → 18 snippets</div>
         </div>
-        <div class="hv-center-badge">
-          <div class="hvcb-num">10+</div>
-          <div class="hvcb-text">Years in<br>iGaming</div>
+        <div class="hv-jackpot">
+          <div class="hvj-num">10+</div>
+          <div class="hvj-label">Years in<br>iGaming</div>
         </div>
       </div>
     </div>
   </div>
   <div class="scroll-hint">
-    <div class="sh-line"></div>
+    <div class="sh-dot"></div>
     <span>Scroll</span>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     TRUST BAR — Logo ticker
+     TRUST BAR — Moving ticker of brands
      ═══════════════════════════════════════════════════════ -->
 <div class="trust-bar">
   <div class="tb-label">Trusted by industry leaders</div>
   <div class="ticker-wrap">
     <div class="ticker-track">
-      <div class="ticker-item" *ngFor="let logo of logos">
-        <img [src]="logo.src" [alt]="logo.alt" loading="lazy">
-      </div>
-      <div class="ticker-item" *ngFor="let logo of logos">
-        <img [src]="logo.src" [alt]="logo.alt" loading="lazy">
-      </div>
+      <span class="ticker-item" *ngFor="let logo of brands">{{ logo }}</span>
+      <span class="ticker-item" *ngFor="let logo of brands">{{ logo }}</span>
     </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════
-     SERVICES — 3-column cards
+     SERVICES — 3 bold color-coded cards
      ═══════════════════════════════════════════════════════ -->
 <section class="services-section section-alt">
   <div class="container">
     <div class="section-head reveal">
       <span class="s-label">What I Do</span>
-      <h2 class="s-title">Specialist Services for <span class="blue">iGaming Brands</span></h2>
+      <h2 class="s-title">Specialist Services for <span class="red">iGaming Brands</span></h2>
       <p class="s-desc">From single-market operators to global platforms — content that works.</p>
     </div>
     <div class="svc-grid">
-      <div class="svc-card reveal" *ngFor="let s of services">
-        <div class="svc-icon-wrap">
-          <span class="svc-icon">{{ s.icon }}</span>
+      <div class="svc-card svc-card--red reveal">
+        <div class="svc-icon-wrap svc-icon--red">
+          <span>✦</span>
         </div>
-        <h3 class="svc-title">{{ s.title }}</h3>
-        <p class="svc-desc">{{ s.desc }}</p>
-        <a routerLink="/services" class="svc-link">Learn More →</a>
+        <h3 class="svc-title">iGaming Content Writing</h3>
+        <p class="svc-desc">Casino guides, slot reviews, betting articles, and more — written for real players and search engines alike. MGA & UKGC compliant.</p>
+        <a routerLink="/services" class="svc-link svc-link--red">Learn More →</a>
+      </div>
+      <div class="svc-card svc-card--gold reveal">
+        <div class="svc-icon-wrap svc-icon--gold">
+          <span>◈</span>
+        </div>
+        <h3 class="svc-title">African Market Consultation</h3>
+        <p class="svc-desc">Strategic insights into Kenya, Nigeria, South Africa, and beyond. Capture untapped audiences with localised, culturally-aware content.</p>
+        <a routerLink="/services" class="svc-link svc-link--gold">Learn More →</a>
+      </div>
+      <div class="svc-card svc-card--purple reveal">
+        <div class="svc-icon-wrap svc-icon--purple">
+          <span>◇</span>
+        </div>
+        <h3 class="svc-title">Content Strategy & SEO</h3>
+        <p class="svc-desc">Data-driven content roadmaps powered by Ahrefs and SEMrush — designed to build authority, increase organic traffic, and outperform competitors.</p>
+        <a routerLink="/services" class="svc-link svc-link--purple">Learn More →</a>
       </div>
     </div>
     <div class="svc-cta reveal">
@@ -108,7 +127,7 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     STATS — Big numbers, blue gradient background
+     STATS — Jackpot gold-to-red gradient, white text
      ═══════════════════════════════════════════════════════ -->
 <section class="stats-section">
   <div class="container">
@@ -122,14 +141,14 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     ABOUT — Two-column, photo right
+     ABOUT — Two-column; John's photo on the right
      ═══════════════════════════════════════════════════════ -->
 <section class="about-section section-alt">
   <div class="container">
     <div class="about-grid">
       <div class="about-content reveal">
         <span class="s-label">About Nasheta John</span>
-        <h2 class="s-title">A Decade Dedicated to<br><span class="blue">iGaming Content</span></h2>
+        <h2 class="s-title">A Decade Dedicated to<br><span class="red">iGaming Content</span></h2>
         <p class="about-p">
           I started as a content writer and grew into a specialist — working across online gambling,
           sports betting, and sweepstakes content in African, European, and global markets.
@@ -137,12 +156,13 @@
         <p class="about-p">
           Today I work with operators, affiliates, and content agencies to produce material that meets
           regulatory standards, drives SEO performance, and genuinely resonates with players.
+          Based in Nairobi, Kenya — writing for the world.
         </p>
         <div class="compliance-chips">
-          <span class="cc-chip">✓ MGA & UKGC Compliance</span>
-          <span class="cc-chip">✓ African Market Localisation</span>
-          <span class="cc-chip">✓ Responsible Gambling</span>
-          <span class="cc-chip">✓ Multi-Jurisdiction SEO</span>
+          <span class="cc-chip cc-red">✓ MGA & UKGC Compliance</span>
+          <span class="cc-chip cc-gold">✓ African Market Localisation</span>
+          <span class="cc-chip cc-purple">✓ Responsible Gambling</span>
+          <span class="cc-chip cc-pink">✓ Multi-Jurisdiction SEO</span>
         </div>
         <div class="about-actions">
           <a routerLink="/career" class="btn-primary">View My Career</a>
@@ -151,7 +171,7 @@
       </div>
       <div class="about-img reveal">
         <div class="ai-frame">
-          <img src="assets/images/nasheta.jpeg" alt="Nasheta John — iGaming Content Strategist">
+          <img src="assets/images/nasheta.jpeg" alt="Nasheta John — Senior iGaming Content Strategist, Nairobi Kenya">
           <div class="ai-badge">
             <div class="aib-icon">✦</div>
             <div>
@@ -172,12 +192,12 @@
   <div class="container">
     <div class="section-head reveal" style="text-align:center;">
       <span class="s-label">Portfolio</span>
-      <h2 class="s-title">Content That <span class="blue">Speaks for Itself</span></h2>
+      <h2 class="s-title">Content That <span class="gold">Speaks for Itself</span></h2>
       <p class="s-desc" style="margin:0 auto;">Organised by category — click through to see real samples.</p>
     </div>
     <div class="port-grid reveal">
-      <a routerLink="/portfolio" class="port-cat" *ngFor="let p of portfolio">
-        <div class="pc-icon">{{ p.icon }}</div>
+      <a routerLink="/portfolio" class="port-cat" *ngFor="let p of portfolio; let i = index" [class]="'port-cat port-cat--' + p.color">
+        <div class="pc-emoji">{{ p.icon }}</div>
         <div class="pc-name">{{ p.name }}</div>
         <div class="pc-metric">{{ p.metric }}</div>
         <div class="pc-arrow">→</div>
@@ -187,20 +207,91 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     TESTIMONIALS — 3-column cards
+     LATEST BLOG — igamingwritenow.com style 3-col grid
      ═══════════════════════════════════════════════════════ -->
-<section class="testimonials-section section-alt">
+<section class="latest-blog section-alt">
+  <div class="container">
+    <div class="lb-head reveal">
+      <div>
+        <span class="s-label">Fresh Content</span>
+        <h2 class="s-title">Latest from the <span class="red">Blog</span></h2>
+      </div>
+      <a routerLink="/blog" class="btn-ghost-red">Browse All Posts →</a>
+    </div>
+
+    <div class="lb-grid">
+      <a routerLink="/blog/kenya-betting-market-2026" class="lb-card reveal">
+        <div class="lb-img">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80" alt="Kenya Sports Betting 2026" loading="lazy">
+          <span class="lb-cat lb-cat--gold">African Market</span>
+        </div>
+        <div class="lb-body">
+          <div class="lb-meta">
+            <span>May 10, 2026</span>
+            <span class="meta-dot">·</span>
+            <span>10 min read</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-author">Nasheta John</span>
+          </div>
+          <h3 class="lb-title">Why Kenya's Sports Betting Market Keeps Growing in 2026</h3>
+          <p class="lb-excerpt">Mobile penetration, Premier League obsession, and a young audience are reshaping operator strategy.</p>
+        </div>
+      </a>
+
+      <a routerLink="/blog/spot-a-fair-casino-site" class="lb-card reveal">
+        <div class="lb-img">
+          <img src="https://images.unsplash.com/photo-1516321165247-4aa89a48be28?w=800&q=80" alt="Fair Casino Site" loading="lazy">
+          <span class="lb-cat lb-cat--purple">Casino Reviews</span>
+        </div>
+        <div class="lb-body">
+          <div class="lb-meta">
+            <span>May 8, 2026</span>
+            <span class="meta-dot">·</span>
+            <span>7 min read</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-author">Nasheta John</span>
+          </div>
+          <h3 class="lb-title">How to Spot a Fair Casino Site Before You Deposit</h3>
+          <p class="lb-excerpt">Licensing checks, RTP transparency, payment method signals — the practical player checklist.</p>
+        </div>
+      </a>
+
+      <a routerLink="/blog/igaming-content-mistakes-ranking" class="lb-card reveal">
+        <div class="lb-img">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="iGaming SEO" loading="lazy">
+          <span class="lb-cat lb-cat--red">Content Strategy</span>
+        </div>
+        <div class="lb-body">
+          <div class="lb-meta">
+            <span>May 5, 2026</span>
+            <span class="meta-dot">·</span>
+            <span>8 min read</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-author">Nasheta John</span>
+          </div>
+          <h3 class="lb-title">The iGaming Content Mistakes Quietly Killing Rankings</h3>
+          <p class="lb-excerpt">Thin affiliate copy, missing compliance context, and weak internal linking — the most common issues.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     TESTIMONIALS — Carousel style
+     ═══════════════════════════════════════════════════════ -->
+<section class="testimonials-section">
   <div class="container">
     <div class="section-head reveal" style="text-align:center;">
       <span class="s-label">Social Proof</span>
-      <h2 class="s-title">What Industry Leaders <span class="blue">Are Saying</span></h2>
+      <h2 class="s-title">What Industry Leaders <span class="gold">Are Saying</span></h2>
     </div>
     <div class="testi-grid">
-      <div class="testi-card reveal" *ngFor="let t of testimonials">
+      <div class="testi-card reveal" *ngFor="let t of testimonials; let i = index" [class]="'testi-card testi-card--' + t.color">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-text">"{{ t.text }}"</p>
         <div class="testi-author">
-          <div class="testi-av">{{ t.avatar }}</div>
+          <div class="testi-av" [style.background]="t.bg">{{ t.avatar }}</div>
           <div>
             <div class="testi-name">{{ t.name }}</div>
             <div class="testi-role">{{ t.role }}</div>
@@ -212,18 +303,21 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     CTA BAND
+     CTA BAND — Big, bold, full-width
      ═══════════════════════════════════════════════════════ -->
 <section class="cta-section">
   <div class="container">
     <div class="cta-band reveal">
+      <div class="cta-deco cta-deco--1">🎰</div>
+      <div class="cta-deco cta-deco--2">🎲</div>
+      <div class="cta-deco cta-deco--3">⚽</div>
       <div class="cta-content">
-        <span class="s-label" style="display:inline-flex;">Ready to Start?</span>
+        <span class="s-label" style="display:inline-flex; background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.3);">Ready to Start?</span>
         <h2 class="cta-title">Let's Create Content that Hits<br>the Jackpot Every Time</h2>
         <p class="cta-desc">Casino reviews, sports betting guides, or a full content strategy — I'm ready to deliver.</p>
         <div class="cta-btns">
-          <a routerLink="/contact" class="btn-primary">Start a Project</a>
-          <a routerLink="/portfolio" class="btn-outline">Browse Samples</a>
+          <a routerLink="/contact" class="cta-btn-white">Start a Project →</a>
+          <a routerLink="/blog" class="cta-btn-outline">Read My Blog</a>
         </div>
       </div>
     </div>

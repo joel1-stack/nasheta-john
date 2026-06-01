@@ -1,16 +1,25 @@
 <div class="page-enter">
 
-  <!-- PAGE HERO -->
+  <!-- PAGE HERO — igamingwritenow.com editorial style -->
   <div class="blog-hero">
     <div class="container">
-      <span class="s-label">Insights & Strategy</span>
-      <h1 class="bh-title">The iGamingUbuntu <span class="blue">Blog</span></h1>
-      <p class="bh-desc">Expert insights on casino content, sports betting strategy, and African iGaming market trends — by Nasheta John.</p>
-      <div class="bh-meta">
-        <span class="bh-author">
-          <span class="bha-av">NJ</span>
-          Nasheta John · Senior iGaming Content Strategist
-        </span>
+      <div class="bh-inner">
+        <div class="bh-text">
+          <span class="s-label">Insights & Strategy</span>
+          <h1 class="bh-title">The iGamingUbuntu <span class="accent-red">Blog</span></h1>
+          <p class="bh-desc">Expert insights on casino content, sports betting strategy, and African iGaming market trends — by Nasheta John, Senior iGaming Content Strategist.</p>
+          <div class="bh-meta">
+            <div class="bh-avatar">NJ</div>
+            <span>Nasheta John · Senior iGaming Content Strategist · Nairobi, Kenya</span>
+          </div>
+        </div>
+        <!-- Newsletter CTA in hero -->
+        <div class="bh-newsletter">
+          <div class="bhn-icon">📬</div>
+          <h3>Stay Ahead of the Game</h3>
+          <p>Get the latest iGaming strategy and African market insights straight to your inbox.</p>
+          <a routerLink="/contact" class="btn-primary bhn-cta">Get in Touch →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -37,31 +46,32 @@
         <p>Loading articles...</p>
       </div>
 
-      <!-- Featured Post (first post, full width) -->
+      <!-- Featured Post (first, full width) — igamingwritenow hero card style -->
       <div *ngIf="!loading && posts.length > 0">
         <a class="featured-card" [routerLink]="['/blog', posts[0].slug]">
           <div class="fc-img">
-            <img *ngIf="posts[0].coverImage" [src]="posts[0].coverImage" [alt]="posts[0].title" loading="lazy">
+            <img *ngIf="posts[0].coverImage" [src]="posts[0].coverImage" [alt]="posts[0].title" loading="eager">
             <div class="fc-img-fallback" *ngIf="!posts[0].coverImage">
-              <span>✦</span>
+              <span>🎰</span>
             </div>
-            <span class="fc-cat">{{ posts[0].category }}</span>
+            <span class="fc-eyebrow">Featured story</span>
+            <span class="fc-cat" [class]="getCatClass(posts[0].category)">{{ posts[0].category }}</span>
           </div>
           <div class="fc-body">
             <div class="fc-meta">
               <span class="fc-date">{{ posts[0].date || posts[0].dateISO | date:'MMMM d, yyyy' }}</span>
               <span class="fc-dot">·</span>
-              <span class="fc-read">{{ posts[0].readTime || posts[0].readMinutes }} min read</span>
+              <span>{{ posts[0].readTime || posts[0].readMinutes }} min read</span>
               <span class="fc-dot">·</span>
               <span class="fc-author">{{ posts[0].author }}</span>
             </div>
             <h2 class="fc-title">{{ posts[0].title }}</h2>
             <p class="fc-excerpt">{{ posts[0].excerpt }}</p>
-            <span class="fc-cta">Read Article →</span>
+            <span class="fc-cta btn-primary" style="width:fit-content;">Read Article →</span>
           </div>
         </a>
 
-        <!-- Grid of remaining posts -->
+        <!-- 3-column grid of remaining posts -->
         <div class="blog-grid" *ngIf="posts.length > 1">
           <a class="blog-card" *ngFor="let p of posts.slice(1)" [routerLink]="['/blog', p.slug]">
             <div class="card-img">
@@ -69,7 +79,7 @@
               <div class="card-img-fallback" *ngIf="!p.coverImage">
                 <span>✦</span>
               </div>
-              <span class="card-cat">{{ p.category }}</span>
+              <span class="card-cat" [class]="getCatClass(p.category)">{{ p.category }}</span>
             </div>
             <div class="card-body">
               <div class="card-meta">
@@ -79,25 +89,22 @@
                 <span class="dot">·</span>
                 <span class="card-author">{{ p.author }}</span>
               </div>
-              <h3>{{ p.title }}</h3>
+              <h3 class="card-title">{{ p.title }}</h3>
               <p class="card-excerpt">{{ p.excerpt }}</p>
-              <div class="card-tags" *ngIf="p.tags?.length">
-                <span *ngFor="let tag of p.tags.slice(0,3)" class="tag">{{ tag }}</span>
-              </div>
               <div class="read-more">Read Article →</div>
             </div>
           </a>
         </div>
 
         <div *ngIf="posts.length === 0" class="no-posts">
-          <p>No articles found. Try a different filter.</p>
+          <p>No articles found. Try a different filter or search term.</p>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- Newsletter CTA -->
+  <!-- Bottom CTA -->
   <section class="blog-cta section-alt">
     <div class="container">
       <div class="bc-inner">
@@ -105,7 +112,7 @@
           <h2 class="bc-title">Need iGaming Content Like This?</h2>
           <p class="bc-desc">Casino reviews, sports betting guides, or a full content strategy — let's talk.</p>
         </div>
-        <a routerLink="/contact" class="btn-primary">Start a Project</a>
+        <a routerLink="/contact" class="btn-primary">Start a Project →</a>
       </div>
     </div>
   </section>

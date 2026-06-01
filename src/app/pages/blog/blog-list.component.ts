@@ -39,4 +39,19 @@ export class BlogListComponent implements OnInit {
   }
 
   setCategory(cat: string) { this.active = cat; }
+
+  /** Returns a CSS class based on category for colored badge */
+  getCatClass(category: string): string {
+    const map: Record<string, string> = {
+      'African Market': 'cat--gold',
+      'Casino Reviews': 'cat--purple',
+      'Slot Reviews': 'cat--purple',
+      'Sports Betting': 'cat--pink',
+      'Content Strategy': 'cat--red',
+      'Player Education': 'cat--red',
+      'Market Analysis': 'cat--gold',
+      'SEO Strategy': 'cat--red',
+    };
+    return map[category] || 'cat--red';
+  }
 }

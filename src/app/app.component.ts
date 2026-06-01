@@ -8,15 +8,13 @@ import { FooterComponent } from './components/footer/footer.component';
   standalone: true,
   imports: [RouterOutlet, NavbarComponent, FooterComponent],
   template: `
-    <video class="site-bg-video" autoplay muted loop playsinline>
-      <source src="https://res.cloudinary.com/REPLACE_WITH_YOUR_CLOUD_NAME/video/upload/background.mp4" type="video/mp4">
-    </video>
-    <div class="site-bg-overlay"></div>
     <app-navbar></app-navbar>
     <main>
       <div class="page-loader" [class.on]="loading" aria-hidden="true">
         <div class="pl-inner">
-          <div class="pl-brand">NJ</div>
+          <div class="pl-brand">
+            <span class="pl-i">i</span><span class="pl-g">G</span><span class="pl-u">U</span>
+          </div>
           <div class="pl-bar"><span></span></div>
         </div>
       </div>
@@ -25,74 +23,46 @@ import { FooterComponent } from './components/footer/footer.component';
     <app-footer></app-footer>
   `,
   styles: [`
-    :host { display: block; position: relative; }
-    .site-bg-video {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -2;
-    }
-    .site-bg-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10,15,13,0.78);
-      z-index: -1;
-    }
-    main { min-height: 100vh; padding-top: 0; }
+    :host { display: block; background: #FFFFFF; }
+    main { min-height: 100vh; padding-top: 0; background: #FFFFFF; }
+
     .page-loader {
-      position: fixed;
-      inset: 0;
-      z-index: 1500;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 280ms cubic-bezier(0.4,0,0.2,1);
-      background: radial-gradient(ellipse 90% 70% at 35% 25%, rgba(58,168,106,0.18) 0%, transparent 60%),
-                  radial-gradient(ellipse 70% 55% at 70% 70%, rgba(201,162,39,0.14) 0%, transparent 55%),
-                  #0A0F0D;
-      backdrop-filter: blur(14px);
+      position: fixed; inset: 0; z-index: 1500;
+      pointer-events: none; opacity: 0;
+      transition: opacity 250ms ease;
+      background: #FFFFFF;
+      display: flex; align-items: center; justify-content: center;
     }
-    .page-loader.on { opacity: 1; }
+    .page-loader.on { opacity: 1; pointer-events: all; }
+
     .pl-inner {
-      height: 100%;
-      display: grid;
-      place-content: center;
-      gap: 1rem;
+      display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
     }
+
     .pl-brand {
-      width: 58px;
-      height: 58px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
       font-family: 'Syne', sans-serif;
-      font-weight: 800;
+      font-weight: 900; font-size: 1.6rem;
       letter-spacing: -0.02em;
-      color: #fff;
-      background: linear-gradient(135deg, #1e5c3a, #3aa86a);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+      display: flex; align-items: center;
     }
+    .pl-i { color: #2563EB; }
+    .pl-g { color: #0F172A; }
+    .pl-u { color: #10B981; }
+
     .pl-bar {
-      width: 220px;
-      height: 2px;
-      border-radius: 999px;
-      overflow: hidden;
-      background: rgba(11,21,16,0.10);
-      border: 1px solid rgba(11,21,16,0.08);
+      width: 180px; height: 3px;
+      border-radius: 999px; overflow: hidden;
+      background: #E2E8F0;
     }
     .pl-bar span {
-      display: block;
-      height: 100%;
-      width: 45%;
+      display: block; height: 100%; width: 40%;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(201,162,39,0.0), rgba(201,162,39,0.9), rgba(58,168,106,0.9), rgba(201,162,39,0.0));
+      background: linear-gradient(90deg, transparent, #2563EB, #10B981, transparent);
       animation: plMove 900ms ease-in-out infinite;
     }
     @keyframes plMove {
-      0% { transform: translateX(-60%); opacity: 0.6; }
-      50% { opacity: 1; }
-      100% { transform: translateX(240%); opacity: 0.6; }
+      0%   { transform: translateX(-80%); }
+      100% { transform: translateX(280%); }
     }
   `]
 })
@@ -107,14 +77,11 @@ export class AppComponent {
         if (this.pendingOff) window.clearTimeout(this.pendingOff);
         return;
       }
-
       if (e instanceof NavigationEnd || e instanceof NavigationCancel || e instanceof NavigationError) {
         if (this.pendingOff) window.clearTimeout(this.pendingOff);
-        this.pendingOff = window.setTimeout(() => (this.loading = false), 220);
+        this.pendingOff = window.setTimeout(() => (this.loading = false), 200);
       }
     });
-
-    // First paint: keep it for a short beat so the opening feels premium (Content Lab-like).
-    window.setTimeout(() => (this.loading = false), 650);
+    window.setTimeout(() => (this.loading = false), 600);
   }
 }

@@ -40,6 +40,20 @@
           <span class="tags-label">Tags:</span>
           <span *ngFor="let tag of post.tags" class="tag">{{ tag }}</span>
         </div>
+
+        <!-- Author Bio -->
+        <div class="author-bio">
+          <div class="ab-av">NJ</div>
+          <div>
+            <div class="ab-name">{{ post.author }}</div>
+            <div class="ab-role">Senior iGaming Content Strategist · iGamingUbuntu</div>
+            <p class="ab-bio">
+              Nasheta John is a senior iGaming content strategist with over a decade of experience writing casino reviews,
+              sports betting guides, and African market strategy. Verified author on Cobber Casino and trusted by operators
+              across 15+ regulated markets.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -67,7 +81,7 @@
       <div class="container">
         <h2>Need Similar Content for Your Brand?</h2>
         <p>I create SEO-optimized iGaming content that ranks and converts.</p>
-        <a routerLink="/contact" class="btn-gold">Start a Project →</a>
+        <a routerLink="/contact" class="btn-primary">Start a Project →</a>
       </div>
     </section>
   </div>

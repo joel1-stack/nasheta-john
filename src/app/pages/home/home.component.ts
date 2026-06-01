@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -12,41 +12,41 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent implements OnInit, AfterViewInit {
 
   stats = [
-    { val: 10,  suffix: '+', label: 'Years Experience' },
+    { val: 10, suffix: '+', label: 'Years Experience' },
     { val: 120, suffix: '+', label: 'Clients Served' },
     { val: 850, suffix: '+', label: 'Projects Completed' },
-    { val: 15,  suffix: '',  label: 'Markets Covered' },
+    { val: 15, suffix: '', label: 'Markets Covered' },
   ];
 
   testimonials = [
     {
       name: 'Marcus Olof',
       role: 'CEO, SportsBoom Media',
-      text: 'Nasheta\'s ability to translate complex sports betting concepts into clear, engaging copy is exceptional. Our conversion rates improved by 34% within three months of bringing her on board.',
+      text: 'Nasheta\'s ability to translate complex sports betting concepts into clear, engaging copy is exceptional. Our conversion rates improved by 34% within three months.',
       avatar: 'MO'
     },
     {
       name: 'Priya Sharma',
       role: 'Head of Content, Kadabra Gaming',
-      text: 'Working with Nasheta has been a game-changer for our iGaming content strategy. Her deep understanding of the African market gave us a competitive edge we didn\'t have before.',
+      text: 'Working with Nasheta has been a game-changer for our iGaming content strategy. Her deep understanding of the African market gave us a competitive edge.',
       avatar: 'PS'
     },
     {
       name: 'James Kamau',
       role: 'HR Director, iGaming Afrika',
-      text: 'In ten years of hiring content professionals, Nasheta stands out for her research depth and ability to meet tight deadlines without compromising quality. A genuinely rare find in this industry.',
+      text: 'In ten years of hiring content professionals, Nasheta stands out for her research depth and ability to meet tight deadlines without compromising quality.',
       avatar: 'JK'
     },
     {
       name: 'Elena Vovk',
       role: 'Content Manager, Lipsnini Agency',
-      text: 'Nasheta delivered casino review content across three languages and multiple regulatory markets simultaneously. The accuracy and tone consistency was flawless throughout.',
+      text: 'Nasheta delivered casino review content across three languages and multiple regulatory markets simultaneously. The accuracy and tone consistency was flawless.',
       avatar: 'EV'
     },
     {
       name: 'David Ndung\'u',
       role: 'CEO, Bideford Digital',
-      text: 'Her work on our eSports betting content helped us reach a younger demographic that was previously hard to engage. The content felt authentic and drove real user interaction.',
+      text: 'Her work on our eSports betting content helped us reach a younger demographic that was previously hard to engage. The content felt authentic and drove real interaction.',
       avatar: 'DN'
     },
     {
@@ -59,22 +59,31 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   logos = [
     { src: 'assets/logos/igaming-afrika.png', alt: 'iGaming Afrika' },
-    { src: 'assets/logos/casino-com.png',     alt: 'Casino.com' },
-    { src: 'assets/logos/bideford.png',       alt: 'Bideford' },
-    { src: 'assets/logos/lipsnini.png',       alt: 'Lipsnini' },
-    { src: 'assets/logos/mrbeast.png',        alt: 'MrBeast News' },
-    { src: 'assets/logos/gorilla.png',        alt: 'Gorilla' },
-    { src: 'assets/logos/kadabra.png',        alt: 'Kadabra' },
-    { src: 'assets/logos/sportsboom.png',     alt: 'SportsBoom' },
+    { src: 'assets/logos/casino-com.png', alt: 'Casino.com' },
+    { src: 'assets/logos/bideford.png', alt: 'Bideford' },
+    { src: 'assets/logos/lipsnini.png', alt: 'Lipsnini' },
+    { src: 'assets/logos/mrbeast.png', alt: 'MrBeast News' },
+    { src: 'assets/logos/gorilla.png', alt: 'Gorilla' },
+    { src: 'assets/logos/kadabra.png', alt: 'Kadabra' },
+    { src: 'assets/logos/sportsboom.png', alt: 'SportsBoom' },
   ];
 
   services = [
-    { icon: '✦', title: 'iGaming Content Writing',      desc: 'Casino guides, slot reviews, betting articles, and more — written for real players and search engines alike.' },
-    { icon: '◈', title: 'African Market Consultation',   desc: 'Strategic insights into the fast-growing African iGaming market to help your brand capture untapped audiences.' },
-    { icon: '◇', title: 'Content Strategy & SEO',        desc: 'Data-driven content roadmaps designed to build authority, increase organic traffic, and outperform competitors.' },
+    { icon: '✦', title: 'iGaming Content Writing', desc: 'Casino guides, slot reviews, betting articles, and more — written for real players and search engines alike.' },
+    { icon: '◈', title: 'African Market Consultation', desc: 'Strategic insights into the fast-growing African iGaming market to help your brand capture untapped audiences.' },
+    { icon: '◇', title: 'Content Strategy & SEO', desc: 'Data-driven content roadmaps designed to build authority, increase organic traffic, and outperform competitors.' },
   ];
 
-  ngOnInit() {}
+  portfolio = [
+    { icon: '🎰', name: 'Casino Reviews', metric: '+156% organic visibility' },
+    { icon: '🎲', name: 'Slot Reviews', metric: '3 → 18 featured snippets' },
+    { icon: '⚽', name: 'Sports Betting', metric: '+280% traffic growth' },
+    { icon: '🏆', name: 'Sweepstakes', metric: '12K → 45K monthly visitors' },
+    { icon: '🎮', name: 'eSports Content', metric: '+34% conversion rate' },
+    { icon: '🔗', name: 'Outreach Posts', metric: '2.1% → 6.8% CTR' },
+  ];
+
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.animateCounters();

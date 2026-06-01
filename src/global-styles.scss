@@ -1,0 +1,439 @@
+// ============================================================================
+// iGamingUbuntu Global Styles
+// ============================================================================
+// Base styles, typography, and utility classes
+
+@import 'variables';
+
+// HTML & Body
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-sans;
+  font-size: $font-size-base;
+  color: $text-primary;
+  background-color: $bg-primary;
+  line-height: $line-height-loose;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// TYPOGRAPHY RESET
+// ============================================================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-sans;
+  font-weight: $font-weight-extrabold;
+  line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
+}
+
+h1 {
+  font-size: $font-size-h1;
+  margin-bottom: $spacing-24;
+}
+
+h2 {
+  font-size: $font-size-h2;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-snug;
+  margin-bottom: $spacing-16;
+}
+
+h3 {
+  font-size: $font-size-h3;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  margin-bottom: $spacing-12;
+}
+
+h4 {
+  font-size: $font-size-h4;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-12;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  line-height: $line-height-loose;
+  color: $text-primary;
+}
+
+small {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+}
+
+// LINKS
+// ============================================================================
+
+a {
+  color: $accent-primary;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $accent-dark;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid $accent-primary;
+    outline-offset: 2px;
+  }
+}
+
+// BUTTONS
+// ============================================================================
+
+button,
+.btn {
+  font-family: $font-family-sans;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  padding: $spacing-12 $spacing-24;
+  border: none;
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:focus {
+    outline: 2px solid $accent-primary;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background-color: $accent-primary;
+  color: $text-light;
+
+  &:hover {
+    background-color: $accent-dark;
+    box-shadow: $shadow-lg;
+  }
+}
+
+.btn-secondary {
+  background-color: $bg-secondary;
+  color: $text-primary;
+  border: $border-width-thin solid $border-color;
+
+  &:hover {
+    background-color: $border-color;
+  }
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: $text-primary;
+  border: $border-width-thin solid $border-color;
+
+  &:hover {
+    background-color: $bg-secondary;
+  }
+}
+
+// CONTAINER & SECTIONS
+// ============================================================================
+
+.container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+}
+
+.section {
+  padding: $section-pad-desktop 0;
+  background-color: $bg-primary;
+  width: 100%;
+}
+
+.section-alt {
+  background-color: $bg-secondary;
+}
+
+.section-dark {
+  background-color: $bg-dark;
+  color: $text-light;
+}
+
+// GRID & FLEXBOX UTILITIES
+// ============================================================================
+
+.grid {
+  display: grid;
+  gap: $container-gap;
+
+  &.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.flex {
+  display: flex;
+
+  &.flex-center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.flex-between {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &.flex-col {
+    flex-direction: column;
+  }
+
+  &.flex-wrap {
+    flex-wrap: wrap;
+  }
+}
+
+// CARDS
+// ============================================================================
+
+.card {
+  background-color: $bg-primary;
+  border-radius: $radius-base;
+  padding: $spacing-24;
+  box-shadow: $shadow-base;
+  transition: all $transition-base;
+  border: $border-width-thin solid $border-color;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+  }
+}
+
+// TEXT UTILITIES
+// ============================================================================
+
+.text-primary {
+  color: $text-primary;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.text-accent {
+  color: $accent-primary;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-bold {
+  font-weight: $font-weight-bold;
+}
+
+.text-semibold {
+  font-weight: $font-weight-semibold;
+}
+
+// META TEXT (for dates, read times, authors)
+// ============================================================================
+
+.meta {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-relaxed;
+}
+
+.meta-divider {
+  margin: 0 $spacing-8;
+}
+
+// BADGES & PILLS
+// ============================================================================
+
+.badge {
+  display: inline-block;
+  padding: $spacing-4 $spacing-12;
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-semibold;
+  border-radius: $radius-full;
+  background-color: $accent-light;
+  color: $accent-primary;
+  white-space: nowrap;
+}
+
+.badge-success {
+  background-color: $success-light;
+  color: $success;
+}
+
+// RESPONSIVE
+// ============================================================================
+
+@media (max-width: $breakpoint-xl) {
+  h1 {
+    font-size: 56px;
+  }
+
+  h2 {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: $breakpoint-lg) {
+  .section {
+    padding: $section-pad-tablet 0;
+  }
+
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  h1 {
+    font-size: 40px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  body {
+    font-size: $font-size-sm;
+  }
+
+  .section {
+    padding: $section-pad-mobile 0;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+// UTILITY SPACING
+// ============================================================================
+
+.mt-16 {
+  margin-top: $spacing-16;
+}
+
+.mt-24 {
+  margin-top: $spacing-24;
+}
+
+.mt-32 {
+  margin-top: $spacing-32;
+}
+
+.mt-48 {
+  margin-top: $spacing-48;
+}
+
+.mb-16 {
+  margin-bottom: $spacing-16;
+}
+
+.mb-24 {
+  margin-bottom: $spacing-24;
+}
+
+.mb-32 {
+  margin-bottom: $spacing-32;
+}
+
+.mb-48 {
+  margin-bottom: $spacing-48;
+}
+
+.py-80 {
+  padding: $spacing-80 0;
+}
+
+.px-24 {
+  padding: 0 $spacing-24;
+}
+
+// ANIMATIONS
+// ============================================================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.slide-in-up {
+  animation: slideInUp 0.6s ease-in-out;
+}
+
+.slide-in-down {
+  animation: slideInDown 0.6s ease-in-out;
+}

@@ -71,29 +71,85 @@
           </div>
         </a>
 
-        <!-- 3-column grid of remaining posts -->
-        <div class="blog-grid" *ngIf="posts.length > 1">
-          <a class="blog-card" *ngFor="let p of posts.slice(1)" [routerLink]="['/blog', p.slug]">
-            <div class="card-img">
-              <img *ngIf="p.coverImage" [src]="p.coverImage" [alt]="p.title" loading="lazy">
-              <div class="card-img-fallback" *ngIf="!p.coverImage">
-                <span>✦</span>
-              </div>
-              <span class="card-cat" [class]="getCatClass(p.category)">{{ p.category }}</span>
+        <!-- Two-column: Main + Sidebar -->
+        <div class="blog-main-grid" *ngIf="posts.length > 1">
+          
+          <!-- Main: 3-column grid of remaining posts -->
+          <div class="blog-grid-main">
+            <div class="blog-grid">
+              <a class="blog-card" *ngFor="let p of posts.slice(1)" [routerLink]="['/blog', p.slug]">
+                <div class="card-img">
+                  <img *ngIf="p.coverImage" [src]="p.coverImage" [alt]="p.title" loading="lazy">
+                  <div class="card-img-fallback" *ngIf="!p.coverImage">
+                    <span>✦</span>
+                  </div>
+                  <span class="card-cat" [class]="getCatClass(p.category)">{{ p.category }}</span>
+                </div>
+                <div class="card-body">
+                  <div class="card-meta">
+                    <span>{{ p.date || p.dateISO | date:'MMM d, yyyy' }}</span>
+                    <span class="dot">·</span>
+                    <span>{{ p.readTime || p.readMinutes }} min read</span>
+                    <span class="dot">·</span>
+                    <span class="card-author">{{ p.author }}</span>
+                  </div>
+                  <h3 class="card-title">{{ p.title }}</h3>
+                  <p class="card-excerpt">{{ p.excerpt }}</p>
+                  <div class="read-more">Read Article →</div>
+                </div>
+              </a>
             </div>
-            <div class="card-body">
-              <div class="card-meta">
-                <span>{{ p.date || p.dateISO | date:'MMM d, yyyy' }}</span>
-                <span class="dot">·</span>
-                <span>{{ p.readTime || p.readMinutes }} min read</span>
-                <span class="dot">·</span>
-                <span class="card-author">{{ p.author }}</span>
+            
+            <!-- Category Explainers at bottom of main -->
+            <div class="blog-explainers">
+              <div class="explainer-card explainer-1">
+                <h3 class="exp-title">Industry News</h3>
+                <p class="exp-desc">Track regulation, partnerships, sportsbook innovation, and operator expansion across African iGaming markets.</p>
+                <a href="#" class="exp-link">Browse →</a>
               </div>
-              <h3 class="card-title">{{ p.title }}</h3>
-              <p class="card-excerpt">{{ p.excerpt }}</p>
-              <div class="read-more">Read Article →</div>
+              <div class="explainer-card explainer-2">
+                <h3 class="exp-title">Betting IQ</h3>
+                <p class="exp-desc">Build your understanding of odds, implied probability, EV, bankroll discipline, and market thinking.</p>
+                <a href="#" class="exp-link">Browse →</a>
+              </div>
+              <div class="explainer-card explainer-3">
+                <h3 class="exp-title">Shepherd Signals</h3>
+                <p class="exp-desc">Use probability insights to understand matches, prices, and potential value spots more clearly.</p>
+                <a href="#" class="exp-link">Browse →</a>
+              </div>
             </div>
-          </a>
+          </div>
+          
+          <!-- Sidebar: Most Read + Newsletter -->
+          <aside class="blog-sidebar">
+            
+            <!-- Most Read -->
+            <div class="sidebar-box most-read">
+              <h3 class="sb-title">Most Read</h3>
+              <div class="mr-list">
+                <a *ngFor="let p of posts.slice(1, 5); let i = index" [routerLink]="['/blog', p.slug]" class="mr-item">
+                  <span class="mr-num">{{ i + 1 }}</span>
+                  <div class="mr-content">
+                    <div class="mr-title">{{ p.title }}</div>
+                    <div class="mr-date">{{ p.date || p.dateISO | date:'MMM d, yyyy' }}</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            
+            <!-- Newsletter -->
+            <div class="sidebar-box newsletter">
+              <div class="nl-icon">📬</div>
+              <h3 class="nl-title">Stay Ahead of the Game</h3>
+              <p class="nl-desc">Get the latest iGaming news and insights straight to your inbox.</p>
+              <div class="nl-form">
+                <input type="email" placeholder="Your email" class="nl-input" [(ngModel)]="newsletterEmail">
+                <button (click)="subscribeNewsletter()" class="nl-btn">Subscribe</button>
+              </div>
+            </div>
+            
+          </aside>
+          
         </div>
 
         <div *ngIf="posts.length === 0" class="no-posts">

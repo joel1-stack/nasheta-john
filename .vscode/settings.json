@@ -1,1 +1,15 @@
-{}
+{
+    "aider-composer.pythonPath": "C:\\Users\\JOEL STACK\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "aider-composer.inlineDiff.enable": true,
+    "openai-compat-provider.providers": [
+        {
+            "id": "aider-composer",
+            "label": "Aider Composer",
+            "description": "Use Aider Composer as an OpenAI-compatible provider.",
+            "endpoint": "http://localhost:8000/v1/chat/completions",
+            "headers": {
+                "Content-Type": "application/json"
+            }
+        }
+    ]
+}

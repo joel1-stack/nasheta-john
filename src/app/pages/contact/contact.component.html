@@ -3,7 +3,7 @@
 <div class="page-hero">
   <div class="container">
     <span class="s-label">Get in Touch</span>
-    <h1 class="s-title">Let's <span class="blue">Connect</span></h1>
+    <h1 class="s-title">Let's <span class="red">Connect</span></h1>
     <p class="s-desc">Have a project in mind, a brief to share, or simply want to discuss iGaming content? I respond within 24 hours.</p>
   </div>
 </div>
@@ -66,6 +66,32 @@
               <input type="email" [(ngModel)]="form.email" name="email" placeholder="you@company.com" required>
             </div>
 
+            <div class="form-row">
+              <div class="form-group">
+                <label>Project Type</label>
+                <select [(ngModel)]="form.projectType" name="projectType">
+                  <option value="">Select a project type...</option>
+                  <option value="blog">Blog Posts</option>
+                  <option value="strategy">Content Strategy</option>
+                  <option value="review">Casino Review</option>
+                  <option value="sports">Sports Betting</option>
+                  <option value="affiliate">Affiliate Content</option>
+                  <option value="seo">SEO Optimization</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Budget Range</label>
+                <select [(ngModel)]="form.budget" name="budget">
+                  <option value="">Select budget...</option>
+                  <option value="lt500">&lt; $500</option>
+                  <option value="500-1k">$500 - $1,000</option>
+                  <option value="1k-5k">$1,000 - $5,000</option>
+                  <option value="gt5k">&gt; $5,000</option>
+                </select>
+              </div>
+            </div>
+
             <div class="form-group">
               <label>Your Message</label>
               <textarea [(ngModel)]="form.message" name="message" rows="5"
@@ -91,7 +117,7 @@
       <h2>Ready to Create Something Great?</h2>
       <p>Let's build iGaming content that converts, ranks, and resonates.</p>
       <div class="cta-btns">
-        <a href="https://mail.google.com/mail/?view=cm&to=nashetajohn@gmail.com&su=Portfolio%20Enquiry" target="_blank" class="btn-primary">Email via Gmail</a>
+        <a href="https://mail.google.com/mail/?view=cm&to=info@igamingubuntu.com&su=Portfolio%20Enquiry" target="_blank" class="btn-primary">Email via Gmail</a>
         <a href="https://wa.me/254112157383?text=Hi%20Nasheta%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." target="_blank" class="btn-wa">WhatsApp Me</a>
       </div>
     </div>

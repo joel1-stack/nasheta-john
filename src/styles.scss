@@ -3,7 +3,7 @@
    White canvas + Bright casino accents (Lipsmm + Ahrefs energy)
    ═══════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 :root {
   /* ── Backgrounds ── */
@@ -80,7 +80,7 @@
 
   /* ── Typography ── */
   --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-d: 'Syne', 'Inter', sans-serif;
+  --font-d: 'Playfair Display', serif;
 
   /* ── Spacing ── */
   --section-y: 7rem;
@@ -195,9 +195,9 @@ section {
 .s-title {
   font-family: var(--font-d);
   font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 900;
+  font-weight: 500;
   line-height: 1.1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   color: var(--text);
   margin-bottom: 1.25rem;
 }

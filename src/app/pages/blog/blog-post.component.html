@@ -41,6 +41,23 @@
           <span *ngFor="let tag of post.tags" class="tag">{{ tag }}</span>
         </div>
 
+        <!-- Affiliate Links / Recommended -->
+        <div class="affiliate-section" *ngIf="post.affiliateLinks?.length">
+          <div class="aff-disclaimer">
+            Some links are affiliate links. We may earn a commission when you sign up.
+          </div>
+          <div class="aff-links">
+            <div class="aff-item" *ngFor="let link of post.affiliateLinks">
+              <div class="aff-icon">↑</div>
+              <div class="aff-content">
+                <div class="aff-title">{{ link.title }}</div>
+                <div class="aff-desc">{{ link.description }}</div>
+                <a [href]="link.url" target="_blank" class="aff-btn">Visit Platform →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Author Bio -->
         <div class="author-bio">
           <div class="ab-av">NJ</div>

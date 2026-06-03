@@ -26,15 +26,19 @@ export class AdminComponent implements OnInit {
 
   constructor(private blogService: BlogService, private fb: FormBuilder) {
     this.blogForm = this.fb.group({
-      title:    ['', Validators.required],
-      slug:     ['', Validators.required],
-      excerpt:  ['', [Validators.required, Validators.maxLength(300)]],
+      title: ['', Validators.required],
+      slug: ['', Validators.required],
+      excerpt: ['', [Validators.required, Validators.maxLength(300)]],
       category: ['', Validators.required],
-      tags:     [''],
+      tags: [''],
       readTime: [5, [Validators.required, Validators.min(1)]],
       coverImage: [''],
-      content:  ['', Validators.required],
-      status:   ['draft', Validators.required]
+      content: ['', Validators.required],
+      status: ['draft', Validators.required],
+      // Affiliate / Monetization fields
+      affiliateUrl: [''],
+      affiliateLabel: [''],
+      affiliateUtm: [''],
     });
   }
 
@@ -46,12 +50,12 @@ export class AdminComponent implements OnInit {
   }
 
   get publishedCount() { return this.posts.filter(p => p.status === 'published').length; }
-  get draftCount()     { return this.posts.filter(p => p.status === 'draft').length; }
+  get draftCount() { return this.posts.filter(p => p.status === 'draft').length; }
 
   filterPosts() {
     let f = [...this.posts];
     if (this.activeTab === 'published') f = f.filter(p => p.status === 'published');
-    if (this.activeTab === 'drafts')    f = f.filter(p => p.status === 'draft');
+    if (this.activeTab === 'drafts') f = f.filter(p => p.status === 'draft');
     if (this.searchTerm) {
       const q = this.searchTerm.toLowerCase();
       f = f.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));

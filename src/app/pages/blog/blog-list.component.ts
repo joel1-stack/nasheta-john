@@ -14,6 +14,7 @@ import { BlogService, BlogPost } from '../../services/blog.service';
 export class BlogListComponent implements OnInit {
   allPosts: BlogPost[] = [];
   loading = true;
+  newsletterEmail = '';
 
   categories = ['All', 'African Market', 'Casino Reviews', 'Slot Reviews', 'Sports Betting', 'Content Strategy', 'Player Education', 'Market Analysis', 'SEO Strategy'];
   active = 'All';
@@ -39,6 +40,15 @@ export class BlogListComponent implements OnInit {
   }
 
   setCategory(cat: string) { this.active = cat; }
+
+  subscribeNewsletter() {
+    if (this.newsletterEmail && this.newsletterEmail.includes('@')) {
+      alert(`Thanks for subscribing with ${this.newsletterEmail}! Check your email for confirmation.`);
+      this.newsletterEmail = '';
+    } else {
+      alert('Please enter a valid email address.');
+    }
+  }
 
   /** Returns a CSS class based on category for colored badge */
   getCatClass(category: string): string {

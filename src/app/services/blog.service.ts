@@ -18,6 +18,7 @@ export interface BlogPost {
   status: 'published' | 'draft';
   content: string;
   contentHtml?: string;
+  affiliateLinks?: Array<{ title: string; description: string; url: string }>;
 }
 
 @Injectable({ providedIn: 'root' })

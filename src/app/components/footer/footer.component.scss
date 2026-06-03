@@ -1,3 +1,80 @@
+
+/* -- Newsletter Band -- */
+.footer-newsletter {
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+  border-bottom: 1px solid rgba(225,29,72,0.25);
+  padding: 3rem 0;
+}
+
+.fn-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.fn-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.fn-desc {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+}
+
+.fn-form {
+  display: flex;
+  gap: 0;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid rgba(225,29,72,0.4);
+  background: rgba(255,255,255,0.05);
+}
+
+.fn-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 0.85rem 1.25rem;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  outline: none;
+  &::placeholder { color: rgba(255,255,255,0.35); }
+}
+
+.fn-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--grad-red);
+  color: #fff;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  &:hover { background: var(--red-dark); }
+}
+
+.fn-success {
+  font-size: 0.88rem;
+  color: var(--green);
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .fn-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+}
 .site-footer {
   background: var(--bg-dark);
   color: rgba(255, 255, 255, 0.7);

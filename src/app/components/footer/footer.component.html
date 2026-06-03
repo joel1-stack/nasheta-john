@@ -1,4 +1,34 @@
 <footer class="site-footer">
+
+  <!-- Newsletter Band -->
+  <div class="footer-newsletter">
+    <div class="container">
+      <div class="fn-inner">
+        <div class="fn-text">
+          <h3 class="fn-title">Stay Ahead of the Game</h3>
+          <p class="fn-desc">Get the latest iGaming news, strategy guides, and African market insights straight to your inbox.</p>
+        </div>
+        <form class="fn-form" (submit)="subscribeNewsletter($event)">
+          <input
+            type="email"
+            [(ngModel)]="newsletterEmail"
+            name="newsletter"
+            placeholder="Your email address"
+            class="fn-input"
+            required>
+          <button type="submit" class="fn-btn">
+            Subscribe
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </form>
+        <div class="fn-success" *ngIf="newsletterSent">
+          ✓ You're subscribed! We'll be in touch soon.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer -->
   <div class="footer-top">
     <div class="container">
       <div class="footer-grid">
@@ -14,7 +44,7 @@
               <span class="flt-sub">by Nasheta John</span>
             </div>
           </div>
-          <p class="f-tagline">iGaming content that converts — casino reviews, sports betting guides, and African market strategy.</p>
+          <p class="f-tagline">Transforming iGaming narratives into content that converts — casino reviews, sports betting guides, and African market strategy.</p>
 
           <div class="communicate-wrap">
             <button class="communicate-btn" (click)="toggle()">
@@ -64,7 +94,7 @@
         <div class="f-col">
           <h4>Get in Touch</h4>
           <ul>
-            <li><a href="mailto:nashetajohn@gmail.com">nashetajohn&#64;gmail.com</a></li>
+            <li><a href="mailto:info@igamingubuntu.com">info&#64;igamingubuntu.com</a></li>
             <li><a href="https://wa.me/254112157383" target="_blank">+254 112 157 383</a></li>
             <li><a href="https://www.linkedin.com/in/nashetajohnigaming/" target="_blank">LinkedIn Profile</a></li>
             <li><a href="https://t.me/salvagejohn" target="_blank">Telegram: &#64;salvagejohn</a></li>
@@ -79,10 +109,12 @@
     </div>
   </div>
 
+  <!-- Footer Bottom -->
   <div class="footer-bottom">
     <div class="container">
       <span>© {{ year }} iGamingUbuntu · Nasheta John. All rights reserved.</span>
       <span class="f-right">iGaming Content Specialist — Nairobi, Kenya</span>
     </div>
   </div>
+
 </footer>

@@ -8,7 +8,16 @@
   position: relative;
   overflow: hidden;
   padding: 9rem 0 5rem;
-  background: #FFFFFF;
+  background: #FFFFFF url('https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=1920&h=1080&fit=crop&q=80') center / cover no-repeat;
+  background-attachment: fixed;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.92) 50%, rgba(255, 247, 237, 0.95) 100%);
+    z-index: 0;
+  }
 }
 
 /* Ambient glows — casino energy without darkness */
@@ -89,9 +98,9 @@
 .hero-h1 {
   font-family: var(--font-d);
   font-size: clamp(3rem, 6vw, 5.5rem);
-  font-weight: 900;
+  font-weight: 500;
   line-height: 1.02;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   color: var(--text);
   margin-bottom: 2rem;
 
@@ -207,7 +216,7 @@
 
   .hvc-label {
     font-family: var(--font-d);
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.9rem;
     color: var(--text);
     margin-bottom: 0.3rem;
@@ -263,10 +272,10 @@
 
   .hvj-num {
     font-family: var(--font-d);
-    font-weight: 900;
+    font-weight: 600;
     font-size: 3rem;
     line-height: 1;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.02em;
   }
 
   .hvj-label {
@@ -562,11 +571,11 @@
   .stat-num {
     font-family: var(--font-d);
     font-size: clamp(3rem, 5.5vw, 5rem);
-    font-weight: 900;
+    font-weight: 600;
     color: #fff;
     line-height: 1;
     margin-bottom: 0.6rem;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.02em;
   }
 
   .stat-label {

@@ -5,15 +5,7 @@
       <span class="logo-text">iGamingUbuntu Blog</span>
     </a>
     <nav class="blog-nav">
-      <div class="dropdown" *ngFor="let category of blogCategories">
-        <button class="dropdown-toggle" (click)="toggleDropdown(category.name)">
-          {{category.name}}
-          <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-        </button>
-        <div class="dropdown-menu" [class.active]="activeDropdown === category.name">
-          <a *ngFor="let sub of category.subcategories" routerLink="/blog" (click)="searchQuery = sub.name">{{sub.name}}</a>
-        </div>
-      </div>
+      <a *ngFor="let category of blogCategories" [routerLink]="['/blog/category', category.slug]" class="dropdown-toggle" style="text-decoration:none;">{{category.name}}</a>
     </nav>
     <div class="blog-search">
       <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M13 13L16 16" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -93,7 +85,7 @@
             <div class="explorer-card" *ngFor="let cat of blogCategories">
               <h3>{{cat.name}}</h3>
               <p>{{cat.description}}</p>
-              <a routerLink="/blog" (click)="searchQuery = cat.name">Browse {{cat.name}} →</a>
+              <a [routerLink]="['/blog/category', cat.slug]">Browse {{cat.name}} →</a>
             </div>
           </div>
         </div>
@@ -114,7 +106,7 @@
           </ol>
         </div>
         <div class="sidebar-widget newsletter">
-          <div class="newsletter-icon" aria-hidden="true"></div>
+          <div class="newsletter-icon">✉</div>
           <h3>Stay ahead of the game</h3>
           <p>Get the latest iGaming news and insights straight to your inbox.</p>
           <form (ngSubmit)="subscribe()">

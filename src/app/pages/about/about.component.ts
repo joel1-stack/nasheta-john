@@ -1,48 +1,23 @@
-import { Component, AfterViewInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
-interface PortfolioItem {
-  title: string;
-  metric: string;
-  image: string;
-  link: string;
-}
-
-interface CareerJob {
-  period: string;
-  title: string;
-  company: string;
-  location: string;
-  description: string;
-  tags: string[];
-}
-
-interface Skill {
-  name: string;
-  level: number;
-}
-
-interface SkillCategory {
-  name: string;
-  skills: Skill[];
-}
+import { Component } from '@angular/core';
+interface PortfolioItem { title: string; metric: string; image: string; link: string; }
+interface CareerJob { period: string; title: string; company: string; location: string; description: string; tags: string[]; }
+interface Skill { name: string; level: number; }
+interface SkillCategory { name: string; skills: Skill[]; }
 
 @Component({
-  selector: 'app-about',
   standalone: true,
-  imports: [RouterLink, CommonModule],
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
-})
-export class AboutComponent implements AfterViewInit {
+  imports: [CommonModule, RouterLink],
+ selector: 'app-about', templateUrl: './about.component.html', styleUrls: ['./about.component.scss'] })
+export class AboutComponent {
   portfolioItems: PortfolioItem[] = [
-    { title: 'Casino Reviews', metric: '+156% organic visibility', image: 'assets/images/online casino website.jpg', link: '/about' },
-    { title: 'Slot Reviews', metric: '3 → 18 featured snippets', image: 'assets/images/slot game interface.jpg', link: '/about' },
-    { title: 'Sports Betting', metric: '+280% traffic growth', image: 'assets/images/sports betting app.jpg', link: '/about' },
-    { title: 'Sweepstakes', metric: '12K → 45K monthly visitors', image: 'assets/images/sweepstakes coins.jpg', link: '/about' },
-    { title: 'eSports Content', metric: '+34% conversion rate', image: 'assets/images/esports betting.jpg', link: '/about' },
-    { title: 'Outreach Posts', metric: '2.1% → 6.8% CTR', image: 'assets/images/guest posting.jpg', link: '/about' }
+    { title: 'Casino Reviews', metric: '+156% organic visibility', image: 'assets/images/portfolio-casino.jpg', link: '/portfolio/casino' },
+    { title: 'Slot Reviews', metric: '3 → 18 featured snippets', image: 'assets/images/portfolio-slots.jpg', link: '/portfolio/slots' },
+    { title: 'Sports Betting', metric: '+280% traffic growth', image: 'assets/images/portfolio-sports.jpg', link: '/portfolio/sports' },
+    { title: 'Sweepstakes', metric: '12K → 45K monthly visitors', image: 'assets/images/portfolio-sweepstakes.jpg', link: '/portfolio/sweepstakes' },
+    { title: 'eSports Content', metric: '+34% conversion rate', image: 'assets/images/portfolio-esports.jpg', link: '/portfolio/esports' },
+    { title: 'Outreach Posts', metric: '2.1% → 6.8% CTR', image: 'assets/images/portfolio-outreach.jpg', link: '/portfolio/outreach' }
   ];
 
   careerTimeline: CareerJob[] = [
@@ -61,16 +36,4 @@ export class AboutComponent implements AfterViewInit {
   ];
 
   tools: string[] = ['Ahrefs', 'SEMrush', 'WordPress', 'Yoast SEO', 'Google Search Console', 'Google Analytics 4', 'Surfer SEO', 'Grammarly', 'Copyscape', 'Asana', 'Slack', 'Notion', 'Figma', 'Canva'];
-
-  ngAfterViewInit() {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  }
 }

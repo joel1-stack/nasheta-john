@@ -6,20 +6,20 @@
   }
   .container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 120px 24px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
   .hero-content {
-    .hero-label { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--emerald, #10B981); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px; }
-    .hero-title { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 600; line-height: 1.1; color: var(--obsidian, #0F172A); letter-spacing: -0.02em; margin-bottom: 24px;
-      .highlight { background: linear-gradient(135deg, #F59E0B 0%, #E11D48 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-label { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 24px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 800; line-height: 1.1; color: #FFFFFF; letter-spacing: -0.02em; margin-bottom: 24px; text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      .highlight { background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 40%, #E11D48 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; }
     }
-    .hero-subtitle { font-family: 'Inter', sans-serif; font-size: 18px; line-height: 1.7; color: var(--gray-600, #4B5563); max-width: 540px; margin-bottom: 32px; }
+    .hero-subtitle { font-family: 'Inter', sans-serif; font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.85); max-width: 540px; margin-bottom: 32px; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
     .hero-badges { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px;
-      .badge { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: var(--ruby, #E11D48); background: rgba(225,29,72,0.08); border: 1px solid rgba(225,29,72,0.12); padding: 8px 16px; border-radius: 999px; }
+      .badge { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #FFFFFF; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 999px; }
     }
     .hero-actions { display: flex; gap: 16px;
       .btn-primary { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: white; background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%); padding: 16px 32px; border-radius: 999px; text-decoration: none; transition: all 0.3s ease;
         &:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(225,29,72,0.4); }
       }
-      .btn-secondary { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: var(--obsidian, #0F172A); background: transparent; border: 2px solid rgba(15,23,42,0.1); padding: 14px 30px; border-radius: 999px; text-decoration: none; transition: all 0.3s ease;
-        &:hover { border-color: rgba(15,23,42,0.5); background: rgba(15,23,42,0.05); }
+      .btn-secondary { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: #FFFFFF; background: transparent; border: 2px solid rgba(255,255,255,0.5); padding: 14px 30px; border-radius: 999px; text-decoration: none; transition: all 0.3s ease; backdrop-filter: blur(4px);
+        &:hover { border-color: #FFFFFF; background: rgba(255,255,255,0.1); }
       }
     }
   }
@@ -38,8 +38,8 @@
     }
   }
   .scroll-indicator { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px;
-    span { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--gray-500, #6B7280); text-transform: uppercase; letter-spacing: 0.1em; }
-    .scroll-arrow { width: 20px; height: 20px; border-right: 2px solid var(--gray-400, #9CA3AF); border-bottom: 2px solid var(--gray-400, #9CA3AF); transform: rotate(45deg); animation: bounceArrow 2s infinite; }
+    span { font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em; }
+    .scroll-arrow { width: 20px; height: 20px; border-right: 2px solid rgba(255,255,255,0.5); border-bottom: 2px solid rgba(255,255,255,0.5); transform: rotate(45deg); animation: bounceArrow 2s infinite; }
   }
 }
 @keyframes float { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(30px,-30px) scale(1.1); } 66% { transform: translate(-20px,20px) scale(0.9); } }

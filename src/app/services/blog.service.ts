@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, BehaviorSubject } from 'rxjs';
+import { Observable, map, BehaviorSubject, skipWhile } from 'rxjs';
 
 export interface BlogPost {
   id: string;
@@ -25,11 +25,12 @@ export interface BlogPost {
 export class BlogService {
   private postsSubject = new BehaviorSubject<BlogPost[]>([]);
   posts$ = this.postsSubject.asObservable();
+  private loaded = false;
 
   constructor(private http: HttpClient) { this.loadPosts(); }
 
   private loadPosts() {
-    this.http.get<any>('assets/data/blogs.json').subscribe({
+    this.http.get<any>('/assets/data/blogs.json').subscribe({
       next: (data) => {
         // support both { posts: [] } and flat [] formats
         const raw: any[] = Array.isArray(data) ? data : (data.posts || []);
@@ -50,9 +51,13 @@ export class BlogService {
           content: p.content || p.contentHtml || '',
           contentHtml: p.contentHtml || p.content || '',
         }));
+        this.loaded = true;
         this.postsSubject.next(posts);
       },
-      error: (err) => console.error('Failed to load blogs:', err)
+      error: (err) => {
+        this.loaded = true;
+        console.error('Failed to load blogs:', err);
+      }
     });
   }
 
@@ -61,7 +66,10 @@ export class BlogService {
   }
 
   getPostBySlug(slug: string): Observable<BlogPost | undefined> {
-    return this.posts$.pipe(map(posts => posts.find(p => p.slug === slug)));
+    return this.posts$.pipe(
+      skipWhile(() => !this.loaded),
+      map(posts => posts.find(p => p.slug === slug))
+    );
   }
 
   getPostsByCategory(category: string): Observable<BlogPost[]> {

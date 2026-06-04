@@ -22,6 +22,11 @@ import { CommonModule } from '@angular/common';
       <router-outlet></router-outlet>
     </main>
     <app-footer *ngIf="showSiteChrome"></app-footer>
+
+    <div class="cookie-banner" *ngIf="showCookieConsent">
+      <p class="cb-text">We use cookies to track unique blog views and improve your experience. By continuing, you accept our cookie use.</p>
+      <button class="cb-btn" (click)="dismissCookieConsent()">Got it</button>
+    </div>
   `,
   styles: [`
     :host { display: block; background: #FFFFFF; }
@@ -65,11 +70,28 @@ import { CommonModule } from '@angular/common';
       0%   { transform: translateX(-80%); }
       100% { transform: translateX(280%); }
     }
+
+    .cookie-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9998;
+      background: #0F172A; color: #fff; padding: 14px 24px;
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+      flex-wrap: wrap; font-family: 'Inter', sans-serif; font-size: 13px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    }
+    .cb-text { margin: 0; color: rgba(255,255,255,0.7); line-height: 1.5; }
+    .cb-btn {
+      background: #E11D48; color: #fff; border: none;
+      padding: 8px 20px; border-radius: 8px; cursor: pointer;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px;
+      white-space: nowrap; transition: background 0.2s;
+    }
+    .cb-btn:hover { background: #BE123C; }
   `]
 })
 export class AppComponent {
   loading = true;
   showSiteChrome = true;
+  showCookieConsent = !localStorage.getItem('igu_cookies_accepted');
   private pendingOff: number | undefined;
 
   constructor(private router: Router) {
@@ -90,5 +112,10 @@ export class AppComponent {
     });
     this.showSiteChrome = !this.router.url.startsWith('/blog');
     window.setTimeout(() => (this.loading = false), 600);
+  }
+
+  dismissCookieConsent() {
+    localStorage.setItem('igu_cookies_accepted', 'true');
+    this.showCookieConsent = false;
   }
 }

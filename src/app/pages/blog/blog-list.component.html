@@ -7,15 +7,7 @@
     </a>
 
     <nav class="blog-nav">
-      <div class="dropdown" *ngFor="let category of blogCategories">
-        <button class="dropdown-toggle" (click)="toggleDropdown(category.name)">
-          {{category.name}}
-          <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-        </button>
-        <div class="dropdown-menu" [class.active]="activeDropdown === category.name">
-          <a *ngFor="let sub of category.subcategories" routerLink="/blog">{{sub.name}}</a>
-        </div>
-      </div>
+      <a *ngFor="let category of blogCategories" routerLink="/blog" class="blog-nav-link">{{category.name}}</a>
     </nav>
 
     <div class="blog-search">

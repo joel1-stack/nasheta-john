@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-interface BlogCategory { name: string; slug: string; description: string; subcategories: { name: string; slug: string }[]; }
+interface BlogCategory { name: string; slug: string; description: string; }
 interface BlogPost { slug: string; title: string; excerpt: string; body?: string; image: string; date: Date; readTime: number; author: string; views: number; categories: string[]; affiliateLinks?: AffiliateLink[]; }
 interface AffiliateLink { url: string; anchorText: string; utmCampaign: string; postSlug?: string; postTitle?: string; clicks?: number; }
 interface Subscriber { email: string; date: Date; }
@@ -16,16 +16,16 @@ interface Subscriber { email: string; date: Date; }
   imports: [CommonModule, FormsModule, RouterLink]
 })
 export class BlogListComponent implements OnInit {
-  activeDropdown: string | null = null; searchQuery = ''; emailInput = '';
+  searchQuery = ''; emailInput = '';
   crmClickCount = 0; crmOpen = false; crmTab = 'posts';
   showAddPost = false; editingPost = false;
   postForm: any = { title: '', slug: '', excerpt: '', body: '', image: '', author: 'Nasheta John', date: new Date().toISOString().split('T')[0], readTime: 5, categories: '', affiliateLinks: [] };
   subscribers: Subscriber[] = [];
 
   blogCategories: BlogCategory[] = [
-    { name: 'Industry News', slug: 'industry-news', description: 'Track regulation, partnerships, sportsbook innovation, and operator expansion across African iGaming markets.', subcategories: [{ name: 'Regulations', slug: 'regulations' }, { name: 'Operator Expansion', slug: 'operator-expansion' }, { name: 'Partnerships', slug: 'partnerships' }, { name: 'Market Entry', slug: 'market-entry' }] },
-    { name: 'Betting IQ', slug: 'betting-iq', description: 'Build your understanding of odds, implied probability, EV, bankroll discipline, and market thinking.', subcategories: [{ name: 'Betting Basics', slug: 'betting-basics' }, { name: 'Odds & Probability', slug: 'odds-probability' }, { name: 'Bankroll Management', slug: 'bankroll-management' }, { name: 'Accumulators', slug: 'accumulators' }] },
-    { name: 'Shepherd Signals', slug: 'shepherd-signals', description: 'Use Shepherd-powered probability insights to understand matches, prices, and potential value spots more clearly.', subcategories: [{ name: 'Match Analysis', slug: 'match-analysis' }, { name: 'Value Spots', slug: 'value-spots' }, { name: 'Probability Insights', slug: 'probability-insights' }] }
+    { name: 'Industry News', slug: 'industry-news', description: 'Track regulation, partnerships, sportsbook innovation, and operator expansion across African iGaming markets.' },
+    { name: 'Betting IQ', slug: 'betting-iq', description: 'Build your understanding of odds, implied probability, EV, bankroll discipline, and market thinking.' },
+    { name: 'Shepherd Signals', slug: 'shepherd-signals', description: 'Use Shepherd-powered probability insights to understand matches, prices, and potential value spots more clearly.' }
   ];
 
   posts: BlogPost[] = [
@@ -54,7 +54,6 @@ export class BlogListComponent implements OnInit {
     if (this.featuredPost) this.trackView(this.featuredPost.slug);
   }
 
-  toggleDropdown(name: string) { this.activeDropdown = this.activeDropdown === name ? null : name; }
   onSearch() {}
 
   subscribe() {

@@ -12,12 +12,12 @@ interface SkillCategory { name: string; skills: Skill[]; }
  selector: 'app-about', templateUrl: './about.component.html', styleUrls: ['./about.component.scss'] })
 export class AboutComponent {
   portfolioItems: PortfolioItem[] = [
-    { title: 'Casino Reviews', metric: '+156% organic visibility', image: 'assets/images/portfolio-casino.jpg', link: '/portfolio/casino' },
-    { title: 'Slot Reviews', metric: '3 → 18 featured snippets', image: 'assets/images/portfolio-slots.jpg', link: '/portfolio/slots' },
-    { title: 'Sports Betting', metric: '+280% traffic growth', image: 'assets/images/portfolio-sports.jpg', link: '/portfolio/sports' },
-    { title: 'Sweepstakes', metric: '12K → 45K monthly visitors', image: 'assets/images/portfolio-sweepstakes.jpg', link: '/portfolio/sweepstakes' },
-    { title: 'eSports Content', metric: '+34% conversion rate', image: 'assets/images/portfolio-esports.jpg', link: '/portfolio/esports' },
-    { title: 'Outreach Posts', metric: '2.1% → 6.8% CTR', image: 'assets/images/portfolio-outreach.jpg', link: '/portfolio/outreach' }
+    { title: 'Casino Reviews', metric: '+156% organic visibility', image: 'assets/images/online-casino-website.jpg', link: '/portfolio/casino' },
+    { title: 'Slot Reviews', metric: '3 → 18 featured snippets', image: 'assets/images/slot-game-interface.jpg', link: '/portfolio/slots' },
+    { title: 'Sports Betting', metric: '+280% traffic growth', image: 'assets/images/sports-betting-app.jpg', link: '/portfolio/sports' },
+    { title: 'Sweepstakes', metric: '12K → 45K monthly visitors', image: 'assets/images/sweepstakes-coins.jpg', link: '/portfolio/sweepstakes' },
+    { title: 'eSports Content', metric: '+34% conversion rate', image: 'assets/images/esports-betting.jpg', link: '/portfolio/esports' },
+    { title: 'Outreach Posts', metric: '2.1% → 6.8% CTR', image: 'assets/images/guest-posting.jpg', link: '/portfolio/outreach' }
   ];
 
   careerTimeline: CareerJob[] = [

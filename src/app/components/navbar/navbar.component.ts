@@ -12,14 +12,12 @@ import { CommonModule } from '@angular/common';
 export class NavbarComponent implements OnInit {
   scrolled = false;
   menuOpen = false;
+  blogOpen = false;
 
   @HostListener('window:scroll')
-  onScroll() {
-    this.scrolled = window.scrollY > 40;
-  }
+  onScroll() { this.scrolled = window.scrollY > 40; }
 
-  ngOnInit() {}
-
+  ngOnInit() { }
   toggleMenu() { this.menuOpen = !this.menuOpen; }
-  closeMenu()  { this.menuOpen = false; }
+  closeMenu() { this.menuOpen = false; this.blogOpen = false; }
 }

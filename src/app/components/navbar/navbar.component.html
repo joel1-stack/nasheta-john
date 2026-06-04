@@ -1,6 +1,7 @@
 <nav class="navbar" [class.scrolled]="scrolled">
   <div class="nav-inner">
 
+    <!-- Logo -->
     <a routerLink="/" class="nav-logo" (click)="closeMenu()">
       <div class="logo-mark">
         <span class="lm-i">i</span><span class="lm-g">G</span><span class="lm-u">U</span>
@@ -11,14 +12,48 @@
       </div>
     </a>
 
+    <!-- Desktop links -->
     <ul class="nav-links" [class.open]="menuOpen">
-      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()">Home</a></li>
-      <li><a routerLink="/blog" routerLinkActive="active" (click)="closeMenu()">Blog</a></li>
-      <li><a routerLink="/portfolio" routerLinkActive="active" (click)="closeMenu()">Portfolio</a></li>
-      <li><a routerLink="/services" routerLinkActive="active" (click)="closeMenu()">Services</a></li>
-      <li><a routerLink="/career" routerLinkActive="active" (click)="closeMenu()">Career</a></li>
-      <li><a routerLink="/skills" routerLinkActive="active" (click)="closeMenu()">Skills</a></li>
-      <li><a routerLink="/contact" routerLinkActive="active" class="nav-cta" (click)="closeMenu()">Hire Me</a></li>
+      <li>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()">Home</a>
+      </li>
+
+      <!-- Blog with dropdown -->
+      <li class="has-dropdown" [class.open]="blogOpen" (mouseenter)="blogOpen=true" (mouseleave)="blogOpen=false">
+        <a routerLink="/blog" routerLinkActive="active" (click)="closeMenu(); blogOpen=false">
+          Blog <span class="dd-arrow">▾</span>
+        </a>
+        <div class="dropdown">
+          <div class="dd-col">
+            <div class="dd-heading">Industry News</div>
+            <a routerLink="/blog" [queryParams]="{cat:'African Market'}" (click)="closeMenu(); blogOpen=false">African Market</a>
+            <a routerLink="/blog" [queryParams]="{cat:'Casino Reviews'}" (click)="closeMenu(); blogOpen=false">Casino Reviews</a>
+            <a routerLink="/blog" [queryParams]="{cat:'Regulations'}" (click)="closeMenu(); blogOpen=false">Regulations</a>
+          </div>
+          <div class="dd-col">
+            <div class="dd-heading">Betting IQ</div>
+            <a routerLink="/blog" [queryParams]="{cat:'Sports Betting'}" (click)="closeMenu(); blogOpen=false">Sports Betting</a>
+            <a routerLink="/blog" [queryParams]="{cat:'Content Strategy'}" (click)="closeMenu(); blogOpen=false">Content Strategy</a>
+            <a routerLink="/blog" [queryParams]="{cat:'SEO Strategy'}" (click)="closeMenu(); blogOpen=false">SEO Strategy</a>
+          </div>
+          <div class="dd-col">
+            <div class="dd-heading">Shepherd Signals</div>
+            <a routerLink="/blog" [queryParams]="{cat:'Slot Reviews'}" (click)="closeMenu(); blogOpen=false">Slot Reviews</a>
+            <a routerLink="/blog" [queryParams]="{cat:'Player Education'}" (click)="closeMenu(); blogOpen=false">Player Education</a>
+            <a routerLink="/blog" [queryParams]="{cat:'Market Analysis'}" (click)="closeMenu(); blogOpen=false">Market Analysis</a>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About Us</a>
+      </li>
+      <li>
+        <a routerLink="/services" routerLinkActive="active" (click)="closeMenu()">Services</a>
+      </li>
+      <li>
+        <a routerLink="/contact" routerLinkActive="active" class="nav-cta" (click)="closeMenu()">Contact Us</a>
+      </li>
     </ul>
 
     <button class="hamburger" [class.open]="menuOpen" (click)="toggleMenu()" aria-label="Toggle menu">

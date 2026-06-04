@@ -5,12 +5,13 @@ export const routes: Routes = [
   { path: 'about', loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) },
   { path: 'blog', loadComponent: () => import('./pages/blog/blog-list.component').then(m => m.BlogListComponent) },
   { path: 'blog/:slug', loadComponent: () => import('./pages/blog/blog-post.component').then(m => m.BlogPostComponent) },
-  { path: 'portfolio', loadComponent: () => import('./pages/portfolio/portfolio.component').then(m => m.PortfolioComponent) },
-  { path: 'portfolio/:id', loadComponent: () => import('./pages/portfolio/case-study/case-study.component').then(m => m.CaseStudyComponent) },
   { path: 'services', loadComponent: () => import('./pages/services/services.component').then(m => m.ServicesComponent) },
-  { path: 'career', loadComponent: () => import('./pages/career/career.component').then(m => m.CareerComponent) },
-  { path: 'skills', loadComponent: () => import('./pages/skills/skills.component').then(m => m.SkillsComponent) },
   { path: 'contact', loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent) },
   { path: 'admin-secret-panel', loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent) },
+  /* Old routes redirected so bookmarks don't break */
+  { path: 'portfolio', redirectTo: 'about', pathMatch: 'full' },
+  { path: 'portfolio/:id', redirectTo: 'about', pathMatch: 'full' },
+  { path: 'career', redirectTo: 'about', pathMatch: 'full' },
+  { path: 'skills', redirectTo: 'about', pathMatch: 'full' },
   { path: '**', redirectTo: '' }
 ];

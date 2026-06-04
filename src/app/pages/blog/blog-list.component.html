@@ -1,18 +1,152 @@
 <header class="blog-header">
   <div class="container">
-    <a routerLink="/" class="blog-logo">
+    <!-- CRM TRIGGER: Click iGU logo 5 times rapidly to open admin panel -->
+    <a class="blog-logo" (click)="handleLogoClick()" style="cursor: pointer; user-select: none;">
       <span class="logo-mark">iGU</span>
       <span class="logo-text">iGamingUbuntu Blog</span>
     </a>
+
     <nav class="blog-nav">
-      <a *ngFor="let category of blogCategories" [routerLink]="['/blog/category', category.slug]" class="dropdown-toggle" style="text-decoration:none;">{{category.name}}</a>
+      <div class="dropdown" *ngFor="let category of blogCategories">
+        <button class="dropdown-toggle" (click)="toggleDropdown(category.name)">
+          {{category.name}}
+          <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        </button>
+        <div class="dropdown-menu" [class.active]="activeDropdown === category.name">
+          <a *ngFor="let sub of category.subcategories" [routerLink]="['/blog/category', sub.slug]">{{sub.name}}</a>
+        </div>
+      </div>
     </nav>
+
     <div class="blog-search">
       <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M13 13L16 16" stroke="currentColor" stroke-width="1.5"/></svg>
       <input type="text" placeholder="Search blog posts" [(ngModel)]="searchQuery" (input)="onSearch()" />
     </div>
   </div>
 </header>
+
+<!-- CRM ADMIN PANEL (Hidden by default) -->
+<div class="crm-panel" [class.active]="crmOpen">
+  <div class="crm-overlay" (click)="closeCrm()"></div>
+  <div class="crm-modal">
+    <div class="crm-header">
+      <h2><span class="logo-mark">iGU</span> Admin Panel</h2>
+      <button class="crm-close" (click)="closeCrm()">×</button>
+    </div>
+    <div class="crm-tabs">
+      <button [class.active]="crmTab === 'posts'" (click)="crmTab = 'posts'">Blog Posts</button>
+      <button [class.active]="crmTab === 'affiliate'" (click)="crmTab = 'affiliate'">Affiliate Links</button>
+      <button [class.active]="crmTab === 'stats'" (click)="crmTab = 'stats'">Stats</button>
+      <button [class.active]="crmTab === 'newsletter'" (click)="crmTab = 'newsletter'">Newsletter</button>
+    </div>
+
+    <!-- BLOG POSTS TAB -->
+    <div class="crm-content" *ngIf="crmTab === 'posts'">
+      <div class="crm-actions">
+        <button class="btn-add" (click)="showAddPost = true">+ Add New Post</button>
+      </div>
+      <div class="post-form" *ngIf="showAddPost || editingPost">
+        <h3>{{editingPost ? 'Edit Post' : 'Add New Post'}}</h3>
+        <div class="form-grid">
+          <div class="form-group"><label>Title</label><input type="text" [(ngModel)]="postForm.title" placeholder="Post title" /></div>
+          <div class="form-group"><label>Slug</label><input type="text" [(ngModel)]="postForm.slug" placeholder="url-friendly-slug" /></div>
+          <div class="form-group full"><label>Excerpt</label><textarea [(ngModel)]="postForm.excerpt" rows="2" placeholder="Short description"></textarea></div>
+          <div class="form-group full"><label>Body Content</label><textarea [(ngModel)]="postForm.body" rows="6" placeholder="Full article content"></textarea></div>
+          <div class="form-group"><label>Featured Image</label><input type="text" [(ngModel)]="postForm.image" placeholder="assets/images/blog-xxx.jpg" /></div>
+          <div class="form-group"><label>Author</label><select [(ngModel)]="postForm.author"><option>Nasheta John</option><option>Kolade Abisoye</option><option>John Raymond</option></select></div>
+          <div class="form-group"><label>Date</label><input type="date" [(ngModel)]="postForm.date" /></div>
+          <div class="form-group"><label>Read Time (min)</label><input type="number" [(ngModel)]="postForm.readTime" min="1" /></div>
+          <div class="form-group full"><label>Categories (comma separated)</label><input type="text" [(ngModel)]="postForm.categories" placeholder="Industry News, Regulations" /></div>
+          <div class="form-group full affiliate-section">
+            <label>Affiliate Links</label>
+            <div class="affiliate-list">
+              <div class="affiliate-item" *ngFor="let link of postForm.affiliateLinks; let i = index">
+                <input type="text" [(ngModel)]="link.url" placeholder="https://affiliate-url.com" />
+                <input type="text" [(ngModel)]="link.anchorText" placeholder="Anchor text" />
+                <input type="text" [(ngModel)]="link.utmCampaign" placeholder="UTM Campaign" />
+                <button class="btn-remove" (click)="removeAffiliateLink(i)">×</button>
+              </div>
+              <button class="btn-add-link" (click)="addAffiliateLink()">+ Add Link</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" (click)="savePost()">Save Post</button>
+          <button class="btn-cancel" (click)="cancelPost()">Cancel</button>
+        </div>
+      </div>
+      <div class="posts-list" *ngIf="!showAddPost && !editingPost">
+        <table>
+          <thead><tr><th>Title</th><th>Author</th><th>Date</th><th>Views</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let post of posts">
+              <td>{{post.title}}</td>
+              <td>{{post.author}}</td>
+              <td>{{post.date | date:'MMM d, y'}}</td>
+              <td>{{post.views | number}}</td>
+              <td>
+                <button class="btn-edit" (click)="editPost(post)">Edit</button>
+                <button class="btn-delete" (click)="deletePost(post)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- AFFILIATE LINKS TAB -->
+    <div class="crm-content" *ngIf="crmTab === 'affiliate'">
+      <h3>Manage Affiliate Links</h3>
+      <p class="crm-desc">Track all affiliate links across blog posts. UTM parameters are auto-generated.</p>
+      <table>
+        <thead><tr><th>Post</th><th>URL</th><th>Anchor Text</th><th>UTM Campaign</th><th>Clicks</th><th>Actions</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let link of allAffiliateLinks">
+            <td>{{link.postTitle}}</td>
+            <td><a [href]="link.fullUrl" target="_blank">{{link.url | slice:0:40}}...</a></td>
+            <td>{{link.anchorText}}</td>
+            <td>{{link.utmCampaign}}</td>
+            <td>{{link.clicks}}</td>
+            <td><button class="btn-delete" (click)="deleteAffiliateLink(link)">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STATS TAB -->
+    <div class="crm-content" *ngIf="crmTab === 'stats'">
+      <div class="stats-grid">
+        <div class="stat-box"><span class="stat-number">{{totalViews | number}}</span><span class="stat-label">Total Views</span></div>
+        <div class="stat-box"><span class="stat-number">{{posts.length}}</span><span class="stat-label">Published Posts</span></div>
+        <div class="stat-box"><span class="stat-number">{{subscriberCount | number}}</span><span class="stat-label">Newsletter Subscribers</span></div>
+        <div class="stat-box"><span class="stat-number">{{totalAffiliateClicks | number}}</span><span class="stat-label">Affiliate Clicks</span></div>
+      </div>
+      <div class="stats-chart">
+        <h4>Top 5 Posts by Views</h4>
+        <div class="chart-bar" *ngFor="let post of mostReadPosts.slice(0,5)">
+          <span class="bar-label">{{post.title | slice:0:35}}</span>
+          <div class="bar-track"><div class="bar-fill" [style.width.%]="(post.views / mostReadPosts[0].views) * 100"></div></div>
+          <span class="bar-value">{{post.views | number}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWSLETTER TAB -->
+    <div class="crm-content" *ngIf="crmTab === 'newsletter'">
+      <h3>Newsletter Subscribers</h3>
+      <p class="crm-desc">{{subscriberCount}} total subscribers. Export to CSV.</p>
+      <div class="subscriber-list">
+        <div class="subscriber-header"><span>Email</span><span>Date Subscribed</span><span>Status</span></div>
+        <div class="subscriber-row" *ngFor="let sub of subscribers">
+          <span>{{sub.email}}</span>
+          <span>{{sub.date | date:'MMM d, y'}}</span>
+          <span class="status active">Active</span>
+        </div>
+      </div>
+      <button class="btn-export" (click)="exportSubscribers()">Export CSV</button>
+    </div>
+  </div>
+</div>
 
 <section class="blog-hero">
   <div class="container">
@@ -121,10 +255,11 @@
   </div>
 </section>
 
+<!-- CLEAN FOOTER - NO CRM TRIGGER -->
 <footer class="blog-footer">
   <div class="container">
     <div class="footer-grid">
-      <div class="footer-brand">
+      <div class="footer-brand" (click)="handleLogoClick()" style="cursor: pointer; user-select: none;">
         <span class="logo-mark">iGU</span>
         <span class="logo-text">iGamingUbuntu</span>
         <p class="footer-tagline">by Nasheta John</p>
@@ -159,9 +294,7 @@
     <div class="footer-bottom">
       <p>© 2026 iGamingUbuntu · Nasheta John. All rights reserved.</p>
       <p>iGaming Content Specialist — Nairobi, Kenya</p>
-      <div class="crm-trigger" (click)="crmClickCount = crmClickCount + 1; checkCrm()">
-        <span class="logo-mark">iGU</span>
-      </div>
+      <!-- NO CRM TRIGGER HERE - moved to blog header logo -->
     </div>
   </div>
 </footer>

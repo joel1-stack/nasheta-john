@@ -190,3 +190,124 @@
   .blog-main .blog-sidebar { grid-template-columns: 1fr; }
   .blog-footer .footer-grid { grid-template-columns: 1fr; gap: 32px; }
 }
+
+/* CRM PANEL */
+.crm-panel { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
+  &.active { pointer-events: all; opacity: 1; }
+  .crm-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); }
+  .crm-modal { position: relative; background: white; border-radius: 24px; width: 90%; max-width: 900px; max-height: 85vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 40px 80px rgba(0,0,0,0.2); }
+  .crm-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 32px; border-bottom: 1px solid $border;
+    h2 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 500; color: $text-primary; margin: 0;
+      .logo-mark { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; background: linear-gradient(135deg, $accent 0%, $accent-dark 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-right: 8px; }
+    }
+    .crm-close { width: 36px; height: 36px; border-radius: 10px; border: none; background: $bg-secondary; color: $text-secondary; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+      &:hover { background: $red; color: white; }
+    }
+  }
+  .crm-tabs { display: flex; gap: 4px; padding: 0 32px; border-bottom: 1px solid $border; background: $bg-secondary;
+    button { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: $text-secondary; background: none; border: none; padding: 16px 20px; cursor: pointer; transition: all 0.2s ease; border-bottom: 2px solid transparent; margin-bottom: -1px;
+      &:hover { color: $text-primary; }
+      &.active { color: $accent; border-bottom-color: $accent; background: white; }
+    }
+  }
+  .crm-content { flex: 1; overflow-y: auto; padding: 32px;
+    h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 500; color: $text-primary; margin-bottom: 8px; }
+    .crm-desc { font-family: 'Inter', sans-serif; font-size: 14px; color: $text-secondary; margin-bottom: 24px; }
+    .crm-actions { margin-bottom: 24px;
+      .btn-add { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: white; background: $accent; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease;
+        &:hover { background: $accent-dark; }
+      }
+    }
+  }
+}
+
+/* POST FORM */
+.post-form { background: $bg-secondary; border-radius: 16px; padding: 24px; margin-bottom: 24px;
+  h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 500; color: $text-primary; margin-bottom: 20px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    .form-group { display: flex; flex-direction: column; gap: 6px;
+      &.full { grid-column: 1 / -1; }
+      label { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; color: $text-secondary; text-transform: uppercase; letter-spacing: 0.05em; }
+      input, textarea, select { font-family: 'Inter', sans-serif; font-size: 14px; color: $text-primary; background: white; border: 1px solid $border; padding: 10px 14px; border-radius: 10px; outline: none; transition: border-color 0.2s ease;
+        &:focus { border-color: $accent; }
+      }
+      textarea { resize: vertical; min-height: 80px; }
+    }
+    .affiliate-section {
+      .affiliate-list { display: flex; flex-direction: column; gap: 12px;
+        .affiliate-item { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; align-items: center;
+          input { font-size: 13px; padding: 8px 12px; }
+          .btn-remove { width: 32px; height: 32px; border-radius: 8px; border: none; background: $red; color: white; font-size: 16px; cursor: pointer;
+            &:hover { background: #be123c; }
+          }
+        }
+        .btn-add-link { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: $accent; background: transparent; border: 2px dashed $border; padding: 10px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease;
+          &:hover { border-color: $accent; background: rgba($accent, 0.05); }
+        }
+      }
+    }
+  }
+  .form-actions { display: flex; gap: 12px; margin-top: 24px;
+    .btn-save { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: white; background: $accent; border: none; padding: 12px 24px; border-radius: 10px; cursor: pointer;
+      &:hover { background: $accent-dark; }
+    }
+    .btn-cancel { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: $text-secondary; background: transparent; border: 1px solid $border; padding: 12px 24px; border-radius: 10px; cursor: pointer;
+      &:hover { border-color: $text-secondary; }
+    }
+  }
+}
+
+/* POSTS LIST TABLE */
+.posts-list { overflow-x: auto;
+  table { width: 100%; border-collapse: collapse;
+    th { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: $text-secondary; text-transform: uppercase; letter-spacing: 0.05em; text-align: left; padding: 12px 16px; border-bottom: 1px solid $border; }
+    td { font-family: 'Inter', sans-serif; font-size: 14px; color: $text-primary; padding: 12px 16px; border-bottom: 1px solid $border; }
+    tr:hover td { background: $bg-secondary; }
+    .btn-edit { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; color: $accent; background: rgba($accent, 0.08); border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-right: 8px;
+      &:hover { background: rgba($accent, 0.15); }
+    }
+    .btn-delete { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; color: $red; background: rgba($red, 0.08); border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;
+      &:hover { background: rgba($red, 0.15); }
+    }
+  }
+}
+
+/* STATS */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px;
+  .stat-box { background: $bg-secondary; border-radius: 16px; padding: 24px; text-align: center; border: 1px solid $border;
+    .stat-number { display: block; font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; color: $accent; margin-bottom: 4px; }
+    .stat-label { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: $text-secondary; }
+  }
+}
+.stats-chart {
+  h4 { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: $text-primary; margin-bottom: 16px; }
+  .chart-bar { display: grid; grid-template-columns: 1fr 200px auto; gap: 16px; align-items: center; margin-bottom: 12px;
+    .bar-label { font-family: 'Inter', sans-serif; font-size: 13px; color: $text-secondary; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar-track { height: 8px; background: $border; border-radius: 999px; overflow: hidden;
+      .bar-fill { height: 100%; background: linear-gradient(90deg, $accent 0%, $accent-dark 100%); border-radius: 999px; transition: width 0.6s ease; }
+    }
+    .bar-value { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: $accent; min-width: 50px; text-align: right; }
+  }
+}
+
+/* NEWSLETTER */
+.subscriber-list { border: 1px solid $border; border-radius: 12px; overflow: hidden; margin-bottom: 24px;
+  .subscriber-header { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; padding: 12px 16px; background: $bg-secondary; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: $text-secondary; text-transform: uppercase; letter-spacing: 0.05em; }
+  .subscriber-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; padding: 12px 16px; border-top: 1px solid $border; font-family: 'Inter', sans-serif; font-size: 14px; color: $text-primary;
+    .status { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+          &.active { color: $success; background: rgba($success, 0.1); }
+        }
+      }
+    }
+    .btn-export { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: white; background: $accent; border: none; padding: 12px 24px; border-radius: 10px; cursor: pointer;
+      &:hover { background: $accent-dark; }
+    }
+
+@media (max-width: 768px) {
+  .crm-panel .crm-modal { width: 95%; max-height: 90vh; }
+  .crm-panel .crm-tabs { overflow-x: auto; }
+  .post-form .form-grid { grid-template-columns: 1fr; }
+  .post-form .form-grid .affiliate-section .affiliate-item { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-chart .chart-bar { grid-template-columns: 1fr 100px auto; }
+}

@@ -69,7 +69,7 @@
       "contentHtml": "<p>Live betting has transformed from a novelty to the dominant revenue driver in sports betting. In 2026, 72% of all sports wagers are placed in-play.</p><h2>Content Structure That Converts</h2><p>Live bettors make decisions in under 8 seconds. Your content must deliver value instantly.</p>"
     },
     {
-      "id": "slot-review-framework-2026",
+      "id": "slot-review-content-framework-2026",
       "slug": "slot-review-content-framework-2026",
       "title": "The Complete Slot Review Content Framework",
       "excerpt": "After writing 200+ slot reviews, here's the data-backed structure that ranks, converts, and keeps players engaged.",
@@ -84,6 +84,59 @@
       "status": "published",
       "content": "<p>Slot reviews are the most competitive content category in iGaming. A single 'Book of Dead review' query returns 2.4 million results. Yet after writing 200+ reviews across 12 languages and 8 jurisdictions, I've developed a framework that consistently captures featured snippets and drives above-average conversion rates.</p><h2>The 7-Section Framework</h2><p><strong>1. RTP & Volatility First:</strong> Lead with hard data. Players scan for RTP percentage and volatility rating within 2 seconds of landing. Burying this information loses 60% of readers.</p><p><strong>2. Provider Context:</strong> NetEnt, Pragmatic Play, and Play'n GO each have distinct player bases. Reference provider history and development philosophy to build authority.</p><p><strong>3. Feature Breakdown:</strong> Don't just list features — explain mechanics with specific trigger frequencies and multiplier data.</p><p><strong>4. Demo Play Integration:</strong> Reviews with embedded demo play generate 4.7x longer time-on-page and 2.3x higher conversion to real-money play.</p><p><strong>5. Similar Games:</strong> 'If you like X, try Y' sections capture 18% of additional search traffic.</p><p><strong>6. Responsible Gambling:</strong> Mandatory in regulated markets. Include session time recommendations and self-exclusion tool links.</p><p><strong>7. Where to Play:</strong> Rank casinos by game availability, bonus terms, and wagering contribution percentages.</p>",
       "contentHtml": "<p>After writing 200+ slot reviews, I've developed a framework that consistently captures featured snippets and drives above-average conversion rates.</p><h2>The 7-Section Framework</h2><p>Lead with RTP and volatility data, then provider context, feature breakdown, demo play, similar games, responsible gambling, and where to play.</p>"
+    },
+    {
+      "id": "south-africa-gambling-tax",
+      "slug": "south-africa-gambling-tax",
+      "title": "University of Cape Town Academics Back Online Gambling Tax Increase In South Africa",
+      "excerpt": "UCT researchers have backed South Africa's proposed 20% online gambling tax, arguing that the country's betting boom is creating growing financial and social harm.",
+      "date": "2026-05-28",
+      "dateISO": "2026-05-28",
+      "category": "Industry News",
+      "tags": ["South Africa", "Tax", "Regulation"],
+      "coverImage": "https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=1400&q=80",
+      "readTime": 4,
+      "readMinutes": 4,
+      "author": "Kolade Abisoye",
+      "status": "published",
+      "content": "<p>UCT researchers have backed South Africa's proposed 20% online gambling tax, arguing that the country's betting boom is creating growing financial and social harm.</p><h2>Key Findings</h2><p>The research paper highlights that South Africa's gambling industry has grown significantly, with online betting accounting for an increasing share of total gambling revenue.</p><h2>Industry Response</h2><p>Operators argue that a 20% tax would reduce their ability to compete with unlicensed offshore operators and could push players toward the black market.</p>",
+      "contentHtml": "<p>UCT researchers have backed South Africa's proposed 20% online gambling tax, arguing that the country's betting boom is creating growing financial and social harm.</p>"
+    },
+    {
+      "id": "accumulator-bets-explained",
+      "slug": "accumulator-bets-explained",
+      "title": "Accumulator Bets Explained: What To Know Before Your Next Parlay",
+      "excerpt": "A clear Betting IQ guide explaining accumulator bets, how they work in football betting, risk factors and what African bettors must understand before making decisions.",
+      "date": "2026-05-28",
+      "dateISO": "2026-05-28",
+      "category": "Betting IQ",
+      "tags": ["Accumulators", "Betting IQ", "Football"],
+      "coverImage": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1400&q=80",
+      "readTime": 5,
+      "readMinutes": 5,
+      "author": "John Raymond",
+      "status": "published",
+      "content": "<p>A clear Betting IQ guide explaining accumulator bets, how they work in football betting, risk factors and what African bettors must understand before making decisions.</p><h2>What is an Accumulator Bet?</h2><p>An accumulator (or parlay) combines multiple selections into a single bet. All selections must win for the bet to payout.</p><h2>Risk Factors</h2><p>While accumulators offer high potential returns, they also carry significant risk. Each additional selection multiplies the difficulty of winning.</p>",
+      "contentHtml": "<p>A clear Betting IQ guide explaining accumulator bets, how they work in football betting, risk factors and what African bettors must understand before making decisions.</p>"
+    },
+    {
+      "id": "kenya-gambling-tax-fight",
+      "slug": "kenya-gambling-tax-fight",
+      "title": "Kenya's Gambling Tax Fight Exposes Gap In Regulatory Framework",
+      "excerpt": "Kenya's gambling regulator is opposing plans to reintroduce a 20% tax on betting winnings, warning that modern bonus systems make the proposal difficult to enforce.",
+      "date": "2026-05-28",
+      "dateISO": "2026-05-28",
+      "category": "Sports Betting",
+      "tags": ["Kenya", "Tax", "Regulation", "Sports Betting"],
+      "coverImage": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1400&q=80",
+      "readTime": 4,
+      "readMinutes": 4,
+      "author": "Kolade Abisoye",
+      "status": "published",
+      "content": "<p>Kenya's gambling regulator is opposing plans to reintroduce a 20% tax on betting winnings, warning that modern bonus systems make the proposal difficult to enforce.</p><h2>Background</h2><p>The proposed tax would apply to all betting winnings above a certain threshold. The regulator argues that modern bonus structures and free bets make enforcement nearly impossible.</p><h2>What This Means</h2><p>Operators may need to adjust their bonus structures and compliance frameworks if the tax is implemented. Players should stay informed about changing regulations.</p>",
+      "contentHtml": "<p>Kenya's gambling regulator is opposing plans to reintroduce a 20% tax on betting winnings, warning that modern bonus systems make the proposal difficult to enforce.</p>"
     }
+  ]
+}
   ]
 }

@@ -3,9 +3,12 @@
      No photo — pure energy through color, type, and floating cards
      ═══════════════════════════════════════════════════════ -->
 <section class="hero">
-  <div class="hero-glow hero-glow--red"></div>
-  <div class="hero-glow hero-glow--gold"></div>
-  <div class="hero-glow hero-glow--purple"></div>
+  <div class="hero-animated-bg" aria-hidden="true">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
   <div class="container">
     <div class="hero-inner">
       <div class="hero-text">
@@ -39,22 +42,22 @@
 
       <div class="hero-visual" aria-hidden="true">
         <div class="hv-card hv-card-1">
-          <div class="hvc-emoji">🎰</div>
+          <img src="assets/images/online casino website.jpg" alt="Casino Reviews" />
           <div class="hvc-label">Casino Reviews</div>
           <div class="hvc-metric">+156% organic visibility</div>
         </div>
         <div class="hv-card hv-card-2">
-          <div class="hvc-emoji">⚽</div>
+          <img src="assets/images/sports betting app.jpg" alt="Sports Betting" />
           <div class="hvc-label">Sports Betting</div>
           <div class="hvc-metric">+280% traffic growth</div>
         </div>
         <div class="hv-card hv-card-3">
-          <div class="hvc-emoji">🌍</div>
+          <img src="assets/images/kenya nairobi tech.jpg" alt="African Markets" />
           <div class="hvc-label">African Markets</div>
           <div class="hvc-metric">15+ markets covered</div>
         </div>
         <div class="hv-card hv-card-4">
-          <div class="hvc-emoji">🎲</div>
+          <img src="assets/images/slot game interface.jpg" alt="Slot Reviews" />
           <div class="hvc-label">Slot Reviews</div>
           <div class="hvc-metric">3 → 18 snippets</div>
         </div>
@@ -333,7 +336,7 @@
     </div>
     <div class="testi-grid">
       <div class="testi-card reveal" *ngFor="let t of testimonials; let i = index" [class]="'testi-card testi-card--' + t.color">
-        <div class="testi-stars">★★★★★</div>
+        <div class="testi-rating" aria-label="5 out of 5">Verified client</div>
         <p class="testi-text">"{{ t.text }}"</p>
         <div class="testi-author">
           <div class="testi-av" [style.background]="t.bg">{{ t.avatar }}</div>
@@ -353,9 +356,6 @@
 <section class="cta-section">
   <div class="container">
     <div class="cta-band reveal">
-      <div class="cta-deco cta-deco--1">🎰</div>
-      <div class="cta-deco cta-deco--2">🎲</div>
-      <div class="cta-deco cta-deco--3">⚽</div>
       <div class="cta-content">
         <span class="s-label" style="display:inline-flex; background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.3);">Ready to Start?</span>
         <h2 class="cta-title">Let's Create Content that Hits<br>the Jackpot Every Time</h2>

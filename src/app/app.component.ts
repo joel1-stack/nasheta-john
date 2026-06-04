@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, CommonModule],
   template: `
-    <app-navbar></app-navbar>
+    <app-navbar *ngIf="showSiteChrome"></app-navbar>
     <main>
       <div class="page-loader" [class.on]="loading" aria-hidden="true">
         <div class="pl-inner">
@@ -20,7 +21,7 @@ import { FooterComponent } from './components/footer/footer.component';
       </div>
       <router-outlet></router-outlet>
     </main>
-    <app-footer></app-footer>
+    <app-footer *ngIf="showSiteChrome"></app-footer>
   `,
   styles: [`
     :host { display: block; background: #FFFFFF; }
@@ -40,8 +41,8 @@ import { FooterComponent } from './components/footer/footer.component';
     }
 
     .pl-brand {
-      font-family: 'Syne', sans-serif;
-      font-weight: 900; font-size: 1.6rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700; font-size: 1.6rem;
       letter-spacing: -0.02em;
       display: flex; align-items: center;
     }
@@ -57,7 +58,7 @@ import { FooterComponent } from './components/footer/footer.component';
     .pl-bar span {
       display: block; height: 100%; width: 40%;
       border-radius: 999px;
-      background: linear-gradient(90deg, transparent, #E11D48, #F59E0B, #8B5CF6, transparent);
+      background: linear-gradient(90deg, transparent, #2563EB, #1E40AF, transparent);
       animation: plMove 900ms ease-in-out infinite;
     }
     @keyframes plMove {
@@ -68,10 +69,15 @@ import { FooterComponent } from './components/footer/footer.component';
 })
 export class AppComponent {
   loading = true;
+  showSiteChrome = true;
   private pendingOff: number | undefined;
 
   constructor(private router: Router) {
     this.router.events.subscribe((e) => {
+      if (e instanceof NavigationEnd) {
+        const url = e.urlAfterRedirects || e.url;
+        this.showSiteChrome = !url.startsWith('/blog');
+      }
       if (e instanceof NavigationStart) {
         this.loading = true;
         if (this.pendingOff) window.clearTimeout(this.pendingOff);
@@ -82,6 +88,7 @@ export class AppComponent {
         this.pendingOff = window.setTimeout(() => (this.loading = false), 200);
       }
     });
+    this.showSiteChrome = !this.router.url.startsWith('/blog');
     window.setTimeout(() => (this.loading = false), 600);
   }
 }

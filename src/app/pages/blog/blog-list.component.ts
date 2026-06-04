@@ -1,8 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BlogService, BlogPost } from '../../services/blog.service';
+
+export interface BlogCategory {
+  name: string;
+  slug: string;
+  description: string;
+  subcategories: { name: string; slug: string }[];
+}
+
+export interface BlogCardPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  date: Date;
+  readTime: number;
+  author: string;
+  views: number;
+  categories: string[];
+}
 
 @Component({
   selector: 'app-blog-list',
@@ -12,56 +31,120 @@ import { BlogService, BlogPost } from '../../services/blog.service';
   styleUrls: ['./blog-list.component.scss']
 })
 export class BlogListComponent implements OnInit {
-  allPosts: BlogPost[] = [];
+  activeDropdown: string | null = null;
+  searchQuery = '';
+  emailInput = '';
+  crmClickCount = 0;
   loading = true;
-  newsletterEmail = '';
 
-  categories = ['All', 'African Market', 'Casino Reviews', 'Slot Reviews', 'Sports Betting', 'Content Strategy', 'Player Education', 'Market Analysis', 'SEO Strategy'];
-  active = 'All';
-  search = '';
+  blogCategories: BlogCategory[] = [
+    {
+      name: 'Industry News',
+      slug: 'industry-news',
+      description: 'Track regulation, partnerships, sportsbook innovation, and operator expansion across African iGaming markets.',
+      subcategories: [
+        { name: 'Regulations', slug: 'regulations' },
+        { name: 'Operator Expansion', slug: 'operator-expansion' },
+        { name: 'Partnerships', slug: 'partnerships' },
+        { name: 'Market Entry', slug: 'market-entry' }
+      ]
+    },
+    {
+      name: 'Betting IQ',
+      slug: 'betting-iq',
+      description: 'Build your understanding of odds, implied probability, EV, bankroll discipline, and market thinking.',
+      subcategories: [
+        { name: 'Betting Basics', slug: 'betting-basics' },
+        { name: 'Odds & Probability', slug: 'odds-probability' },
+        { name: 'Bankroll Management', slug: 'bankroll-management' },
+        { name: 'Accumulators', slug: 'accumulators' }
+      ]
+    },
+    {
+      name: 'Shepherd Signals',
+      slug: 'shepherd-signals',
+      description: 'Use Shepherd-powered probability insights to understand matches, prices, and potential value spots more clearly.',
+      subcategories: [
+        { name: 'Match Analysis', slug: 'match-analysis' },
+        { name: 'Value Spots', slug: 'value-spots' },
+        { name: 'Probability Insights', slug: 'probability-insights' }
+      ]
+    }
+  ];
 
-  constructor(private blogService: BlogService) {}
+  posts: BlogCardPost[] = [];
+
+  constructor(
+    private blogService: BlogService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.blogService.getPublishedPosts().subscribe(posts => {
-      this.allPosts = posts;
+    this.blogService.getPublishedPosts().subscribe(raw => {
+      this.posts = raw.map((p, i) => this.toCard(p, 3200 - i * 200));
       this.loading = false;
+      if (this.featuredPost) {
+        this.featuredPost.views++;
+      }
     });
   }
 
-  get posts(): BlogPost[] {
-    let filtered = this.allPosts;
-    if (this.active !== 'All') filtered = filtered.filter(p => p.category === this.active);
-    if (this.search.trim()) {
-      const q = this.search.toLowerCase();
-      filtered = filtered.filter(p => p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q));
-    }
-    return filtered;
-  }
-
-  setCategory(cat: string) { this.active = cat; }
-
-  subscribeNewsletter() {
-    if (this.newsletterEmail && this.newsletterEmail.includes('@')) {
-      alert(`Thanks for subscribing with ${this.newsletterEmail}! Check your email for confirmation.`);
-      this.newsletterEmail = '';
-    } else {
-      alert('Please enter a valid email address.');
-    }
-  }
-
-  /** Returns a CSS class based on category for colored badge */
-  getCatClass(category: string): string {
-    const map: Record<string, string> = {
-      'African Market': 'cat--gold',
-      'Casino Reviews': 'cat--purple',
-      'Slot Reviews': 'cat--purple',
-      'Sports Betting': 'cat--pink',
-      'Content Strategy': 'cat--red',
-      'Player Education': 'cat--red',
-      'Market Analysis': 'cat--gold',
-      'SEO Strategy': 'cat--red',
+  private toCard(p: BlogPost, views: number): BlogCardPost {
+    const cats = [p.category, ...(p.tags || []).slice(0, 1)].filter(Boolean);
+    return {
+      slug: p.slug,
+      title: p.title,
+      excerpt: p.excerpt,
+      image: p.coverImage || 'assets/images/igaming content creation.jpg',
+      date: new Date(p.dateISO || p.date || Date.now()),
+      readTime: p.readTime || p.readMinutes || 5,
+      author: p.author || 'Nasheta John',
+      views,
+      categories: cats.length ? cats : ['Industry News']
     };
-    return map[category] || 'cat--red';
+  }
+
+  get featuredPost(): BlogCardPost | undefined {
+    return this.posts[0];
+  }
+
+  get mostReadPosts(): BlogCardPost[] {
+    return [...this.posts].sort((a, b) => b.views - a.views).slice(0, 4);
+  }
+
+  get filteredPosts(): BlogCardPost[] {
+    const rest = this.posts.slice(1);
+    if (!this.searchQuery.trim()) return rest;
+    const q = this.searchQuery.toLowerCase();
+    return rest.filter(
+      p =>
+        p.title.toLowerCase().includes(q) ||
+        p.excerpt.toLowerCase().includes(q) ||
+        p.categories.some(c => c.toLowerCase().includes(q))
+    );
+  }
+
+  toggleDropdown(name: string) {
+    this.activeDropdown = this.activeDropdown === name ? null : name;
+  }
+
+  onSearch() {}
+
+  subscribe() {
+    if (!this.emailInput?.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+    const subject = encodeURIComponent('Newsletter Subscription');
+    const body = encodeURIComponent(`Please add ${this.emailInput} to the iGamingUbuntu newsletter.`);
+    window.open(`mailto:info@igamingubuntu.com?subject=${subject}&body=${body}`, '_blank');
+    this.emailInput = '';
+  }
+
+  checkCrm() {
+    if (this.crmClickCount >= 5) {
+      this.crmClickCount = 0;
+      this.router.navigate(['/admin-secret-panel']);
+    }
   }
 }

@@ -75,15 +75,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     'Kenya Bet', 'AfricaBet'
   ];
 
-  portfolio = [
-    { icon: '🎰', name: 'Casino Reviews', metric: '+156% organic visibility', color: 'red' },
-    { icon: '🎲', name: 'Slot Reviews', metric: '3 → 18 featured snippets', color: 'purple' },
-    { icon: '⚽', name: 'Sports Betting', metric: '+280% traffic growth', color: 'pink' },
-    { icon: '🏆', name: 'Sweepstakes', metric: '12K → 45K monthly visitors', color: 'gold' },
-    { icon: '🎮', name: 'eSports Content', metric: '+34% conversion rate', color: 'purple' },
-    { icon: '🔗', name: 'Outreach Posts', metric: '2.1% → 6.8% CTR', color: 'red' },
-  ];
-
   ngOnInit() { }
 
   ngAfterViewInit() {

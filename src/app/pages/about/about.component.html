@@ -1,197 +1,119 @@
-<div class="page-enter">
-
-  <!-- PAGE HERO -->
-  <div class="about-hero">
-    <div class="container">
-      <div class="ah-inner">
-        <div class="ah-text">
-          <span class="s-label">About iGamingUbuntu</span>
-          <h1 class="ah-title">A Decade Dedicated to<br><span class="red">iGaming Content</span></h1>
-          <p class="ah-desc">
-            iGamingUbuntu is a specialist iGaming content studio founded by Nasheta John.
-            We produce casino reviews, sports betting guides, and African market strategy
-            for operators, affiliates, and agencies across 15+ regulated markets.
-          </p>
-          <div class="ah-badges">
-            <span class="ahb ahb--red">MGA & UKGC Aware</span>
-            <span class="ahb ahb--gold">African Market Expert</span>
-            <span class="ahb ahb--purple">Responsible Gambling</span>
-            <span class="ahb ahb--pink">Multi-Jurisdiction SEO</span>
-          </div>
-          <div class="ah-actions">
-            <a routerLink="/contact" class="btn-primary">Work With Us</a>
-            <a routerLink="/services" class="btn-outline">Our Services</a>
-          </div>
+<section class="about-hero">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image">
+        <img src="assets/images/nasheta.jpeg" alt="Nasheta John - Senior iGaming Content Strategist" />
+        <div class="verified-badge">
+          <span class="badge-icon">✦</span>
+          <span>Verified Author</span>
+          <span class="badge-brand">Cobber Casino</span>
         </div>
-        <div class="ah-photo">
-          <img src="assets/images/nasheta.jpeg" alt="Nasheta John — iGamingUbuntu Founder">
-          <div class="ah-badge-card">
-            <div class="ahbc-icon">✦</div>
-            <div>
-              <div class="ahbc-title">Verified Author</div>
-              <div class="ahbc-sub">Cobber Casino</div>
-            </div>
+      </div>
+      <div class="about-content">
+        <p class="section-label">About iGamingUbuntu</p>
+        <h1>A Decade Dedicated to<br><span class="highlight">iGaming Content</span></h1>
+        <p class="about-text">I started as a content writer and grew into a specialist — working across online gambling, sports betting, and sweepstakes content in African, European, and global markets.</p>
+        <p class="about-text">Today I work with operators, affiliates, and content agencies to produce material that meets regulatory standards, drives SEO performance, and genuinely resonates with players. Based in Nairobi, Kenya — writing for the world.</p>
+        <div class="regulatory-badges">
+          <span class="badge">✓ MGA & UKGC Compliance</span>
+          <span class="badge">✓ African Market Localisation</span>
+          <span class="badge">✓ Responsible Gambling</span>
+          <span class="badge">✓ Multi-Jurisdiction SEO</span>
+        </div>
+        <a routerLink="/contact" class="btn-primary">Work With Me</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio-section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Our Work</p>
+      <h2>Content That Speaks for Itself</h2>
+      <p class="section-subtitle">Organised by category — click through to see real samples.</p>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card" *ngFor="let item of portfolioItems">
+        <div class="portfolio-image">
+          <img [src]="item.image" [alt]="item.title" />
+        </div>
+        <div class="portfolio-content">
+          <h3>{{item.title}}</h3>
+          <p class="portfolio-metric">{{item.metric}}</p>
+          <a [routerLink]="item.link" class="portfolio-link">View Samples →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="career-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Our Journey</p>
+      <h2>Career Timeline</h2>
+      <p class="section-subtitle">Ten years of progressive growth in iGaming content.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item" *ngFor="let job of careerTimeline; let i = index" [class.current]="i === 0">
+        <div class="timeline-marker">
+          <div class="timeline-dot"></div>
+          <div class="timeline-line" *ngIf="i < careerTimeline.length - 1"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <span class="timeline-period">{{job.period}}</span>
+            <span class="timeline-current" *ngIf="i === 0">Current Role</span>
+          </div>
+          <h3>{{job.title}}</h3>
+          <p class="timeline-company">{{job.company}} · {{job.location}}</p>
+          <p class="timeline-description">{{job.description}}</p>
+          <div class="timeline-tags">
+            <span class="tag" *ngFor="let tag of job.tags">{{tag}}</span>
           </div>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- OUR WORK / PORTFOLIO -->
-  <section class="portfolio-section section-alt">
-    <div class="container">
-      <div class="section-head">
-        <span class="s-label">Our Work</span>
-        <h2 class="s-title">Content That <span class="gold">Speaks for Itself</span></h2>
-        <p class="s-desc">Over a decade of iGaming content organised by category — with real performance metrics.</p>
-      </div>
-      <div class="work-grid">
-        <div class="work-card" *ngFor="let cat of categories" (click)="setActive(cat.id)" [class.active]="activeTab === cat.id">
-          <div class="wc-img">
-            <img [src]="cat.image" [alt]="cat.label" loading="lazy">
-            <div class="wc-overlay">
-              <div class="wco-label">{{ cat.label }}</div>
-            </div>
-          </div>
-          <div class="wc-body">
-            <div class="wc-title">{{ cat.label }}</div>
-            <div class="wc-desc">{{ cat.desc }}</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Active category samples -->
-      <div class="work-detail" *ngIf="activeCategory">
-        <div class="wd-header">
-          <h3>{{ activeCategory.label }}</h3>
-          <a [href]="activeCategory.drive" target="_blank" class="btn-primary">Open in Drive</a>
-        </div>
-        <div class="wd-samples">
-          <div class="wd-sample" *ngFor="let s of activeCategory.samples; let i = index">
-            <span class="wds-num">{{ (i+1).toString().padStart(2,'0') }}</span>
-            <div>
-              <div class="wds-title">{{ s.title }}</div>
-              <div class="wds-tags">
-                <span *ngFor="let t of s.tags" class="wds-tag">{{ t }}</span>
-              </div>
-            </div>
-            <span class="wds-words">{{ s.words }} words</span>
-          </div>
-        </div>
-      </div>
+<section class="skills-section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Tools & Expertise</p>
+      <h2>Skills & Technologies</h2>
+      <p class="section-subtitle">The stack that powers every project.</p>
     </div>
-  </section>
-
-  <!-- OUR STORY / CAREER TIMELINE -->
-  <section class="story-section">
-    <div class="container">
-      <div class="section-head">
-        <span class="s-label">Our Story</span>
-        <h2 class="s-title">From Writer to <span class="red">iGaming Strategist</span></h2>
-        <p class="s-desc">Ten years of progressive growth — from junior content writer to specialist leading projects across multiple markets.</p>
-      </div>
-      <div class="timeline">
-        <div class="timeline-line"></div>
-        <div class="tl-item" *ngFor="let item of timeline; let i = index">
-          <div class="tl-dot" [class.current]="item.current">
-            <span *ngIf="item.current" class="dot-pulse"></span>
-          </div>
-          <div class="tl-card" [class.current]="item.current">
-            <div class="tl-year">{{ item.year }}</div>
-            <div class="tl-role">{{ item.role }}</div>
-            <div class="tl-company">
-              <span class="tc-name">{{ item.company }}</span>
-              <span class="tc-sep">·</span>
-              <span class="tc-loc">{{ item.location }}</span>
+    <div class="skills-grid">
+      <div class="skill-category" *ngFor="let category of skillCategories">
+        <h3>{{category.name}}</h3>
+        <div class="skill-items">
+          <div class="skill-item" *ngFor="let skill of category.skills">
+            <div class="skill-info">
+              <span class="skill-name">{{skill.name}}</span>
+              <span class="skill-level">{{skill.level}}%</span>
             </div>
-            <p class="tl-desc">{{ item.desc }}</p>
-            <div class="tl-tags">
-              <span class="tl-tag" *ngFor="let t of item.tags">{{ t }}</span>
-            </div>
-            <div class="tl-current-badge" *ngIf="item.current">Current Role</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TOOLS & EXPERTISE / SKILLS -->
-  <section class="skills-section section-alt">
-    <div class="container">
-      <div class="section-head">
-        <span class="s-label">Tools & Expertise</span>
-        <h2 class="s-title">What We <span class="purple">Bring to Every Project</span></h2>
-      </div>
-
-      <div class="skills-grid">
-        <!-- Technical skill bars -->
-        <div class="skills-block">
-          <h3 class="block-title">Technical Skills</h3>
-          <div class="tech-list">
-            <div class="tech-item" *ngFor="let t of technical">
-              <div class="tech-row">
-                <span class="tech-skill">{{ t.skill }}</span>
-                <span class="tech-pct">{{ t.level }}%</span>
-              </div>
-              <div class="tech-bar"><div class="tech-fill" [style.width.%]="t.level"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tools chips -->
-        <div class="skills-block">
-          <h3 class="block-title">Software & Tools</h3>
-          <div class="tools-grid">
-            <div class="tool-chip" *ngFor="let t of tools">
-              <span class="tc-name">{{ t.name }}</span>
-              <span class="tc-cat">{{ t.cat }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Personal skills + Languages -->
-      <div class="skills-lower">
-        <div class="skills-block">
-          <h3 class="block-title">Personal Skills</h3>
-          <div class="personal-grid">
-            <span class="personal-chip" *ngFor="let p of personal">{{ p }}</span>
-          </div>
-        </div>
-        <div class="skills-block">
-          <h3 class="block-title">Languages</h3>
-          <div class="lang-list">
-            <div class="lang-item" *ngFor="let l of languages">
-              <div class="lang-row">
-                <span class="lang-name">{{ l.lang }}</span>
-                <span class="lang-level">{{ l.level }}</span>
-              </div>
-              <div class="lang-bar"><div class="lang-fill" [style.width.%]="l.pct"></div></div>
+            <div class="skill-bar">
+              <div class="skill-progress" [style.width.%]="skill.level"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="about-cta">
-    <div class="container">
-      <div class="cta-band">
-        <div class="cta-deco cta-deco--1">🎰</div>
-        <div class="cta-deco cta-deco--2">🎲</div>
-        <div class="cta-deco cta-deco--3">⚽</div>
-        <div class="cta-content">
-          <span class="s-label" style="background:rgba(255,255,255,0.2);color:#fff;border-color:rgba(255,255,255,0.3);">Ready to Start?</span>
-          <h2 class="cta-title">Work With iGamingUbuntu</h2>
-          <p class="cta-desc">Casino reviews, sports betting guides, or a full content strategy — we're ready to deliver.</p>
-          <div class="cta-btns">
-            <a routerLink="/contact" class="cta-btn-white">Start a Project →</a>
-            <a routerLink="/services" class="cta-btn-outline">Our Services</a>
-          </div>
-        </div>
+    <div class="tools-cloud">
+      <h3>Platforms & Tools</h3>
+      <div class="tools-list">
+        <span class="tool-tag" *ngFor="let tool of tools">{{tool}}</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-</div>
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to Work Together?</h2>
+    <p>Send me your brief and I'll come back with a proposal within 24 hours.</p>
+    <a routerLink="/contact" class="btn-primary">Let's Talk</a>
+  </div>
+</section>

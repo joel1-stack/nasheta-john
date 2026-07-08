@@ -55,7 +55,7 @@ export default function Hero() {
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
               <Link
-                href="/contact"
+                href="/work-with-me"
                 className="inline-flex items-center gap-2 border-2 border-ubuntu-orange text-ubuntu-orange px-8 py-3.5 rounded-xl font-semibold hover:bg-ubuntu-orange hover:text-white hover:shadow-lg hover:shadow-ubuntu-orange/20 transition-all duration-200"
               >
                 Work With Me

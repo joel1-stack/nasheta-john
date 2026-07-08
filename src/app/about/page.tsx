@@ -1,99 +1,116 @@
 import Link from "next/link"
+import AdSlot from "@/components/AdSlot"
 
 export default function AboutPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in">
+      {/* Hero */}
       <div className="relative rounded-2xl overflow-hidden mb-12 bg-gradient-to-r from-ubuntu-purple to-ubuntu-orange p-8 md:p-12 text-white">
         <div className="absolute inset-0 opacity-10">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80" alt="Team working" className="w-full h-full object-cover" />
+          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80" alt="" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-6">
           <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white/30 shrink-0 shadow-xl">
             <img src="/images/nasheta.png" alt="Nasheta" className="w-full h-full object-cover" />
           </div>
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold">About iGamingUbuntu</h1>
-            <p className="text-white/80 mt-2 max-w-xl">
-              Your trusted source for iGaming content, betting site reviews, and affiliate guides across Africa.
-              We help bettors find the best sites, understand odds, and play responsibly.
-            </p>
+            <h1 className="text-3xl md:text-4xl font-bold">About Us</h1>
+            <p className="text-white/80 mt-1 max-w-xl">The person behind iGamingUbuntu — and why clients trust me with their content.</p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        {[
-          { value: "500+", label: "Articles Published", desc: "Across African iGaming markets", img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=100&q=80" },
-          { value: "50+", label: "Operator Partners", desc: "Including SportPesa, Betika, 1xBet", img: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=100&q=80" },
-          { value: "15", label: "Markets Covered", desc: "Kenya, Nigeria, SA, Ghana, Tanzania & more", img: "https://images.unsplash.com/photo-1526778548025-fa2f459b5fe7?w=100&q=80" },
-        ].map((stat) => (
-          <div key={stat.label} className="bg-white rounded-xl p-6 text-center border border-border hover:shadow-md transition animate-fade-up">
-            <div className="w-12 h-12 mx-auto mb-3 rounded-lg overflow-hidden">
-              <img src={stat.img} alt={stat.label} className="w-full h-full object-cover" />
-            </div>
-            <h3 className="font-bold text-text-primary text-lg mb-1">{stat.value}</h3>
-            <p className="text-sm font-medium text-text-secondary">{stat.label}</p>
-            <p className="text-xs text-text-muted mt-1">{stat.desc}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="bg-card rounded-xl p-8 mb-8 border border-border">
-        <h2 className="text-2xl font-bold text-text-primary mb-6">What We Do</h2>
+      {/* The story */}
+      <div className="bg-white rounded-xl border border-border p-8 mb-8">
+        <h2 className="text-2xl font-bold text-text-primary mb-4">My Story</h2>
         <div className="space-y-4 text-text-secondary leading-relaxed">
           <p>
-            We write expert content about sports betting, casino games, and iGaming across Africa.
-            Every article is researched, fact-checked, and optimized so bettors can find the information they need.
+            I started writing about iGaming in 2016, back when African betting markets were still finding their feet online. 
+            I saw a gap — most content about betting was written for European or American audiences, 
+            copied poorly for African readers, or just didn't exist in local context.
           </p>
           <p>
-            Through our affiliate partnerships with leading operators, we earn a commission when readers sign up through our links.
-            This allows us to keep producing free, high-quality content for the African betting community.
+            So I built iGamingUbuntu to fix that. Every article I write is researched for the specific market it targets — 
+            whether that's a Kenyan bettor checking M-Pesa deposit limits or a Nigerian punter comparing Bet9ja odds.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
+          <p>
+            Over the years I've written for affiliate site owners, sportsbook operators, casino marketing teams, 
+            and content agencies that needed to scale their African iGaming output. 
+            The common thread: they needed someone who understood both the global affiliate industry and the local African betting culture.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="bg-white rounded-xl border border-border p-6">
+          <h2 className="text-xl font-bold text-text-primary mb-3">What I Specialise In</h2>
+          <ul className="space-y-3 text-sm text-text-secondary">
             {[
-              { label: "Betting Site Reviews", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&q=80" },
-              { label: "Bonus Guides", img: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=200&q=80" },
-              { label: "Match Previews", img: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=200&q=80" },
-              { label: "Regulatory Updates", img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=200&q=80" },
+              "SEO-optimised match reports that rank within hours of the final whistle",
+              "Casino and sportsbook reviews that drive affiliate conversions",
+              "Beginner-friendly betting guides that turn readers into depositing players",
+              "Industry news and regulatory coverage for African markets",
+              "Content strategy for affiliate sites scaling to 50+ articles per week",
             ].map((item) => (
-              <div key={item.label} className="bg-white rounded-lg overflow-hidden border border-border group cursor-default">
-                <div className="h-20 overflow-hidden">
-                  <img src={item.img} alt={item.label} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
-                </div>
-                <p className="text-sm font-medium text-text-primary p-2.5 text-center">{item.label}</p>
-              </div>
+              <li key={item} className="flex items-start gap-2">
+                <svg className="w-4 h-4 text-ubuntu-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                <span>{item}</span>
+              </li>
             ))}
-          </div>
+          </ul>
+        </div>
+        <div className="bg-white rounded-xl border border-border p-6">
+          <h2 className="text-xl font-bold text-text-primary mb-3">Why That Matters</h2>
+          <p className="text-sm text-text-secondary leading-relaxed mb-4">
+            When you hire a writer who doesn't understand your market, you get generic content that doesn't rank and doesn't convert.
+          </p>
+          <p className="text-sm text-text-secondary leading-relaxed">
+            I write for your specific audience — whether they're depositing via M-Pesa in Nairobi, 
+            betting with Bet9ja in Lagos, or claiming a bonus in pounds from London. 
+            That market knowledge is what turns a content budget into an ROI.
+          </p>
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-ubuntu-green/10 to-ubuntu-green/5 rounded-xl p-8 mb-8 border border-ubuntu-green/20">
-        <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-lg bg-ubuntu-green/20 flex items-center justify-center shrink-0">
-            <svg className="w-5 h-5 text-ubuntu-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-text-primary mb-2">Responsible Gambling Commitment</h2>
-            <p className="text-text-secondary leading-relaxed">
-              We promote responsible gambling. Our content includes responsible gambling messaging on every page.
-              We never encourage chasing losses or betting more than you can afford. If you or someone you know needs help,
-              please contact your local responsible gambling organization.
-            </p>
-            <div className="flex flex-wrap gap-3 mt-4">
-              <span className="bg-ubuntu-red/10 text-ubuntu-red text-xs px-3 py-1 rounded-full font-medium">18+ Only</span>
-              <span className="bg-ubuntu-orange/10 text-ubuntu-orange text-xs px-3 py-1 rounded-full font-medium">Set Deposit Limits</span>
-              <span className="bg-ubuntu-green/10 text-ubuntu-green text-xs px-3 py-1 rounded-full font-medium">Gamble Responsibly</span>
+      {/* Markets */}
+      <div className="bg-card rounded-xl p-8 mb-8 border border-border">
+        <h2 className="text-2xl font-bold text-text-primary mb-6">Markets I Cover</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { name: "Africa", desc: "Kenya, Nigeria, South Africa, Ghana, Tanzania — local knowledge, local payment methods, local regulations." },
+            { name: "United Kingdom", desc: "UKGC-regulated content, responsible gambling compliance, Premier League-focused betting content." },
+            { name: "United States", desc: "State-by-state sports betting coverage, US audience tone, regulated market compliance." },
+            { name: "Canada", desc: "Ontario-regulated content, Canadian sports focus (hockey, basketball), bilingual consideration." },
+          ].map((m) => (
+            <div key={m.name} className="bg-white rounded-lg p-4 border border-border">
+              <h3 className="font-bold text-text-primary mb-1">{m.name}</h3>
+              <p className="text-xs text-text-secondary leading-relaxed">{m.desc}</p>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      <div className="text-center bg-white rounded-xl p-8 border border-border">
-        <h2 className="text-2xl font-bold text-text-primary mb-2">Want to work together?</h2>
-        <p className="text-text-secondary mb-6">Have a question, partnership inquiry, or feedback? We'd love to hear from you.</p>
-        <Link href="/contact" className="inline-block bg-ubuntu-orange text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition shadow-md shadow-ubuntu-orange/20">
-          Get in Touch
-        </Link>
+      <AdSlot position="in-content-1" className="mb-8 rounded-xl overflow-hidden" />
+
+      {/* CTA */}
+      <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 text-white text-center">
+        <div className="absolute inset-0">
+          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ubuntu-orange/90 to-ubuntu-purple/90" />
+        </div>
+        <div className="relative z-10">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Let's Work Together</h2>
+          <p className="text-white/70 max-w-lg mx-auto mb-6">Tell me about your content needs — I'll send you a quote within 24 hours.</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-white text-ubuntu-orange px-8 py-3 rounded-xl font-bold hover:bg-white/90 transition shadow-xl">
+              Work With Me
+              <span>→</span>
+            </Link>
+            <Link href="/contact" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-8 py-3 rounded-xl font-semibold hover:bg-white/10 transition">
+              Contact Us
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   )

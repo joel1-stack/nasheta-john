@@ -244,7 +244,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 animate-fade-up delay-2">
             <Link
-              href="/contact"
+              href="/work-with-me"
               className="inline-flex items-center gap-2 bg-white text-ubuntu-orange px-8 py-3.5 rounded-xl font-bold hover:bg-white/90 transition-all duration-200 shadow-xl hover:shadow-2xl hover:-translate-y-0.5"
             >
               Work With Me

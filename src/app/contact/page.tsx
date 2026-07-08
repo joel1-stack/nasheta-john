@@ -2,37 +2,6 @@
 
 import { useState } from "react"
 
-const contactMethods = [
-  {
-    title: "Email",
-    desc: "Send us an email anytime",
-    detail: "hello@igamingubuntu.com",
-    sub: "We respond within 24 hours",
-    svg: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>,
-  },
-  {
-    title: "WhatsApp",
-    desc: "Quick inquiries",
-    detail: "Available for quick inquiries",
-    sub: "Response within 2 hours",
-    svg: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>,
-  },
-  {
-    title: "Connect",
-    desc: "Follow us on social media",
-    detail: "LinkedIn, Twitter, and Telegram",
-    sub: "Daily iGaming insights across Africa",
-    svg: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>,
-  },
-  {
-    title: "Affiliate Partnerships",
-    desc: "Partner with iGamingUbuntu",
-    detail: "Interested in affiliate relationships?",
-    sub: "We partner with quality operators and platforms",
-    svg: <svg className="w-5 h-5 text-ubuntu-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>,
-  },
-]
-
 export default function ContactPage() {
   const [sent, setSent] = useState(false)
 
@@ -45,60 +14,100 @@ export default function ContactPage() {
     <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-orange to-gold/80 p-8 md:p-12 text-white">
         <div className="absolute inset-0 opacity-10">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80" alt="Contact us" className="w-full h-full object-cover" />
+          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80" alt="" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10">
-          <h1 className="text-3xl md:text-4xl font-bold">Get in Touch</h1>
-          <p className="text-white/80 mt-1 max-w-xl">Want to work together? Have a question, partnership inquiry, or feedback? We'd love to hear from you.</p>
+          <h1 className="text-3xl md:text-4xl font-bold">Contact Us</h1>
+          <p className="text-white/80 mt-1 max-w-xl">Have a question or want to discuss a project? Reach out — I typically reply within 24 hours.</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+        <div className="md:col-span-3">
           {sent ? (
-            <div className="bg-ubuntu-green/10 border border-ubuntu-green/30 text-ubuntu-green p-6 rounded-xl animate-fade-up">
-              <p className="font-bold text-lg mb-2">Message Sent!</p>
-              <p className="text-text-secondary">Thanks for reaching out. We'll get back to you within 24 hours.</p>
+            <div className="bg-ubuntu-green/10 border border-ubuntu-green/30 p-8 rounded-xl text-center animate-fade-up">
+              <svg className="w-16 h-16 text-ubuntu-green mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <h2 className="text-2xl font-bold text-text-primary mb-2">Message Sent!</h2>
+              <p className="text-text-secondary">Thanks for reaching out. I'll get back to you within 24 hours.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 bg-white rounded-xl p-6 border border-border animate-fade-up">
-              <h3 className="font-bold text-text-primary text-lg mb-2">Send us a message</h3>
-              <div>
-                <label className="block text-sm font-medium text-text-primary mb-1">Name</label>
-                <input type="text" required className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 focus:border-ubuntu-orange/30 transition" />
+            <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 border border-border space-y-4">
+              <h2 className="font-bold text-text-primary text-lg mb-1">Send a Message</h2>
+              <p className="text-sm text-text-muted mb-3">Fill in the form and I'll get back to you promptly.</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-text-primary mb-1">Name</label>
+                  <input type="text" required className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-text-primary mb-1">Email</label>
+                  <input type="email" required className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50" />
+                </div>
               </div>
+
               <div>
-                <label className="block text-sm font-medium text-text-primary mb-1">Email</label>
-                <input type="email" required className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 focus:border-ubuntu-orange/30 transition" />
+                <label className="block text-sm font-medium text-text-primary mb-1">Project Type</label>
+                <select required className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 bg-white">
+                  <option value="">Select a service...</option>
+                  <option value="match">Match Result Articles</option>
+                  <option value="reviews">Casino & Betting Reviews</option>
+                  <option value="guides">Betting Guides & Tutorials</option>
+                  <option value="news">Industry News & Press Releases</option>
+                  <option value="strategy">Content Strategy & Consulting</option>
+                  <option value="other">Something else</option>
+                </select>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-text-primary mb-1">Subject</label>
-                <input type="text" placeholder="e.g. Partnership Inquiry" className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 focus:border-ubuntu-orange/30 transition" />
-              </div>
+
               <div>
                 <label className="block text-sm font-medium text-text-primary mb-1">Message</label>
-                <textarea rows={5} required className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 focus:border-ubuntu-orange/30 transition resize-none"></textarea>
+                <textarea rows={5} required placeholder="Tell me about your project, ask a question, or just say hello." className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 resize-none" />
               </div>
-              <button type="submit" className="bg-ubuntu-orange text-white px-6 py-3 rounded-lg font-medium hover:bg-ubuntu-orange/90 transition shadow-md shadow-ubuntu-orange/20 cursor-pointer w-full">
+
+              <button type="submit" className="w-full bg-ubuntu-orange text-white py-3 rounded-lg font-bold hover:opacity-90 transition shadow-md shadow-ubuntu-orange/20 cursor-pointer text-sm">
                 Send Message
               </button>
             </form>
           )}
         </div>
 
-        <div className="space-y-4">
-          {contactMethods.map((method, i) => (
-            <div key={method.title} className={`bg-white rounded-xl p-6 border border-border hover:shadow-md transition animate-fade-up delay-${i + 1}`}>
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-card flex items-center justify-center text-ubuntu-orange">
-                  {method.svg}
-                </div>
-                <h3 className="font-bold text-text-primary">{method.title}</h3>
-              </div>
-              <p className="text-sm text-text-secondary">{method.detail}</p>
-              <p className="text-xs text-text-muted mt-1">{method.sub}</p>
-            </div>
-          ))}
+        <div className="md:col-span-2 space-y-4">
+          <div className="bg-white rounded-xl p-5 border border-border">
+            <h3 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
+              <svg className="w-4 h-4 text-ubuntu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              Email
+            </h3>
+            <p className="text-sm text-text-secondary">hello@igamingubuntu.com</p>
+            <p className="text-xs text-text-muted mt-1">I reply within 24 hours</p>
+          </div>
+
+          <div className="bg-white rounded-xl p-5 border border-border">
+            <h3 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
+              <svg className="w-4 h-4 text-ubuntu-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              WhatsApp
+            </h3>
+            <p className="text-sm text-text-secondary">+254 700 000 000</p>
+            <p className="text-xs text-text-muted mt-1">Available for quick messages. Response within 2 hours during working hours.</p>
+          </div>
+
+          <div className="bg-card rounded-xl p-5 border border-border">
+            <h3 className="font-semibold text-text-primary mb-2 text-sm">Response Time</h3>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              I typically reply within <span className="text-ubuntu-green font-medium">24 hours</span> on weekdays. 
+              For urgent projects, mention "URGENT" in your subject line and I'll prioritise your message.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-ubuntu-orange/5 to-ubuntu-purple/5 rounded-xl p-5 border border-ubuntu-orange/10">
+            <h3 className="font-semibold text-text-primary mb-2 text-sm">Prefer a faster option?</h3>
+            <a
+              href="/work-with-me"
+              className="inline-flex items-center gap-1 text-ubuntu-orange font-medium text-sm hover:underline"
+            >
+              Submit a quote request →
+            </a>
+            <p className="text-xs text-text-muted mt-1">The quote form includes project details so I can respond with a tailored price.</p>
+          </div>
         </div>
       </div>
     </div>

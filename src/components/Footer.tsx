@@ -35,16 +35,27 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-br from-[#1a0a2e] via-[#2d1b4e] to-[#1a0a2e] text-white relative overflow-hidden">
-      {/* Decorative gradient orbs */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-ubuntu-orange/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-gold/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
-      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-ubuntu-purple/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+    <footer className="relative overflow-hidden text-white">
+      {/* Full background image with overlay */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e]/95 via-[#2d1b4e]/90 to-[#1a0a2e]/95" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a0a2e]/40 to-transparent" />
+      </div>
+
+      {/* Animated gradient orbs */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-ubuntu-orange/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse" />
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 animate-pulse" style={{ animationDelay: "1s" }} />
+      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-ubuntu-purple/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse" style={{ animationDelay: "2s" }} />
 
       <div className="max-w-6xl mx-auto px-4 py-16 relative z-10">
         {/* Top: Brand + Description + Newsletter */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-12 pb-12 border-b border-white/10">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 animate-fade-up">
             <Link href="/" className="inline-block mb-4">
               <span className="text-2xl font-bold" style={{ background: "linear-gradient(135deg, #FFD700, #E95420)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 iGamingUbuntu
@@ -56,14 +67,14 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3 mt-6">
               {socialLinks.map((s) => (
-                <a key={s.label} href={s.href} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ubuntu-orange/80 hover:scale-110 transition-all duration-200 text-white/60 hover:text-white" title={s.label}>
+                <a key={s.label} href={s.href} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-ubuntu-orange hover:scale-125 hover:shadow-lg hover:shadow-ubuntu-orange/30 transition-all duration-300 text-white/60 hover:text-white" title={s.label}>
                   {s.svg}
                 </a>
               ))}
             </div>
           </div>
-          <div className="lg:col-span-1">
-            <div className="bg-white/5 rounded-xl p-5 backdrop-blur-sm border border-white/10">
+          <div className="lg:col-span-1 animate-fade-up delay-2">
+            <div className="bg-white/5 rounded-xl p-5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition">
               <Newsletter />
             </div>
           </div>
@@ -71,10 +82,10 @@ export default function Footer() {
 
         {/* Links Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-gold/80 mb-4">Navigate</h4>
-            <div className="space-y-2.5">
-              {[
+          {[
+            {
+              title: "Navigate",
+              links: [
                 { label: "Home", href: "/" },
                 { label: "News", href: "/news" },
                 { label: "Press Release", href: "/press" },
@@ -82,79 +93,79 @@ export default function Footer() {
                 { label: "Casino Directory", href: "/casinos" },
                 { label: "Events", href: "/events" },
                 { label: "The Desk", href: "/the-desk" },
-                { label: "About the Writer", href: "/about" },
-              ].map((l) => (
-                <Link key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-white hover:translate-x-1 transition-all duration-200">
-                  {l.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-gold/80 mb-4">Markets</h4>
-            <div className="space-y-2.5">
-              {[
+                { label: "About", href: "/about" },
+              ],
+            },
+            {
+              title: "Markets",
+              isMarkets: true,
+              links: [
                 { label: "Kenya", slug: "kenya" },
                 { label: "Nigeria", slug: "nigeria" },
                 { label: "South Africa", slug: "south-africa" },
                 { label: "Ghana", slug: "ghana" },
                 { label: "Tanzania", slug: "tanzania" },
                 { label: "Uganda", slug: "uganda" },
-              ].map((l) => (
-                <Link key={l.slug} href={l.slug === "uganda" ? "#" : `/${l.slug}`} className="block text-sm text-white/50 hover:text-white hover:translate-x-1 transition-all duration-200">
-                  <span className="flex items-center gap-2">
-                    <img src={getFlagUrl(l.slug)} alt="" className="w-4 h-3 rounded object-cover" />
-                    {l.label}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-gold/80 mb-4">Categories</h4>
-            <div className="space-y-2.5">
-              {[
+              ],
+            },
+            {
+              title: "Categories",
+              links: [
                 { label: "Industry News", href: "/news/industry" },
                 { label: "Regulation Watch", href: "/news/regulation" },
                 { label: "Casino Reviews", href: "/casinos" },
                 { label: "Sports Betting", href: "/sports" },
                 { label: "Bonus Guides", href: "/guides" },
                 { label: "Responsible Gambling", href: "/guides" },
-              ].map((l) => (
-                <Link key={l.label} href={l.href} className="block text-sm text-white/50 hover:text-white hover:translate-x-1 transition-all duration-200">
-                  {l.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-gold/80 mb-4">Company</h4>
-            <div className="space-y-2.5">
-              {[
+              ],
+            },
+            {
+              title: "Company",
+              links: [
                 { label: "About the Writer", href: "/about" },
                 { label: "Contact", href: "/contact" },
                 { label: "Privacy Policy", href: "/privacy" },
                 { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
                 { label: "Terms of Service", href: "#" },
                 { label: "Cookie Policy", href: "#" },
-              ].map((l) => (
-                <Link key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-white hover:translate-x-1 transition-all duration-200">
-                  {l.label}
-                </Link>
-              ))}
+              ],
+            },
+          ].map((col, i) => (
+            <div key={col.title} className={`animate-fade-up delay-${i + 1}`}>
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-gold/80 mb-4 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gold/50">
+                {col.title}
+              </h4>
+              <div className="space-y-2.5 mt-4">
+                {(col.links as any[]).map((l: any) => (
+                  <Link
+                    key={l.label}
+                    href={l.href || (l.slug === "uganda" ? "#" : `/${l.slug}`)}
+                    className="group block text-sm text-white/50 hover:text-white transition-all duration-200"
+                  >
+                    <span className="flex items-center gap-2">
+                      {col.isMarkets && <img src={getFlagUrl(l.slug)} alt="" className="w-4 h-3 rounded object-cover" />}
+                      <span className="relative">
+                        {l.label}
+                        <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-gold/60 group-hover:w-full transition-all duration-300" />
+                      </span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
 
         {/* Partners */}
-        <div className="border-t border-white/10 pt-8 mb-8">
-          <p className="text-xs text-white/30 text-center mb-4 uppercase tracking-widest">Trusted Partners</p>
-          <div className="flex flex-wrap items-center justify-center gap-6 text-white/20">
-            {["SportPesa", "1xBet", "Betika", "Betway", "22Bet", "Melbet", "HollywoodBets", "Bet9ja"].map((p) => (
-              <span key={p} className="text-sm font-semibold tracking-wider opacity-50 hover:opacity-100 hover:text-white transition">
+        <div className="border-t border-white/10 pt-8 mb-8 animate-fade-up delay-4">
+          <p className="text-xs text-white/30 text-center mb-6 uppercase tracking-widest">Trusted Partners</p>
+          <div className="flex flex-wrap items-center justify-center gap-8 text-white/20">
+            {["SportPesa", "1xBet", "Betika", "Betway", "22Bet", "Melbet", "HollywoodBets", "Bet9ja"].map((p, i) => (
+              <span
+                key={p}
+                className="text-sm font-semibold tracking-wider opacity-40 hover:opacity-100 hover:text-white hover:scale-110 transition-all duration-300"
+                style={{ animationDelay: `${i * 0.1}s` }}
+              >
                 {p}
               </span>
             ))}
@@ -162,7 +173,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/10 pt-6 text-center text-sm text-white/30">
+        <div className="border-t border-white/10 pt-6 text-center text-sm text-white/30 animate-fade-up delay-5">
           <p className="mb-2 max-w-3xl mx-auto text-xs leading-relaxed">
             <span className="text-gold/80">Affiliate Disclosure:</span> This site contains affiliate links. We may earn a commission when you sign up through our links at no extra cost to you. 
             All opinions and reviews are our own based on independent research.

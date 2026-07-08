@@ -102,14 +102,14 @@ export default function HomePage() {
               </h2>
               <div className="space-y-4 text-text-secondary leading-relaxed">
                 <p>
-                  <strong className="text-text-primary">iGaming</strong> — short for internet gaming — is the business of online betting, 
+                  <strong className="text-text-primary">iGaming</strong>, short for internet gaming, is the business of online betting, 
                   casino gaming, and sports wagering. It's a multi-billion dollar industry that's growing faster in Africa than 
                   anywhere else in the world.
                 </p>
                 <p>
                   <strong className="text-text-primary">iGamingUbuntu</strong> exists to help betting operators, affiliate site owners, 
                   and content agencies capture that growth through expert-written content. Every article I produce is researched 
-                  for the specific African market it targets — from M-Pesa deposit guides in Kenya to Bet9ja comparisons in Nigeria.
+                  for the specific African market it targets, from M-Pesa deposit guides in Kenya to Bet9ja comparisons in Nigeria.
                 </p>
                 <p>
                   I don't write generic gambling content. I write content that ranks in Google, converts readers into depositing players, 

@@ -1,7 +1,8 @@
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
+import CategoryArticleList from "@/components/CategoryArticleList"
 
-export default function PaymentMethodsPage() {
+export default function PaymentsPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-orange to-ubuntu-purple">
@@ -10,13 +11,23 @@ export default function PaymentMethodsPage() {
         </div>
         <div className="relative z-10 p-8 md:p-12 text-white">
           <h1 className="text-3xl md:text-4xl font-bold">Payment Methods</h1>
-          <p className="text-white/80 mt-1 max-w-2xl">Deposit and withdrawal options for African players.</p>
+          <p className="text-white/80 mt-1 max-w-2xl">M-Pesa, Airtel, Bank Transfer and more — payment options for African bettors.</p>
         </div>
       </div>
-      <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
-      <div className="bg-card rounded-xl p-8 text-center">
-        <p className="text-text-secondary">Content coming soon.</p>
-      </div>
+
+      <nav className="flex flex-wrap gap-2 mb-8">
+        <Link href="/casinos" className="text-sm text-ubuntu-orange hover:underline font-medium">&larr; Back to Casino Directory</Link>
+        <span className="text-sm text-text-secondary mx-1">|</span>
+        <Link href="/casinos/new" className="text-sm text-text-secondary hover:text-ubuntu-orange">New Casinos</Link>
+        <span className="text-sm text-text-secondary">|</span>
+        <Link href="/casinos/best" className="text-sm text-text-secondary hover:text-ubuntu-orange">Best Casinos</Link>
+        <span className="text-sm text-text-secondary">|</span>
+        <Link href="/casinos/mobile" className="text-sm text-text-secondary hover:text-ubuntu-orange">Mobile Casinos</Link>
+      </nav>
+
+      <AdSlot position="leaderboard-top" className="mb-8" />
+
+      <CategoryArticleList category="Casino Reviews" />
     </div>
   )
 }

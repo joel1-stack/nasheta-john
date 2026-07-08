@@ -1,5 +1,6 @@
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
+import CategoryArticleList from "@/components/CategoryArticleList"
 
 export default function NewCasinosPage() {
   return (
@@ -13,10 +14,20 @@ export default function NewCasinosPage() {
           <p className="text-white/80 mt-1 max-w-2xl">Recently launched online casinos reviewed and ranked.</p>
         </div>
       </div>
-      <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
-      <div className="bg-card rounded-xl p-8 text-center">
-        <p className="text-text-secondary">Content coming soon.</p>
-      </div>
+
+      <nav className="flex flex-wrap gap-2 mb-8">
+        <Link href="/casinos" className="text-sm text-ubuntu-orange hover:underline font-medium">&larr; Back to Casino Directory</Link>
+        <span className="text-sm text-text-secondary mx-1">|</span>
+        <Link href="/casinos/best" className="text-sm text-text-secondary hover:text-ubuntu-orange">Best Casinos</Link>
+        <span className="text-sm text-text-secondary">|</span>
+        <Link href="/casinos/mobile" className="text-sm text-text-secondary hover:text-ubuntu-orange">Mobile Casinos</Link>
+        <span className="text-sm text-text-secondary">|</span>
+        <Link href="/casinos/payments" className="text-sm text-text-secondary hover:text-ubuntu-orange">Payment Methods</Link>
+      </nav>
+
+      <AdSlot position="leaderboard-top" className="mb-8" />
+
+      <CategoryArticleList category="Casino Reviews" />
     </div>
   )
 }

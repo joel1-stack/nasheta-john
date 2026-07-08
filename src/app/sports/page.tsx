@@ -1,7 +1,15 @@
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
+import CategoryArticleList from "@/components/CategoryArticleList"
 
 export default function SportsBettingPage() {
+  const subs = [
+    { title: "Live Events", href: "/sports/live", desc: "Real-time odds, in-play betting and match coverage" },
+    { title: "Predictions & Tips", href: "/sports/predictions", desc: "Expert match predictions and betting tips" },
+    { title: "League Guides", href: "/sports/leagues", desc: "Premier League, La Liga, EPL and more" },
+    { title: "Betting Explained", href: "/sports/basics", desc: "Beginner-friendly guides to betting fundamentals" },
+  ]
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-orange to-ubuntu-purple">
@@ -13,10 +21,20 @@ export default function SportsBettingPage() {
           <p className="text-white/80 mt-1 max-w-2xl">Sports betting guides, tips, and market coverage.</p>
         </div>
       </div>
-      <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
-      <div className="bg-card rounded-xl p-8 text-center">
-        <p className="text-text-secondary">Content coming soon.</p>
+
+      <AdSlot position="leaderboard-top" className="mb-8" />
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        {subs.map((s) => (
+          <Link key={s.href} href={s.href} className="bg-white border border-border rounded-xl p-4 hover:shadow-md hover:border-ubuntu-orange/30 transition-all group">
+            <h3 className="font-semibold text-text-primary group-hover:text-ubuntu-orange transition">{s.title}</h3>
+            <p className="text-sm text-text-secondary mt-1">{s.desc}</p>
+          </Link>
+        ))}
       </div>
+
+      <h2 className="text-2xl font-bold text-text-primary mb-6">Latest Articles</h2>
+      <CategoryArticleList category="Sports Betting" />
     </div>
   )
 }

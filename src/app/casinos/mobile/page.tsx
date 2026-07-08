@@ -1,5 +1,6 @@
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
+import CategoryArticleList from "@/components/CategoryArticleList"
 
 export default function MobileCasinosPage() {
   return (
@@ -10,13 +11,23 @@ export default function MobileCasinosPage() {
         </div>
         <div className="relative z-10 p-8 md:p-12 text-white">
           <h1 className="text-3xl md:text-4xl font-bold">Mobile Casinos</h1>
-          <p className="text-white/80 mt-1 max-w-2xl">Best mobile casino experiences for gaming on the go.</p>
+          <p className="text-white/80 mt-1 max-w-2xl">Online casinos optimised for mobile betting on the go.</p>
         </div>
       </div>
-      <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
-      <div className="bg-card rounded-xl p-8 text-center">
-        <p className="text-text-secondary">Content coming soon.</p>
-      </div>
+
+      <nav className="flex flex-wrap gap-2 mb-8">
+        <Link href="/casinos" className="text-sm text-ubuntu-orange hover:underline font-medium">&larr; Back to Casino Directory</Link>
+        <span className="text-sm text-text-secondary mx-1">|</span>
+        <Link href="/casinos/new" className="text-sm text-text-secondary hover:text-ubuntu-orange">New Casinos</Link>
+        <span className="text-sm text-text-secondary">|</span>
+        <Link href="/casinos/best" className="text-sm text-text-secondary hover:text-ubuntu-orange">Best Casinos</Link>
+        <span className="text-sm text-text-secondary">|</span>
+        <Link href="/casinos/payments" className="text-sm text-text-secondary hover:text-ubuntu-orange">Payment Methods</Link>
+      </nav>
+
+      <AdSlot position="leaderboard-top" className="mb-8" />
+
+      <CategoryArticleList category="Casino Reviews" />
     </div>
   )
 }

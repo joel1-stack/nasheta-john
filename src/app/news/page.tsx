@@ -1,5 +1,6 @@
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
+import CategoryArticleList from "@/components/CategoryArticleList"
 
 export default function NewsPage() {
   return (
@@ -16,24 +17,12 @@ export default function NewsPage() {
 
       <AdSlot position="leaderboard-top" className="mb-8" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-        {[
-          { title: "Kenya BCLB Issues New Licensing Guidelines for 2026", slug: "/news/regulation", img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80", cat: "Regulation Watch" },
-          { title: "Nigerian Betting Market Grows 34% in Q2 2026", slug: "/news/industry", img: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80", cat: "Industry News" },
-          { title: "South Africa's National Gambling Bill Amendments Explained", slug: "/news/regulation", img: "https://images.unsplash.com/photo-1588182472590-d8e4c7a36b63?w=800&q=80", cat: "Regulation Watch" },
-          { title: "Ghana Gaming Commission Launches New Operator Portal", slug: "/news/industry", img: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=800&q=80", cat: "Industry News" },
-        ].map((article, i) => (
-          <Link key={i} href={article.slug} className="group bg-white border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all">
-            <div className="aspect-[16/9] overflow-hidden">
-              <img src={article.img} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-            </div>
-            <div className="p-5">
-              <span className="text-xs text-ubuntu-orange font-medium bg-ubuntu-orange/10 px-2 py-0.5 rounded">{article.cat}</span>
-              <h3 className="font-bold text-text-primary group-hover:text-ubuntu-orange transition mt-2">{article.title}</h3>
-            </div>
-          </Link>
-        ))}
+      <div className="flex flex-wrap gap-2 mb-6">
+        <Link href="/news/industry" className="bg-ubuntu-orange text-white px-4 py-1.5 rounded-full text-sm font-medium">Industry News</Link>
+        <Link href="/news/regulation" className="bg-card text-text-secondary px-4 py-1.5 rounded-full text-sm font-medium hover:text-ubuntu-orange transition">Regulation Watch</Link>
       </div>
+
+      <CategoryArticleList category="Industry News" />
     </div>
   )
 }

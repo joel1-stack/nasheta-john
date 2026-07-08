@@ -7,9 +7,6 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
-  query,
-  orderBy,
-  where,
   serverTimestamp,
   Timestamp,
   increment,
@@ -33,9 +30,35 @@ function toArticle(doc: any): Article {
 
 export async function getArticles(): Promise<Article[]> {
   if (!db) return []
-  const q = query(collection(db, ARTICLES), orderBy("createdAt", "desc"))
-  const snap = await getDocs(q)
-  return snap.docs.map(toArticle)
+  const snap = await getDocs(collection(db, ARTICLES))
+  const results = snap.docs.map(toArticle)
+  results.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""))
+  return results
+}
+
+export async function getArticlesByCategory(category: string, country?: string, limitCount?: number): Promise<Article[]> {
+  if (!db) return []
+  try {
+    const snap = await getDocs(collection(db, ARTICLES))
+    let results = snap.docs.map(toArticle).filter(a => a.status === "published" && a.category === category)
+    if (country && country !== "general") results = results.filter(a => a.country === country)
+    results.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""))
+    return limitCount ? results.slice(0, limitCount) : results
+  } catch {
+    return []
+  }
+}
+
+export async function getAllPublishedArticles(limitCount?: number): Promise<Article[]> {
+  if (!db) return []
+  try {
+    const snap = await getDocs(collection(db, ARTICLES))
+    let results = snap.docs.map(toArticle).filter(a => a.status === "published")
+    results.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""))
+    return limitCount ? results.slice(0, limitCount) : results
+  } catch {
+    return []
+  }
 }
 
 export async function getArticleById(id: string): Promise<Article | null> {
@@ -47,10 +70,13 @@ export async function getArticleById(id: string): Promise<Article | null> {
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   if (!db) return null
-  const q = query(collection(db, ARTICLES), where("slug", "==", slug), where("status", "==", "published"))
-  const snap = await getDocs(q)
-  if (snap.empty) return null
-  return toArticle(snap.docs[0])
+  try {
+    const snap = await getDocs(collection(db, ARTICLES))
+    const match = snap.docs.map(toArticle).find(a => a.slug === slug && a.status === "published")
+    return match || null
+  } catch {
+    return null
+  }
 }
 
 export async function createArticle(data: Omit<Article, "id" | "createdAt" | "updatedAt">): Promise<string | null> {
@@ -87,9 +113,12 @@ export async function incrementViews(id: string): Promise<void> {
 // Affiliate links
 export async function getAffiliateLinks(articleId: string): Promise<AffiliateLink[]> {
   if (!db) return []
-  const q = query(collection(db, AFFILIATE_LINKS), where("articleId", "==", articleId))
-  const snap = await getDocs(q)
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as AffiliateLink))
+  try {
+    const snap = await getDocs(collection(db, AFFILIATE_LINKS))
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as AffiliateLink)).filter(l => l.articleId === articleId)
+  } catch {
+    return []
+  }
 }
 
 export async function createAffiliateLink(data: Omit<AffiliateLink, "id">): Promise<string | null> {

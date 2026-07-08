@@ -1,5 +1,6 @@
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
+import CategoryArticleList from "@/components/CategoryArticleList"
 
 export default function RegulationWatchPage() {
   return (
@@ -13,10 +14,16 @@ export default function RegulationWatchPage() {
           <p className="text-white/80 mt-1 max-w-2xl">Regulatory changes and compliance updates across African markets.</p>
         </div>
       </div>
-      <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
-      <div className="bg-card rounded-xl p-8 text-center">
-        <p className="text-text-secondary">Content coming soon.</p>
-      </div>
+
+      <nav className="flex flex-wrap gap-2 mb-8">
+        <Link href="/news" className="text-sm text-ubuntu-orange hover:underline font-medium">&larr; Back to News</Link>
+        <span className="text-sm text-text-secondary mx-1">|</span>
+        <Link href="/news/industry" className="text-sm text-text-secondary hover:text-ubuntu-orange">Industry News</Link>
+      </nav>
+
+      <AdSlot position="leaderboard-top" className="mb-8" />
+
+      <CategoryArticleList category="Industry News" />
     </div>
   )
 }

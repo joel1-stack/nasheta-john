@@ -13,9 +13,23 @@ export default function PressReleasesPage() {
           <p className="text-white/80 mt-1 max-w-2xl">Official press releases submitted by operators and industry stakeholders.</p>
         </div>
       </div>
-      <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
-      <div className="bg-card rounded-xl p-8 text-center">
-        <p className="text-text-secondary">Content coming soon.</p>
+
+      <AdSlot position="leaderboard-top" className="mb-8" />
+
+      <div className="bg-card rounded-xl p-8 md:p-12 text-center">
+        <div className="max-w-lg mx-auto">
+          <h2 className="text-xl font-bold text-text-primary mb-3">Submit a Press Release</h2>
+          <p className="text-text-secondary mb-6">
+            iGamingUbuntu accepts press releases from licensed operators, iGaming platforms,
+            and industry stakeholders. Send your announcements to our editorial team for review.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-ubuntu-orange text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-ubuntu-orange/90 transition"
+          >
+            Submit Your Press Release
+          </Link>
+        </div>
       </div>
     </div>
   )

@@ -3,18 +3,30 @@
 import { useEffect, useState } from "react"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "@/lib/firebase"
+import { createArticle, createAffiliateLink } from "@/lib/firestoreService"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+
+interface AffiliateField {
+  operatorName: string
+  url: string
+  bonusText: string
+}
 
 export default function NewPostPage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
   const router = useRouter()
 
   const [form, setForm] = useState({
     title: "", slug: "", excerpt: "", content: "", category: "Sports Betting",
     country: "kenya", featuredImage: "", tags: "", readTime: 5, status: "draft",
   })
+
+  const [affiliates, setAffiliates] = useState<AffiliateField[]>([
+    { operatorName: "", url: "", bonusText: "" },
+  ])
 
   useEffect(() => {
     if (!auth) { setLoading(false); return }
@@ -25,14 +37,63 @@ export default function NewPostPage() {
     return () => unsub()
   }, [router])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    alert("Article saved! (Firebase integration pending — will save to Firestore)")
-    router.push("/admin/dashboard")
-  }
-
   const autoSlug = (title: string) => {
     setForm((f) => ({ ...f, title, slug: title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") }))
+  }
+
+  const addAffiliate = () => {
+    setAffiliates((prev) => [...prev, { operatorName: "", url: "", bonusText: "" }])
+  }
+
+  const removeAffiliate = (i: number) => {
+    setAffiliates((prev) => prev.filter((_, idx) => idx !== i))
+  }
+
+  const updateAffiliate = (i: number, field: keyof AffiliateField, value: string) => {
+    setAffiliates((prev) => prev.map((a, idx) => idx === i ? { ...a, [field]: value } : a))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSaving(true)
+    try {
+      const id = await createArticle({
+        title: form.title,
+        slug: form.slug,
+        excerpt: form.excerpt,
+        content: form.content,
+        category: form.category,
+        country: form.country,
+        featuredImage: form.featuredImage,
+        tags: form.tags.split(",").map((t) => t.trim()),
+        readTime: form.readTime,
+        author: "iGamingUbuntu",
+        status: form.status as "published" | "draft",
+        views: 0,
+      })
+
+      if (id) {
+        for (const aff of affiliates) {
+          if (aff.operatorName && aff.url) {
+            await createAffiliateLink({
+              articleId: id,
+              operatorName: aff.operatorName,
+              url: aff.url,
+              trackingId: `${id}-${aff.operatorName.toLowerCase().replace(/\s+/g, "-")}`,
+              bonusText: aff.bonusText,
+              clicks: 0,
+            })
+          }
+        }
+      }
+
+      router.push("/admin/dashboard")
+    } catch (err) {
+      alert("Failed to save. Check console for error.")
+      console.error(err)
+    } finally {
+      setSaving(false)
+    }
   }
 
   if (loading) return <div className="p-8 text-center text-text-muted">Loading...</div>
@@ -48,12 +109,7 @@ export default function NewPostPage() {
       <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-border p-6 space-y-6">
         <div>
           <label className="block text-sm font-medium text-text-primary mb-1">Title</label>
-          <input
-            value={form.title}
-            onChange={(e) => autoSlug(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50"
-            required
-          />
+          <input value={form.title} onChange={(e) => autoSlug(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50" required />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -111,6 +167,34 @@ export default function NewPostPage() {
           <input value={form.featuredImage} onChange={(e) => setForm((f) => ({ ...f, featuredImage: e.target.value }))} className="w-full px-3 py-2 rounded-lg border border-border text-sm" placeholder="https://..." />
         </div>
 
+        {/* Affiliate Links */}
+        <div className="border-t border-border pt-4">
+          <h2 className="font-bold text-text-primary mb-3">Affiliate Links</h2>
+          <p className="text-xs text-text-muted mb-4">Add operator affiliate links that will appear in this article.</p>
+          {affiliates.map((aff, i) => (
+            <div key={i} className="grid grid-cols-3 gap-3 mb-3 p-3 bg-card rounded-lg">
+              <div>
+                <label className="block text-xs font-medium text-text-primary mb-1">Operator</label>
+                <input value={aff.operatorName} onChange={(e) => updateAffiliate(i, "operatorName", e.target.value)} className="w-full px-2 py-1.5 rounded border border-border text-sm" placeholder="SportPesa" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-text-primary mb-1">Affiliate URL</label>
+                <input value={aff.url} onChange={(e) => updateAffiliate(i, "url", e.target.value)} className="w-full px-2 py-1.5 rounded border border-border text-sm" placeholder="https://..." />
+              </div>
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <label className="block text-xs font-medium text-text-primary mb-1">Bonus Text</label>
+                  <input value={aff.bonusText} onChange={(e) => updateAffiliate(i, "bonusText", e.target.value)} className="w-full px-2 py-1.5 rounded border border-border text-sm" placeholder="200% bonus" />
+                </div>
+                {affiliates.length > 1 && (
+                  <button type="button" onClick={() => removeAffiliate(i)} className="text-ubuntu-red text-lg mt-5 cursor-pointer">×</button>
+                )}
+              </div>
+            </div>
+          ))}
+          <button type="button" onClick={addAffiliate} className="text-sm text-ubuntu-orange font-medium hover:underline cursor-pointer">+ Add another operator</button>
+        </div>
+
         <div className="flex items-center gap-2">
           <label className="block text-sm font-medium text-text-primary">Status:</label>
           <select value={form.status} onChange={(e) => setForm((f) => ({ ...f, status: e.target.value }))} className="px-3 py-2 rounded-lg border border-border text-sm">
@@ -120,8 +204,8 @@ export default function NewPostPage() {
         </div>
 
         <div className="flex gap-3 pt-4 border-t border-border">
-          <button type="submit" className="bg-ubuntu-orange text-white px-6 py-2.5 rounded-lg font-medium hover:opacity-90 transition cursor-pointer">
-            Save Article
+          <button type="submit" disabled={saving} className="bg-ubuntu-orange text-white px-6 py-2.5 rounded-lg font-medium hover:opacity-90 transition disabled:opacity-50 cursor-pointer">
+            {saving ? "Saving..." : "Save Article"}
           </button>
           <Link href="/admin/dashboard" className="border border-border text-text-secondary px-6 py-2.5 rounded-lg font-medium hover:text-text-primary transition">
             Cancel

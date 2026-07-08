@@ -1,15 +1,31 @@
+"use client"
+
 interface AffiliateOffer {
   operatorName: string
   bonusText: string
   url: string
+  linkId?: string
 }
 
 interface AffiliateBoxProps {
   title: string
   offers: AffiliateOffer[]
+  placement?: string
 }
 
-export default function AffiliateBox({ title, offers }: AffiliateBoxProps) {
+export default function AffiliateBox({ title, offers, placement = "sidebar" }: AffiliateBoxProps) {
+  const handleClick = async (offer: AffiliateOffer) => {
+    if (offer.linkId) {
+      try {
+        await fetch("/api/track-click", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ linkId: offer.linkId, placement }),
+        })
+      } catch { /* silent */ }
+    }
+  }
+
   return (
     <div className="affiliate-box rounded-lg p-6 my-8 border border-gold/30">
       <h3 className="text-lg font-bold text-text-primary mb-4">{title}</h3>
@@ -24,6 +40,7 @@ export default function AffiliateBox({ title, offers }: AffiliateBoxProps) {
               href={offer.url}
               target="_blank"
               rel="nofollow sponsored noopener"
+              onClick={() => handleClick(offer)}
               className="bg-gold text-black font-bold px-5 py-2.5 rounded-lg text-sm hover:opacity-90 transition whitespace-nowrap"
             >
               BET NOW →
@@ -31,7 +48,7 @@ export default function AffiliateBox({ title, offers }: AffiliateBoxProps) {
           </div>
         ))}
       </div>
-      <p className="text-xs text-text-muted mt-3">Affiliate link — we may earn a commission</p>
+      <p className="text-xs text-text-muted mt-3">18+ Only. Gamble responsibly. Affiliate link — we may earn a commission.</p>
     </div>
   )
 }

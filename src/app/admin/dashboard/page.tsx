@@ -3,50 +3,53 @@
 import { useEffect, useState } from "react"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "@/lib/firebase"
+import { getArticles, deleteArticle } from "@/lib/firestoreService"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import type { Article } from "@/types"
 
-const sampleArticles: Article[] = [
-  { id: "1", slug: "argentina-vs-egypt-world-cup-2026", title: "Argentina vs Egypt 3-2: Full Result", excerpt: "Argentina came from 2-0 down to beat Egypt.", category: "Sports Betting", country: "kenya", featuredImage: "", tags: [], readTime: 4, author: "iGamingUbuntu", status: "published", views: 2848, content: "", createdAt: "2026-07-08", updatedAt: "2026-07-08" },
-  { id: "2", slug: "top-5-online-casinos-kenya-2026", title: "Top 5 Online Casinos in Kenya 2026", excerpt: "Best online casinos in Kenya.", category: "Casino Reviews", country: "kenya", featuredImage: "", tags: [], readTime: 8, author: "iGamingUbuntu", status: "published", views: 1956, content: "", createdAt: "2026-07-07", updatedAt: "2026-07-07" },
-  { id: "3", slug: "world-cup-2026-betting-guide", title: "World Cup 2026 Betting Guide", excerpt: "Complete betting guide for World Cup 2026.", category: "Guides", country: "nigeria", featuredImage: "", tags: [], readTime: 6, author: "iGamingUbuntu", status: "draft", views: 3421, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06" },
-]
-
 export default function AdminDashboardPage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
-  const [articles, setArticles] = useState<Article[]>(sampleArticles)
-  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
+  const [articles, setArticles] = useState<Article[]>([])
+  const [deleteId, setDeleteId] = useState<string | null>(null)
+  const [firebaseReady, setFirebaseReady] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
-    if (!auth) { setLoading(false); return }
+    if (!auth) {
+      setLoading(false)
+      return
+    }
+    setFirebaseReady(true)
     const unsub = onAuthStateChanged(auth, (u) => {
       if (!u) {
         router.push("/admin")
       } else {
         setUser(u)
+        loadArticles()
       }
       setLoading(false)
     })
     return () => unsub()
   }, [router])
 
+  const loadArticles = async () => {
+    const data = await getArticles()
+    setArticles(data)
+  }
+
+  const handleDelete = async (id: string) => {
+    await deleteArticle(id)
+    setArticles((prev) => prev.filter((a) => a.id !== id))
+    setDeleteId(null)
+  }
+
+  const totalViews = articles.reduce((s, a) => s + (a.views || 0), 0)
+  const publishedCount = articles.filter((a) => a.status === "published").length
+
   if (loading) return <div className="p-8 text-center text-text-muted">Loading...</div>
   if (!user) return null
-
-  const handleDelete = (id: string) => {
-    setArticles((prev) => prev.filter((a) => a.id !== id))
-    setDeleteConfirm(null)
-  }
-
-  const toggleStatus = (id: string) => {
-    setArticles((prev) => prev.map((a) => a.id === id ? { ...a, status: a.status === "published" ? "draft" : "published" as Article["status"] } : a))
-  }
-
-  const totalViews = articles.reduce((s, a) => s + a.views, 0)
-  const publishedCount = articles.filter((a) => a.status === "published").length
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -94,38 +97,48 @@ export default function AdminDashboardPage() {
               </tr>
             </thead>
             <tbody>
-              {articles.map((a) => (
-                <tr key={a.id} className="border-t border-border">
-                  <td className="p-4">
-                    <p className="font-medium text-text-primary">{a.title}</p>
-                    <p className="text-xs text-text-muted">{a.slug}</p>
-                  </td>
-                  <td className="p-4 text-sm text-text-secondary">{a.category}</td>
-                  <td className="p-4">
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded ${a.status === "published" ? "bg-ubuntu-green/10 text-ubuntu-green" : "bg-yellow-100 text-yellow-700"}`}>
-                      {a.status}
-                    </span>
-                  </td>
-                  <td className="p-4 text-sm text-text-secondary">{a.views}</td>
-                  <td className="p-4 text-sm text-text-muted">{a.createdAt}</td>
-                  <td className="p-4">
-                    <div className="flex gap-2">
-                      <Link href={`/admin/dashboard/edit/${a.id}`} className="text-sm text-ubuntu-orange hover:underline">Edit</Link>
-                      <button onClick={() => toggleStatus(a.id)} className="text-sm text-text-secondary hover:text-text-primary cursor-pointer">
-                        {a.status === "published" ? "Draft" : "Publish"}
-                      </button>
-                      {deleteConfirm === a.id ? (
-                        <div className="flex gap-1">
-                          <button onClick={() => handleDelete(a.id)} className="text-sm text-ubuntu-red font-medium cursor-pointer">Confirm</button>
-                          <button onClick={() => setDeleteConfirm(null)} className="text-sm text-text-muted cursor-pointer">Cancel</button>
-                        </div>
-                      ) : (
-                        <button onClick={() => setDeleteConfirm(a.id)} className="text-sm text-ubuntu-red hover:underline cursor-pointer">Delete</button>
-                      )}
-                    </div>
+              {articles.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="p-12 text-center text-text-muted">
+                    <svg className="w-12 h-12 mx-auto mb-3 text-text-muted/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <p className="font-medium mb-1">No articles yet</p>
+                    <p className="text-sm mb-4">Create your first article to get started.</p>
+                    <Link href="/admin/dashboard/new" className="bg-ubuntu-orange text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition inline-block">
+                      + Create First Article
+                    </Link>
                   </td>
                 </tr>
-              ))}
+              ) : (
+                articles.map((a) => (
+                  <tr key={a.id} className="border-t border-border">
+                    <td className="p-4">
+                      <p className="font-medium text-text-primary">{a.title}</p>
+                      <p className="text-xs text-text-muted">{a.slug}</p>
+                    </td>
+                    <td className="p-4 text-sm text-text-secondary">{a.category}</td>
+                    <td className="p-4">
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded ${a.status === "published" ? "bg-ubuntu-green/10 text-ubuntu-green" : "bg-yellow-100 text-yellow-700"}`}>
+                        {a.status}
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm text-text-secondary">{a.views || 0}</td>
+                    <td className="p-4 text-sm text-text-muted">{a.createdAt}</td>
+                    <td className="p-4">
+                      <div className="flex gap-2">
+                        <Link href={`/admin/dashboard/edit/${a.id}`} className="text-sm text-ubuntu-orange hover:underline">Edit</Link>
+                        {deleteId === a.id ? (
+                          <div className="flex gap-1">
+                            <button onClick={() => handleDelete(a.id)} className="text-sm text-ubuntu-red font-medium cursor-pointer">Confirm</button>
+                            <button onClick={() => setDeleteId(null)} className="text-sm text-text-muted cursor-pointer">Cancel</button>
+                          </div>
+                        ) : (
+                          <button onClick={() => setDeleteId(a.id)} className="text-sm text-ubuntu-red hover:underline cursor-pointer">Delete</button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

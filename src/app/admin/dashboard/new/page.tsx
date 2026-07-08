@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { onAuthStateChanged } from "firebase/auth"
-import { auth } from "@/lib/firebase"
+import { getAuthInstance } from "@/lib/firebase"
 import { createArticle, createAffiliateLink } from "@/lib/firestoreService"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
@@ -29,6 +29,7 @@ export default function NewPostPage() {
   ])
 
   useEffect(() => {
+    const auth = getAuthInstance()
     if (!auth) { setLoading(false); return }
     const unsub = onAuthStateChanged(auth, (u) => {
       if (!u) { router.push("/admin") } else { setUser(u) }

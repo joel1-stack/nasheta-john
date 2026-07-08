@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { onAuthStateChanged, signOut } from "firebase/auth"
-import { auth } from "@/lib/firebase"
+import { getAuthInstance } from "@/lib/firebase"
 import { getArticles, deleteArticle } from "@/lib/firestoreService"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
@@ -17,6 +17,7 @@ export default function AdminDashboardPage() {
   const router = useRouter()
 
   useEffect(() => {
+    const auth = getAuthInstance()
     if (!auth) {
       setLoading(false)
       return
@@ -62,7 +63,7 @@ export default function AdminDashboardPage() {
           <Link href="/admin/dashboard/new" className="bg-ubuntu-orange text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">
             + New Post
           </Link>
-          <button onClick={() => signOut(auth!)} className="border border-border text-text-secondary px-4 py-2 rounded-lg text-sm hover:text-ubuntu-red transition cursor-pointer">
+          <button onClick={() => signOut(getAuthInstance()!)} className="border border-border text-text-secondary px-4 py-2 rounded-lg text-sm hover:text-ubuntu-red transition cursor-pointer">
             Logout
           </button>
         </div>

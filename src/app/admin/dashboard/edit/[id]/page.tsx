@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { onAuthStateChanged } from "firebase/auth"
-import { auth } from "@/lib/firebase"
+import { getAuthInstance } from "@/lib/firebase"
 import { getArticleById, updateArticle, getAffiliateLinks, createAffiliateLink, updateAffiliateLink, deleteAffiliateLink } from "@/lib/firestoreService"
 import { useRouter, useParams } from "next/navigation"
 import Link from "next/link"
@@ -32,6 +32,7 @@ export default function EditPostPage() {
   const [affiliates, setAffiliates] = useState<AffiliateField[]>([])
 
   useEffect(() => {
+    const auth = getAuthInstance()
     if (!auth) { setLoading(false); return }
     const unsub = onAuthStateChanged(auth, async (u) => {
       if (!u) { router.push("/admin") } else { setUser(u) }

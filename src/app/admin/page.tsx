@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "@/lib/firebase"
+import { getAuthInstance } from "@/lib/firebase"
 import { useRouter } from "next/navigation"
 
 export default function AdminLoginPage() {
@@ -17,6 +17,7 @@ export default function AdminLoginPage() {
     setLoading(true)
     setError("")
     try {
+      const auth = getAuthInstance()
       if (!auth) throw new Error("Firebase not initialized")
       await signInWithEmailAndPassword(auth, email, password)
       router.push("/admin/dashboard")

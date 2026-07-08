@@ -3,7 +3,6 @@ import Link from "next/link"
 export default function Hero() {
   return (
     <section className="relative overflow-hidden min-h-[90vh] flex items-center">
-      {/* Full background image */}
       <div className="absolute inset-0">
         <img
           src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85"
@@ -14,12 +13,10 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
       </div>
 
-      {/* Animated decorative orbs */}
       <div className="absolute top-20 left-10 w-96 h-96 bg-ubuntu-orange/10 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-10 right-20 w-[30rem] h-[30rem] bg-gold/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1.5s" }} />
       <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-ubuntu-purple/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "0.8s" }} />
 
-      {/* Subtle pattern overlay */}
       <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `radial-gradient(circle at 25px 25px, #E95420 2px, transparent 0)`, backgroundSize: '50px 50px' }} />
 
       <div className="max-w-6xl mx-auto px-4 py-24 relative z-10 w-full">
@@ -79,7 +76,6 @@ export default function Hero() {
 
           <div className="flex-1 flex justify-center animate-fade-up delay-3">
             <div className="relative">
-              {/* Main image */}
               <div className="w-72 h-72 md:w-96 md:h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/80 rotate-3 hover:rotate-0 transition-transform duration-500">
                 <img
                   src="/images/nasheta.png"
@@ -88,7 +84,6 @@ export default function Hero() {
                 />
               </div>
               
-              {/* Floating badges */}
               <div className="absolute -bottom-4 -right-4 bg-gold text-black text-sm font-bold px-5 py-3 rounded-xl shadow-xl animate-scale-in delay-4 hover:scale-105 transition-transform">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-green-600 rounded-full animate-ping" />

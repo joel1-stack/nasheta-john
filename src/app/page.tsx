@@ -86,10 +86,97 @@ export default function HomePage() {
       <Hero />
       <AdSlot position="leaderboard-top" className="max-w-6xl mx-auto px-4 mb-8" />
 
+      {/* What is iGamingUbuntu — About section right upfront */}
+      <section className="py-16 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-gold-light to-white" />
+        <WaveSeparator color="#ffffff" flip />
+        <WaveSeparator color="#f7f7f7" />
+        <div className="max-w-5xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-4">
+            <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">About iGamingUbuntu</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="animate-fade-up">
+              <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6 leading-tight">
+                What is <span className="gradient-text">iGamingUbuntu</span>?
+              </h2>
+              <div className="space-y-4 text-text-secondary leading-relaxed">
+                <p>
+                  <strong className="text-text-primary">iGaming</strong> — short for internet gaming — is the business of online betting, 
+                  casino gaming, and sports wagering. It's a multi-billion dollar industry that's growing faster in Africa than 
+                  anywhere else in the world.
+                </p>
+                <p>
+                  <strong className="text-text-primary">iGamingUbuntu</strong> exists to help betting operators, affiliate site owners, 
+                  and content agencies capture that growth through expert-written content. Every article I produce is researched 
+                  for the specific African market it targets — from M-Pesa deposit guides in Kenya to Bet9ja comparisons in Nigeria.
+                </p>
+                <p>
+                  I don't write generic gambling content. I write content that ranks in Google, converts readers into depositing players, 
+                  and builds trust with African betting audiences.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 mt-6">
+                {["Kenya", "Nigeria", "South Africa", "Ghana", "Tanzania", "UK / US / Canada"].map((m) => (
+                  <span key={m} className="bg-ubuntu-orange/5 text-ubuntu-orange text-xs font-medium px-3 py-1.5 rounded-full border border-ubuntu-orange/10">
+                    {m}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="animate-fade-up delay-2">
+              <div className="bg-white rounded-2xl border border-border p-8 shadow-lg">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-ubuntu-orange/20">
+                    <img src="/images/nasheta.png" alt="Nasheta" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-text-primary">Nasheta</p>
+                    <p className="text-sm text-text-muted">iGaming Content Specialist</p>
+                  </div>
+                </div>
+                <blockquote className="text-text-secondary italic leading-relaxed border-l-4 border-ubuntu-orange pl-4">
+                  "I've been writing iGaming content since 2016. I've seen the African market grow from a handful of operators to 
+                  hundreds. My job is to help you capture that growth with content that actually works."
+                </blockquote>
+                <div className="mt-6 pt-4 border-t border-border">
+                  <Link href="/about" className="text-ubuntu-orange font-medium text-sm hover:underline inline-flex items-center gap-1">
+                    Read my full story →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Who Is This For */}
+      <section className="py-12 bg-card">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">Who Is This For</span>
+            <h2 className="text-2xl font-bold text-text-primary mt-1">Built for iGaming Operators & Affiliates</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { title: "Affiliate Site Owners", desc: "Need consistent, high-ranking content that drives depositing players to your operator partners across African markets." },
+              { title: "Betting Operators", desc: "Require compliant, market-specific content for your sportsbook or casino brands targeting African bettors." },
+              { title: "Content Agencies", desc: "Scaling iGaming content for clients? I deliver white-label articles that match your quality bar and deadlines." },
+            ].map((item) => (
+              <div key={item.title} className="bg-white rounded-xl p-5 border border-border hover:shadow-md transition">
+                <h3 className="font-bold text-text-primary mb-2">{item.title}</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Intro Strip */}
       <section className="py-12 bg-gradient-to-r from-ubuntu-orange/5 via-gold-light to-ubuntu-purple/5 border-y border-ubuntu-orange/10">
         <div className="max-w-4xl mx-auto px-4 text-center animate-fade-up">
-          <p className="text-lg text-text-secondary leading-relaxed">
+          <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">What I Do</span>
+          <p className="text-lg text-text-secondary leading-relaxed mt-2">
             I write iGaming content that ranks in Google and converts readers into depositing players. 
             From match reports that pull in World Cup traffic to casino reviews that drive affiliate signups — 
             every article is built for the African betting audience.
@@ -191,9 +278,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {processSteps.map((p, i) => (
               <div key={p.step} className="text-center animate-fade-up" style={{ animationDelay: `${i * 0.15}s` }}>
-                <div className="w-16 h-16 rounded-2xl bg-gold/20 border border-gold/30 flex items-center justify-center mx-auto mb-4 text-gold font-bold text-xl">
-                  {p.step}
-                </div>
+                <div className="w-16 h-16 rounded-2xl bg-gold/20 border border-gold/30 flex items-center justify-center mx-auto mb-4 text-gold font-bold text-xl">{p.step}</div>
                 <h3 className="text-white font-bold text-lg mb-2">{p.title}</h3>
                 <p className="text-white/50 text-sm leading-relaxed">{p.desc}</p>
                 {i < 3 && <div className="hidden md:block absolute top-8 left-[60%] w-[calc(80%)] h-px border-t border-dashed border-gold/20" />}
@@ -211,9 +296,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold text-text-primary mt-1 mb-8">Industry Leaders</h2>
           <div className="flex flex-wrap items-center justify-center gap-10 text-text-muted">
             {["SportPesa", "Betika", "1xBet", "Betway", "22Bet", "Melbet", "HollywoodBets", "Bet9ja"].map((brand) => (
-              <span key={brand} className="text-lg font-bold opacity-30 hover:opacity-60 hover:text-ubuntu-orange transition-all duration-300">
-                {brand}
-              </span>
+              <span key={brand} className="text-lg font-bold opacity-30 hover:opacity-60 hover:text-ubuntu-orange transition-all duration-300">{brand}</span>
             ))}
           </div>
         </div>
@@ -253,17 +336,10 @@ export default function HomePage() {
             Let's talk about your content needs. I'll deliver articles that rank, convert, and grow your affiliate revenue.
           </p>
           <div className="flex flex-wrap justify-center gap-4 animate-fade-up delay-2">
-            <Link
-              href="/work-with-me"
-              className="inline-flex items-center gap-2 bg-white text-ubuntu-orange px-8 py-3.5 rounded-xl font-bold hover:bg-white/90 transition-all duration-200 shadow-xl hover:shadow-2xl hover:-translate-y-0.5"
-            >
-              Work With Me
-              <span>→</span>
+            <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-white text-ubuntu-orange px-8 py-3.5 rounded-xl font-bold hover:bg-white/90 transition-all duration-200 shadow-xl hover:shadow-2xl hover:-translate-y-0.5">
+              Work With Me <span>→</span>
             </Link>
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-white/10 transition-all duration-200"
-            >
+            <Link href="/blog" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-white/10 transition-all duration-200">
               View Sample Work
             </Link>
           </div>

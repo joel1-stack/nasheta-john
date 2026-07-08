@@ -82,7 +82,7 @@ export default function Hero() {
               {/* Main image */}
               <div className="w-72 h-72 md:w-96 md:h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/80 rotate-3 hover:rotate-0 transition-transform duration-500">
                 <img
-                  src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=500&q=85"
+                  src="/images/nasheta.png"
                   alt="iGamingUbuntu"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />

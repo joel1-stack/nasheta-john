@@ -8,8 +8,8 @@ export default function AboutPage() {
           <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80" alt="Team working" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-6">
-          <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center border-4 border-white/30 shrink-0 backdrop-blur-sm">
-            <span className="text-3xl font-bold text-white">IG</span>
+          <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white/30 shrink-0 shadow-xl">
+            <img src="/images/nasheta.png" alt="Nasheta" className="w-full h-full object-cover" />
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-bold">About iGamingUbuntu</h1>

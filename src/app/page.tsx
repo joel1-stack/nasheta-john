@@ -3,6 +3,7 @@ import LatestPosts from "@/components/LatestPosts"
 import CountryCard from "@/components/CountryCard"
 import Newsletter from "@/components/Newsletter"
 import AdSlot from "@/components/AdSlot"
+import WaveSeparator from "@/components/WaveSeparator"
 import Link from "next/link"
 import type { Article, Country } from "@/types"
 
@@ -86,7 +87,7 @@ export default function HomePage() {
       <AdSlot position="leaderboard-top" className="max-w-6xl mx-auto px-4 mb-8" />
 
       {/* Intro Strip */}
-      <section className="py-12 border-y border-border bg-card/30">
+      <section className="py-12 bg-gradient-to-r from-ubuntu-orange/5 via-gold-light to-ubuntu-purple/5 border-y border-ubuntu-orange/10">
         <div className="max-w-4xl mx-auto px-4 text-center animate-fade-up">
           <p className="text-lg text-text-secondary leading-relaxed">
             I write iGaming content that ranks in Google and converts readers into depositing players. 
@@ -108,11 +109,14 @@ export default function HomePage() {
       <section className="py-16 relative overflow-hidden">
         <div className="absolute inset-0">
           <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=60" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-white/95" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-[#FFF8E1]/90" />
         </div>
+        <WaveSeparator color="#f7f7f7" flip />
+        <WaveSeparator color="#FFF8E1" />
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-text-primary mb-3">What I Write</h2>
+            <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">What I Write</span>
+            <h2 className="text-3xl font-bold text-text-primary mt-1 mb-3">Services & Content Types</h2>
             <p className="text-text-secondary max-w-lg mx-auto">Content types that drive traffic, engagement, and affiliate revenue across every African iGaming market.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -132,10 +136,12 @@ export default function HomePage() {
       </section>
 
       {/* Why Work With Me */}
-      <section className="py-16 bg-gradient-to-br from-ubuntu-orange/5 via-white to-ubuntu-purple/5">
-        <div className="max-w-6xl mx-auto px-4">
+      <section className="py-16 relative overflow-hidden bg-card">
+        <WaveSeparator color="#ffffff" />
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-text-primary mb-3">Why Work With Me</h2>
+            <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">Why Choose Me</span>
+            <h2 className="text-3xl font-bold text-text-primary mt-1 mb-3">Why Work With Me</h2>
             <p className="text-text-secondary max-w-lg mx-auto">Three reasons clients choose iGamingUbuntu over generic content mills.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -156,7 +162,7 @@ export default function HomePage() {
                 img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80",
               },
             ].map((item, i) => (
-              <div key={item.title} className="bg-white rounded-xl overflow-hidden border border-border hover:shadow-lg transition-all duration-300 animate-fade-up" style={{ animationDelay: `${i * 0.15}s` }}>
+              <div key={item.title} className="bg-white rounded-xl overflow-hidden border border-border hover:shadow-lg transition-all duration-300 animate-fade-up shadow-sm" style={{ animationDelay: `${i * 0.15}s` }}>
                 <div className="h-40 overflow-hidden">
                   <img src={item.img} alt={item.title} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
                 </div>
@@ -168,6 +174,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+        <WaveSeparator color="#ffffff" flip />
       </section>
 
       {/* Process Snapshot */}
@@ -197,9 +204,11 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-card">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold text-text-primary mb-8">Trusted by Industry Leaders</h2>
+      <section className="py-16 relative overflow-hidden bg-gradient-to-br from-white via-gold-light to-white">
+        <WaveSeparator color="#ffffff" flip />
+        <div className="max-w-6xl mx-auto px-4 text-center relative z-10">
+          <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">Trusted By</span>
+          <h2 className="text-2xl font-bold text-text-primary mt-1 mb-8">Industry Leaders</h2>
           <div className="flex flex-wrap items-center justify-center gap-10 text-text-muted">
             {["SportPesa", "Betika", "1xBet", "Betway", "22Bet", "Melbet", "HollywoodBets", "Bet9ja"].map((brand) => (
               <span key={brand} className="text-lg font-bold opacity-30 hover:opacity-60 hover:text-ubuntu-orange transition-all duration-300">
@@ -208,6 +217,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+        <WaveSeparator color="#ffffff" />
       </section>
 
       <LatestPosts articles={sampleArticles} />
@@ -216,7 +226,7 @@ export default function HomePage() {
       <section className="py-16 relative overflow-hidden">
         <div className="absolute inset-0">
           <img src="https://images.unsplash.com/photo-1526778548025-fa2f459b5fe7?w=1920&q=60" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-white/95" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-[#fff8e1]/90" />
         </div>
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           <div className="text-center mb-10">
@@ -261,7 +271,7 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-16 bg-card">
+      <section className="py-16 bg-gradient-to-br from-ubuntu-purple/5 via-white to-ubuntu-orange/5">
         <div className="max-w-6xl mx-auto px-4">
           <div className="max-w-xl mx-auto text-center">
             <h2 className="text-2xl font-bold text-text-primary mb-2">Stay Ahead of the Game</h2>

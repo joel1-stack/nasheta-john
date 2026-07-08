@@ -2,17 +2,25 @@
 
 @theme inline {
   --color-ubuntu-orange: #E95420;
+  --color-ubuntu-orange-dark: #CC4A1C;
   --color-ubuntu-purple: #772953;
+  --color-ubuntu-purple-dark: #5A1F3F;
   --color-ubuntu-green: #0E8420;
+  --color-ubuntu-green-dark: #0B6B1A;
   --color-ubuntu-red: #C7162B;
   --color-gold: #FFD700;
+  --color-gold-dark: #E6C200;
   --color-gold-light: #FFF8E1;
   --color-card: #F7F7F7;
+  --color-card-hover: #EEEEEE;
   --color-border: #E0E0E0;
+  --color-border-light: #F0F0F0;
   --color-text-primary: #111111;
   --color-text-secondary: #555555;
   --color-text-muted: #888888;
   --color-ad-bg: #FFF8E1;
+  --color-deep-purple: #1a0a2e;
+  --color-deep-purple-light: #2d1b4e;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
@@ -83,4 +91,47 @@ html {
 }
 .img-zoom:hover img {
   transform: scale(1.05);
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #E95420, #FFD700, #772953);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover lift */
+.card-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(233, 84, 32, 0.1);
+}
+
+/* Orange glow */
+.glow-orange {
+  box-shadow: 0 0 20px rgba(233, 84, 32, 0.2);
+}
+.glow-orange:hover {
+  box-shadow: 0 0 30px rgba(233, 84, 32, 0.35);
+}
+
+/* Gold accent underline */
+.underline-gold {
+  position: relative;
+}
+.underline-gold::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #FFD700, #E95420);
+  transition: width 0.3s ease;
+}
+.underline-gold:hover::after {
+  width: 100%;
 }

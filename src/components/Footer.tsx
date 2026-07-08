@@ -1,59 +1,168 @@
 import Link from "next/link"
 import Newsletter from "./Newsletter"
 
+function getFlagUrl(slug: string): string {
+  const map: Record<string, string> = {
+    kenya: "ke", nigeria: "ng", "south-africa": "za",
+    ghana: "gh", tanzania: "tz", uganda: "ug",
+  }
+  return `https://flagcdn.com/20x15/${map[slug] || slug}.png`
+}
+
+const socialLinks = [
+  {
+    label: "Email",
+    href: "mailto:hello@igamingubuntu.com",
+    svg: <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>,
+  },
+  {
+    label: "LinkedIn",
+    href: "#",
+    svg: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>,
+  },
+  {
+    label: "Twitter",
+    href: "#",
+    svg: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>,
+  },
+  {
+    label: "Telegram",
+    href: "#",
+    svg: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>,
+  },
+  {
+    label: "YouTube",
+    href: "#",
+    svg: <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>,
+  },
+]
+
 export default function Footer() {
   return (
-    <footer className="bg-ubuntu-purple text-white">
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h3 className="text-lg font-bold mb-4">iGamingUbuntu</h3>
-            <p className="text-sm text-white/70 leading-relaxed">
-              Africa&apos;s iGaming content authority. Expert reviews, betting guides, and industry news across the continent.
+    <footer className="bg-gradient-to-br from-ubuntu-purple via-[#5a1f3e] to-[#3a1025] text-white relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-96 h-96 bg-ubuntu-orange/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
+
+      <div className="max-w-6xl mx-auto px-4 py-16 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-12 pb-12 border-b border-white/10">
+          <div className="lg:col-span-2">
+            <Link href="/" className="inline-block mb-4">
+              <span className="text-2xl font-bold" style={{ background: "linear-gradient(135deg, #FFD700, #E95420)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                iGamingUbuntu
+              </span>
+            </Link>
+            <p className="text-white/60 text-sm leading-relaxed max-w-lg">
+              Africa's trusted iGaming content authority. Expert betting site reviews, 
+              affiliate guides, and industry news across Kenya, Nigeria, South Africa, Ghana, Tanzania, and beyond.
             </p>
+            <div className="flex items-center gap-3 mt-6">
+              {socialLinks.map((s) => (
+                <a key={s.label} href={s.href} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-ubuntu-orange/80 transition text-white cursor-pointer" title={s.label}>
+                  {s.svg}
+                </a>
+              ))}
+            </div>
           </div>
+          <div className="lg:col-span-1">
+            <Newsletter />
+          </div>
+        </div>
 
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">Quick Links</h4>
-            <div className="space-y-2 text-sm text-white/70">
-              <Link href="/" className="block hover:text-white transition">Home</Link>
-              <Link href="/blog" className="block hover:text-white transition">Blog</Link>
-              <Link href="/reviews" className="block hover:text-white transition">Reviews</Link>
-              <Link href="/guides" className="block hover:text-white transition">Guides</Link>
-              <Link href="/about" className="block hover:text-white transition">About</Link>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-gold mb-4">Quick Links</h4>
+            <div className="space-y-2.5">
+              {[
+                { label: "Home", href: "/" },
+                { label: "Blog", href: "/blog" },
+                { label: "Reviews", href: "/reviews" },
+                { label: "Guides", href: "/guides" },
+                { label: "About", href: "/about" },
+                { label: "Contact", href: "/contact" },
+              ].map((l) => (
+                <Link key={l.href} href={l.href} className="block text-sm text-white/60 hover:text-white hover:translate-x-1 transition-all duration-200">
+                  {l.label}
+                </Link>
+              ))}
             </div>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">Countries</h4>
-            <div className="space-y-2 text-sm text-white/70">
-              <Link href="/kenya" className="block hover:text-white transition">Kenya</Link>
-              <Link href="/nigeria" className="block hover:text-white transition">Nigeria</Link>
-              <Link href="/south-africa" className="block hover:text-white transition">South Africa</Link>
-              <Link href="/ghana" className="block hover:text-white transition">Ghana</Link>
-              <Link href="/tanzania" className="block hover:text-white transition">Tanzania</Link>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-gold mb-4">Countries</h4>
+            <div className="space-y-2.5">
+              {[
+                { label: "Kenya", slug: "kenya" },
+                { label: "Nigeria", slug: "nigeria" },
+                { label: "South Africa", slug: "south-africa" },
+                { label: "Ghana", slug: "ghana" },
+                { label: "Tanzania", slug: "tanzania" },
+                { label: "Uganda", slug: "uganda" },
+              ].map((l) => (
+                <Link key={l.slug} href={l.slug === "uganda" ? "#" : `/${l.slug}`} className="block text-sm text-white/60 hover:text-white hover:translate-x-1 transition-all duration-200">
+                  <span className="flex items-center gap-2">
+                    <img src={getFlagUrl(l.slug)} alt="" className="w-4 h-3 rounded object-cover" />
+                    {l.label}
+                  </span>
+                </Link>
+              ))}
             </div>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">Legal</h4>
-            <div className="space-y-2 text-sm text-white/70">
-              <Link href="/privacy" className="block hover:text-white transition">Privacy Policy</Link>
-              <Link href="/affiliate-disclosure" className="block hover:text-white transition">Affiliate Disclosure</Link>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-gold mb-4">Categories</h4>
+            <div className="space-y-2.5">
+              {[
+                { label: "Casino Reviews", href: "/reviews" },
+                { label: "Sports Betting", href: "/blog" },
+                { label: "Bonuses", href: "/blog" },
+                { label: "Tips & Guides", href: "/guides" },
+                { label: "Industry News", href: "/blog" },
+                { label: "Responsible Gambling", href: "/guides" },
+              ].map((l) => (
+                <Link key={l.label} href={l.href} className="block text-sm text-white/60 hover:text-white hover:translate-x-1 transition-all duration-200">
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-gold mb-4">Legal</h4>
+            <div className="space-y-2.5">
+              {[
+                { label: "Privacy Policy", href: "/privacy" },
+                { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+                { label: "Terms of Service", href: "#" },
+                { label: "Cookie Policy", href: "#" },
+              ].map((l) => (
+                <Link key={l.href} href={l.href} className="block text-sm text-white/60 hover:text-white hover:translate-x-1 transition-all duration-200">
+                  {l.label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="border-t border-white/20 pt-8 mb-8">
-          <Newsletter />
+        <div className="border-t border-white/10 pt-8 mb-8">
+          <p className="text-xs text-white/40 text-center mb-4 uppercase tracking-widest">Trusted Partners</p>
+          <div className="flex flex-wrap items-center justify-center gap-6 text-white/30">
+            {["SportPesa", "1xBet", "Betika", "Betway", "22Bet", "Melbet", "HollywoodBets"].map((p) => (
+              <span key={p} className="text-sm font-semibold tracking-wider opacity-50 hover:opacity-100 transition">
+                {p}
+              </span>
+            ))}
+          </div>
         </div>
 
-        <div className="border-t border-white/20 pt-6 text-center text-sm text-white/50">
-          <p className="mb-2">
-            This site contains affiliate links. We may earn a commission when you sign up through our links. 
-            Please gamble responsibly. 18+ only.
+        <div className="border-t border-white/10 pt-6 text-center text-sm text-white/40">
+          <p className="mb-2 max-w-2xl mx-auto text-xs leading-relaxed">
+            <span className="text-gold">Affiliate Disclosure:</span> This site contains affiliate links. We may earn a commission when you sign up through our links at no extra cost to you. 
+            All opinions and reviews are our own. 
           </p>
-          <p>&copy; {new Date().getFullYear()} iGamingUbuntu. All rights reserved.</p>
+          <p className="text-xs mt-3">
+            <span className="text-ubuntu-red font-semibold">18+ Only.</span> Please gamble responsibly. If you or someone you know needs help, contact your local responsible gambling organization.
+          </p>
+          <p className="mt-4">&copy; {new Date().getFullYear()} iGamingUbuntu. All rights reserved. Built for African bettors.</p>
         </div>
       </div>
     </footer>

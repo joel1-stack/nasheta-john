@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow anyone to read articles (needed for blog posts to load)
+    match /articles/{article} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    // Allow authenticated users to manage affiliate links
+    match /affiliateLinks/{link} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    // Allow authenticated users to read/write clicks
+    match /clicks/{click} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

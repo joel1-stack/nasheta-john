@@ -63,10 +63,10 @@ export default function BlogArticlePage() {
   }
 
   const affiliateOffers = [
-    { operatorName: "SportPesa", bonusText: "200% Welcome Bonus up to KES 5,000 — M-Pesa Accepted", url: "https://sportpesa.com/?ref=igamingubuntu" },
+    { operatorName: "SportPesa", bonusText: "200% Welcome Bonus up to KES 5,000, M-Pesa Accepted", url: "https://sportpesa.com/?ref=igamingubuntu" },
     { operatorName: "1xBet", bonusText: "100% Deposit Bonus + $100 Free Bet + Live Streaming", url: "https://1xbet.com/?btag=igamingubuntu" },
     { operatorName: "Betika", bonusText: "Free Bet on First Deposit + Instant M-Pesa Withdrawals", url: "https://betika.com/?aff=igamingubuntu" },
-    { operatorName: "Betway", bonusText: "Up to $50 in Free Bets — Trusted Global Brand, Local Support", url: "https://betway.com/?aff=igamingubuntu" },
+    { operatorName: "Betway", bonusText: "Up to $50 in Free Bets, Trusted Global Brand, Local Support", url: "https://betway.com/?aff=igamingubuntu" },
     { operatorName: "22Bet", bonusText: "100% Welcome Bonus + Daily Enhanced Odds on Major Leagues", url: "https://22bet.com/?btag=igamingubuntu" },
   ]
 
@@ -168,7 +168,7 @@ export default function BlogArticlePage() {
               </div>
               <div className="flex-1">
                 <p className="font-bold text-text-primary">iGamingUbuntu</p>
-                <p className="text-sm text-text-secondary">iGaming Content & Affiliate Partner &mdash; Africa</p>
+                <p className="text-sm text-text-secondary">iGaming Content & Affiliate Partner, Africa</p>
                 <p className="text-xs text-text-muted mt-1">
                   Published {formatDate(article.createdAt)} &middot; Updated {formatDate(article.updatedAt)}
                 </p>

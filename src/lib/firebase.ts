@@ -6,17 +6,23 @@ import { firebaseConfig } from "./firebaseConfig"
 let _app: any = null
 let _db: any = null
 let _auth: any = null
+let _initAttempted = false
 
 function initFirebase() {
+  if (_initAttempted) return
+  _initAttempted = true
   if (typeof window === "undefined") return
-  if (_app) return
-  if (!firebaseConfig.apiKey) return
+  if (!firebaseConfig.apiKey) { console.warn("Firebase: no API key"); return }
   try {
     _app = getApps().length > 0 ? getApps()[0] : initializeApp(firebaseConfig)
     _db = getFirestore(_app)
+  } catch (e) {
+    console.error("Firebase init error (db):", e)
+  }
+  try {
     _auth = getAuth(_app)
   } catch (e) {
-    console.error("Firebase init error:", e)
+    console.error("Firebase init error (auth):", e)
   }
 }
 

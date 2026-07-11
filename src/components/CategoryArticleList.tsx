@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { getArticlesByCategory, getAllPublishedArticles } from "@/lib/firestoreService"
+import { getArticles } from "@/lib/firestoreService"
 import type { Article } from "@/types"
 
 interface Props {
@@ -17,21 +17,18 @@ export default function CategoryArticleList({ category, country, limit: limitCou
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function fetch() {
-      try {
-        if (all) {
-          setArticles(await getAllPublishedArticles(limitCount))
-        } else if (category) {
-          setArticles(await getArticlesByCategory(category, country, limitCount))
-        }
-      } catch {
-        // silent
-      } finally {
-        setLoading(false)
+    getArticles().then((allArticles) => {
+      let filtered = allArticles
+      if (category) {
+        filtered = filtered.filter((a) => a.status === "published" && a.category === category)
       }
-    }
-    fetch()
-  }, [category, country, limitCount, all])
+      if (country && country !== "general") {
+        filtered = filtered.filter((a) => a.country === country)
+      }
+      filtered.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""))
+      setArticles(limitCount ? filtered.slice(0, limitCount) : filtered)
+    }).catch(() => {}).finally(() => setLoading(false))
+  }, [category, country, limitCount])
 
   if (loading) {
     return (

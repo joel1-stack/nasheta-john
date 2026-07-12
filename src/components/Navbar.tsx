@@ -143,13 +143,18 @@ export default function Navbar() {
             >
               {item.hasDropdown ? (
                 <>
-                  <button
-                    onClick={() => setOpen((prev) => ({ ...prev, [item.key!]: !prev[item.key!] }))}
-                    className={linkClass(item.href)}
-                  >
-                    {item.label}
-                    <FiChevronDown className={`w-3.5 h-3.5 mt-0.5 inline ml-0.5 transition-transform ${open[item.key!] ? "rotate-180" : ""}`} />
-                  </button>
+          <button
+            onClick={() => {
+              if (item.key === "blogs") {
+                window.open(item.href, "_blank", "noopener,noreferrer")
+              }
+              setOpen((prev) => ({ ...prev, [item.key!]: !prev[item.key!] }))
+            }}
+            className={linkClass(item.href)}
+          >
+            {item.label}
+            <FiChevronDown className={`w-3.5 h-3.5 mt-0.5 inline ml-0.5 transition-transform ${open[item.key!] ? "rotate-180" : ""}`} />
+          </button>
 
                   {/* Services dropdown */}
                   {item.key === "services" && open.services && (

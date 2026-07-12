@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link"
+import { ScrollReveal } from "@/lib/scrollReveal"
 
 const values = [
   {
@@ -33,17 +36,15 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#110B18] relative overflow-hidden">
 
-      {/* ===== HERO SECTION ===== */}
+      {/* ===== HERO ===== */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src="/images/Green Data Network (ABSTRACT + TECH).png"
-            alt=""
-            className="w-full h-full object-cover"
-          />
+          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/70 via-[#110B18]/60 to-[#110B18]/85" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/40 to-transparent" />
         </div>
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#772953]/15 blur-[120px] animate-orb-drift" />
+        <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-[#0E1358]/15 blur-[100px] animate-orb-drift-slow" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 w-full py-20">
           <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
@@ -62,16 +63,10 @@ export default function AboutPage() {
                 iGamingUbuntu is an editorial content agency built for businesses that need SEO content that ranks, converts, and scales.
               </p>
               <div className="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
-                <Link
-                  href="/work-with-me"
-                  className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg shadow-[#409824]/20 hover:shadow-[#409824]/40"
-                >
+                <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg shadow-[#409824]/20 hover:shadow-[#409824]/40">
                   Start a project <span>&rarr;</span>
                 </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 hover:border-[#B5ABB3]/60 transition-all duration-200"
-                >
+                <Link href="/contact" className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 hover:border-[#B5ABB3]/60 transition-all duration-200">
                   Contact us
                 </Link>
               </div>
@@ -84,13 +79,15 @@ export default function AboutPage() {
       <section className="py-20 relative">
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-[#409824]/5 blur-[120px]" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <div className="inline-block text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em] mb-3">Our Mission</div>
-          <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] tracking-tight leading-tight">
-            To provide the editorial firepower that content marketing campaigns need to succeed in competitive markets.
-          </h2>
-          <p className="text-[#56525E] text-lg mt-6 max-w-2xl mx-auto leading-relaxed">
-            We combine journalistic rigour with SEO discipline to produce content that drives measurable business results.
-          </p>
+          <ScrollReveal>
+            <div className="inline-block text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em] mb-3">Our Mission</div>
+            <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] tracking-tight leading-tight">
+              To provide the editorial firepower that content marketing campaigns need to succeed in competitive markets.
+            </h2>
+            <p className="text-[#56525E] text-lg mt-6 max-w-2xl mx-auto leading-relaxed">
+              We combine journalistic rigour with SEO discipline to produce content that drives measurable business results.
+            </p>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -101,27 +98,22 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#110B18] via-[#110B18]/95 to-[#110B18]" />
         </div>
         <div className="relative z-10 max-w-5xl mx-auto px-4">
-          <div className="glass-card rounded-3xl p-8 md:p-12 border border-white/5">
-            <div className="flex flex-col md:flex-row items-start gap-8">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden shrink-0 shadow-xl border border-white/10">
-                <img src="/images/nasheta.png" alt="Nasheta John" className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <h2 className="text-3xl font-light text-[#FCFBFB] mb-1">Content strategist and iGaming specialist since 2016</h2>
-                <div className="space-y-4 text-[#56525E] leading-relaxed mt-6">
-                  <p>
-                    Nasheta started writing about African iGaming markets in 2016 when most betting content was copied from European sources.
-                    He saw an opportunity to deliver locally relevant, well-researched content that served both operators and bettors.
-                  </p>
-                  <p>
-                    What began as a solo writing operation grew into a full-service content agency. Today, iGamingUbuntu works with operators,
-                    affiliate networks, and content agencies across Africa, the UK, the US, and Canada. The founding principle remains the same:
-                    understand the market, respect the reader, and deliver content that performs.
-                  </p>
+          <ScrollReveal>
+            <div className="glass-card rounded-3xl p-8 md:p-12 border border-white/5">
+              <div className="flex flex-col md:flex-row items-start gap-8">
+                <div className="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden shrink-0 shadow-xl border border-white/10">
+                  <img src="/images/nasheta.png" alt="Nasheta John" className="w-full h-full object-cover" />
+                </div>
+                <div>
+                  <h2 className="text-3xl font-light text-[#FCFBFB] mb-1">Content strategist and iGaming specialist since 2016</h2>
+                  <div className="space-y-4 text-[#56525E] leading-relaxed mt-6">
+                    <p>Nasheta started writing about African iGaming markets in 2016 when most betting content was copied from European sources. He saw an opportunity to deliver locally relevant, well-researched content that served both operators and bettors.</p>
+                    <p>What began as a solo writing operation grew into a full-service content agency. Today, iGamingUbuntu works with operators, affiliate networks, and content agencies across Africa, the UK, the US, and Canada. The founding principle remains the same: understand the market, respect the reader, and deliver content that performs.</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -129,17 +121,19 @@ export default function AboutPage() {
       <section className="py-20 relative">
         <div className="absolute -bottom-40 right-0 w-[400px] h-[400px] rounded-full bg-[#0E1358]/10 blur-[100px]" />
         <div className="relative z-10 max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
+          <ScrollReveal className="text-center mb-12">
             <div className="inline-block text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em] mb-3">What We Stand For</div>
             <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] tracking-tight">Our Values</h2>
-          </div>
+          </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-5">
             {values.map((v, i) => (
-              <div key={v.title} className="glass-card rounded-2xl border border-white/5 p-7 hover:border-[#409824]/30 transition-all duration-300 hover:-translate-y-0.5">
-                <span className="text-xs font-bold text-[#409824] bg-[#409824]/10 px-2.5 py-1 rounded-full">0{i + 1}</span>
-                <h3 className="text-xl font-medium text-[#FCFBFB] mt-4 mb-2">{v.title}</h3>
-                <p className="text-sm text-[#56525E] leading-relaxed">{v.desc}</p>
-              </div>
+              <ScrollReveal key={v.title} delay={i * 80}>
+                <div className="glass-card rounded-2xl border border-white/5 p-7 hover:border-[#409824]/30 transition-all duration-300 hover:-translate-y-0.5">
+                  <span className="text-xs font-bold text-[#409824] bg-[#409824]/10 px-2.5 py-1 rounded-full">0{i + 1}</span>
+                  <h3 className="text-xl font-medium text-[#FCFBFB] mt-4 mb-2">{v.title}</h3>
+                  <p className="text-sm text-[#56525E] leading-relaxed">{v.desc}</p>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -151,26 +145,28 @@ export default function AboutPage() {
           <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" className="w-full h-full object-cover opacity-[0.08]" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4">
-          <div className="text-center mb-12">
+          <ScrollReveal className="text-center mb-12">
             <div className="inline-block text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em] mb-3">Our Journey</div>
             <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] tracking-tight">From Solo Writer to Full-Service Agency</h2>
-          </div>
+          </ScrollReveal>
           <div className="relative">
             <div className="hidden md:block absolute left-1/2 -translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#409824]/40 via-[#409824]/20 to-transparent" />
             <div className="space-y-8">
               {timeline.map((t, i) => (
-                <div key={t.year} className={`flex items-start gap-6 md:gap-10 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
-                  <div className={`hidden md:block w-1/2 ${i % 2 === 0 ? "text-right" : "text-left"}`}>
-                    <span className="text-3xl font-bold text-[#409824]">{t.year}</span>
+                <ScrollReveal key={t.year} delay={i * 100}>
+                  <div className={`flex items-start gap-6 md:gap-10 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
+                    <div className={`hidden md:block w-1/2 ${i % 2 === 0 ? "text-right" : "text-left"}`}>
+                      <span className="text-3xl font-bold text-[#409824]">{t.year}</span>
+                    </div>
+                    <div className="hidden md:flex w-5 h-5 rounded-full bg-[#409824] shrink-0 relative z-10 items-center justify-center shadow-lg shadow-[#409824]/30">
+                      <div className="w-2 h-2 rounded-full bg-[#FCFBFB]" />
+                    </div>
+                    <div className="md:w-1/2 glass-card rounded-xl border border-white/5 p-5 hover:border-[#409824]/20 transition-all duration-300">
+                      <span className="md:hidden text-sm font-bold text-[#409824] mb-1 block">{t.year}</span>
+                      <p className="text-sm text-[#56525E] leading-relaxed">{t.event}</p>
+                    </div>
                   </div>
-                  <div className="hidden md:flex w-5 h-5 rounded-full bg-[#409824] shrink-0 relative z-10 items-center justify-center shadow-lg shadow-[#409824]/30">
-                    <div className="w-2 h-2 rounded-full bg-[#FCFBFB]" />
-                  </div>
-                  <div className="md:w-1/2 glass-card rounded-xl border border-white/5 p-5 hover:border-[#409824]/20 transition-all duration-300">
-                    <span className="md:hidden text-sm font-bold text-[#409824] mb-1 block">{t.year}</span>
-                    <p className="text-sm text-[#56525E] leading-relaxed">{t.event}</p>
-                  </div>
-                </div>
+                </ScrollReveal>
               ))}
             </div>
           </div>
@@ -180,14 +176,18 @@ export default function AboutPage() {
       {/* ===== INDUSTRIES ===== */}
       <section className="py-20 relative">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <div className="inline-block text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em] mb-3">Industries We Serve</div>
-          <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] tracking-tight mb-3">Sectors We Cover</h2>
-          <p className="text-[#56525E] mb-8 max-w-lg mx-auto">Our editorial team produces content for a wide range of sectors.</p>
+          <ScrollReveal>
+            <div className="inline-block text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em] mb-3">Industries We Serve</div>
+            <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] tracking-tight mb-3">Sectors We Cover</h2>
+            <p className="text-[#56525E] mb-8 max-w-lg mx-auto">Our editorial team produces content for a wide range of sectors.</p>
+          </ScrollReveal>
           <div className="flex flex-wrap justify-center gap-3">
-            {sectors.map((s) => (
-              <div key={s} className="glass-card border border-white/5 rounded-xl px-5 py-3 text-sm font-medium text-[#B5ABB3] hover:border-[#409824]/30 hover:text-[#FCFBFB] transition-all duration-300 cursor-default">
-                {s}
-              </div>
+            {sectors.map((s, i) => (
+              <ScrollReveal key={s} delay={i * 60}>
+                <div className="glass-card border border-white/5 rounded-xl px-5 py-3 text-sm font-medium text-[#B5ABB3] hover:border-[#409824]/30 hover:text-[#FCFBFB] transition-all duration-300 cursor-default">
+                  {s}
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -202,11 +202,13 @@ export default function AboutPage() {
             { num: "12+", label: "languages" },
             { num: "98%", label: "on-time delivery" },
             { num: "50+", label: "active clients" },
-          ].map((s) => (
-            <div key={s.label} className="glass-card rounded-2xl border border-white/5 p-7 text-center hover:border-[#409824]/20 transition-all duration-300">
-              <p className="text-4xl font-bold text-[#409824]">{s.num}</p>
-              <p className="text-sm text-[#56525E] mt-1">{s.label}</p>
-            </div>
+          ].map((s, i) => (
+            <ScrollReveal key={s.label} delay={i * 100}>
+              <div className="glass-card rounded-2xl border border-white/5 p-7 text-center hover:border-[#409824]/20 transition-all duration-300">
+                <p className="text-4xl font-bold text-[#409824]">{s.num}</p>
+                <p className="text-sm text-[#56525E] mt-1">{s.label}</p>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
       </section>
@@ -217,25 +219,20 @@ export default function AboutPage() {
           <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/90 to-[#110B18]/95" />
         </div>
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-[#409824]/10 blur-[120px]" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-light text-[#FCFBFB] tracking-tight leading-tight">Ready to work together?</h2>
-          <p className="text-[#B5ABB3] text-lg mt-4 mb-8 max-w-md mx-auto">
-            Tell us about your content needs. We will send you a tailored proposal within 24 hours.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/work-with-me"
-              className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg shadow-[#409824]/20"
-            >
-              Start a project <span>&rarr;</span>
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 hover:border-[#B5ABB3]/60 transition-all duration-200"
-            >
-              Contact us
-            </Link>
-          </div>
+          <ScrollReveal>
+            <h2 className="text-4xl md:text-5xl font-light text-[#FCFBFB] tracking-tight leading-tight">Ready to work together?</h2>
+            <p className="text-[#B5ABB3] text-lg mt-4 mb-8 max-w-md mx-auto">Tell us about your content needs. We will send you a tailored proposal within 24 hours.</p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg shadow-[#409824]/20">
+                Start a project <span>&rarr;</span>
+              </Link>
+              <Link href="/contact" className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 hover:border-[#B5ABB3]/60 transition-all duration-200">
+                Contact us
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </div>

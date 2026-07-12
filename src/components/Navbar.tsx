@@ -12,15 +12,6 @@ const contentTypes = [
   { label: "Link Building", href: "/link-building-services", desc: "Build authoritative backlinks that boost rankings" },
 ]
 
-const markets = [
-  { label: "Kenya", href: "/kenya", desc: "M-Pesa, BCLB-regulated operators, local leagues" },
-  { label: "Nigeria", href: "/nigeria", desc: "Naija betting culture, Bank Transfer, Bet9ja market" },
-  { label: "South Africa", href: "/south-africa", desc: "HollywoodBets, ZAR support, NGB compliance" },
-  { label: "Ghana", href: "/ghana", desc: "MTN MoMo, Gaming Commission, Premier League focus" },
-  { label: "Tanzania", href: "/tanzania", desc: "Tigo-Pesa, Gaming Board, Swahili audience" },
-  { label: "Global", href: "/global", desc: "UK, US, Canada — regulated markets, English-first" },
-]
-
 const blogSections = [
   {
     label: "News", href: "/news",
@@ -168,28 +159,15 @@ export default function Navbar() {
                       onMouseEnter={() => handleEnter("services")}
                       onMouseLeave={handleLeave}
                     >
-                      <div className="grid grid-cols-2 gap-6">
-                        <div>
-                          <h4 className="text-xs font-semibold uppercase tracking-widest text-ubuntu-orange mb-3">Content Types</h4>
-                          <div className="space-y-2">
-                            {contentTypes.map((ct) => (
-                              <Link key={ct.label} href={ct.href} className="block p-3 rounded-lg hover:bg-white/5 transition group">
-                                <span className="font-medium text-sm text-[#FCFBFB] group-hover:text-ubuntu-orange transition-colors">{ct.label}</span>
-                                <p className="text-xs text-[#56525E] mt-0.5">{ct.desc}</p>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="text-xs font-semibold uppercase tracking-widest text-ubuntu-orange mb-3">Markets</h4>
-                          <div className="space-y-2">
-                            {markets.map((m) => (
-                              <Link key={m.label} href={m.href} className="block p-3 rounded-lg hover:bg-white/5 transition group">
-                                <span className="font-medium text-sm text-[#FCFBFB] group-hover:text-ubuntu-orange transition-colors">{m.label}</span>
-                                <p className="text-xs text-[#56525E] mt-0.5">{m.desc}</p>
-                              </Link>
-                            ))}
-                          </div>
+                      <div>
+                        <h4 className="text-xs font-semibold uppercase tracking-widest text-ubuntu-orange mb-3">Content Types</h4>
+                        <div className="space-y-2">
+                          {contentTypes.map((ct) => (
+                            <Link key={ct.label} href={ct.href} className="block p-3 rounded-lg hover:bg-white/5 transition group">
+                              <span className="font-medium text-sm text-[#FCFBFB] group-hover:text-ubuntu-orange transition-colors">{ct.label}</span>
+                              <p className="text-xs text-[#56525E] mt-0.5">{ct.desc}</p>
+                            </Link>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -317,20 +295,12 @@ export default function Navbar() {
                 <FiChevronDown className={`w-4 h-4 transition-transform ${mobile.services ? "rotate-180" : ""}`} />
               </button>
               {mobile.services && (
-                <div className="ml-3 mt-1 space-y-1 pb-2 border-l-2 border-ubuntu-orange/20 pl-3">
-                  <div className="mb-3">
+                  <div className="ml-3 mt-1 space-y-1 pb-2 border-l-2 border-ubuntu-orange/20 pl-3">
                     <p className="text-xs font-semibold text-ubuntu-orange uppercase tracking-wider mb-2">Content Types</p>
                     {contentTypes.map((ct) => (
                       <Link key={ct.label} href={ct.href} className="block px-3 py-2 rounded-lg text-sm text-[#56525E] hover:text-[#B5ABB3] hover:bg-white/5">{ct.label}</Link>
                     ))}
                   </div>
-                  <div>
-                    <p className="text-xs font-semibold text-ubuntu-orange uppercase tracking-wider mb-2">Markets</p>
-                    {markets.map((m) => (
-                      <Link key={m.label} href={m.href} className="block px-3 py-2 rounded-lg text-sm text-[#56525E] hover:text-[#B5ABB3] hover:bg-white/5">{m.label}</Link>
-                    ))}
-                  </div>
-                </div>
               )}
             </div>
 

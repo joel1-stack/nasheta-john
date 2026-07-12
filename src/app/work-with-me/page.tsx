@@ -43,7 +43,7 @@ export default function WorkWithMePage() {
     <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in relative z-10">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-orange to-gold/80 p-8 md:p-12 text-white">
         <div className="absolute inset-0 opacity-20">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1200&q=80" alt="Work with me" className="w-full h-full object-cover" />
+          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Work with me" className="w-full h-full object-cover opacity-40" />
         </div>
         <div className="relative z-10">
           <h1 className="text-3xl md:text-4xl font-bold">Work With Me</h1>

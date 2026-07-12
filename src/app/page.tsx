@@ -144,7 +144,7 @@ export default function HomePage() {
       {/* Full-page background image with subtle dark overlay */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <img
-          src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85"
+          src="/images/full backgound.png"
           alt=""
           className="w-full h-full object-cover"
         />
@@ -320,10 +320,10 @@ export default function HomePage() {
           </ScrollReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { title: "Match Result Articles", desc: "SEO-optimised match reports with integrated betting odds and affiliate CTAs.", img: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=100&q=80" },
-              { title: "Casino & Betting Reviews", desc: "In-depth operator reviews with comparison tables and bonus breakdowns.", img: "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?w=100&q=80" },
-              { title: "Betting Guides & Tutorials", desc: "Beginner-friendly how-to content that converts readers into depositing players.", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=100&q=80" },
-              { title: "Industry News & Press Releases", desc: "Timely coverage of regulatory changes, market launches, and operator announcements.", img: "https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=100&q=80" },
+              { title: "Match Result Articles", desc: "SEO-optimised match reports with integrated betting odds and affiliate CTAs.", img: "/images/sports betting analytics.png" },
+              { title: "Casino & Betting Reviews", desc: "In-depth operator reviews with comparison tables and bonus breakdowns.", img: "/images/Green Data Network (ABSTRACT + TECH).png" },
+              { title: "Betting Guides & Tutorials", desc: "Beginner-friendly how-to content that converts readers into depositing players.", img: "/images/sports betting analytics.png" },
+              { title: "Industry News & Press Releases", desc: "Timely coverage of regulatory changes, market launches, and operator announcements.", img: "/images/Green Data Network (ABSTRACT + TECH).png" },
             ].map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 80}>
                 <Link href="/services" className="group block glass-card rounded-2xl p-6 hover:border-[#409824]/40 hover:-translate-y-1 transition-all duration-300">

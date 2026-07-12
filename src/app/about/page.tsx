@@ -35,7 +35,7 @@ export default function AboutPage() {
       {/* Hero */}
       <div className="relative rounded-2xl overflow-hidden mb-12 bg-gradient-to-br from-[#0E1358] to-[#1B2385]">
         <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1400&q=80" alt="" className="w-full h-full object-cover opacity-30" />
+          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" className="w-full h-full object-cover opacity-40" />
         </div>
         <div className="absolute inset-0 bg-[#110B18]/40" />
         <div className="relative z-10 p-8 md:p-14 text-white">
@@ -153,7 +153,7 @@ export default function AboutPage() {
       {/* CTA */}
       <div className="relative rounded-2xl overflow-hidden p-8 md:p-12 text-white text-center">
         <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1400&q=80" alt="" className="w-full h-full object-cover" />
+          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" className="w-full h-full object-cover opacity-30" />
           <div className="absolute inset-0 bg-gradient-to-r from-ubuntu-orange/90 to-ubuntu-purple/90" />
         </div>
         <div className="relative z-10">

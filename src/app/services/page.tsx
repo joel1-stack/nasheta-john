@@ -188,7 +188,7 @@ export default function ServicesPage() {
   return (
     <div className="bg-[#110B18] min-h-screen relative">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85" alt="" className="w-full h-full object-cover" />
+        <img src="/images/sports betting analytics.png" alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#110B18]/60" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/20 via-transparent to-[#110B18]/40" />
       </div>
@@ -196,7 +196,7 @@ export default function ServicesPage() {
       {/* Hero */}
       <div className="relative rounded-2xl overflow-hidden mb-12 bg-gradient-to-br from-[#0E1358] to-[#1B2385]">
         <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1400&q=80" alt="" className="w-full h-full object-cover opacity-30" />
+          <img src="/images/sports betting analytics.png" alt="" className="w-full h-full object-cover opacity-40" />
         </div>
         <div className="absolute inset-0 bg-[#110B18]/40" />
         <div className="relative z-10 p-8 md:p-14 text-white">

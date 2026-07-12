@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import AdSlot from "@/components/AdSlot"
 import { ScrollReveal } from "@/lib/scrollReveal"
 import LetterReveal from "@/components/LetterReveal"
 
@@ -10,163 +9,58 @@ const services = [
   {
     id: "seo-content",
     title: "SEO Content Writing",
-    tagline: "Data-led, editorial content that ranks and converts.",
     icon: (
-      <svg className="w-7 h-7 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+      <svg className="w-8 h-8 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
     ),
-    deliverables: [
-      "Long-form articles and guides — briefs, drafts, final",
-      "Page copy — product, category, landing pages",
-      "Blog content and topical clusters",
-      "Meta titles, descriptions and on-page optimisation notes",
-    ],
-    subs: [
-      "Keyword and topical research",
-      "Content briefs and persona targeting",
-      "Headline testing — A/B title variants",
-      "CMS-ready delivery — structured headings, alt text",
-    ],
-    cta: "See sample brief",
+    desc: "Without SEO, your brand could never reach the visibility it deserves. Reaching high rankings isn't as simple as it used to be, and only experts can adapt to the constant changes of the algorithm. Let iGamingUbuntu deal with all of Google's requirements, and watch your brand climb the ranks.",
+    link: "/seo-content-writing",
   },
   {
     id: "translation",
     title: "Translation",
-    tagline: "Maintain voice and SEO across languages.",
     icon: (
-      <svg className="w-7 h-7 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      <svg className="w-8 h-8 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
     ),
-    deliverables: [
-      "Translations for web pages, emails, social posts",
-      "Localised keyword research and optimisation",
-      "Multilingual style guides and glossaries",
-    ],
-    subs: [
-      "Native translator assignment with translator notes",
-      "Transcreation for marketing assets",
-      "QA and publishing in local CMS",
-    ],
-    cta: "Learn more",
+    desc: "Your creative voice must remain the same across all of the languages available on your site. At iGamingUbuntu, we specialise in all kinds of translations, and no matter if you're working with social media, emails, or documents, we're there to help you spread your message in multiple languages.",
+    link: "/translation-services",
   },
   {
     id: "editing",
     title: "Editing",
-    tagline: "Polish tone, remove errors, ensure brand consistency.",
     icon: (
-      <svg className="w-7 h-7 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      <svg className="w-8 h-8 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
     ),
-    deliverables: [
-      "Proofreading — typos, grammar, punctuation",
-      "Tone and style editing — brand voice alignment",
-      "Structural editing for clarity and flow",
-    ],
-    subs: [
-      "Final QA pass — pre-publish",
-      "Fact checks and link checks",
-      "Readability and accessibility checks",
-    ],
-    cta: "Learn more",
+    desc: "In the digital sphere, even small errors can harm your brand's credibility. Though often overlooked, editing is an important part of the content marketing process that ensures you stay consistent while spreading your message. Avoiding typos and hitting the right tone of voice is crucial when creating an online presence.",
+    link: "/editing-services",
   },
   {
     id: "link-building",
-    title: "Link Building, Outreach and Backlinks",
-    tagline: "Build authoritative backlinks that boost rankings and referral traffic.",
+    title: "Link Building",
     icon: (
-      <svg className="w-7 h-7 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+      <svg className="w-8 h-8 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
     ),
-    deliverables: [
-      "Outreach and guest post placement",
-      "Editorial link campaigns and content promotion",
-      "Link prospecting and domain authority targeting",
-    ],
-    subs: [
-      "Campaign strategy and target list",
-      "Content asset creation for outreach",
-      "Reporting on links and placements",
-    ],
-    cta: "Learn more",
-  },
-  {
-    id: "strategy",
-    title: "Content Strategy and Research",
-    tagline: "Plan campaigns that compound organic growth.",
-    icon: (
-      <svg className="w-7 h-7 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-    ),
-    deliverables: [
-      "Topical maps and content calendars",
-      "Competitor gap analysis",
-      "Conversion-focused content funnel planning",
-    ],
-    subs: [
-      "Audience persona work",
-      "KPI and measurement framework",
-    ],
-    optional: true,
-    cta: "Learn more",
-  },
-  {
-    id: "operations",
-    title: "Content Operations",
-    tagline: "Workflow, briefs, and CMS publishing to keep production predictable.",
-    icon: (
-      <svg className="w-7 h-7 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-    ),
-    deliverables: [
-      "Editorial calendar, brief templates, versioning",
-      "CMS upload and basic page layout",
-      "API integrations and formatting for syndication",
-    ],
-    subs: [
-      "Batch production scheduling",
-      "Onboarding and single point of contact project management",
-    ],
-    optional: true,
-    cta: "Learn more",
+    desc: "To rank among the biggest fish in the industry, you'll need to build your domain through powerful backlinks. At iGamingUbuntu, we'll ensure that these backlinks don't only work one SEO angle but also provide valuable information to the reader, enhancing traffic to your site.",
+    link: "/link-building-services",
   },
 ]
 
-const packages = [
+const expectations = [
   {
-    name: "Starter",
-    price: "Per-piece or monthly",
-    badge: "",
-    bullets: [
-      "Set number of articles per month",
-      "Basic editing and proofreading",
-      "CMS-ready delivery",
-      "Email support",
-    ],
+    title: "Proven Track Record",
+    desc: "iGamingUbuntu only works with experienced and well-established specialists. Our professional SEO writers will have no problems adapting to your niche and requirements, and by partnering with us, you'll be certain that experts will be working on your site.",
   },
   {
-    name: "Growth",
-    price: "Monthly retainer",
-    badge: "Most Popular",
-    bullets: [
-      "More articles plus translation",
-      "Link prospecting and outreach",
-      "Dedicated editor",
-      "Slack and email support",
-    ],
+    title: "Top-Tier Quality",
+    desc: "At iGamingUbuntu, we already have an established process that delivers top-tier quality and results. Quality SEO content is our business and a promise to all current and future clients.",
   },
   {
-    name: "Enterprise",
-    price: "Custom monthly",
-    badge: "",
-    bullets: [
-      "Full strategy plus operations",
-      "Link building and dedicated account team",
-      "Content operations and CMS management",
-      "Priority support and monthly performance review",
-    ],
+    title: "Updated Knowledge",
+    desc: "We're aware that things change quickly nowadays, and how quickly you react can either make or break your business. Our experts remain in tune with the newest Google requirements to ensure your marketing plan delivers at all times.",
   },
-]
-
-const processSteps = [
-  { step: "01", title: "Research", desc: "Keyword and audience discovery to identify high-opportunity topics." },
-  { step: "02", title: "Strategy", desc: "Topical map and brief approval before production begins." },
-  { step: "03", title: "Production", desc: "Writing, editing, localisation and QA across all deliverables." },
-  { step: "04", title: "Promotion", desc: "Outreach and link building to amplify content reach." },
-  { step: "05", title: "Reporting", desc: "Deliverables, performance review and KPI alignment." },
+  {
+    title: "Precise Deadlines",
+    desc: "Simply let us know when you need the content delivered, and we'll make sure it's on time. We're working on your time, and you won't have to worry about surprises and delays.",
+  },
 ]
 
 const faqs = [
@@ -189,7 +83,6 @@ const faqs = [
 ]
 
 export default function ServicesPage() {
-  const [expanded, setExpanded] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [faqOpen, setFaqOpen] = useState<string | null>(null)
 
@@ -206,219 +99,100 @@ export default function ServicesPage() {
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-8">
 
         {/* ===== HERO ===== */}
-        <section className="relative rounded-2xl overflow-hidden mb-12 bg-gradient-to-br from-[#0E1358] to-[#1B2385]">
+        <section className="relative rounded-2xl overflow-hidden mb-16 bg-gradient-to-br from-[#0E1358] to-[#1B2385]">
           <div className="absolute inset-0">
             <img src="/images/sports betting analytics.png" alt="" className="w-full h-full object-cover opacity-40" />
           </div>
           <div className="absolute inset-0 bg-[#110B18]/40" />
-          <div className="relative z-10 p-8 md:p-14 text-white">
+          <div className="relative z-10 p-8 md:p-16 text-white text-center">
             <LetterReveal
-              text="We create high performing SEO content that converts."
-              className="text-3xl md:text-5xl font-bold leading-tight max-w-2xl"
-              delay={400}
-              stagger={30}
+              text="Services"
+              className="text-5xl md:text-7xl font-bold leading-tight"
+              delay={300}
+              stagger={40}
             />
             <LetterReveal
-              text="Full-service content and localisation delivered by an experienced editorial team."
+              text="A specific set of services is required to make the most out of your SEO content marketing campaign. At iGamingUbuntu, we aim to provide everything you need to achieve your business goals. A team of professionals will ensure all of your deadlines are met and expectations exceeded."
               as="p"
-              className="text-white/80 text-lg mt-3 max-w-xl"
-              delay={2200}
-              stagger={18}
+              className="text-white/80 text-base md:text-lg mt-4 max-w-2xl mx-auto leading-relaxed"
+              delay={1800}
+              stagger={15}
             />
-            <p className="text-white/60 text-sm mt-2 max-w-lg animate-fade-in" style={{ animationDelay: "3.5s", animationFillMode: "both" }}>
-              From research and writing to translation, editing and link building — we cover everything a modern SEO content campaign needs.
-            </p>
-            <div className="flex flex-wrap gap-3 mt-6 animate-fade-in" style={{ animationDelay: "4s", animationFillMode: "both" }}>
-              <a href="#form" onClick={() => setShowForm(true)} className="inline-flex items-center gap-2 bg-[#409824] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#409824]/90 transition shadow-lg shadow-[#409824]/20">
-                Get a project estimate
+            <div className="mt-8 animate-fade-in" style={{ animationDelay: "3s", animationFillMode: "both" }}>
+              <a href="#services" className="inline-flex items-center gap-2 bg-[#409824] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#409824]/90 transition shadow-lg shadow-[#409824]/20">
+                Check out our offerings below
               </a>
-              <Link href="/blog" className="inline-flex items-center gap-2 border border-white/30 text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/5 transition">
-                See our work
-              </Link>
             </div>
           </div>
         </section>
 
-        <AdSlot position="leaderboard-top" className="mb-12" />
-
-        {/* ===== INTRO ===== */}
-        <div className="max-w-3xl mx-auto text-center mb-14">
-          <ScrollReveal>
-            <p className="text-[#56525E] text-lg leading-relaxed">
-              A specific set of services is required to make the most of your SEO content marketing campaign.
-              We provide everything you need to achieve your business goals — from research and writing to translation,
-              editing, link building, and full content operations.
-            </p>
-          </ScrollReveal>
-        </div>
-
-        {/* ===== SERVICE CARDS ===== */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
-          {services.map((svc, i) => (
-            <ScrollReveal key={svc.id} delay={i * 80}>
-              <div
-                className="glass-card rounded-2xl border border-white/5 p-6 hover:border-[#409824]/30 hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
-                onClick={() => setExpanded(expanded === svc.id ? null : svc.id)}
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#409824]/10 flex items-center justify-center">
+        {/* ===== SERVICES GRID ===== */}
+        <section id="services" className="mb-16">
+          <div className="flex flex-col md:flex-row items-start gap-8 md:gap-16 mb-10">
+            <div className="md:w-1/2">
+              <ScrollReveal>
+                <div className="text-xs font-semibold text-[#409824] uppercase tracking-[0.2em] mb-3">iGamingUbuntu Services</div>
+                <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] tracking-tight leading-tight">
+                  We've Got The Formula<br />For Great Content
+                </h2>
+              </ScrollReveal>
+            </div>
+            <div className="md:w-1/2">
+              <ScrollReveal delay={150}>
+                <p className="text-[#56525E] leading-relaxed">
+                  At iGamingUbuntu, our mission is to make your life easier whilst providing you with great content that makes a difference.
+                  That's why we offer a range of content services to cover all your needs, as well as having a fantastic team that works behind it all.
+                </p>
+              </ScrollReveal>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-5">
+            {services.map((svc, i) => (
+              <ScrollReveal key={svc.id} delay={i * 100}>
+                <Link href={svc.link} className="group block glass-card rounded-2xl border border-white/5 p-6 md:p-8 hover:border-[#409824]/30 hover:-translate-y-1 transition-all duration-300">
+                  <div className="w-14 h-14 rounded-xl bg-[#409824]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                     {svc.icon}
                   </div>
-                  {svc.optional && <span className="text-[10px] font-semibold text-[#409824] bg-[#409824]/10 px-2.5 py-0.5 rounded-full">Add-on</span>}
-                </div>
-                <h3 className="font-bold text-[#FCFBFB] text-lg group-hover:text-[#409824] transition-colors">{svc.title}</h3>
-                <p className="text-sm text-[#56525E] mt-1 mb-4">{svc.tagline}</p>
-                <ul className="space-y-2 text-sm text-[#56525E]">
-                  {svc.deliverables.map((d) => (
-                    <li key={d} className="flex items-start gap-2">
-                      <svg className="w-3.5 h-3.5 text-[#409824] mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                      <span>{d}</span>
-                    </li>
-                  ))}
-                </ul>
-                <button className="text-xs text-[#409824] font-medium mt-4 hover:underline flex items-center gap-1">
-                  {expanded === svc.id ? "Less detail" : svc.cta}
-                  <svg className={`w-3 h-3 transition-transform ${expanded === svc.id ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                </button>
-                {expanded === svc.id && (
-                  <div className="mt-4 pt-4 border-t border-white/5 animate-fade-in">
-                    <p className="text-xs font-semibold text-[#B5ABB3] mb-2">Sub-services:</p>
-                    <ul className="space-y-1.5 text-sm text-[#56525E]">
-                      {svc.subs.map((s) => (
-                        <li key={s} className="flex items-start gap-2">
-                          <svg className="w-3.5 h-3.5 text-[#409824] mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-                          <span>{s}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <h3 className="text-2xl font-bold text-[#FCFBFB] group-hover:text-[#409824] transition-colors">{svc.title}</h3>
+                  <p className="text-sm text-[#56525E] mt-3 leading-relaxed">{svc.desc}</p>
+                  <div className="mt-auto pt-4">
+                    <span className="text-sm text-[#409824] font-medium group-hover:underline inline-flex items-center gap-1">
+                      Learn More about {svc.title} <span>&rarr;</span>
+                    </span>
                   </div>
-                )}
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        {/* ===== PACKAGES ===== */}
-        <ScrollReveal>
-          <div className="glass-card rounded-2xl p-8 mb-14 border border-white/5">
-            <h2 className="text-2xl font-bold text-[#FCFBFB] text-center mb-2">Simple, scalable pricing</h2>
-            <p className="text-[#56525E] text-center mb-8 max-w-lg mx-auto">Choose the package that fits your content volume and goals. All plans include CMS-ready delivery and editorial QA.</p>
-            <div className="grid md:grid-cols-3 gap-6">
-              {packages.map((pkg) => (
-                <div key={pkg.name} className={`glass-card rounded-xl border-2 p-6 relative ${pkg.badge ? "border-[#409824] shadow-lg shadow-[#409824]/10" : "border-white/5"}`}>
-                  {pkg.badge && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#409824] text-white text-xs font-bold px-4 py-1 rounded-full">{pkg.badge}</span>
-                  )}
-                  <h3 className="font-bold text-xl text-[#FCFBFB]">{pkg.name}</h3>
-                  <p className="text-sm text-[#56525E] mt-1 mb-4">{pkg.price}</p>
-                  <ul className="space-y-2 mb-6">
-                    {pkg.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-2 text-sm text-[#B5ABB3]">
-                        <svg className="w-4 h-4 text-[#409824] mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <a href="#form" onClick={() => setShowForm(true)} className={`block text-center py-2.5 rounded-lg font-semibold text-sm transition ${pkg.badge ? "bg-[#409824] text-white hover:bg-[#409824]/90" : "border border-white/10 text-[#B5ABB3] hover:border-[#409824]/50 hover:text-[#FCFBFB]"}`}>
-                    Get pricing
-                  </a>
-                </div>
-              ))}
-            </div>
-            <div className="text-center mt-6">
-              <a href="#form" onClick={() => setShowForm(true)} className="text-[#409824] font-medium text-sm hover:underline">Need something custom? Request a tailored quote &rarr;</a>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* ===== TRUST ===== */}
-        <div className="text-center mb-14">
-          <ScrollReveal>
-            <h2 className="text-2xl font-bold text-[#FCFBFB] mb-3">Trusted by leading brands and agencies</h2>
-            <p className="text-[#56525E] text-sm mb-6 max-w-xl mx-auto">We deliver editorial content that performs, on time and at scale.</p>
-          </ScrollReveal>
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            {["Publishing", "iGaming", "SaaS", "E-commerce", "Finance", "Health", "Travel"].map((sector, i) => (
-              <ScrollReveal key={sector} delay={i * 60}>
-                <div className="glass-card border border-white/5 rounded-xl px-5 py-2.5 text-sm font-medium text-[#B5ABB3] hover:border-[#409824]/30 hover:text-[#FCFBFB] transition-all duration-300 cursor-default">{sector}</div>
+                </Link>
               </ScrollReveal>
             ))}
           </div>
-          <div className="flex flex-wrap justify-center gap-10">
-            {[
-              { num: "5,000+", label: "pieces delivered" },
-              { num: "12+", label: "languages supported" },
-              { num: "98%", label: "on-time delivery" },
-              { num: "50+", label: "active clients" },
-            ].map((s, i) => (
-              <ScrollReveal key={s.label} delay={i * 80}>
-                <div className="text-center">
-                  <p className="text-3xl font-bold text-[#409824]">{s.num}</p>
-                  <p className="text-sm text-[#56525E] mt-1">{s.label}</p>
-                </div>
+        </section>
+
+        {/* ===== WHAT CAN YOU EXPECT ===== */}
+        <section className="mb-16">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-16">
+            <div className="md:w-2/5">
+              <ScrollReveal>
+                <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] tracking-tight leading-tight">
+                  What Can You Expect<br />From Our Experts?
+                </h2>
               </ScrollReveal>
-            ))}
-          </div>
-        </div>
-
-        {/* ===== TESTIMONIALS ===== */}
-        <div className="grid md:grid-cols-3 gap-5 mb-14">
-          {[
-            { quote: "They consistently deliver high-quality content that ranks. Our organic traffic grew 280% in six months.", name: "Marcus Olof", title: "Head of Content, Betting Platform" },
-            { quote: "The translation service maintained our brand voice perfectly across three African markets.", name: "Priya Sharma", title: "Marketing Director, iGaming Operator" },
-            { quote: "Reliable, professional, and results-driven. They've become an extension of our editorial team.", name: "James Kamau", title: "CEO, Affiliate Network" },
-          ].map((t, i) => (
-            <ScrollReveal key={t.name} delay={i * 100}>
-              <div className="glass-card rounded-2xl border border-white/5 p-6 hover:border-[#409824]/20 transition-all duration-300">
-                <svg className="w-6 h-6 text-[#409824]/30 mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
-                <p className="text-sm text-[#B5ABB3] leading-relaxed mb-4">{t.quote}</p>
-                <p className="font-semibold text-[#FCFBFB] text-sm">{t.name}</p>
-                <p className="text-xs text-[#56525E]">{t.title}</p>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        {/* ===== PROCESS ===== */}
-        <div className="mb-14">
-          <ScrollReveal className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-[#FCFBFB]">How we work</h2>
-            <p className="text-[#56525E] text-sm mt-1">Five steps from discovery to delivery.</p>
-          </ScrollReveal>
-          <div className="relative">
-            <div className="hidden md:block absolute top-8 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-[#409824]/40 via-[#409824]/20 to-[#409824]/40" />
-            <div className="grid md:grid-cols-5 gap-6">
-              {processSteps.map((step, i) => (
-                <ScrollReveal key={step.step} delay={i * 100}>
-                  <div className="text-center relative">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#409824] to-[#2d6b1a] flex items-center justify-center mx-auto mb-3 shadow-lg shadow-[#409824]/20 relative z-10">
-                      <span className="text-white font-bold text-sm">{step.step}</span>
-                    </div>
-                    <h3 className="font-bold text-[#FCFBFB] text-sm">{step.title}</h3>
-                    <p className="text-xs text-[#56525E] mt-1 leading-relaxed">{step.desc}</p>
+            </div>
+            <div className="md:w-3/5 grid md:grid-cols-2 gap-5">
+              {expectations.map((item, i) => (
+                <ScrollReveal key={item.title} delay={i * 80}>
+                  <div className="glass-card rounded-2xl border border-white/5 p-6 hover:border-[#409824]/20 transition-all duration-300 h-full">
+                    <h3 className="font-bold text-[#FCFBFB] mb-2">{item.title}</h3>
+                    <p className="text-sm text-[#56525E] leading-relaxed">{item.desc}</p>
                   </div>
                 </ScrollReveal>
               ))}
             </div>
           </div>
-        </div>
-
-        <AdSlot position="in-content-1" className="mb-14" />
-
-        {/* ===== CASE STUDIES ===== */}
-        <ScrollReveal>
-          <div className="glass-card rounded-2xl p-8 text-center mb-14 border border-white/5">
-            <p className="text-[#B5ABB3] mb-4">Want to see real results? Browse our portfolio of successful content campaigns.</p>
-            <Link href="/blog" className="inline-flex items-center gap-2 bg-[#409824] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition text-sm shadow-lg shadow-[#409824]/20">
-              See examples of our work
-            </Link>
-          </div>
-        </ScrollReveal>
+        </section>
 
         {/* ===== FAQ ===== */}
-        <div className="max-w-2xl mx-auto mb-14">
-          <ScrollReveal className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-[#FCFBFB]">Frequently asked questions</h2>
+        <section className="max-w-2xl mx-auto mb-16">
+          <ScrollReveal className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] tracking-tight">FAQs</h2>
           </ScrollReveal>
           <div className="space-y-3">
             {faqs.map((faq, i) => (
@@ -440,7 +214,7 @@ export default function ServicesPage() {
               </ScrollReveal>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* ===== CONTACT FORM ===== */}
         <div id="form" className="scroll-mt-20">

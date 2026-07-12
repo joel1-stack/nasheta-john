@@ -6,19 +6,19 @@ import { usePathname } from "next/navigation"
 import { FiMenu, FiX, FiChevronDown } from "react-icons/fi"
 
 const contentTypes = [
-  { label: "Match Result Articles", href: "/services#match-articles", desc: "SEO-optimised match reports with affiliate CTAs" },
-  { label: "Casino & Betting Reviews", href: "/services#casino-reviews", desc: "In-depth operator reviews with comparison tables" },
-  { label: "Betting Guides & Tutorials", href: "/services#betting-guides", desc: "Beginner-friendly how-to content" },
-  { label: "Industry News & Press Releases", href: "/services#industry-news", desc: "Timely coverage of market developments" },
+  { label: "SEO Content Writing", href: "/seo-content-writing", desc: "Data-led editorial content that ranks and converts" },
+  { label: "Translation", href: "/translation-services", desc: "Maintain voice and SEO across multiple languages" },
+  { label: "Editing", href: "/editing-services", desc: "Polish tone, remove errors, ensure brand consistency" },
+  { label: "Link Building", href: "/link-building-services", desc: "Build authoritative backlinks that boost rankings" },
 ]
 
 const markets = [
-  { label: "Kenya", href: "/services#kenya", desc: "M-Pesa, BCLB-regulated operators, local leagues" },
-  { label: "Nigeria", href: "/services#nigeria", desc: "Naija betting culture, Bank Transfer, Bet9ja market" },
-  { label: "South Africa", href: "/services#south-africa", desc: "HollywoodBets, ZAR support, NGB compliance" },
-  { label: "Ghana", href: "/services#ghana", desc: "MTN MoMo, Gaming Commission, Premier League focus" },
-  { label: "Tanzania", href: "/services#tanzania", desc: "Tigo-Pesa, Gaming Board, Swahili audience" },
-  { label: "Global", href: "/services#global", desc: "UK, US, Canada — regulated markets, English-first" },
+  { label: "Kenya", href: "/kenya", desc: "M-Pesa, BCLB-regulated operators, local leagues" },
+  { label: "Nigeria", href: "/nigeria", desc: "Naija betting culture, Bank Transfer, Bet9ja market" },
+  { label: "South Africa", href: "/south-africa", desc: "HollywoodBets, ZAR support, NGB compliance" },
+  { label: "Ghana", href: "/ghana", desc: "MTN MoMo, Gaming Commission, Premier League focus" },
+  { label: "Tanzania", href: "/tanzania", desc: "Tigo-Pesa, Gaming Board, Swahili audience" },
+  { label: "Global", href: "/global", desc: "UK, US, Canada — regulated markets, English-first" },
 ]
 
 const blogSections = [

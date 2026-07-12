@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
-import type { Article, Country } from "@/types"
+import type { Article } from "@/types"
 
 const sampleArticles: Article[] = [
   {
@@ -56,26 +56,26 @@ const sampleArticles: Article[] = [
   },
 ]
 
-const countries: Country[] = [
-  { id: "ke", name: "Kenya", slug: "kenya", flag: "", description: "Best betting sites, M-Pesa guides, and local operator reviews for Kenyan bettors.", articleCount: 120 },
-  { id: "ng", name: "Nigeria", slug: "nigeria", flag: "", description: "Nigerian betting market, Naija bonuses, and sportsbook reviews for Nigerian players.", articleCount: 85 },
-  { id: "za", name: "South Africa", slug: "south-africa", flag: "", description: "SA betting guides, Hollywoodbets reviews, and local regulations for South African bettors.", articleCount: 64 },
-  { id: "gh", name: "Ghana", slug: "ghana", flag: "", description: "Ghana betting sites, Premier League tips, and mobile money guides for Ghanaian players.", articleCount: 42 },
-  { id: "tz", name: "Tanzania", slug: "tanzania", flag: "", description: "Tanzania sports betting, casino reviews, and Tigo-Pesa guides for Tanzanian bettors.", articleCount: 38 },
+const africanCountries = [
+  { code: "dz", name: "Algeria" }, { code: "ao", name: "Angola" }, { code: "bj", name: "Benin" },
+  { code: "bw", name: "Botswana" }, { code: "bf", name: "Burkina Faso" }, { code: "bi", name: "Burundi" },
+  { code: "cv", name: "Cabo Verde" }, { code: "cm", name: "Cameroon" }, { code: "cf", name: "Central African Republic" },
+  { code: "td", name: "Chad" }, { code: "km", name: "Comoros" }, { code: "cg", name: "Congo" },
+  { code: "cd", name: "DR Congo" }, { code: "dj", name: "Djibouti" }, { code: "eg", name: "Egypt" },
+  { code: "gq", name: "Equatorial Guinea" }, { code: "er", name: "Eritrea" }, { code: "sz", name: "Eswatini" },
+  { code: "et", name: "Ethiopia" }, { code: "ga", name: "Gabon" }, { code: "gm", name: "Gambia" },
+  { code: "gh", name: "Ghana" }, { code: "gn", name: "Guinea" }, { code: "gw", name: "Guinea-Bissau" },
+  { code: "ci", name: "Ivory Coast" }, { code: "ke", name: "Kenya" }, { code: "ls", name: "Lesotho" },
+  { code: "lr", name: "Liberia" }, { code: "ly", name: "Libya" }, { code: "mg", name: "Madagascar" },
+  { code: "mw", name: "Malawi" }, { code: "ml", name: "Mali" }, { code: "mr", name: "Mauritania" },
+  { code: "mu", name: "Mauritius" }, { code: "ma", name: "Morocco" }, { code: "mz", name: "Mozambique" },
+  { code: "na", name: "Namibia" }, { code: "ne", name: "Niger" }, { code: "ng", name: "Nigeria" },
+  { code: "rw", name: "Rwanda" }, { code: "st", name: "Sao Tome & Principe" }, { code: "sn", name: "Senegal" },
+  { code: "sc", name: "Seychelles" }, { code: "sl", name: "Sierra Leone" }, { code: "so", name: "Somalia" },
+  { code: "za", name: "South Africa" }, { code: "ss", name: "South Sudan" }, { code: "sd", name: "Sudan" },
+  { code: "tz", name: "Tanzania" }, { code: "tg", name: "Togo" }, { code: "tn", name: "Tunisia" },
+  { code: "ug", name: "Uganda" }, { code: "zm", name: "Zambia" }, { code: "zw", name: "Zimbabwe" },
 ]
-
-const countryOrbColors: Record<string, string> = {
-  kenya: "from-[#409824]/30 to-[#409824]/5",
-  nigeria: "from-[#1B2385]/30 to-[#1B2385]/5",
-  "south-africa": "from-[#D4AF37]/30 to-[#D4AF37]/5",
-  ghana: "from-[#C7162B]/30 to-[#C7162B]/5",
-  tanzania: "from-[#0E8420]/30 to-[#0E8420]/5",
-}
-
-function getFlagUrl(slug: string): string {
-  const map: Record<string, string> = { kenya: "ke", nigeria: "ng", "south-africa": "za", ghana: "gh", tanzania: "tz" }
-  return `https://flagcdn.com/48x36/${map[slug] || slug}.png`
-}
 
 function useScrollReveal(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null!)
@@ -140,9 +140,20 @@ export default function HomePage() {
   useEffect(() => { setHeroLoaded(true) }, [])
 
   return (
-    <div className="bg-[#110B18] min-h-screen overflow-hidden">
+    <div className="bg-[#110B18] min-h-screen overflow-hidden relative">
+      {/* Full-page background image with subtle dark overlay */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <img
+          src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#110B18]/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/20 via-transparent to-[#110B18]/40" />
+      </div>
+
       {/* ===== SECTION 1: HERO ===== */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden z-10">
         {/* Background orbs */}
         <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#772953]/15 blur-[120px] animate-orb-drift" />
         <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-[#0E1358]/15 blur-[100px] animate-orb-drift-slow" />
@@ -156,8 +167,8 @@ export default function HomePage() {
         <div className="particle" style={{ top: "30%", left: "50%", animation: "particle-drift 20s ease-in-out infinite 3s" }} />
 
         <div className="max-w-6xl mx-auto px-4 w-full relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1 pt-20 lg:pt-0">
+          <div className="flex flex-col items-center">
+            <div className="w-full pt-20 lg:pt-0 max-w-3xl">
               {/* Label */}
               <div className={`transition-all duration-700 delay-200 ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
                 <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em]">
@@ -228,36 +239,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right side - abstract content engine */}
-            <div className={`flex-1 hidden lg:flex justify-center transition-all duration-700 ease-out ${
-              heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`} style={{ transitionDelay: "600ms" }}>
-              <div className="relative w-80 h-80">
-                <div className="absolute inset-0 rounded-full bg-[#409824]/5 blur-3xl animate-orb-pulse" />
-                <div className="absolute inset-4 rounded-full border border-white/5 glass-card" />
-                <div className="absolute inset-8 rounded-full border border-white/5" />
-                <svg className="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 320 320" style={{ animation: "spin 30s linear infinite" }}>
-                  <defs>
-                    <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#409824" />
-                      <stop offset="100%" stopColor="#772953" />
-                    </linearGradient>
-                  </defs>
-                  <circle cx="160" cy="160" r="120" fill="none" stroke="url(#arcGrad)" strokeWidth="1" strokeDasharray="8 8" opacity="0.3" />
-                  <circle cx="160" cy="160" r="80" fill="none" stroke="url(#arcGrad)" strokeWidth="1" strokeDasharray="4 6" opacity="0.2" />
-                  <circle cx="160" cy="160" r="40" fill="none" stroke="url(#arcGrad)" strokeWidth="0.5" opacity="0.15" />
-                  <circle cx="160" cy="40" r="3" fill="#409824" />
-                  <circle cx="160" cy="280" r="3" fill="#409824" />
-                  <circle cx="40" cy="160" r="3" fill="#772953" />
-                  <circle cx="280" cy="160" r="3" fill="#772953" />
-                  <circle cx="80" cy="80" r="2" fill="#D4AF37" />
-                  <circle cx="240" cy="240" r="2" fill="#D4AF37" />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-xs font-medium text-[#B5ABB3] tracking-widest uppercase">Content Engine</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -339,14 +320,16 @@ export default function HomePage() {
           </ScrollReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { title: "Match Result Articles", desc: "SEO-optimised match reports with integrated betting odds and affiliate CTAs.", icon: "⚽" },
-              { title: "Casino & Betting Reviews", desc: "In-depth operator reviews with comparison tables and bonus breakdowns.", icon: "🎰" },
-              { title: "Betting Guides & Tutorials", desc: "Beginner-friendly how-to content that converts readers into depositing players.", icon: "📖" },
-              { title: "Industry News & Press Releases", desc: "Timely coverage of regulatory changes, market launches, and operator announcements.", icon: "📰" },
+              { title: "Match Result Articles", desc: "SEO-optimised match reports with integrated betting odds and affiliate CTAs.", img: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=100&q=80" },
+              { title: "Casino & Betting Reviews", desc: "In-depth operator reviews with comparison tables and bonus breakdowns.", img: "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?w=100&q=80" },
+              { title: "Betting Guides & Tutorials", desc: "Beginner-friendly how-to content that converts readers into depositing players.", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=100&q=80" },
+              { title: "Industry News & Press Releases", desc: "Timely coverage of regulatory changes, market launches, and operator announcements.", img: "https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=100&q=80" },
             ].map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 80}>
                 <Link href="/services" className="group block glass-card rounded-2xl p-6 hover:border-[#409824]/40 hover:-translate-y-1 transition-all duration-300">
-                  <span className="text-2xl mb-4 block">{s.icon}</span>
+                  <div className="w-10 h-10 rounded-lg overflow-hidden mb-4 border border-white/5">
+                    <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
+                  </div>
                   <h3 className="text-lg font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors mb-2">{s.title}</h3>
                   <p className="text-sm text-[#56525E] leading-relaxed">{s.desc}</p>
                   <span className="text-xs text-[#409824] font-medium mt-3 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
@@ -460,32 +443,42 @@ export default function HomePage() {
 
       <AdSlot position="in-content-1" className="max-w-6xl mx-auto px-4 mb-8" />
 
-      {/* ===== SECTION 7: COUNTRY HUBS ===== */}
+      {/* ===== SECTION 7: ALL AFRICA COUNTRY MARQUEE ===== */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute top-1/2 right-0 w-[400px] h-[400px] rounded-full bg-[#772953]/8 blur-[100px] -translate-y-1/2 animate-orb-drift-slow" />
+        <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-[#0E1358]/10 blur-[100px] -translate-y-1/2 animate-orb-drift-slow" />
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           <ScrollReveal className="text-center mb-12">
-            <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">Explore by Country</span>
-            <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-3 tracking-tight">Country-Specific Betting Guides</h2>
-            <p className="text-[#56525E] max-w-lg mx-auto mt-3">Tailored content for each African market with local operators, payment methods, and regulations.</p>
+            <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">Across Africa</span>
+            <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-3 tracking-tight">All African Markets</h2>
+            <p className="text-[#56525E] max-w-lg mx-auto mt-3">Country-specific betting guides, operator reviews, and localised content for every African market.</p>
           </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-            {countries.map((c, i) => (
-              <ScrollReveal key={c.slug} delay={i * 80}>
-                <Link
-                  href={`/${c.slug}`}
-                  className="group flex flex-col items-center text-center glass-card rounded-2xl p-6 hover:scale-105 hover:border-[#409824]/30 transition-all duration-300"
-                >
-                  <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${countryOrbColors[c.slug] || "from-[#409824]/20 to-[#409824]/5"} flex items-center justify-center mb-4 group-hover:animate-orb-pulse`}>
-                    <img src={getFlagUrl(c.slug)} alt={c.name} className="w-10 h-7 rounded shadow-sm object-cover" />
-                  </div>
-                  <h3 className="text-base font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors">{c.name}</h3>
-                  <p className="text-xs text-[#56525E] mt-1">{c.articleCount} articles</p>
-                  <span className="text-xs text-[#409824] mt-3 opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
-                </Link>
-              </ScrollReveal>
+        </div>
+        <div className="overflow-hidden py-6 border-t border-white/5 border-b border-white/5">
+          <div className="flex animate-marquee gap-10 w-max">
+            {[...Array(2)].map((_, idx) => (
+              <div key={idx} className="flex gap-10 items-center">
+                {africanCountries.map((c) => (
+                  <Link
+                    key={c.code}
+                    href={`/${c.name.toLowerCase().replace(/\s+/g, "-")}`}
+                    className="group flex items-center gap-3 glass-card rounded-full px-4 py-2 hover:border-[#409824]/40 transition-all duration-300 whitespace-nowrap hover:scale-105"
+                  >
+                    <img
+                      src={`https://flagcdn.com/24x18/${c.code}.png`}
+                      alt={c.name}
+                      className="w-6 h-4 rounded object-cover"
+                    />
+                    <span className="text-sm text-[#B5ABB3] group-hover:text-[#FCFBFB] transition-colors">{c.name}</span>
+                  </Link>
+                ))}
+              </div>
             ))}
           </div>
+        </div>
+        <div className="max-w-6xl mx-auto px-4 mt-8 text-center">
+          <Link href="/guides" className="text-sm text-[#409824] font-medium hover:underline">
+            Browse all country guides &rarr;
+          </Link>
         </div>
       </section>
 

@@ -186,12 +186,19 @@ export default function ServicesPage() {
   const [faqOpen, setFaqOpen] = useState<string | null>(null)
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
+    <div className="bg-[#110B18] min-h-screen relative">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85" alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[#110B18]/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/20 via-transparent to-[#110B18]/40" />
+      </div>
+      <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in relative z-10">
       {/* Hero */}
-      <div className="relative rounded-2xl overflow-hidden mb-12 bg-gradient-to-br from-ubuntu-purple via-ubuntu-orange to-gold/60">
-        <div className="absolute inset-0 opacity-10">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1400&q=80" alt="" className="w-full h-full object-cover" />
+      <div className="relative rounded-2xl overflow-hidden mb-12 bg-gradient-to-br from-[#0E1358] to-[#1B2385]">
+        <div className="absolute inset-0">
+          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1400&q=80" alt="" className="w-full h-full object-cover opacity-30" />
         </div>
+        <div className="absolute inset-0 bg-[#110B18]/40" />
         <div className="relative z-10 p-8 md:p-14 text-white">
           <h1 className="text-3xl md:text-5xl font-bold leading-tight max-w-2xl animate-fade-up">
             We create high performing SEO content that converts.
@@ -203,10 +210,10 @@ export default function ServicesPage() {
             From research and writing to translation, editing and link building — we cover everything a modern SEO content campaign needs.
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
-            <a href="#form" onClick={() => setShowForm(true)} className="inline-flex items-center gap-2 bg-white text-ubuntu-orange px-6 py-3 rounded-xl font-bold hover:bg-white/90 transition shadow-lg">
+            <a href="#form" onClick={() => setShowForm(true)} className="inline-flex items-center gap-2 glass-card text-ubuntu-orange px-6 py-3 rounded-xl font-bold hover:glass-card/90 transition shadow-lg">
               Get a project estimate
             </a>
-            <Link href="/blog" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/10 transition">
+            <Link href="/blog" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-6 py-3 rounded-xl font-semibold hover:glass-card/10 transition">
               See our work
             </Link>
           </div>
@@ -229,7 +236,7 @@ export default function ServicesPage() {
         {services.map((svc, i) => (
           <div
             key={svc.id}
-            className="bg-white rounded-xl border border-border p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up group cursor-pointer"
+            className="glass-card rounded-xl border border-border p-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up group cursor-pointer"
             style={{ animationDelay: `${i * 0.08}s` }}
             onClick={() => setExpanded(expanded === svc.id ? null : svc.id)}
           >
@@ -269,12 +276,12 @@ export default function ServicesPage() {
       </div>
 
       {/* Packages */}
-      <div className="bg-card rounded-2xl p-8 mb-14 border border-border">
+      <div className="glass-card rounded-2xl p-8 mb-14 border border-border">
         <h2 className="text-2xl font-bold text-text-primary text-center mb-2">Simple, scalable pricing</h2>
         <p className="text-text-secondary text-center mb-8 max-w-lg mx-auto">Choose the package that fits your content volume and goals. All plans include CMS-ready delivery and editorial QA.</p>
         <div className="grid md:grid-cols-3 gap-6">
           {packages.map((pkg) => (
-            <div key={pkg.name} className={`bg-white rounded-xl border-2 p-6 relative ${pkg.badge ? "border-ubuntu-orange shadow-lg shadow-ubuntu-orange/10" : "border-border"}`}>
+            <div key={pkg.name} className={`glass-card rounded-xl border-2 p-6 relative ${pkg.badge ? "border-ubuntu-orange shadow-lg shadow-ubuntu-orange/10" : "border-border"}`}>
               {pkg.badge && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-ubuntu-orange text-white text-xs font-bold px-4 py-1 rounded-full">{pkg.badge}</span>
               )}
@@ -288,7 +295,7 @@ export default function ServicesPage() {
                   </li>
                 ))}
               </ul>
-              <a href="#form" onClick={() => setShowForm(true)} className={`block text-center py-2.5 rounded-lg font-semibold text-sm transition ${pkg.badge ? "bg-ubuntu-orange text-white hover:opacity-90" : "bg-card text-text-secondary hover:text-ubuntu-orange"}`}>
+              <a href="#form" onClick={() => setShowForm(true)} className={`block text-center py-2.5 rounded-lg font-semibold text-sm transition ${pkg.badge ? "bg-ubuntu-orange text-white hover:opacity-90" : "glass-card text-text-secondary hover:text-ubuntu-orange"}`}>
                 Get pricing
               </a>
             </div>
@@ -305,7 +312,7 @@ export default function ServicesPage() {
         <p className="text-text-secondary text-sm mb-6 max-w-xl mx-auto">We deliver editorial content that performs, on time and at scale.</p>
         <div className="flex flex-wrap justify-center gap-8 mb-6">
           {["Publishing", "iGaming", "SaaS", "E-commerce", "Finance", "Health", "Travel"].map((sector) => (
-            <div key={sector} className="bg-white border border-border rounded-xl px-4 py-2 text-sm font-medium text-text-secondary hover:border-ubuntu-orange/30 transition">{sector}</div>
+            <div key={sector} className="glass-card border border-border rounded-xl px-4 py-2 text-sm font-medium text-text-secondary hover:border-ubuntu-orange/30 transition">{sector}</div>
           ))}
         </div>
         <div className="flex flex-wrap justify-center gap-8 text-sm">
@@ -323,7 +330,7 @@ export default function ServicesPage() {
           { quote: "The translation service maintained our brand voice perfectly across three African markets.", name: "Priya Sharma", title: "Marketing Director, iGaming Operator" },
           { quote: "Reliable, professional, and results-driven. They've become an extension of our editorial team.", name: "James Kamau", title: "CEO, Affiliate Network" },
         ].map((t) => (
-          <div key={t.name} className="bg-white rounded-xl border border-border p-6">
+          <div key={t.name} className="glass-card rounded-xl border border-border p-6">
             <svg className="w-6 h-6 text-gold/40 mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
             <p className="text-sm text-text-secondary leading-relaxed mb-4">{t.quote}</p>
             <p className="font-semibold text-text-primary text-sm">{t.name}</p>
@@ -354,7 +361,7 @@ export default function ServicesPage() {
       <AdSlot position="in-content-1" className="mb-14" />
 
       {/* Case studies link */}
-      <div className="bg-card rounded-xl p-6 text-center mb-14 border border-border">
+      <div className="glass-card rounded-xl p-6 text-center mb-14 border border-border">
         <p className="text-text-secondary mb-3">Want to see real results? Browse our portfolio of successful content campaigns.</p>
         <Link href="/blog" className="inline-flex items-center gap-2 bg-ubuntu-orange text-white px-6 py-2.5 rounded-lg font-semibold hover:opacity-90 transition text-sm">
           See examples of our work
@@ -366,7 +373,7 @@ export default function ServicesPage() {
         <h2 className="text-2xl font-bold text-text-primary text-center mb-6">Frequently asked questions</h2>
         <div className="space-y-3">
           {faqs.map((faq) => (
-            <div key={faq.q} className="bg-white rounded-xl border border-border overflow-hidden">
+            <div key={faq.q} className="glass-card rounded-xl border border-border overflow-hidden">
               <button
                 onClick={() => setFaqOpen(faqOpen === faq.q ? null : faq.q)}
                 className="w-full flex items-center justify-between p-4 text-left cursor-pointer"
@@ -387,7 +394,7 @@ export default function ServicesPage() {
       {/* Contact Form */}
       <div id="form" className="scroll-mt-20">
         {showForm ? (
-          <div className="bg-white rounded-xl border border-border p-8 max-w-2xl mx-auto">
+          <div className="glass-card rounded-xl border border-border p-8 max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold text-text-primary mb-2">Request a project estimate</h2>
             <p className="text-text-secondary text-sm mb-6">Tell us about your content needs and we&apos;ll send you a tailored proposal within 24 hours.</p>
             <ContactForm />
@@ -413,6 +420,7 @@ export default function ServicesPage() {
           Request an estimate
         </button>
       </div>
+    </div>
     </div>
   )
 }
@@ -453,73 +461,73 @@ function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-text-primary mb-1">Company</label>
-          <input type="text" name="company" required className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50" />
+          <label className="block text-sm font-medium text-[#B5ABB3] mb-1">Company</label>
+          <input type="text" name="company" required className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-[#FCFBFB] placeholder-[#56525E] text-sm focus:outline-none focus:ring-2 focus:ring-[#409824]/50" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-text-primary mb-1">Website</label>
-          <input type="url" name="website" className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50" placeholder="https://" />
-        </div>
-      </div>
-      <div className="grid md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-text-primary mb-1">Name</label>
-          <input type="text" name="name" required className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-text-primary mb-1">Email</label>
-          <input type="email" name="email" required className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50" />
+          <label className="block text-sm font-medium text-[#B5ABB3] mb-1">Website</label>
+          <input type="url" name="website" className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-[#FCFBFB] placeholder-[#56525E] text-sm focus:outline-none focus:ring-2 focus:ring-[#409824]/50" placeholder="https://" />
         </div>
       </div>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-text-primary mb-1">Monthly content volume</label>
-          <select name="volume" className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 bg-white">
-            <option value="">Select...</option>
-            <option value="1-5">1-5 pieces</option>
-            <option value="5-20">5-20 pieces</option>
-            <option value="20-50">20-50 pieces</option>
-            <option value="50+">50+ pieces</option>
+          <label className="block text-sm font-medium text-[#B5ABB3] mb-1">Name</label>
+          <input type="text" name="name" required className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-[#FCFBFB] placeholder-[#56525E] text-sm focus:outline-none focus:ring-2 focus:ring-[#409824]/50" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-[#B5ABB3] mb-1">Email</label>
+          <input type="email" name="email" required className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-[#FCFBFB] placeholder-[#56525E] text-sm focus:outline-none focus:ring-2 focus:ring-[#409824]/50" />
+        </div>
+      </div>
+      <div className="grid md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-[#B5ABB3] mb-1">Monthly content volume</label>
+          <select name="volume" className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-[#FCFBFB] text-sm focus:outline-none focus:ring-2 focus:ring-[#409824]/50">
+            <option value="" className="bg-[#110B18]">Select...</option>
+            <option value="1-5" className="bg-[#110B18]">1-5 pieces</option>
+            <option value="5-20" className="bg-[#110B18]">5-20 pieces</option>
+            <option value="20-50" className="bg-[#110B18]">20-50 pieces</option>
+            <option value="50+" className="bg-[#110B18]">50+ pieces</option>
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-text-primary mb-1">Budget range</label>
-          <select name="budget" className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 bg-white">
-            <option value="">Select...</option>
-            <option value="under-2k">Under $2,000/mo</option>
-            <option value="2k-5k">$2,000-5,000/mo</option>
-            <option value="5k-10k">$5,000-10,000/mo</option>
-            <option value="10k+">$10,000+/mo</option>
+          <label className="block text-sm font-medium text-[#B5ABB3] mb-1">Budget range</label>
+          <select name="budget" className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-[#FCFBFB] text-sm focus:outline-none focus:ring-2 focus:ring-[#409824]/50">
+            <option value="" className="bg-[#110B18]">Select...</option>
+            <option value="under-2k" className="bg-[#110B18]">Under $2,000/mo</option>
+            <option value="2k-5k" className="bg-[#110B18]">$2,000-5,000/mo</option>
+            <option value="5k-10k" className="bg-[#110B18]">$5,000-10,000/mo</option>
+            <option value="10k+" className="bg-[#110B18]">$10,000+/mo</option>
           </select>
         </div>
       </div>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-text-primary mb-1">Primary goal</label>
-          <select name="goal" className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 bg-white">
-            <option value="">Select...</option>
-            <option value="organic">Organic traffic growth</option>
-            <option value="affiliate">Affiliate revenue</option>
-            <option value="brand">Brand awareness</option>
-            <option value="leads">Lead generation</option>
+          <label className="block text-sm font-medium text-[#B5ABB3] mb-1">Primary goal</label>
+          <select name="goal" className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-[#FCFBFB] text-sm focus:outline-none focus:ring-2 focus:ring-[#409824]/50">
+            <option value="" className="bg-[#110B18]">Select...</option>
+            <option value="organic" className="bg-[#110B18]">Organic traffic growth</option>
+            <option value="affiliate" className="bg-[#110B18]">Affiliate revenue</option>
+            <option value="brand" className="bg-[#110B18]">Brand awareness</option>
+            <option value="leads" className="bg-[#110B18]">Lead generation</option>
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-text-primary mb-1">Desired start date</label>
-          <select name="start" className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 bg-white">
-            <option value="">Select...</option>
-            <option value="asap">ASAP</option>
-            <option value="this-month">This month</option>
-            <option value="next-month">Next month</option>
-            <option value="flexible">Flexible</option>
+          <label className="block text-sm font-medium text-[#B5ABB3] mb-1">Desired start date</label>
+          <select name="start" className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-[#FCFBFB] text-sm focus:outline-none focus:ring-2 focus:ring-[#409824]/50">
+            <option value="" className="bg-[#110B18]">Select...</option>
+            <option value="asap" className="bg-[#110B18]">ASAP</option>
+            <option value="this-month" className="bg-[#110B18]">This month</option>
+            <option value="next-month" className="bg-[#110B18]">Next month</option>
+            <option value="flexible" className="bg-[#110B18]">Flexible</option>
           </select>
         </div>
       </div>
       <div>
-        <label className="block text-sm font-medium text-text-primary mb-1">Tell us more about your project</label>
-        <textarea name="details" rows={3} className="w-full px-3 py-2.5 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50 resize-none" placeholder="Target markets, content types, any specific requirements..." />
+        <label className="block text-sm font-medium text-[#B5ABB3] mb-1">Tell us more about your project</label>
+        <textarea name="details" rows={3} className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-[#FCFBFB] placeholder-[#56525E] text-sm focus:outline-none focus:ring-2 focus:ring-[#409824]/50 resize-none" placeholder="Target markets, content types, any specific requirements..." />
       </div>
-      <button type="submit" disabled={loading} className="w-full bg-ubuntu-orange text-white py-3 rounded-lg font-bold hover:opacity-90 transition cursor-pointer text-sm disabled:opacity-50">
+      <button type="submit" disabled={loading} className="w-full bg-[#409824] text-white py-3 rounded-lg font-bold hover:bg-[#409824]/90 transition shadow-lg cursor-pointer text-sm disabled:opacity-50">
         {loading ? "Sending..." : "Send request"}
       </button>
     </form>

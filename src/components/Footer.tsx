@@ -26,8 +26,11 @@ export default function Footer() {
         </svg>
       </div>
 
-      <div className="absolute inset-0 bg-[#0E1358]" />
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0E1358] via-[#110B18] to-[#0E1358]" />
+      <div className="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85" alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[#0E1358]/85" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0E1358]/90 via-[#110B18]/80 to-[#0E1358]/90" />
+      </div>
 
       {/* Animated orbs */}
       <div className="absolute top-40 left-0 w-96 h-96 bg-[#772953]/10 rounded-full blur-3xl -translate-x-1/2 animate-orb-drift" />

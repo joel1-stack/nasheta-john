@@ -31,12 +31,13 @@ const sectors = ["Publishing", "iGaming", "SaaS", "E-commerce", "Finance", "Heal
 
 export default function AboutPage() {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
+    <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in relative z-10">
       {/* Hero */}
-      <div className="relative rounded-2xl overflow-hidden mb-12 bg-gradient-to-br from-ubuntu-purple via-ubuntu-orange to-gold/60">
-        <div className="absolute inset-0 opacity-10">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1400&q=80" alt="" className="w-full h-full object-cover" />
+      <div className="relative rounded-2xl overflow-hidden mb-12 bg-gradient-to-br from-[#0E1358] to-[#1B2385]">
+        <div className="absolute inset-0">
+          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1400&q=80" alt="" className="w-full h-full object-cover opacity-30" />
         </div>
+        <div className="absolute inset-0 bg-[#110B18]/40" />
         <div className="relative z-10 p-8 md:p-14 text-white">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-6">
             <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white/30 shrink-0 shadow-xl">
@@ -48,10 +49,10 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-white text-ubuntu-orange px-6 py-3 rounded-xl font-bold hover:bg-white/90 transition shadow-lg">
+            <Link href="/work-with-me" className="inline-flex items-center gap-2 glass-card text-ubuntu-orange px-6 py-3 rounded-xl font-bold hover:glass-card/90 transition shadow-lg">
               Start a project
             </Link>
-            <Link href="/contact" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/10 transition">
+            <Link href="/contact" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-6 py-3 rounded-xl font-semibold hover:glass-card/10 transition">
               Contact us
             </Link>
           </div>
@@ -68,7 +69,7 @@ export default function AboutPage() {
       </div>
 
       {/* Founder */}
-      <div className="bg-white rounded-xl border border-border p-8 md:p-10 mb-14">
+      <div className="glass-card rounded-xl border border-border p-8 md:p-10 mb-14">
         <div className="flex flex-col md:flex-row items-start gap-6">
           <div className="w-28 h-28 rounded-xl overflow-hidden shrink-0 shadow-md">
             <img src="/images/nasheta.png" alt="Nasheta John" className="w-full h-full object-cover" />
@@ -96,7 +97,7 @@ export default function AboutPage() {
         <h2 className="text-2xl font-bold text-text-primary text-center mb-8">What we stand for</h2>
         <div className="grid md:grid-cols-2 gap-5">
           {values.map((v) => (
-            <div key={v.title} className="bg-white rounded-xl border border-border p-6">
+            <div key={v.title} className="glass-card rounded-xl border border-border p-6">
               <h3 className="font-bold text-text-primary mb-2">{v.title}</h3>
               <p className="text-sm text-text-secondary leading-relaxed">{v.desc}</p>
             </div>
@@ -105,7 +106,7 @@ export default function AboutPage() {
       </div>
 
       {/* Timeline */}
-      <div className="bg-card rounded-xl border border-border p-8 mb-14">
+      <div className="glass-card rounded-xl border border-border p-8 mb-14">
         <h2 className="text-2xl font-bold text-text-primary text-center mb-8">Our journey</h2>
         <div className="relative">
           <div className="hidden md:block absolute left-[120px] top-0 bottom-0 w-0.5 bg-ubuntu-orange/20" />
@@ -129,7 +130,7 @@ export default function AboutPage() {
         <p className="text-text-secondary text-sm mb-6 max-w-xl mx-auto">Our editorial team produces content for a wide range of sectors.</p>
         <div className="flex flex-wrap justify-center gap-3">
           {sectors.map((s) => (
-            <div key={s} className="bg-white border border-border rounded-xl px-5 py-2.5 text-sm font-medium text-text-secondary hover:border-ubuntu-orange/30 transition">{s}</div>
+            <div key={s} className="glass-card border border-border rounded-xl px-5 py-2.5 text-sm font-medium text-text-secondary hover:border-ubuntu-orange/30 transition">{s}</div>
           ))}
         </div>
       </div>
@@ -142,7 +143,7 @@ export default function AboutPage() {
           { num: "98%", label: "on-time delivery" },
           { num: "50+", label: "active clients" },
         ].map((s) => (
-          <div key={s.label} className="bg-white rounded-xl border border-border p-6 text-center">
+          <div key={s.label} className="glass-card rounded-xl border border-border p-6 text-center">
             <p className="text-3xl font-bold text-ubuntu-orange">{s.num}</p>
             <p className="text-sm text-text-muted mt-1">{s.label}</p>
           </div>
@@ -159,11 +160,11 @@ export default function AboutPage() {
           <h2 className="text-2xl md:text-3xl font-bold mb-3">Ready to work together?</h2>
           <p className="text-white/70 max-w-lg mx-auto mb-6">Tell us about your content needs. We will send you a tailored proposal within 24 hours.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-white text-ubuntu-orange px-8 py-3 rounded-xl font-bold hover:bg-white/90 transition shadow-xl">
+            <Link href="/work-with-me" className="inline-flex items-center gap-2 glass-card text-ubuntu-orange px-8 py-3 rounded-xl font-bold hover:glass-card/90 transition shadow-xl">
               Start a project
               <span>&rarr;</span>
             </Link>
-            <Link href="/contact" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-8 py-3 rounded-xl font-semibold hover:bg-white/10 transition">
+            <Link href="/contact" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-8 py-3 rounded-xl font-semibold hover:glass-card/10 transition">
               Contact us
             </Link>
           </div>

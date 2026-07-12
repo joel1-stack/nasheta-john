@@ -11,14 +11,14 @@
   --color-gold: #FFD700;
   --color-gold-dark: #E6C200;
   --color-gold-light: #FFF8E1;
-  --color-card: #F7F7F7;
-  --color-card-hover: #EEEEEE;
-  --color-border: #E0E0E0;
-  --color-border-light: #F0F0F0;
-  --color-text-primary: #111111;
-  --color-text-secondary: #555555;
-  --color-text-muted: #888888;
-  --color-ad-bg: #FFF8E1;
+  --color-card: rgba(255,255,255,0.03);
+  --color-card-hover: rgba(255,255,255,0.06);
+  --color-border: rgba(255,255,255,0.08);
+  --color-border-light: rgba(255,255,255,0.04);
+  --color-text-primary: #FCFBFB;
+  --color-text-secondary: #B5ABB3;
+  --color-text-muted: #56525E;
+  --color-ad-bg: rgba(27,35,133,0.1);
   --color-deep-purple: #1a0a2e;
   --color-deep-purple-light: #2d1b4e;
 
@@ -51,8 +51,8 @@
 }
 
 body {
-  background: #ffffff;
-  color: #111111;
+  background: #110B18;
+  color: #FCFBFB;
   font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 

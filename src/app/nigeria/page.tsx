@@ -11,10 +11,10 @@ const topSites = [
 ]
 
 const nigeriaArticles: Article[] = [
-  { id: "n1", slug: "best-betting-sites-nigeria-2026", title: "Top 10 Best Betting Sites in Nigeria 2026", excerpt: "Compare bonuses, odds, payment methods, and our expert ratings.", category: "Sports Betting", country: "nigeria", featuredImage: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80", tags: [], readTime: 10, author: "iGamingUbuntu", status: "published", views: 3187, content: "", createdAt: "2026-07-04", updatedAt: "2026-07-04" },
-  { id: "n2", slug: "world-cup-2026-betting-guide", title: "World Cup 2026 Betting Guide: Tips, Odds & Best Sites", excerpt: "Complete betting guide for the 2026 FIFA World Cup with Nigeria perspective.", category: "Guides", country: "nigeria", featuredImage: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&q=80", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 3421, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06" },
-  { id: "n3", slug: "naija-betting-tips-premier-league", title: "Naija Premier League Betting Tips 2026/27", excerpt: "Expert EPL betting tips for Nigerian punters. Enhance your wins!", category: "Betting Tips", country: "nigeria", featuredImage: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=800&q=80", tags: [], readTime: 7, author: "iGamingUbuntu", status: "published", views: 2156, content: "", createdAt: "2026-07-02", updatedAt: "2026-07-02" },
-  { id: "n4", slug: "nigeria-sportpesa-vs-bet9ja", title: "SportPesa vs Bet9ja Nigeria: Which is Better in 2026?", excerpt: "Head-to-head comparison of Nigeria's biggest betting brands.", category: "Sports Betting", country: "nigeria", featuredImage: "https://images.unsplash.com/photo-1554224154-26032dfc0dbe?w=800&q=80", tags: [], readTime: 9, author: "iGamingUbuntu", status: "published", views: 2890, content: "", createdAt: "2026-06-29", updatedAt: "2026-06-29" },
+  { id: "n1", slug: "best-betting-sites-nigeria-2026", title: "Top 10 Best Betting Sites in Nigeria 2026", excerpt: "Compare bonuses, odds, payment methods, and our expert ratings.", category: "Sports Betting", country: "nigeria", featuredImage: "/images/sports betting analytics.png", tags: [], readTime: 10, author: "iGamingUbuntu", status: "published", views: 3187, content: "", createdAt: "2026-07-04", updatedAt: "2026-07-04" },
+  { id: "n2", slug: "world-cup-2026-betting-guide", title: "World Cup 2026 Betting Guide: Tips, Odds & Best Sites", excerpt: "Complete betting guide for the 2026 FIFA World Cup with Nigeria perspective.", category: "Guides", country: "nigeria", featuredImage: "/images/Green Data Network (ABSTRACT + TECH).png", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 3421, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06" },
+  { id: "n3", slug: "naija-betting-tips-premier-league", title: "Naija Premier League Betting Tips 2026/27", excerpt: "Expert EPL betting tips for Nigerian punters. Enhance your wins!", category: "Betting Tips", country: "nigeria", featuredImage: "/images/full backgound.png", tags: [], readTime: 7, author: "iGamingUbuntu", status: "published", views: 2156, content: "", createdAt: "2026-07-02", updatedAt: "2026-07-02" },
+  { id: "n4", slug: "nigeria-sportpesa-vs-bet9ja", title: "SportPesa vs Bet9ja Nigeria: Which is Better in 2026?", excerpt: "Head-to-head comparison of Nigeria's biggest betting brands.", category: "Sports Betting", country: "nigeria", featuredImage: "/images/sports betting analytics.png", tags: [], readTime: 9, author: "iGamingUbuntu", status: "published", views: 2890, content: "", createdAt: "2026-06-29", updatedAt: "2026-06-29" },
 ]
 
 export default function NigeriaPage() {
@@ -23,7 +23,7 @@ export default function NigeriaPage() {
       {/* Hero section with image */}
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-purple to-ubuntu-orange">
         <div className="absolute inset-0 opacity-20">
-          <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1200&q=80" alt="Nigeria betting" className="w-full h-full object-cover" />
+          <img src="/images/full backgound.png" alt="Nigeria betting" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 flex items-center gap-4">
           <img src="https://flagcdn.com/48x36/ng.png" alt="Nigeria" className="w-12 h-9 rounded shadow-lg" />

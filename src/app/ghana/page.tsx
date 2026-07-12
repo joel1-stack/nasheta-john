@@ -10,9 +10,9 @@ const topSites = [
 ]
 
 const ghArticles: Article[] = [
-  { id: "gh1", slug: "best-ghana-betting-sites-2026", title: "Best Betting Sites in Ghana 2026: Expert Comparison", excerpt: "Compare the top Ghana betting sites with MoMo support, bonuses and local licenses.", category: "Sports Betting", country: "ghana", featuredImage: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=800&q=80", tags: [], readTime: 8, author: "iGamingUbuntu", status: "published", views: 2156, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06" },
-  { id: "gh2", slug: "mtn-momo-betting-guide", title: "MTN MoMo Betting Guide 2026: How to Deposit & Withdraw", excerpt: "Complete guide to using MTN Mobile Money for betting in Ghana.", category: "Guides", country: "ghana", featuredImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80", tags: [], readTime: 5, author: "iGamingUbuntu", status: "published", views: 1876, content: "", createdAt: "2026-07-04", updatedAt: "2026-07-04" },
-  { id: "gh3", slug: "ghana-premier-league-betting", title: "Ghana Premier League Betting Tips 2026/27", excerpt: "Expert betting tips and predictions for the Ghana Premier League season.", category: "Betting Tips", country: "ghana", featuredImage: "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=800&q=80", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 1543, content: "", createdAt: "2026-07-02", updatedAt: "2026-07-02" },
+  { id: "gh1", slug: "best-ghana-betting-sites-2026", title: "Best Betting Sites in Ghana 2026: Expert Comparison", excerpt: "Compare the top Ghana betting sites with MoMo support, bonuses and local licenses.", category: "Sports Betting", country: "ghana", featuredImage: "/images/sports betting analytics.png", tags: [], readTime: 8, author: "iGamingUbuntu", status: "published", views: 2156, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06" },
+  { id: "gh2", slug: "mtn-momo-betting-guide", title: "MTN MoMo Betting Guide 2026: How to Deposit & Withdraw", excerpt: "Complete guide to using MTN Mobile Money for betting in Ghana.", category: "Guides", country: "ghana", featuredImage: "/images/Green Data Network (ABSTRACT + TECH).png", tags: [], readTime: 5, author: "iGamingUbuntu", status: "published", views: 1876, content: "", createdAt: "2026-07-04", updatedAt: "2026-07-04" },
+  { id: "gh3", slug: "ghana-premier-league-betting", title: "Ghana Premier League Betting Tips 2026/27", excerpt: "Expert betting tips and predictions for the Ghana Premier League season.", category: "Betting Tips", country: "ghana", featuredImage: "/images/full backgound.png", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 1543, content: "", createdAt: "2026-07-02", updatedAt: "2026-07-02" },
 ]
 
 export default function GhanaPage() {
@@ -20,7 +20,7 @@ export default function GhanaPage() {
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-gold/80 to-ubuntu-orange">
         <div className="absolute inset-0 opacity-20">
-          <img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1200&q=80" alt="Ghana betting" className="w-full h-full object-cover" />
+          <img src="/images/full backgound.png" alt="Ghana betting" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 flex items-center gap-4">
           <img src="https://flagcdn.com/48x36/gh.png" alt="Ghana" className="w-12 h-9 rounded shadow-lg" />

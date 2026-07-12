@@ -11,9 +11,9 @@ const topSites = [
 ]
 
 const saArticles: Article[] = [
-  { id: "sa1", slug: "best-sa-betting-sites-2026", title: "Top South Africa Betting Sites 2026: Expert Guide", excerpt: "Compare the best SA betting sites with ZAR support, fast payouts and local licenses.", category: "Sports Betting", country: "south-africa", featuredImage: "https://images.unsplash.com/photo-1588182472590-d8e4c7a36b63?w=800&q=80", tags: [], readTime: 9, author: "iGamingUbuntu", status: "published", views: 2876, content: "", createdAt: "2026-07-07", updatedAt: "2026-07-07" },
-  { id: "sa2", slug: "hollywoodbets-review-2026", title: "HollywoodBets Review 2026: Is It SA's Best Bookmaker?", excerpt: "Honest HollywoodBets review covering odds, app, payouts and promotions.", category: "Casino Reviews", country: "south-africa", featuredImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80", tags: [], readTime: 8, author: "iGamingUbuntu", status: "published", views: 2145, content: "", createdAt: "2026-07-05", updatedAt: "2026-07-05" },
-  { id: "sa3", slug: "rugby-world-cup-betting-sa", title: "Rugby World Cup 2027 Betting Guide for SA Punters", excerpt: "Everything you need to bet on the RWC 2027 from South Africa.", category: "Guides", country: "south-africa", featuredImage: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 1789, content: "", createdAt: "2026-07-03", updatedAt: "2026-07-03" },
+  { id: "sa1", slug: "best-sa-betting-sites-2026", title: "Top South Africa Betting Sites 2026: Expert Guide", excerpt: "Compare the best SA betting sites with ZAR support, fast payouts and local licenses.", category: "Sports Betting", country: "south-africa", featuredImage: "/images/sports betting analytics.png", tags: [], readTime: 9, author: "iGamingUbuntu", status: "published", views: 2876, content: "", createdAt: "2026-07-07", updatedAt: "2026-07-07" },
+  { id: "sa2", slug: "hollywoodbets-review-2026", title: "HollywoodBets Review 2026: Is It SA's Best Bookmaker?", excerpt: "Honest HollywoodBets review covering odds, app, payouts and promotions.", category: "Casino Reviews", country: "south-africa", featuredImage: "/images/Green Data Network (ABSTRACT + TECH).png", tags: [], readTime: 8, author: "iGamingUbuntu", status: "published", views: 2145, content: "", createdAt: "2026-07-05", updatedAt: "2026-07-05" },
+  { id: "sa3", slug: "rugby-world-cup-betting-sa", title: "Rugby World Cup 2027 Betting Guide for SA Punters", excerpt: "Everything you need to bet on the RWC 2027 from South Africa.", category: "Guides", country: "south-africa", featuredImage: "/images/full backgound.png", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 1789, content: "", createdAt: "2026-07-03", updatedAt: "2026-07-03" },
 ]
 
 export default function SouthAfricaPage() {
@@ -21,7 +21,7 @@ export default function SouthAfricaPage() {
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-green to-ubuntu-purple">
         <div className="absolute inset-0 opacity-20">
-          <img src="https://images.unsplash.com/photo-1588182472590-d8e4c7a36b63?w=1200&q=80" alt="South Africa betting" className="w-full h-full object-cover" />
+          <img src="/images/full backgound.png" alt="South Africa betting" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 flex items-center gap-4">
           <img src="https://flagcdn.com/48x36/za.png" alt="South Africa" className="w-12 h-9 rounded shadow-lg" />

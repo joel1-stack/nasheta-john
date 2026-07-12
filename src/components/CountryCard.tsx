@@ -14,15 +14,15 @@ function getFlagUrl(slug: string): string {
 }
 
 const countryImages: Record<string, string> = {
-  kenya: "https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?w=600&q=80",
-  nigeria: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&q=80",
-  "south-africa": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=600&q=80",
-  ghana: "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80",
-  tanzania: "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=600&q=80",
+  kenya: "/images/full backgound.png",
+  nigeria: "/images/Green Data Network (ABSTRACT + TECH).png",
+  "south-africa": "/images/sports betting analytics.png",
+  ghana: "/images/full backgound.png",
+  tanzania: "/images/Green Data Network (ABSTRACT + TECH).png",
 }
 
 export default function CountryCard({ country }: CountryCardProps) {
-  const img = countryImages[country.slug] || "https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?w=600&q=80"
+  const img = countryImages[country.slug] || "/images/full backgound.png"
 
   return (
     <Link href={`/${country.slug}`} className="group block bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up">

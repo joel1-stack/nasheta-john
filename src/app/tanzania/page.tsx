@@ -10,9 +10,9 @@ const topSites = [
 ]
 
 const tzArticles: Article[] = [
-  { id: "tz1", slug: "best-tanzania-betting-sites-2026", title: "Best Betting Sites in Tanzania 2026: Top Bookmakers", excerpt: "Expert guide to the best Tanzania betting sites with Tigo-Pesa and M-Pesa support.", category: "Sports Betting", country: "tanzania", featuredImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80", tags: [], readTime: 8, author: "iGamingUbuntu", status: "published", views: 1890, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06" },
-  { id: "tz2", slug: "tigo-pesa-betting-guide", title: "Tigo-Pesa Betting Guide: How to Deposit & Withdraw", excerpt: "Step-by-step guide for using Tigo-Pesa at Tanzania betting sites.", category: "Guides", country: "tanzania", featuredImage: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80", tags: [], readTime: 5, author: "iGamingUbuntu", status: "published", views: 1456, content: "", createdAt: "2026-07-04", updatedAt: "2026-07-04" },
-  { id: "tz3", slug: "tanzania-premier-league-betting", title: "Tanzania Premier League Betting Tips 2026/27", excerpt: "Expert predictions and betting tips for the NBC Premier League.", category: "Betting Tips", country: "tanzania", featuredImage: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 1234, content: "", createdAt: "2026-07-02", updatedAt: "2026-07-02" },
+  { id: "tz1", slug: "best-tanzania-betting-sites-2026", title: "Best Betting Sites in Tanzania 2026: Top Bookmakers", excerpt: "Expert guide to the best Tanzania betting sites with Tigo-Pesa and M-Pesa support.", category: "Sports Betting", country: "tanzania", featuredImage: "/images/sports betting analytics.png", tags: [], readTime: 8, author: "iGamingUbuntu", status: "published", views: 1890, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06" },
+  { id: "tz2", slug: "tigo-pesa-betting-guide", title: "Tigo-Pesa Betting Guide: How to Deposit & Withdraw", excerpt: "Step-by-step guide for using Tigo-Pesa at Tanzania betting sites.", category: "Guides", country: "tanzania", featuredImage: "/images/Green Data Network (ABSTRACT + TECH).png", tags: [], readTime: 5, author: "iGamingUbuntu", status: "published", views: 1456, content: "", createdAt: "2026-07-04", updatedAt: "2026-07-04" },
+  { id: "tz3", slug: "tanzania-premier-league-betting", title: "Tanzania Premier League Betting Tips 2026/27", excerpt: "Expert predictions and betting tips for the NBC Premier League.", category: "Betting Tips", country: "tanzania", featuredImage: "/images/full backgound.png", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 1234, content: "", createdAt: "2026-07-02", updatedAt: "2026-07-02" },
 ]
 
 export default function TanzaniaPage() {
@@ -20,7 +20,7 @@ export default function TanzaniaPage() {
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-green to-ubuntu-orange">
         <div className="absolute inset-0 opacity-20">
-          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80" alt="Tanzania betting" className="w-full h-full object-cover" />
+          <img src="/images/full backgound.png" alt="Tanzania betting" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 flex items-center gap-4">
           <img src="https://flagcdn.com/48x36/tz.png" alt="Tanzania" className="w-12 h-9 rounded shadow-lg" />

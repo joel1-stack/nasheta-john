@@ -66,7 +66,7 @@ export default function CategoryArticleList({ category, country, limit: limitCou
         >
           <div className="relative h-48 overflow-hidden">
             <img
-              src={article.featuredImage || "https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=600&q=80"}
+              src={article.featuredImage || "/images/Green Data Network (ABSTRACT + TECH).png"}
               alt={article.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />

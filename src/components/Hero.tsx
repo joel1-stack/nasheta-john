@@ -5,7 +5,7 @@ export default function Hero() {
     <section className="relative overflow-hidden min-h-[90vh] flex items-center">
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85"
+          src="/images/Green Data Network (ABSTRACT + TECH).png"
           alt="iGaming content strategy"
           className="w-full h-full object-cover"
         />

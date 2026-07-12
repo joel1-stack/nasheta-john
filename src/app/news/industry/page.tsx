@@ -7,7 +7,7 @@ export default function IndustryNewsPage() {
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-orange to-ubuntu-purple">
         <div className="absolute inset-0 opacity-15">
-          <img src="https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=1200&q=80" alt="Industry News" className="w-full h-full object-cover" />
+          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Industry News" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 text-white">
           <h1 className="text-3xl md:text-4xl font-bold">Industry News</h1>

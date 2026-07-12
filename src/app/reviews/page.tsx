@@ -3,11 +3,11 @@ import AdSlot from "@/components/AdSlot"
 import AffiliateBox from "@/components/AffiliateBox"
 
 const casinoReviews = [
-  { name: "SportPesa", rating: 4.8, bonus: "200% up to KES 5,000", payments: "M-Pesa, Airtel, Card", license: "BCLB Kenya", logo: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=100&q=80" },
-  { name: "Betika", rating: 4.6, bonus: "Free Bet on Deposit", payments: "M-Pesa, Card", license: "BCLB Kenya", logo: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=100&q=80" },
-  { name: "1xBet", rating: 4.5, bonus: "100% + $100 Free Bet", payments: "M-Pesa, Crypto, Card", license: "Curacao", logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=100&q=80" },
-  { name: "Betway", rating: 4.7, bonus: "Up to $50 Free Bets", payments: "M-Pesa, Card, Bank", license: "MGA, UKGC", logo: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=100&q=80" },
-  { name: "22Bet", rating: 4.4, bonus: "100% Welcome Bonus", payments: "M-Pesa, Crypto, Card", license: "Curacao", logo: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=100&q=80" },
+  { name: "SportPesa", rating: 4.8, bonus: "200% up to KES 5,000", payments: "M-Pesa, Airtel, Card", license: "BCLB Kenya", logo: "/images/full backgound.png" },
+  { name: "Betika", rating: 4.6, bonus: "Free Bet on Deposit", payments: "M-Pesa, Card", license: "BCLB Kenya", logo: "/images/sports betting analytics.png" },
+  { name: "1xBet", rating: 4.5, bonus: "100% + $100 Free Bet", payments: "M-Pesa, Crypto, Card", license: "Curacao", logo: "/images/Green Data Network (ABSTRACT + TECH).png" },
+  { name: "Betway", rating: 4.7, bonus: "Up to $50 Free Bets", payments: "M-Pesa, Card, Bank", license: "MGA, UKGC", logo: "/images/full backgound.png" },
+  { name: "22Bet", rating: 4.4, bonus: "100% Welcome Bonus", payments: "M-Pesa, Crypto, Card", license: "Curacao", logo: "/images/sports betting analytics.png" },
 ]
 
 const topSites = casinoReviews.map((c) => ({
@@ -20,17 +20,17 @@ const ratingCriteria = [
   {
     title: "Security & Licensing",
     desc: "We only recommend sites with valid licenses from recognized regulators like BCLB (Kenya), NLRC (Nigeria), and MGA.",
-    img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&q=80",
+    img: "/images/Green Data Network (ABSTRACT + TECH).png",
   },
   {
     title: "Bonuses & Promotions",
     desc: "We evaluate welcome bonuses, ongoing promotions, wagering requirements, and overall value for the bettor.",
-    img: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=400&q=80",
+    img: "/images/full backgound.png",
   },
   {
     title: "Payment Methods",
     desc: "We test deposit and withdrawal speed, fees, and available options including M-Pesa, Tigo-Pesa, Airtel Money, and bank transfers.",
-    img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=80",
+    img: "/images/sports betting analytics.png",
   },
 ]
 
@@ -39,7 +39,7 @@ export default function ReviewsPage() {
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-purple to-ubuntu-orange">
         <div className="absolute inset-0 opacity-15">
-          <img src="https://images.unsplash.com/photo-1596838132731-3301c3fd4317?w=1200&q=80" alt="Casino reviews" className="w-full h-full object-cover" />
+          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Casino reviews" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 text-white">
           <h1 className="text-3xl md:text-4xl font-bold">Casino & Betting Site Reviews</h1>

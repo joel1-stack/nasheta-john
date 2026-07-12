@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { ScrollReveal } from "@/lib/scrollReveal"
+import LetterReveal from "@/components/LetterReveal"
 
 const values = [
   {
@@ -55,13 +56,21 @@ export default function AboutPage() {
               <div className="inline-block text-xs font-semibold text-[#409824] uppercase tracking-[0.2em] bg-[#409824]/10 px-4 py-1.5 rounded-full mb-4">
                 Founded by Nasheta John
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-[#FCFBFB] leading-tight tracking-tight">
-                We help brands own their space through{" "}
-                <span className="text-[#409824]">content that works.</span>
-              </h1>
-              <p className="text-lg md:text-xl text-[#B5ABB3] mt-4 max-w-xl leading-relaxed">
-                iGamingUbuntu is an editorial content agency built for businesses that need SEO content that ranks, converts, and scales.
-              </p>
+              <LetterReveal
+                text="We help brands own their space through content that works."
+                className="text-4xl md:text-6xl lg:text-7xl font-light text-[#FCFBFB] leading-tight tracking-tight"
+                highlight="content that works."
+                highlightClassName="text-[#409824]"
+                delay={500}
+                stagger={35}
+              />
+              <LetterReveal
+                text="iGamingUbuntu is an editorial content agency built for businesses that need SEO content that ranks, converts, and scales."
+                as="p"
+                className="text-lg md:text-xl text-[#B5ABB3] mt-4 max-w-xl leading-relaxed"
+                delay={2500}
+                stagger={20}
+              />
               <div className="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
                 <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg shadow-[#409824]/20 hover:shadow-[#409824]/40">
                   Start a project <span>&rarr;</span>

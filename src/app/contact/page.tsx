@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { ScrollReveal } from "@/lib/scrollReveal"
+import LetterReveal from "@/components/LetterReveal"
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false)
@@ -64,13 +65,21 @@ export default function ContactPage() {
             <div className="inline-block text-xs font-semibold text-[#409824] uppercase tracking-[0.2em] bg-[#409824]/10 px-4 py-1.5 rounded-full mb-4">
               Get in Touch
             </div>
-            <h1 className="text-4xl md:text-6xl font-light text-[#FCFBFB] tracking-tight leading-tight">
-              Let's talk about your<br />
-              <span className="text-[#409824]">next project</span>
-            </h1>
-            <p className="text-lg text-[#56525E] max-w-xl mx-auto mt-4 leading-relaxed">
-              Have a question or want to discuss a project? Reach out. I typically reply within 24 hours.
-            </p>
+            <LetterReveal
+              text="Let's talk about your next project"
+              className="text-4xl md:text-6xl font-light text-[#FCFBFB] tracking-tight leading-tight"
+              highlight="next project"
+              highlightClassName="text-[#409824]"
+              delay={500}
+              stagger={35}
+            />
+            <LetterReveal
+              text="Have a question or want to discuss a project? Reach out. I typically reply within 24 hours."
+              as="p"
+              className="text-lg text-[#56525E] max-w-xl mx-auto mt-4 leading-relaxed"
+              delay={2200}
+              stagger={18}
+            />
           </ScrollReveal>
         </section>
 

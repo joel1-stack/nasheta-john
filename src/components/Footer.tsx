@@ -22,19 +22,17 @@ export default function Footer() {
       {/* Curved S-wave top separator */}
       <div className="absolute top-0 left-0 w-full z-20 pointer-events-none">
         <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-auto">
-          <path d="M0,60 C240,120 480,0 720,50 C960,100 1200,20 1440,60 L1440,0 L0,0 Z" fill="#1a0a2e" />
+          <path d="M0,60 C240,120 480,0 720,50 C960,100 1200,20 1440,60 L1440,0 L0,0 Z" fill="#0E1358" />
         </svg>
       </div>
 
-      <div className="absolute inset-0">
-        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85" alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e]/95 via-[#2d1b4e]/90 to-[#1a0a2e]/95" />
-      </div>
+      <div className="absolute inset-0 bg-[#0E1358]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0E1358] via-[#110B18] to-[#0E1358]" />
 
       {/* Animated orbs */}
-      <div className="absolute top-40 left-0 w-96 h-96 bg-ubuntu-orange/10 rounded-full blur-3xl -translate-x-1/2 animate-pulse" />
-      <div className="absolute bottom-20 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl translate-x-1/3 animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-ubuntu-purple/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse" style={{ animationDelay: "2s" }} />
+      <div className="absolute top-40 left-0 w-96 h-96 bg-[#772953]/10 rounded-full blur-3xl -translate-x-1/2 animate-orb-drift" />
+      <div className="absolute bottom-20 right-0 w-80 h-80 bg-[#409824]/8 rounded-full blur-3xl translate-x-1/3 animate-orb-drift-slow" style={{ animationDelay: "1s" }} />
+      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-[#0E1358]/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-orb-drift" style={{ animationDelay: "2s" }} />
 
       <div className="max-w-6xl mx-auto px-4 pt-24 pb-16 relative z-10">
         {/* 4-column grid */}

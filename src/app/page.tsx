@@ -1,10 +1,8 @@
-import Hero from "@/components/Hero"
-import LatestPosts from "@/components/LatestPosts"
-import CountryCard from "@/components/CountryCard"
-import Newsletter from "@/components/Newsletter"
-import AdSlot from "@/components/AdSlot"
-import WaveSeparator from "@/components/WaveSeparator"
+"use client"
+
+import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
+import AdSlot from "@/components/AdSlot"
 import type { Article, Country } from "@/types"
 
 const sampleArticles: Article[] = [
@@ -66,296 +64,507 @@ const countries: Country[] = [
   { id: "tz", name: "Tanzania", slug: "tanzania", flag: "", description: "Tanzania sports betting, casino reviews, and Tigo-Pesa guides for Tanzanian bettors.", articleCount: 38 },
 ]
 
-const services = [
-  { title: "Match Result Articles", desc: "SEO-optimised match reports with integrated betting odds and affiliate CTAs that rank on Google within hours.", img: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&q=80" },
-  { title: "Casino & Betting Reviews", desc: "In-depth operator reviews with comparison tables, bonus breakdowns, and compliant affiliate disclosure.", img: "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?w=600&q=80" },
-  { title: "Betting Guides & Tutorials", desc: "Beginner-friendly how-to content that converts readers into depositing players at your preferred operators.", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80" },
-  { title: "Industry News & Press Releases", desc: "Timely coverage of regulatory changes, market launches, and operator announcements across African markets.", img: "https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=600&q=80" },
-]
+const countryOrbColors: Record<string, string> = {
+  kenya: "from-[#409824]/30 to-[#409824]/5",
+  nigeria: "from-[#1B2385]/30 to-[#1B2385]/5",
+  "south-africa": "from-[#D4AF37]/30 to-[#D4AF37]/5",
+  ghana: "from-[#C7162B]/30 to-[#C7162B]/5",
+  tanzania: "from-[#0E8420]/30 to-[#0E8420]/5",
+}
 
-const processSteps = [
-  { step: "01", title: "Brief", desc: "You tell me the topic, target market, and key affiliate links to include." },
-  { step: "02", title: "Research", desc: "I research the latest odds, regulations, and competitor content for that market." },
-  { step: "03", title: "Write & Optimise", desc: "I write the article with SEO, readability, and conversion elements baked in." },
-  { step: "04", title: "Deliver & Deploy", desc: "You receive the finished article ready to publish — or I deploy it directly to your CMS." },
-]
+function getFlagUrl(slug: string): string {
+  const map: Record<string, string> = { kenya: "ke", nigeria: "ng", "south-africa": "za", ghana: "gh", tanzania: "tz" }
+  return `https://flagcdn.com/48x36/${map[slug] || slug}.png`
+}
+
+function useScrollReveal(threshold = 0.1) {
+  const ref = useRef<HTMLDivElement>(null!)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.unobserve(el) } },
+      { threshold }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [threshold])
+  return [ref, visible] as const
+}
+
+function useCountUp(target: number, active: boolean, duration = 1500) {
+  const [count, setCount] = useState(0)
+  useEffect(() => {
+    if (!active) { setCount(0); return }
+    const startTime = performance.now()
+    let raf: number
+    const animate = (now: number) => {
+      const elapsed = now - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      setCount(Math.floor(progress * target))
+      if (progress < 1) raf = requestAnimationFrame(animate)
+    }
+    raf = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(raf)
+  }, [active, target, duration])
+  return count
+}
+
+function ScrollReveal({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const [ref, visible] = useScrollReveal(0.08)
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  )
+}
+
+function StatItem({ target, label }: { target: number; label: string }) {
+  const [ref, visible] = useScrollReveal(0.5)
+  const count = useCountUp(target, visible)
+  return (
+    <div ref={ref} className="text-center">
+      <span className="text-3xl md:text-4xl font-light text-[#FCFBFB] tabular-nums">{count}{target >= 100 ? "+" : "+"}</span>
+      <p className="text-xs text-[#56525E] uppercase tracking-wider mt-1">{label}</p>
+    </div>
+  )
+}
 
 export default function HomePage() {
+  const [heroLoaded, setHeroLoaded] = useState(false)
+  useEffect(() => { setHeroLoaded(true) }, [])
+
   return (
-    <>
-      <Hero />
+    <div className="bg-[#110B18] min-h-screen overflow-hidden">
+      {/* ===== SECTION 1: HERO ===== */}
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Background orbs */}
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#772953]/15 blur-[120px] animate-orb-drift" />
+        <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-[#0E1358]/15 blur-[100px] animate-orb-drift-slow" />
+        <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] rounded-full bg-[#409824]/8 blur-[80px] animate-orb-drift" style={{ animationDelay: "-10s" }} />
+
+        {/* Gold particles */}
+        <div className="particle" style={{ top: "20%", left: "10%", animation: "particle-drift 12s ease-in-out infinite" }} />
+        <div className="particle" style={{ top: "40%", left: "80%", animation: "particle-drift 15s ease-in-out infinite 2s" }} />
+        <div className="particle" style={{ top: "60%", left: "20%", animation: "particle-drift 18s ease-in-out infinite 4s" }} />
+        <div className="particle" style={{ top: "80%", left: "70%", animation: "particle-drift 14s ease-in-out infinite 1s" }} />
+        <div className="particle" style={{ top: "30%", left: "50%", animation: "particle-drift 20s ease-in-out infinite 3s" }} />
+
+        <div className="max-w-6xl mx-auto px-4 w-full relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="flex-1 pt-20 lg:pt-0">
+              {/* Label */}
+              <div className={`transition-all duration-700 delay-200 ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+                <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em]">
+                  Africa's iGaming Content Authority
+                </span>
+              </div>
+
+              {/* Headline with stagger */}
+              <h1 className="mt-6 space-y-2">
+                {[
+                  { text: "iGaming Content", delay: 400 },
+                  { text: "That Ranks", delay: 600 },
+                ].map((part) => (
+                  <span
+                    key={part.text}
+                    className={`block text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight text-[#FCFBFB] transition-all duration-700 ease-out ${
+                      heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                    }`}
+                    style={{ transitionDelay: `${part.delay}ms` }}
+                  >
+                    {part.text}
+                  </span>
+                ))}
+                <span
+                  className={`block text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight transition-all duration-700 ease-out ${
+                    heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                  }`}
+                  style={{ transitionDelay: "800ms" }}
+                >
+                  <span className="bg-gradient-to-r from-[#409824] to-[#FCFBFB] bg-clip-text text-transparent">&amp;</span> Converts
+                </span>
+              </h1>
+
+              {/* Subhead */}
+              <p className={`text-base md:text-lg text-[#56525E] max-w-md mt-6 leading-relaxed transition-all duration-700 ease-out ${
+                heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`} style={{ transitionDelay: "1000ms" }}>
+                I write the articles that drive players to betting sites, casinos, and sportsbooks across Africa.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className={`flex flex-wrap gap-4 mt-8 transition-all duration-700 ease-out ${
+                heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`} style={{ transitionDelay: "1200ms" }}>
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg animate-btn-glow hover:shadow-[#409824]/50"
+                >
+                  Read Latest Tips
+                  <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                </Link>
+                <Link
+                  href="/work-with-me"
+                  className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 hover:border-[#B5ABB3]/60 transition-all duration-200"
+                >
+                  Work With Me
+                </Link>
+              </div>
+
+              {/* Stats */}
+              <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-8 border-t border-white/5 transition-all duration-700 ease-out ${
+                heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`} style={{ transitionDelay: "1400ms" }}>
+                <StatItem target={10} label="Years Experience" />
+                <StatItem target={500} label="Articles Written" />
+                <StatItem target={50} label="Operator Partners" />
+                <StatItem target={15} label="Markets Covered" />
+              </div>
+            </div>
+
+            {/* Right side - abstract content engine */}
+            <div className={`flex-1 hidden lg:flex justify-center transition-all duration-700 ease-out ${
+              heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`} style={{ transitionDelay: "600ms" }}>
+              <div className="relative w-80 h-80">
+                <div className="absolute inset-0 rounded-full bg-[#409824]/5 blur-3xl animate-orb-pulse" />
+                <div className="absolute inset-4 rounded-full border border-white/5 glass-card" />
+                <div className="absolute inset-8 rounded-full border border-white/5" />
+                <svg className="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 320 320" style={{ animation: "spin 30s linear infinite" }}>
+                  <defs>
+                    <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#409824" />
+                      <stop offset="100%" stopColor="#772953" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="160" cy="160" r="120" fill="none" stroke="url(#arcGrad)" strokeWidth="1" strokeDasharray="8 8" opacity="0.3" />
+                  <circle cx="160" cy="160" r="80" fill="none" stroke="url(#arcGrad)" strokeWidth="1" strokeDasharray="4 6" opacity="0.2" />
+                  <circle cx="160" cy="160" r="40" fill="none" stroke="url(#arcGrad)" strokeWidth="0.5" opacity="0.15" />
+                  <circle cx="160" cy="40" r="3" fill="#409824" />
+                  <circle cx="160" cy="280" r="3" fill="#409824" />
+                  <circle cx="40" cy="160" r="3" fill="#772953" />
+                  <circle cx="280" cy="160" r="3" fill="#772953" />
+                  <circle cx="80" cy="80" r="2" fill="#D4AF37" />
+                  <circle cx="240" cy="240" r="2" fill="#D4AF37" />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-xs font-medium text-[#B5ABB3] tracking-widest uppercase">Content Engine</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <AdSlot position="leaderboard-top" className="max-w-6xl mx-auto px-4 mb-8" />
 
-      {/* What is iGamingUbuntu — About section right upfront */}
-      <section className="py-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-gold-light to-white" />
-        <WaveSeparator color="#ffffff" flip />
-        <WaveSeparator color="#f7f7f7" />
-        <div className="max-w-5xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-4">
-            <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">About iGamingUbuntu</span>
+      {/* ===== SECTION 2: TRUST BAR ===== */}
+      <section className="py-10 border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-4">
+          <p className="text-center text-xs text-[#56525E] uppercase tracking-widest mb-6">Trusted by 50+ Operators</p>
+          <div className="overflow-hidden">
+            <div className="flex animate-marquee gap-16 w-max">
+              {[...Array(2)].map((_, idx) => (
+                <div key={idx} className="flex gap-16 items-center">
+                  {["SportPesa", "Betika", "1xBet", "Betway", "22Bet", "Melbet", "HollywoodBets", "Bet9ja"].map((brand) => (
+                    <span key={brand} className="text-lg font-bold text-[#56525E] opacity-60 hover:opacity-100 hover:text-[#FCFBFB] transition-all duration-300 whitespace-nowrap">
+                      {brand}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-up">
-              <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-6 leading-tight">
-                What is <span className="gradient-text">iGamingUbuntu</span>?
-              </h2>
-              <div className="space-y-4 text-text-secondary leading-relaxed">
+        </div>
+      </section>
+
+      {/* ===== SECTION 3: WHAT IS iGAMINGUBUNTU ===== */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-[#772953]/8 blur-[100px] -translate-y-1/2 animate-orb-drift-slow" />
+        <div className="max-w-5xl mx-auto px-4">
+          <ScrollReveal>
+            <div className="glass-card rounded-3xl p-8 md:p-12">
+              <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">About iGamingUbuntu</span>
+              <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-3 mb-6 tracking-tight">What is iGamingUbuntu?</h2>
+              <div className="space-y-4 text-[#56525E] leading-relaxed max-w-3xl">
                 <p>
-                  <strong className="text-text-primary">iGaming</strong>, short for internet gaming, is the business of online betting, 
-                  casino gaming, and sports wagering. It's a multi-billion dollar industry that's growing faster in Africa than 
-                  anywhere else in the world.
+                  <span className="text-[#B5ABB3]">iGaming</span>, short for internet gaming, is the business of online betting, casino gaming, and sports wagering. It is a multi-billion dollar industry growing faster in Africa than anywhere else in the world.
                 </p>
                 <p>
-                  <strong className="text-text-primary">iGamingUbuntu</strong> exists to help betting operators, affiliate site owners, 
-                  and content agencies capture that growth through expert-written content. Every article I produce is researched 
-                  for the specific African market it targets, from M-Pesa deposit guides in Kenya to Bet9ja comparisons in Nigeria.
+                  <span className="text-[#B5ABB3]">iGamingUbuntu</span> exists to help betting operators, affiliate site owners, and content agencies capture that growth through expert-written content. Every article is researched for the specific African market it targets, from M-Pesa deposit guides in Kenya to Bet9ja comparisons in Nigeria.
                 </p>
-                <p>
-                  I don't write generic gambling content. I write content that ranks in Google, converts readers into depositing players, 
-                  and builds trust with African betting audiences.
+                <p className="text-[#B5ABB3]">
+                  We do not write generic gambling content. We write content that ranks in Google, converts readers into depositing players, and builds trust with African betting audiences.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3 mt-6">
                 {["Kenya", "Nigeria", "South Africa", "Ghana", "Tanzania", "UK / US / Canada"].map((m) => (
-                  <span key={m} className="bg-ubuntu-orange/5 text-ubuntu-orange text-xs font-medium px-3 py-1.5 rounded-full border border-ubuntu-orange/10">
+                  <span key={m} className="text-xs font-medium text-[#56525E] bg-white/5 border border-white/10 px-3 py-1.5 rounded-full hover:bg-[#409824] hover:text-white hover:scale-105 transition-all duration-300 cursor-default">
                     {m}
                   </span>
                 ))}
               </div>
-            </div>
-            <div className="animate-fade-up delay-2">
-              <div className="bg-white rounded-2xl border border-border p-8 shadow-lg">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-ubuntu-orange/20">
-                    <img src="/images/nasheta.png" alt="Nasheta" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-text-primary">Nasheta</p>
-                    <p className="text-sm text-text-muted">iGaming Content Specialist</p>
-                  </div>
+              <div className="flex items-center gap-4 mt-8 pt-6 border-t border-white/5">
+                <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10">
+                  <img src="/images/nasheta.png" alt="Nasheta" className="w-full h-full object-cover" />
                 </div>
-                <blockquote className="text-text-secondary italic leading-relaxed border-l-4 border-ubuntu-orange pl-4">
-                  "I've been writing iGaming content since 2016. I've seen the African market grow from a handful of operators to 
-                  hundreds. My job is to help you capture that growth with content that actually works."
-                </blockquote>
-                <div className="mt-6 pt-4 border-t border-border">
-                  <Link href="/about" className="text-ubuntu-orange font-medium text-sm hover:underline inline-flex items-center gap-1">
-                    Read my full story →
+                <div>
+                  <p className="text-sm text-[#FCFBFB] font-medium">Nasheta - iGaming Content Specialist</p>
+                  <Link href="/about" className="text-xs text-[#409824] hover:underline inline-flex items-center gap-1">
+                    Read my full story &rarr;
                   </Link>
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Who Is This For */}
-      <section className="py-12 bg-card">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-8">
-            <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">Who Is This For</span>
-            <h2 className="text-2xl font-bold text-text-primary mt-1">Built for iGaming Operators & Affiliates</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { title: "Affiliate Site Owners", desc: "Need consistent, high-ranking content that drives depositing players to your operator partners across African markets." },
-              { title: "Betting Operators", desc: "Require compliant, market-specific content for your sportsbook or casino brands targeting African bettors." },
-              { title: "Content Agencies", desc: "Scaling iGaming content for clients? I deliver white-label articles that match your quality bar and deadlines." },
-            ].map((item) => (
-              <div key={item.title} className="bg-white rounded-xl p-5 border border-border hover:shadow-md transition">
-                <h3 className="font-bold text-text-primary mb-2">{item.title}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <AdSlot position="in-content-1" className="max-w-6xl mx-auto px-4 mb-8" />
 
-      {/* Intro Strip */}
-      <section className="py-12 bg-gradient-to-r from-ubuntu-orange/5 via-gold-light to-ubuntu-purple/5 border-y border-ubuntu-orange/10">
-        <div className="max-w-4xl mx-auto px-4 text-center animate-fade-up">
-          <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">What I Do</span>
-          <p className="text-lg text-text-secondary leading-relaxed mt-2">
-            I write iGaming content that ranks in Google and converts readers into depositing players. 
-            From match reports that pull in World Cup traffic to casino reviews that drive affiliate signups — 
-            every article is built for the African betting audience.
-          </p>
-          <p className="text-sm text-text-muted mt-3">
-            Covering <span className="text-ubuntu-orange font-medium">Kenya</span>,{' '}
-            <span className="text-ubuntu-orange font-medium">Nigeria</span>,{' '}
-            <span className="text-ubuntu-orange font-medium">South Africa</span>,{' '}
-            <span className="text-ubuntu-orange font-medium">Ghana</span>,{' '}
-            <span className="text-ubuntu-orange font-medium">Tanzania</span>,{' '}
-            and global markets.
-          </p>
-        </div>
-      </section>
-
-      {/* Services Preview */}
-      <section className="py-16 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=60" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-[#FFF8E1]/90" />
-        </div>
-        <WaveSeparator color="#f7f7f7" flip />
-        <WaveSeparator color="#FFF8E1" />
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-10">
-            <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">What I Write</span>
-            <h2 className="text-3xl font-bold text-text-primary mt-1 mb-3">Services & Content Types</h2>
-            <p className="text-text-secondary max-w-lg mx-auto">Content types that drive traffic, engagement, and affiliate revenue across every African iGaming market.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((s, i) => (
-              <Link key={s.title} href="/services" className="group bg-white rounded-xl border border-border overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-fade-up" style={{ animationDelay: `${i * 0.1}s` }}>
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img src={s.img} alt={s.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-text-primary group-hover:text-ubuntu-orange transition-colors mb-1">{s.title}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed">{s.desc}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Work With Me */}
-      <section className="py-16 relative overflow-hidden bg-card">
-        <WaveSeparator color="#ffffff" />
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-10">
-            <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">Why Choose Me</span>
-            <h2 className="text-3xl font-bold text-text-primary mt-1 mb-3">Why Work With Me</h2>
-            <p className="text-text-secondary max-w-lg mx-auto">Three reasons clients choose iGamingUbuntu over generic content mills.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Speed Without Sacrifice",
-                desc: "Need 50 articles this week? I deliver high-quality, researched content at scale — no plagiarism, no shortcuts, no missed deadlines.",
-                img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
-              },
-              {
-                title: "Deep Market Knowledge",
-                desc: "I understand African betting audiences — M-Pesa, MoMo, local leagues, regulatory nuances, and what makes a Kenyan bettor different from a Nigerian one.",
-                img: "https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?w=400&q=80",
-              },
-              {
-                title: "Native + Global Perspective",
-                desc: "I write for African readers with global standards. Articles are localised, compliant with UK/African regulations, and built for international affiliate programmes.",
-                img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80",
-              },
-            ].map((item, i) => (
-              <div key={item.title} className="bg-white rounded-xl overflow-hidden border border-border hover:shadow-lg transition-all duration-300 animate-fade-up shadow-sm" style={{ animationDelay: `${i * 0.15}s` }}>
-                <div className="h-40 overflow-hidden">
-                  <img src={item.img} alt={item.title} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-bold text-text-primary text-lg mb-2">{item.title}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <WaveSeparator color="#ffffff" flip />
-      </section>
-
-      {/* Process Snapshot */}
-      <section className="py-16 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=60" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ubuntu-purple/95 to-[#1a0a2e]/95" />
-        </div>
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-3">How It Works</h2>
-            <p className="text-white/60 max-w-lg mx-auto">From brief to published article in four straightforward steps.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {processSteps.map((p, i) => (
-              <div key={p.step} className="text-center animate-fade-up" style={{ animationDelay: `${i * 0.15}s` }}>
-                <div className="w-16 h-16 rounded-2xl bg-gold/20 border border-gold/30 flex items-center justify-center mx-auto mb-4 text-gold font-bold text-xl">{p.step}</div>
-                <h3 className="text-white font-bold text-lg mb-2">{p.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed">{p.desc}</p>
-                {i < 3 && <div className="hidden md:block absolute top-8 left-[60%] w-[calc(80%)] h-px border-t border-dashed border-gold/20" />}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-16 relative overflow-hidden bg-gradient-to-br from-white via-gold-light to-white">
-        <WaveSeparator color="#ffffff" flip />
-        <div className="max-w-6xl mx-auto px-4 text-center relative z-10">
-          <span className="text-xs font-semibold text-ubuntu-orange uppercase tracking-widest">Trusted By</span>
-          <h2 className="text-2xl font-bold text-text-primary mt-1 mb-8">Industry Leaders</h2>
-          <div className="flex flex-wrap items-center justify-center gap-10 text-text-muted">
-            {["SportPesa", "Betika", "1xBet", "Betway", "22Bet", "Melbet", "HollywoodBets", "Bet9ja"].map((brand) => (
-              <span key={brand} className="text-lg font-bold opacity-30 hover:opacity-60 hover:text-ubuntu-orange transition-all duration-300">{brand}</span>
-            ))}
-          </div>
-        </div>
-        <WaveSeparator color="#ffffff" />
-      </section>
-
-      <LatestPosts articles={sampleArticles} />
-
-      {/* Country section */}
-      <section className="py-16 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1526778548025-fa2f459b5fe7?w=1920&q=60" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-[#fff8e1]/90" />
-        </div>
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-text-primary mb-3">Explore by Country</h2>
-            <p className="text-text-secondary max-w-lg mx-auto">Country-specific betting guides, top sites, and local operator reviews tailored for each African market.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-            {countries.map((c) => (
-              <CountryCard key={c.slug} country={c} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
+      {/* ===== SECTION 4: SERVICES ===== */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=1920&q=85" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-ubuntu-orange/90 to-ubuntu-purple/90" />
-        </div>
-        <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 animate-fade-up">Ready to Scale Your iGaming Content?</h2>
-          <p className="text-white/70 text-lg mb-8 animate-fade-up delay-1">
-            Let's talk about your content needs. I'll deliver articles that rank, convert, and grow your affiliate revenue.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 animate-fade-up delay-2">
-            <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-white text-ubuntu-orange px-8 py-3.5 rounded-xl font-bold hover:bg-white/90 transition-all duration-200 shadow-xl hover:shadow-2xl hover:-translate-y-0.5">
-              Work With Me <span>→</span>
-            </Link>
-            <Link href="/blog" className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-white/10 transition-all duration-200">
-              View Sample Work
-            </Link>
+        <div className="absolute -top-40 right-0 w-[400px] h-[400px] rounded-full bg-[#0E1358]/10 blur-[100px] animate-orb-drift" />
+        <div className="max-w-6xl mx-auto px-4">
+          <ScrollReveal className="text-center mb-12">
+            <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">What I Write</span>
+            <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-3 tracking-tight">Services & Content Types</h2>
+            <p className="text-[#56525E] max-w-lg mx-auto mt-3">Content types that drive traffic, engagement, and affiliate revenue across every African iGaming market.</p>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { title: "Match Result Articles", desc: "SEO-optimised match reports with integrated betting odds and affiliate CTAs.", icon: "⚽" },
+              { title: "Casino & Betting Reviews", desc: "In-depth operator reviews with comparison tables and bonus breakdowns.", icon: "🎰" },
+              { title: "Betting Guides & Tutorials", desc: "Beginner-friendly how-to content that converts readers into depositing players.", icon: "📖" },
+              { title: "Industry News & Press Releases", desc: "Timely coverage of regulatory changes, market launches, and operator announcements.", icon: "📰" },
+            ].map((s, i) => (
+              <ScrollReveal key={s.title} delay={i * 80}>
+                <Link href="/services" className="group block glass-card rounded-2xl p-6 hover:border-[#409824]/40 hover:-translate-y-1 transition-all duration-300">
+                  <span className="text-2xl mb-4 block">{s.icon}</span>
+                  <h3 className="text-lg font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors mb-2">{s.title}</h3>
+                  <p className="text-sm text-[#56525E] leading-relaxed">{s.desc}</p>
+                  <span className="text-xs text-[#409824] font-medium mt-3 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    Learn more &rarr;
+                  </span>
+                </Link>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="py-16 bg-gradient-to-br from-ubuntu-purple/5 via-white to-ubuntu-orange/5">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-2xl font-bold text-text-primary mb-2">Stay Ahead of the Game</h2>
-            <p className="text-text-secondary mb-6">Get the latest betting tips, bonus offers, and iGaming insights delivered to your inbox.</p>
-            <Newsletter />
+      {/* ===== SECTION 5: WHY WORK WITH ME ===== */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/30 to-transparent" />
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <ScrollReveal>
+                <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">Why Choose Me</span>
+                <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-3 tracking-tight mb-10">Why Work With Me</h2>
+              </ScrollReveal>
+              <div className="space-y-8">
+                {[
+                  { num: "01", title: "Speed Without Sacrifice", desc: "Need 50 articles this week? I deliver high-quality, researched content at scale. No plagiarism, no shortcuts, no missed deadlines." },
+                  { num: "02", title: "Deep Market Knowledge", desc: "I understand African betting audiences. M-Pesa, local leagues, regulatory nuances, and what makes a Kenyan bettor different from a Nigerian one." },
+                  { num: "03", title: "Native + Global Perspective", desc: "I write for African readers with global standards. Articles are localised, compliant with international regulations, and built for global affiliate programmes." },
+                ].map((item, i) => (
+                  <ScrollReveal key={item.num} delay={i * 100}>
+                    <div className="flex gap-5">
+                      <span className="text-3xl font-light text-[#409824] shrink-0 w-12">{item.num}</span>
+                      <div>
+                        <div className="h-px bg-white/10 mb-4" />
+                        <h3 className="text-lg font-medium text-[#FCFBFB] mb-2">{item.title}</h3>
+                        <p className="text-sm text-[#56525E] leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
+            </div>
+            <div className="hidden md:block">
+              <ScrollReveal delay={200}>
+                <div className="glass-card rounded-3xl p-8">
+                  <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">How It Works</span>
+                  <div className="mt-6 space-y-6">
+                    {[
+                      { step: "01", title: "Brief", desc: "You share the topic, target market, and affiliate links" },
+                      { step: "02", title: "Research", desc: "I research odds, regulations, and competitor content" },
+                      { step: "03", title: "Write & Optimise", desc: "I write with SEO, readability, and conversion baked in" },
+                      { step: "04", title: "Deliver", desc: "Finished article ready to publish or CMS-deployed" },
+                    ].map((p) => (
+                      <div key={p.step} className="flex items-start gap-4">
+                        <span className="text-xs font-bold text-[#409824] bg-[#409824]/10 px-2 py-1 rounded">{p.step}</span>
+                        <div>
+                          <p className="text-sm font-medium text-[#FCFBFB]">{p.title}</p>
+                          <p className="text-xs text-[#56525E]">{p.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
-    </>
+
+      {/* ===== SECTION 6: LATEST ARTICLES ===== */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="max-w-6xl mx-auto px-4">
+          <ScrollReveal className="flex items-center justify-between mb-10">
+            <div>
+              <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">Latest iGaming Insights</span>
+              <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-2 tracking-tight">Fresh from the Editorial Desk</h2>
+            </div>
+            <Link href="/blog" className="text-sm text-[#409824] font-medium hover:underline hidden sm:block">
+              View All &rarr;
+            </Link>
+          </ScrollReveal>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {sampleArticles.slice(0, 3).map((article, i) => (
+              <ScrollReveal key={article.slug} delay={i * 100}>
+                <Link href={`/blog/${article.slug}`} className="group block rounded-2xl overflow-hidden border border-white/5 hover:border-[#409824]/30 transition-all duration-300 hover:-translate-y-1">
+                  <div className="aspect-[16/9] overflow-hidden">
+                    <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <div className="p-5 bg-[#0E1358]/20">
+                    <div className="flex items-center gap-3 text-xs text-[#56525E] mb-2">
+                      <span className="text-[#409824] font-medium">{article.category}</span>
+                      <span>&middot;</span>
+                      <span>{article.createdAt}</span>
+                      <span>&middot;</span>
+                      <span>{article.readTime} min read</span>
+                    </div>
+                    <h3 className="text-base font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors leading-snug mb-2 line-clamp-2">{article.title}</h3>
+                    <div className="flex items-center gap-2 text-xs text-[#56525E] mt-3">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                      <span>{article.views.toLocaleString()} views</span>
+                    </div>
+                  </div>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+          <div className="text-center mt-8 sm:hidden">
+            <Link href="/blog" className="text-sm text-[#409824] font-medium hover:underline">View All Articles &rarr;</Link>
+          </div>
+        </div>
+      </section>
+
+      <AdSlot position="in-content-1" className="max-w-6xl mx-auto px-4 mb-8" />
+
+      {/* ===== SECTION 7: COUNTRY HUBS ===== */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute top-1/2 right-0 w-[400px] h-[400px] rounded-full bg-[#772953]/8 blur-[100px] -translate-y-1/2 animate-orb-drift-slow" />
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+          <ScrollReveal className="text-center mb-12">
+            <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">Explore by Country</span>
+            <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-3 tracking-tight">Country-Specific Betting Guides</h2>
+            <p className="text-[#56525E] max-w-lg mx-auto mt-3">Tailored content for each African market with local operators, payment methods, and regulations.</p>
+          </ScrollReveal>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+            {countries.map((c, i) => (
+              <ScrollReveal key={c.slug} delay={i * 80}>
+                <Link
+                  href={`/${c.slug}`}
+                  className="group flex flex-col items-center text-center glass-card rounded-2xl p-6 hover:scale-105 hover:border-[#409824]/30 transition-all duration-300"
+                >
+                  <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${countryOrbColors[c.slug] || "from-[#409824]/20 to-[#409824]/5"} flex items-center justify-center mb-4 group-hover:animate-orb-pulse`}>
+                    <img src={getFlagUrl(c.slug)} alt={c.name} className="w-10 h-7 rounded shadow-sm object-cover" />
+                  </div>
+                  <h3 className="text-base font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors">{c.name}</h3>
+                  <p className="text-xs text-[#56525E] mt-1">{c.articleCount} articles</p>
+                  <span className="text-xs text-[#409824] mt-3 opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SECTION 8: CTA + NEWSLETTER ===== */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#110B18] via-[#0E1358]/20 to-[#110B18]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(64,152,36,0.08)_0%,_transparent_70%)]" />
+        <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
+          <ScrollReveal>
+            <h2 className="text-4xl md:text-5xl font-light text-[#FCFBFB] tracking-tight leading-tight">
+              Ready to Scale Your<br />iGaming Content?
+            </h2>
+            <p className="text-[#56525E] text-lg mt-4 mb-8 max-w-md mx-auto">
+              Let's talk about your content needs. I will send you a tailored proposal within 24 hours.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/work-with-me"
+                className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg animate-btn-glow"
+              >
+                Work With Me <span>&rarr;</span>
+              </Link>
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 transition-all duration-200"
+              >
+                View Sample Work
+              </Link>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={200}>
+            <div className="mt-16 pt-10 border-t border-white/5">
+              <p className="text-xs text-[#B5ABB3] uppercase tracking-widest mb-4">Stay Ahead of the Game</p>
+              <NewsletterForm />
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function NewsletterForm() {
+  const [email, setEmail] = useState("")
+  const [subscribed, setSubscribed] = useState(false)
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (email && email.includes("@")) {
+      setSubscribed(true)
+      setEmail("")
+    }
+  }
+
+  if (subscribed) {
+    return (
+      <div className="glass-card rounded-xl p-5 max-w-md mx-auto">
+        <p className="text-[#409824] text-sm font-medium">Thanks for subscribing!</p>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex gap-3 max-w-md mx-auto">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="your@email.com"
+        required
+        className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-[#FCFBFB] placeholder-[#56525E] focus:outline-none focus:border-[#409824]/50 transition-colors"
+      />
+      <button
+        type="submit"
+        className="bg-[#409824] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#409824]/90 transition cursor-pointer whitespace-nowrap"
+      >
+        Subscribe
+      </button>
+    </form>
   )
 }

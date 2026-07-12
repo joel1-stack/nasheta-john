@@ -11,6 +11,7 @@ const blogSections = [
     children: [
       { label: "Industry News", href: "/news/industry", desc: "Latest developments across African iGaming markets" },
       { label: "Regulation Watch", href: "/news/regulation", desc: "Regulatory changes and compliance updates" },
+      { label: "Press Release", href: "/press", desc: "Submitted releases and partner announcements" },
     ],
   },
   {
@@ -43,7 +44,6 @@ const blogSections = [
 ]
 
 const standaloneItems = [
-  { label: "Press Release", href: "/press" },
   { label: "The Desk", href: "/the-desk" },
   { label: "About the Writer", href: "/about" },
 ]
@@ -79,8 +79,6 @@ export default function BlogNavbar() {
     return `${base} text-[#B5ABB3] hover:text-[#FCFBFB] hover:bg-white/5`
   }
 
-  const dropdownClass = "absolute top-full left-0 mt-1 bg-[#1B2385]/60 backdrop-blur-xl border border-white/10 shadow-xl shadow-black/30 rounded-xl p-6 z-50 min-w-[280px]"
-
   const handleEnter = (label: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
     setOpenDropdown(label)
@@ -99,9 +97,9 @@ export default function BlogNavbar() {
       scrolled ? "bg-[#110B18]/95 border-b border-white/10 shadow-lg shadow-black/20" : "bg-transparent border-transparent"
     }`}>
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/blog" className="flex items-center gap-2 shrink-0">
-          <svg className="w-5 h-5 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
-          <span className="text-lg font-bold text-[#FCFBFB]">iGamingUbuntu</span>
+        <Link href="/blog" className="flex items-center gap-2 shrink-0 group">
+          <svg className="w-5 h-5 text-[#409824] group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
+          <span className="text-lg font-bold text-[#FCFBFB] group-hover:text-[#409824] transition-colors">iGamingUbuntu</span>
           <span className="text-[10px] font-semibold text-[#409824] bg-[#409824]/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Blog</span>
         </Link>
 
@@ -113,12 +111,15 @@ export default function BlogNavbar() {
                 <FiChevronDown className={`w-3.5 h-3.5 mt-0.5 inline ml-0.5 transition-transform ${openDropdown === section.label ? "rotate-180" : ""}`} />
               </button>
               {openDropdown === section.label && (
-                <div className={dropdownClass} onMouseEnter={() => handleEnter(section.label)} onMouseLeave={handleLeave}>
-                  <div className="space-y-2">
+                <div className="absolute top-full left-0 mt-1 bg-[#1B2385]/70 backdrop-blur-xl border border-white/10 shadow-xl shadow-black/30 rounded-xl p-5 z-50 min-w-[260px]" onMouseEnter={() => handleEnter(section.label)} onMouseLeave={handleLeave}>
+                  <div className="space-y-1">
                     {section.children.map((ch) => (
-                      <Link key={ch.href} href={ch.href} className="block p-3 rounded-lg hover:bg-white/5 transition group">
-                        <span className="font-medium text-sm text-[#FCFBFB] group-hover:text-[#409824] transition-colors">{ch.label}</span>
-                        <p className="text-xs text-[#56525E] mt-0.5">{ch.desc}</p>
+                      <Link key={ch.href} href={ch.href} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 transition group">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#409824] opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                        <div>
+                          <span className="font-medium text-sm text-[#FCFBFB] group-hover:text-[#409824] transition-colors">{ch.label}</span>
+                          <p className="text-xs text-[#56525E] mt-0.5">{ch.desc}</p>
+                        </div>
                       </Link>
                     ))}
                   </div>
@@ -154,7 +155,7 @@ export default function BlogNavbar() {
                   <FiChevronDown className={`w-4 h-4 transition-transform ${mobileChild === section.label ? "rotate-180" : ""}`} />
                 </button>
                 {mobileChild === section.label && (
-                  <div className="ml-3 space-y-1 border-l-2 border-[#409824]/20 pl-3">
+                  <div className="ml-3 space-y-1 border-l-2 border-[#409824]/20 pl-3 mt-1">
                     {section.children.map((ch) => (
                       <Link key={ch.href} href={ch.href} className="block px-3 py-2 rounded-lg text-sm text-[#56525E] hover:text-[#B5ABB3] hover:bg-white/5">{ch.label}</Link>
                     ))}

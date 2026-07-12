@@ -16,7 +16,11 @@ const socialLinks = [
   },
 ]
 
-export default function Footer() {
+interface FooterProps {
+  hideNav?: boolean
+}
+
+export default function Footer({ hideNav }: FooterProps) {
   return (
     <footer className="relative overflow-hidden text-white">
       {/* Curved S-wave top separator */}
@@ -60,22 +64,24 @@ export default function Footer() {
           </div>
 
           {/* Navigate */}
-          <div>
-            <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">Navigate</h4>
-            <div className="space-y-2.5">
-              {[
-                { label: "Home", href: "/" },
-                { label: "About Us", href: "/about" },
-                { label: "Services", href: "/services" },
-                { label: "Blogs", href: "/blog" },
-                { label: "Contact Us", href: "/contact" },
-              ].map((l) => (
-                <Link key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-gold hover:translate-x-1 transition-all duration-300">
-                  {l.label}
-                </Link>
-              ))}
+          {!hideNav && (
+            <div>
+              <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">Navigate</h4>
+              <div className="space-y-2.5">
+                {[
+                  { label: "Home", href: "/" },
+                  { label: "About Us", href: "/about" },
+                  { label: "Services", href: "/services" },
+                  { label: "Blogs", href: "/blog" },
+                  { label: "Contact Us", href: "/contact" },
+                ].map((l) => (
+                  <Link key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-gold hover:translate-x-1 transition-all duration-300">
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Markets */}
           <div>
@@ -96,21 +102,23 @@ export default function Footer() {
           </div>
 
           {/* Company */}
-          <div>
-            <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">Company</h4>
-            <div className="space-y-2.5">
-              {[
-                { label: "Work With Me", href: "/work-with-me" },
-                { label: "Privacy Policy", href: "/privacy" },
-                { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
-                { label: "Newsletter", href: "/newsletter/confirm" },
-              ].map((l) => (
-                <Link key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-gold hover:translate-x-1 transition-all duration-300">
-                  {l.label}
-                </Link>
-              ))}
+          {!hideNav && (
+            <div>
+              <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">Company</h4>
+              <div className="space-y-2.5">
+                {[
+                  { label: "Work With Me", href: "/work-with-me" },
+                  { label: "Privacy Policy", href: "/privacy" },
+                  { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+                  { label: "Newsletter", href: "/newsletter/confirm" },
+                ].map((l) => (
+                  <Link key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-gold hover:translate-x-1 transition-all duration-300">
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Bottom bar */}

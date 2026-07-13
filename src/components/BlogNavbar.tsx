@@ -3,49 +3,33 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { FiMenu, FiX, FiChevronDown } from "react-icons/fi"
+import { FiMenu, FiX, FiChevronDown, FiSearch } from "react-icons/fi"
 
-const blogSections = [
+const navGroups = [
   {
-    label: "News", href: "/news",
+    label: "Industry News", href: "/news",
     children: [
-      { label: "Industry News", href: "/news/industry", desc: "Latest developments across African iGaming markets" },
-      { label: "Regulation Watch", href: "/news/regulation", desc: "Regulatory changes and compliance updates" },
-      { label: "Press Release", href: "/press", desc: "Submitted releases and partner announcements" },
+      { label: "Regulatory", href: "/news/regulation", desc: "Regulatory changes and compliance updates" },
+      { label: "M&A", href: "/news", desc: "Mergers, acquisitions and partnerships" },
+      { label: "Market Updates", href: "/news/industry", desc: "Latest developments across African iGaming markets" },
     ],
   },
   {
-    label: "Sports Betting", href: "/sports",
+    label: "Betting IQ", href: "/sports",
     children: [
-      { label: "Live Events", href: "/sports/live", desc: "Real-time odds, in-play betting and match coverage" },
-      { label: "Predictions & Tips", href: "/sports/predictions", desc: "Expert match predictions and betting tips" },
-      { label: "League Guides", href: "/sports/leagues", desc: "Premier League, La Liga, EPL and more" },
-      { label: "Betting Explained", href: "/sports/basics", desc: "Beginner-friendly guides to betting fundamentals" },
+      { label: "Tips", href: "/sports/predictions", desc: "Expert match predictions and betting tips" },
+      { label: "Guides", href: "/guides", desc: "Beginner-friendly how-to content" },
+      { label: "Predictions", href: "/sports/predictions", desc: "Data-driven match forecasts" },
     ],
   },
   {
-    label: "Casino Directory", href: "/casinos",
+    label: "BetKulture", href: "/the-desk",
     children: [
-      { label: "New Casinos", href: "/casinos/new", desc: "Recently launched operators reviewed" },
-      { label: "Best Casinos", href: "/casinos/best", desc: "Top-rated casinos by our expert team" },
-      { label: "Mobile Casinos", href: "/casinos/mobile", desc: "Optimised for mobile betting on the go" },
-      { label: "Payment Methods", href: "/casinos/payments", desc: "M-Pesa, Airtel, Bank Transfer and more" },
-      { label: "By Market", href: "/casinos/market", desc: "Filter by Kenya, Nigeria, SA, Ghana, Global" },
+      { label: "Behind the Scenes", href: "/the-desk", desc: "How we research and write iGaming content" },
+      { label: "Writer Profiles", href: "/the-desk", desc: "Meet the team behind iGamingUbuntu" },
+      { label: "Editorial Process", href: "/the-desk", desc: "Our editorial standards and workflow" },
     ],
   },
-  {
-    label: "Events", href: "/events",
-    children: [
-      { label: "Upcoming Events", href: "/events/upcoming", desc: "Conferences, summits and industry meetups" },
-      { label: "Event Recaps", href: "/events/recaps", desc: "Highlights and key takeaways from past events" },
-      { label: "Webinars & Panels", href: "/events/webinars", desc: "Expert discussions and panels on demand" },
-    ],
-  },
-]
-
-const standaloneItems = [
-  { label: "The Desk", href: "/the-desk" },
-  { label: "About the Writer", href: "/about" },
 ]
 
 export default function BlogNavbar() {
@@ -54,6 +38,8 @@ export default function BlogNavbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [mobileChild, setMobileChild] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -65,6 +51,8 @@ export default function BlogNavbar() {
   useEffect(() => {
     setMenuOpen(false)
     setMobileChild(null)
+    setSearchOpen(false)
+    setSearchQuery("")
   }, [pathname])
 
   const isActive = (href: string) => {
@@ -75,8 +63,8 @@ export default function BlogNavbar() {
   const linkClass = (href: string) => {
     const active = isActive(href)
     const base = "px-3 py-2 rounded-lg text-sm font-medium transition cursor-pointer"
-    if (active) return `${base} text-[#409824] bg-[#409824]/10`
-    return `${base} text-[#B5ABB3] hover:text-[#FCFBFB] hover:bg-white/5`
+    if (active) return `${base} text-emerald-600 bg-emerald-50`
+    return `${base} text-gray-600 hover:text-gray-900 hover:bg-gray-50`
   }
 
   const handleEnter = (label: string) => {
@@ -92,33 +80,39 @@ export default function BlogNavbar() {
     return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current) }
   }, [])
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      window.location.href = `/blog?search=${encodeURIComponent(searchQuery.trim())}`
+    }
+  }
+
   return (
     <nav className={`sticky top-0 z-50 transition-all duration-300 ${
-      scrolled ? "bg-[#110B18]/95 border-b border-white/10 shadow-lg shadow-black/20" : "bg-transparent border-transparent"
+      scrolled ? "bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm" : "bg-white border-b border-gray-100"
     }`}>
-      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/blog" className="flex items-center gap-2 shrink-0 group">
-          <svg className="w-5 h-5 text-[#409824] group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
-          <span className="text-lg font-bold text-[#FCFBFB] group-hover:text-[#409824] transition-colors">iGamingUbuntu</span>
-          <span className="text-[10px] font-semibold text-[#409824] bg-[#409824]/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Blog</span>
+          <span className="text-base font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">iGamingUbuntu</span>
+          <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full uppercase tracking-wider">Blog</span>
         </Link>
 
         <div className="hidden lg:flex items-center gap-1">
-          {blogSections.map((section) => (
-            <div key={section.label} className="relative" onMouseEnter={() => handleEnter(section.label)} onMouseLeave={handleLeave}>
-              <button onClick={() => setOpenDropdown(openDropdown === section.label ? null : section.label)} className={linkClass(section.href)}>
-                {section.label}
-                <FiChevronDown className={`w-3.5 h-3.5 mt-0.5 inline ml-0.5 transition-transform ${openDropdown === section.label ? "rotate-180" : ""}`} />
+          {navGroups.map((group) => (
+            <div key={group.label} className="relative" onMouseEnter={() => handleEnter(group.label)} onMouseLeave={handleLeave}>
+              <button onClick={() => setOpenDropdown(openDropdown === group.label ? null : group.label)} className={linkClass(group.href)}>
+                {group.label}
+                <FiChevronDown className={`w-3.5 h-3.5 mt-0.5 inline ml-0.5 transition-transform ${openDropdown === group.label ? "rotate-180" : ""}`} />
               </button>
-              {openDropdown === section.label && (
-                <div className="absolute top-full left-0 mt-1 bg-[#1B2385]/70 backdrop-blur-xl border border-white/10 shadow-xl shadow-black/30 rounded-xl p-5 z-50 min-w-[260px]" onMouseEnter={() => handleEnter(section.label)} onMouseLeave={handleLeave}>
+              {openDropdown === group.label && (
+                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 shadow-lg rounded-xl p-4 z-50 min-w-[240px]" onMouseEnter={() => handleEnter(group.label)} onMouseLeave={handleLeave}>
                   <div className="space-y-1">
-                    {section.children.map((ch) => (
-                      <Link key={ch.href} href={ch.href} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 transition group">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#409824] opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                    {group.children.map((ch) => (
+                      <Link key={ch.href + ch.label} href={ch.href} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-emerald-50 transition group">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                         <div>
-                          <span className="font-medium text-sm text-[#FCFBFB] group-hover:text-[#409824] transition-colors">{ch.label}</span>
-                          <p className="text-xs text-[#56525E] mt-0.5">{ch.desc}</p>
+                          <span className="font-medium text-sm text-gray-900 group-hover:text-emerald-600 transition-colors">{ch.label}</span>
+                          <p className="text-xs text-gray-400 mt-0.5">{ch.desc}</p>
                         </div>
                       </Link>
                     ))}
@@ -127,47 +121,47 @@ export default function BlogNavbar() {
               )}
             </div>
           ))}
-          {standaloneItems.map((item) => (
-            <Link key={item.label} href={item.href} className={linkClass(item.href)}>
-              {item.label}
-            </Link>
-          ))}
         </div>
 
-        <div className="hidden lg:flex items-center gap-3">
-          <Link href="/blog" className="bg-[#409824] text-white px-5 py-2.5 rounded-lg text-sm font-bold transition hover:bg-[#409824]/90 shadow-lg shadow-[#409824]/20">
-            View All Articles
-          </Link>
-        </div>
+        <div className="flex items-center gap-2">
+          {searchOpen ? (
+            <form onSubmit={handleSearch} className="flex items-center gap-1">
+              <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search articles..." autoFocus className="w-48 px-3 py-1.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" />
+              <button type="submit" className="p-1.5 text-gray-400 hover:text-emerald-600 cursor-pointer"><FiSearch size={18} /></button>
+              <button type="button" onClick={() => { setSearchOpen(false); setSearchQuery("") }} className="p-1.5 text-gray-400 hover:text-gray-600 text-sm cursor-pointer">✕</button>
+            </form>
+          ) : (
+            <button onClick={() => setSearchOpen(true)} className="p-2 text-gray-400 hover:text-emerald-600 transition cursor-pointer" title="Search">
+              <FiSearch size={20} />
+            </button>
+          )}
 
-        <button className="lg:hidden cursor-pointer p-2 text-[#FCFBFB]" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
-        </button>
+          <button className="lg:hidden cursor-pointer p-2 text-gray-600" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+          </button>
+        </div>
       </div>
 
       {menuOpen && (
-        <div className="lg:hidden bg-[#110B18] border-t border-white/10 max-h-[calc(100vh-4rem)] overflow-y-auto">
+        <div className="lg:hidden bg-white border-t border-gray-100 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
           <div className="px-4 py-3 space-y-1">
-            {blogSections.map((section) => (
-              <div key={section.label}>
-                <button onClick={() => setMobileChild(mobileChild === section.label ? null : section.label)} className="flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-[#B5ABB3] hover:text-[#FCFBFB] hover:bg-white/5 cursor-pointer">
-                  {section.label}
-                  <FiChevronDown className={`w-4 h-4 transition-transform ${mobileChild === section.label ? "rotate-180" : ""}`} />
+            {navGroups.map((group) => (
+              <div key={group.label}>
+                <button onClick={() => setMobileChild(mobileChild === group.label ? null : group.label)} className="flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 cursor-pointer">
+                  {group.label}
+                  <FiChevronDown className={`w-4 h-4 transition-transform ${mobileChild === group.label ? "rotate-180" : ""}`} />
                 </button>
-                {mobileChild === section.label && (
-                  <div className="ml-3 space-y-1 border-l-2 border-[#409824]/20 pl-3 mt-1">
-                    {section.children.map((ch) => (
-                      <Link key={ch.href} href={ch.href} className="block px-3 py-2 rounded-lg text-sm text-[#56525E] hover:text-[#B5ABB3] hover:bg-white/5">{ch.label}</Link>
+                {mobileChild === group.label && (
+                  <div className="ml-3 space-y-1 border-l-2 border-emerald-200 pl-3 mt-1">
+                    {group.children.map((ch) => (
+                      <Link key={ch.href + ch.label} href={ch.href} className="block px-3 py-2 rounded-lg text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-50">{ch.label}</Link>
                     ))}
                   </div>
                 )}
               </div>
             ))}
-            {standaloneItems.map((item) => (
-              <Link key={item.label} href={item.href} className="block px-3 py-2.5 rounded-lg text-sm font-medium text-[#B5ABB3] hover:text-[#FCFBFB] hover:bg-white/5">{item.label}</Link>
-            ))}
-            <div className="border-t border-white/10 pt-3 mt-3">
-              <Link href="/blog" className="block text-center bg-[#409824] text-white px-4 py-3 rounded-lg text-sm font-bold">View All Articles</Link>
+            <div className="border-t border-gray-100 pt-3 mt-3">
+              <Link href="/blog" className="block text-center bg-gray-900 text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-gray-800 transition">View All Articles</Link>
             </div>
           </div>
         </div>

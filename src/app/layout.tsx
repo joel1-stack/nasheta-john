@@ -59,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </head>
         <body className={`${inter.className} min-h-full flex flex-col bg-[#110B18] text-text-primary antialiased`}>
         <NavbarWrapper />
-         <main className="flex-1">
+         <main className="flex-1 bg-[#110B18]">
           {children}
         </main>
         <FooterWrapper />

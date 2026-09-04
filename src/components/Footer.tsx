@@ -159,51 +159,33 @@ export default function Footer({ hideNav }: FooterProps) {
             </div>
           )}
 
-          {/* Markets - 5 Regional 3D Rotating Carousels */}
+          {/* Markets - Regional Flags Grid */}
           <div className="lg:col-span-2">
             <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">African Markets</h4>
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-5 gap-3">
               {regions.map((region) => (
-                <div key={region.label} className="relative h-[160px] overflow-hidden" style={{ perspective: "300px" }}>
-                  <div className="text-center mb-1">
+                <div key={region.label}>
+                  <div className="text-center mb-2">
                     <span className="text-[9px] font-bold uppercase tracking-wider" style={{ color: region.color }}>{region.label}</span>
                   </div>
-                  <div
-                    className="absolute top-5 left-0 right-0"
-                    style={{
-                      height: "140px",
-                      animation: region.anim,
-                      transformStyle: "preserve-3d",
-                    }}
-                  >
-                    {region.countries.map((c, i) => {
-                      const angle = (360 / region.countries.length) * i
-                      return (
-                        <Link
-                          key={c.code}
-                          href={`/${c.name.toLowerCase().replace(/\s+/g, "-")}`}
-                          className="absolute left-1/2 flex items-center gap-1 whitespace-nowrap group"
-                          style={{
-                            transform: `rotateX(${angle}deg) translateZ(55px)`,
-                            transformOrigin: "center center",
-                            top: "50%",
-                            marginLeft: "-50px",
-                            marginTop: "-9px",
-                            width: "100px",
-                          }}
-                        >
-                          <img
-                            src={FLAG(c.code)}
-                            alt={c.name}
-                            className="w-4 h-3 rounded-sm object-cover shrink-0 shadow-sm border border-white/20"
-                            loading="lazy"
-                          />
-                          <span className="text-[9px] font-semibold text-white/60 group-hover:text-gold transition-colors truncate">
-                            {c.name}
-                          </span>
-                        </Link>
-                      )
-                    })}
+                  <div className="space-y-1.5 max-h-[140px] overflow-y-auto scrollbar-hide" style={{ scrollbarWidth: "none" }}>
+                    {region.countries.map((c) => (
+                      <Link
+                        key={c.code}
+                        href={`/${c.name.toLowerCase().replace(/\s+/g, "-")}`}
+                        className="flex items-center gap-1.5 px-1.5 py-1 rounded hover:bg-white/5 transition-colors group"
+                      >
+                        <img
+                          src={FLAG(c.code)}
+                          alt={c.name}
+                          className="w-4 h-3 rounded-sm object-cover shrink-0 shadow-sm border border-white/10"
+                          loading="lazy"
+                        />
+                        <span className="text-[9px] font-medium text-white/50 group-hover:text-gold transition-colors truncate leading-tight">
+                          {c.name}
+                        </span>
+                      </Link>
+                    ))}
                   </div>
                 </div>
               ))}

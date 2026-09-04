@@ -15,17 +15,34 @@ export default function ContactPage() {
     setError("")
     setLoading(true)
     const form = e.currentTarget
-    const data = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      projectType: (form.elements.namedItem("projectType") as HTMLSelectElement).value,
-      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value
+    const projectType = (form.elements.namedItem("projectType") as HTMLSelectElement).value
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value
+
+    const projectLabels: Record<string, string> = {
+      match: "Match Result Articles",
+      reviews: "Casino & Betting Reviews",
+      guides: "Betting Guides & Tutorials",
+      news: "Industry News & Press Releases",
+      strategy: "Content Strategy & Consulting",
+      other: "Something else",
     }
+
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("https://formsubmit.co/ajax/salvagekyalo@gmail.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          "Project Type": projectLabels[projectType] || projectType || "Not specified",
+          message,
+          _subject: `iGamingUbuntu Contact: ${name} - ${projectLabels[projectType] || projectType || "General"}`,
+        }),
       })
       if (!res.ok) throw new Error("Failed")
       setSent(true)
@@ -149,7 +166,7 @@ export default function ContactPage() {
                   <svg className="w-5 h-5 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                 </div>
                 <h3 className="font-medium text-[#FCFBFB] mb-1">Email</h3>
-                <a href="mailto:nashetajohn@gmail.com" className="text-sm text-[#409824] font-medium hover:underline">nashetajohn@gmail.com</a>
+                <a href="mailto:salvagekyalo@gmail.com" className="text-sm text-[#409824] font-medium hover:underline">salvagekyalo@gmail.com</a>
                 <p className="text-xs text-[#56525E] mt-1">Click to open your email client</p>
               </div>
             </ScrollReveal>
@@ -160,7 +177,7 @@ export default function ContactPage() {
                   <svg className="w-5 h-5 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
                 </div>
                 <h3 className="font-medium text-[#FCFBFB] mb-1">WhatsApp</h3>
-                <a href="https://wa.me/254112157383" target="_blank" rel="noopener" className="text-sm text-[#409824] font-medium hover:underline">+254 112 157383</a>
+                <a href="https://wa.me/254112157383" target="_blank" rel="noopener noreferrer" className="text-sm text-[#409824] font-medium hover:underline">+254 112 157383</a>
                 <p className="text-xs text-[#56525E] mt-1">Click to open WhatsApp</p>
               </div>
             </ScrollReveal>
@@ -172,7 +189,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="font-medium text-[#FCFBFB] mb-1 text-sm">Response Time</h3>
                 <p className="text-sm text-[#B5ABB3] leading-relaxed">
-                  I typically reply within <span className="text-[#409824] font-medium">24 hours</span> on weekdays. For urgent projects, mention "URGENT" in your subject line.
+                  I typically reply within <span className="text-[#409824] font-medium">24 hours</span> on weekdays. For urgent projects, mention &quot;URGENT&quot; in your subject line.
                 </p>
               </div>
             </ScrollReveal>

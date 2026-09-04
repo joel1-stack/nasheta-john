@@ -46,7 +46,6 @@ const blogSections = [
 
 const flatLinks = [
   { label: "The Desk", href: "/the-desk" },
-  { label: "About the Writer", href: "/about" },
 ]
 
 export default function BlogNavbar() {

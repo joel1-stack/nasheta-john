@@ -1,13 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getDb } from "@/lib/firebase"
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limit as fbLimit,
-} from "firebase/firestore"
+import { collection, getDocs } from "firebase/firestore"
 
 function serializeDoc(d: any) {
   const data = d.data()
@@ -30,44 +23,24 @@ export async function GET(req: NextRequest) {
   const perPage = 12
 
   const fb = getDb()
-  if (!fb) return NextResponse.json({ articles: [], total: 0, hasMore: false })
+  if (!fb) {
+    return NextResponse.json({ articles: [], total: 0, hasMore: false, error: "No Firebase" })
+  }
 
   try {
+    const snap = await getDocs(collection(fb, "articles"))
+    let articles = snap.docs.map(serializeDoc).filter((a: any) => a.status === "published")
+
     if (action === "popular") {
-      const q = query(
-        collection(fb, "articles"),
-        where("status", "==", "published"),
-        orderBy("views", "desc"),
-        fbLimit(10)
-      )
-      const snap = await getDocs(q)
-      const articles = snap.docs.map(serializeDoc)
-      return NextResponse.json({ articles })
+      articles.sort((a: any, b: any) => (b.views || 0) - (a.views || 0))
+      return NextResponse.json({ articles: articles.slice(0, 10) })
     }
 
     if (action === "related" && category) {
-      const q = query(
-        collection(fb, "articles"),
-        where("status", "==", "published"),
-        where("category", "==", category),
-        orderBy("createdAt", "desc"),
-        fbLimit(10)
-      )
-      const snap = await getDocs(q)
-      const articles = snap.docs
-        .map(serializeDoc)
-        .filter((a: any) => a.slug !== slug)
-        .slice(0, 3)
-      return NextResponse.json({ articles })
+      articles = articles.filter((a: any) => a.category === category && a.slug !== slug)
+      articles.sort((a: any, b: any) => (b.views || 0) - (a.views || 0))
+      return NextResponse.json({ articles: articles.slice(0, 3) })
     }
-
-    const allQ = query(
-      collection(fb, "articles"),
-      where("status", "==", "published"),
-      orderBy("createdAt", "desc")
-    )
-    const snap = await getDocs(allQ)
-    let articles = snap.docs.map(serializeDoc)
 
     if (category) {
       articles = articles.filter((a: any) => a.category === category)
@@ -81,6 +54,12 @@ export async function GET(req: NextRequest) {
           a.tags?.some((t: string) => t.toLowerCase().includes(s))
       )
     }
+
+    articles.sort((a: any, b: any) => {
+      const da = a.createdAt || ""
+      const db = b.createdAt || ""
+      return db.localeCompare(da)
+    })
 
     const total = articles.length
     const start = (page - 1) * perPage

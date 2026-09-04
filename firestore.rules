@@ -11,9 +11,15 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null;
     }
-    // Allow authenticated users to read/write clicks
+    // Click tracking - anyone can write (for API route), only auth can read
     match /clicks/{click} {
-      allow read, write: if request.auth != null;
+      allow read: if request.auth != null;
+      allow create: if true;
+    }
+    // Newsletter subscribers - anyone can subscribe, only auth can list
+    match /subscribers/{subscriber} {
+      allow create: if true;
+      allow read: if request.auth != null;
     }
   }
 }

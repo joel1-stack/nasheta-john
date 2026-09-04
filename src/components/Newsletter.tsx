@@ -5,12 +5,27 @@ import { useState } from "react"
 export default function Newsletter() {
   const [email, setEmail] = useState("")
   const [subscribed, setSubscribed] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email && email.includes("@")) {
+    if (!email || !email.includes("@")) return
+    setLoading(true)
+    setError("")
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+      if (!res.ok) throw new Error("Failed")
       setSubscribed(true)
       setEmail("")
+    } catch {
+      setError("Failed to subscribe. Try again.")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -30,11 +45,12 @@ export default function Newsletter() {
             required
             className="flex-1 px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50"
           />
-          <button type="submit" className="bg-ubuntu-orange text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition cursor-pointer">
-            Subscribe
+          <button type="submit" disabled={loading} className="bg-ubuntu-orange text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition cursor-pointer disabled:opacity-50">
+            {loading ? "..." : "Subscribe"}
           </button>
         </form>
       )}
+      {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
     </div>
   )
 }

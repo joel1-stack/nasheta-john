@@ -2,6 +2,7 @@
 
 import { Suspense, useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useSearchParams } from "next/navigation"
 import { FiEye, FiArrowRight, FiClock, FiCalendar } from "react-icons/fi"
 import { getAllPublishedArticles } from "@/lib/firestoreService"
@@ -34,6 +35,7 @@ function BlogContent() {
   const [loading, setLoading] = useState(true)
   const [email, setEmail] = useState("")
   const [subscribed, setSubscribed] = useState(false)
+  const [nlLoading, setNlLoading] = useState(false)
 
   useEffect(() => {
     getAllPublishedArticles().then(setArticles).catch(() => {}).finally(() => setLoading(false))
@@ -114,9 +116,9 @@ function BlogContent() {
                     href={`/blog/${article.slug}`}
                     className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-[#f59e0b]/30 hover:-translate-y-0.5 transition-all duration-300"
                   >
-                    <div className="aspect-[16/9] overflow-hidden bg-gray-50">
+                    <div className="aspect-[16/9] overflow-hidden bg-gray-50 relative">
                       {article.featuredImage ? (
-                        <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
+                        <Image src={article.featuredImage} alt={article.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-[1.04] transition duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <span className="text-gray-300 text-sm font-medium">iGamingUbuntu</span>
@@ -211,10 +213,10 @@ function BlogContent() {
               {subscribed ? (
                 <p className="text-white text-sm font-medium">Thanks for subscribing!</p>
               ) : (
-                <form onSubmit={(e) => { e.preventDefault(); if (email.includes("@")) { setSubscribed(true); setEmail("") } }} className="flex">
+                <form onSubmit={async (e) => { e.preventDefault(); if (email.includes("@")) { setNlLoading(true); try { await fetch("/api/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) }); setSubscribed(true); setEmail("") } catch {} setNlLoading(false) } }} className="flex">
                   <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" required className="flex-1 bg-white/20 text-white placeholder-white/60 px-3 py-2.5 text-sm rounded-l-lg focus:outline-none focus:ring-2 focus:ring-white/40 border-0" />
-                  <button type="submit" className="bg-white text-[#f59e0b] px-4 py-2.5 rounded-r-lg text-sm font-semibold hover:bg-white/90 transition cursor-pointer whitespace-nowrap flex items-center gap-1">
-                    Subscribe <FiArrowRight size={14} />
+                  <button type="submit" disabled={nlLoading} className="bg-white text-[#f59e0b] px-4 py-2.5 rounded-r-lg text-sm font-semibold hover:bg-white/90 transition cursor-pointer whitespace-nowrap flex items-center gap-1 disabled:opacity-50">
+                    {nlLoading ? "..." : <>Subscribe <FiArrowRight size={14} /></>}
                   </button>
                 </form>
               )}

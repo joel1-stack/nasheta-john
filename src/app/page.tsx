@@ -2,59 +2,10 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ScrollReveal, useScrollReveal, useCountUp } from "@/lib/scrollReveal"
+import { getAllPublishedArticles } from "@/lib/firestoreService"
 import type { Article } from "@/types"
-
-const sampleArticles: Article[] = [
-  {
-    id: "1", slug: "argentina-vs-egypt-world-cup-2026", title: "Argentina vs Egypt 3-2: Full Result & Best Odds for Next Match",
-    excerpt: "Argentina came from 2-0 down to beat Egypt 3-2 in a thrilling World Cup Round of 16 match. Get the full result and best betting odds for the quarterfinal.",
-    category: "Sports Betting", country: "kenya",
-    featuredImage: "/images/sports betting analytics.png",
-    tags: ["World Cup", "Argentina", "Egypt", "Betting"],
-    readTime: 4, author: "iGamingUbuntu", status: "published", views: 2848, content: "", createdAt: "2026-07-08", updatedAt: "2026-07-08",
-  },
-  {
-    id: "2", slug: "top-5-online-casinos-kenya-2026", title: "Top 5 Online Casinos in Kenya 2026: Expert Reviews & Bonuses",
-    excerpt: "We review the best online casinos available in Kenya for 2026. Compare bonuses, game selection, M-Pesa support, and our expert ratings.",
-    category: "Casino Reviews", country: "kenya",
-    featuredImage: "/images/Green Data Network (ABSTRACT + TECH).png",
-    tags: ["Kenya", "Casino", "Reviews"],
-    readTime: 8, author: "iGamingUbuntu", status: "published", views: 1956, content: "", createdAt: "2026-07-07", updatedAt: "2026-07-07",
-  },
-  {
-    id: "3", slug: "world-cup-2026-betting-guide", title: "World Cup 2026 Betting Guide: Tips, Odds & Best Sites",
-    excerpt: "Complete betting guide for the 2026 FIFA World Cup. Learn how to bet, where to get the best odds, and which betting sites to use in Africa.",
-    category: "Betting Tips", country: "nigeria",
-    featuredImage: "/images/full backgound.png",
-    tags: ["World Cup", "Betting", "Guide"],
-    readTime: 6, author: "iGamingUbuntu", status: "published", views: 3421, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06",
-  },
-  {
-    id: "4", slug: "sportpesa-welcome-bonus-2026", title: "SportPesa Welcome Bonus 2026: How to Claim Your 200% Match",
-    excerpt: "Step-by-step guide to claiming the SportPesa welcome bonus. Get 200% up to KES 5,000 on your first deposit. Terms and conditions explained.",
-    category: "Bonuses", country: "kenya",
-    featuredImage: "/images/sports betting analytics.png",
-    tags: ["SportPesa", "Bonus", "Kenya"],
-    readTime: 5, author: "iGamingUbuntu", status: "published", views: 4521, content: "", createdAt: "2026-07-05", updatedAt: "2026-07-05",
-  },
-  {
-    id: "5", slug: "best-betting-sites-nigeria-2026", title: "Top 10 Best Betting Sites in Nigeria 2026: Ranked & Reviewed",
-    excerpt: "Find the best betting sites in Nigeria for 2026. Compare bonuses, odds, payment methods like Bank Transfer and our expert ratings.",
-    category: "Sports Betting", country: "nigeria",
-    featuredImage: "/images/Green Data Network (ABSTRACT + TECH).png",
-    tags: ["Nigeria", "Betting", "Reviews"],
-    readTime: 10, author: "iGamingUbuntu", status: "published", views: 3187, content: "", createdAt: "2026-07-04", updatedAt: "2026-07-04",
-  },
-  {
-    id: "6", slug: "m-pesa-betting-sites-2026", title: "M-Pesa Betting Sites 2026: Best Operators Accepting Mobile Money",
-    excerpt: "Complete list of betting sites that accept M-Pesa in 2026. Compare deposit limits, processing times, and welcome bonuses for mobile money users.",
-    category: "Guides", country: "kenya",
-    featuredImage: "/images/full backgound.png",
-    tags: ["M-Pesa", "Kenya", "Mobile Money"],
-    readTime: 7, author: "iGamingUbuntu", status: "published", views: 2734, content: "", createdAt: "2026-07-03", updatedAt: "2026-07-03",
-  },
-]
 
 const africanCountries = [
   { code: "dz", name: "Algeria" }, { code: "ao", name: "Angola" }, { code: "bj", name: "Benin" },
@@ -91,7 +42,12 @@ function StatItem({ target, label }: { target: number; label: string }) {
 
 export default function HomePage() {
   const [heroLoaded, setHeroLoaded] = useState(false)
-  useEffect(() => { setHeroLoaded(true) }, [])
+  const [articles, setArticles] = useState<Article[]>([])
+
+  useEffect(() => {
+    setHeroLoaded(true)
+    getAllPublishedArticles(6).then(setArticles).catch(() => {})
+  }, [])
 
   return (
     <div className="bg-[#110B18] min-h-screen overflow-hidden relative">
@@ -117,7 +73,7 @@ export default function HomePage() {
             <div className="w-full pt-20 lg:pt-0 max-w-3xl">
               <div className={`transition-all duration-700 delay-200 ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
                 <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em]">
-                  Africa's iGaming Content Authority
+                  Africa&apos;s iGaming Content Authority
                 </span>
               </div>
 
@@ -197,8 +153,8 @@ export default function HomePage() {
                 ))}
               </div>
               <div className="flex items-center gap-4 mt-8 pt-6 border-t border-white/5">
-                <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10">
-                  <img src="/images/nasheta.png" alt="Nasheta" className="w-full h-full object-cover" />
+                <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 relative">
+                  <Image src="/images/nasheta.png" alt="Nasheta" fill className="object-cover" />
                 </div>
                 <div>
                   <p className="text-sm text-[#FCFBFB] font-medium">Nasheta - iGaming Content Specialist</p>
@@ -227,8 +183,8 @@ export default function HomePage() {
             ].map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 80}>
                 <Link href="/services" className="group block glass-card rounded-2xl p-6 hover:border-[#409824]/40 hover:-translate-y-1 transition-all duration-300">
-                  <div className="w-10 h-10 rounded-lg overflow-hidden mb-4 border border-white/5">
-                    <img src={s.img} alt={s.title} className="w-full h-full object-cover" />
+                  <div className="w-10 h-10 rounded-lg overflow-hidden mb-4 border border-white/5 relative">
+                    <Image src={s.img} alt={s.title} fill className="object-cover" />
                   </div>
                   <h3 className="text-lg font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors mb-2">{s.title}</h3>
                   <p className="text-sm text-[#56525E] leading-relaxed">{s.desc}</p>
@@ -305,11 +261,17 @@ export default function HomePage() {
             <Link href="/blog" className="text-sm text-[#409824] font-medium hover:underline hidden sm:block">View All &rarr;</Link>
           </ScrollReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {sampleArticles.slice(0, 3).map((article, i) => (
+            {articles.slice(0, 3).map((article, i) => (
               <ScrollReveal key={article.slug} delay={i * 100}>
                 <Link href={`/blog/${article.slug}`} className="group block rounded-2xl overflow-hidden border border-white/5 hover:border-[#409824]/30 transition-all duration-300 hover:-translate-y-1">
-                  <div className="aspect-[16/9] overflow-hidden">
-                    <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="aspect-[16/9] overflow-hidden relative bg-white/5">
+                    {article.featuredImage ? (
+                      <Image src={article.featuredImage} alt={article.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-[#56525E] text-sm">iGamingUbuntu</span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-5 bg-[#0E1358]/20">
                     <div className="flex items-center gap-3 text-xs text-[#56525E] mb-2">
@@ -322,7 +284,7 @@ export default function HomePage() {
                     <h3 className="text-base font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors leading-snug mb-2 line-clamp-2">{article.title}</h3>
                     <div className="flex items-center gap-2 text-xs text-[#56525E] mt-3">
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                      <span>{article.views.toLocaleString()} views</span>
+                      <span>{(article.views || 0).toLocaleString()} views</span>
                     </div>
                   </div>
                 </Link>
@@ -369,7 +331,7 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
           <ScrollReveal>
             <h2 className="text-4xl md:text-5xl font-light text-[#FCFBFB] tracking-tight leading-tight">Ready to Scale Your<br />iGaming Content?</h2>
-            <p className="text-[#56525E] text-lg mt-4 mb-8 max-w-md mx-auto">Let's talk about your content needs. I will send you a tailored proposal within 24 hours.</p>
+            <p className="text-[#56525E] text-lg mt-4 mb-8 max-w-md mx-auto">Let&apos;s talk about your content needs. I will send you a tailored proposal within 24 hours.</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg animate-btn-glow">Work With Me <span>&rarr;</span></Link>
               <Link href="/blog" className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 transition-all duration-200">View Sample Work</Link>
@@ -390,13 +352,22 @@ export default function HomePage() {
 function NewsletterForm() {
   const [email, setEmail] = useState("")
   const [subscribed, setSubscribed] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email && email.includes("@")) {
+    if (!email || !email.includes("@")) return
+    setLoading(true)
+    try {
+      await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
       setSubscribed(true)
       setEmail("")
-    }
+    } catch {}
+    setLoading(false)
   }
 
   if (subscribed) {
@@ -410,7 +381,7 @@ function NewsletterForm() {
   return (
     <form onSubmit={handleSubmit} className="flex gap-3 max-w-md mx-auto">
       <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" required className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-[#FCFBFB] placeholder-[#56525E] focus:outline-none focus:border-[#409824]/50 transition-colors" />
-      <button type="submit" className="bg-[#409824] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#409824]/90 transition cursor-pointer whitespace-nowrap">Subscribe</button>
+      <button type="submit" disabled={loading} className="bg-[#409824] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#409824]/90 transition cursor-pointer whitespace-nowrap disabled:opacity-50">{loading ? "..." : "Subscribe"}</button>
     </form>
   )
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useParams } from "next/navigation"
 import { formatDate } from "@/lib/utils"
 import AdSlot from "@/components/AdSlot"
@@ -99,7 +100,7 @@ export default function BlogArticlePage() {
 
           <div className="aspect-[2/1] rounded-2xl overflow-hidden mb-8 shadow-md relative">
             {article.featuredImage ? (
-              <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover" />
+              <Image src={article.featuredImage} alt={article.title} fill sizes="(max-width: 768px) 100vw, 80vw" className="object-cover" />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-ubuntu-orange/20 to-ubuntu-purple/20 flex items-center justify-center">
                 <svg className="w-16 h-16 text-ubuntu-orange/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">

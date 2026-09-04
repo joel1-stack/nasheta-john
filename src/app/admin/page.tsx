@@ -38,45 +38,47 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="bg-white rounded-xl shadow-sm border border-border p-8 w-full max-w-sm">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[#0F0A1A]">
+      <div className="bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-8 w-full max-w-sm">
         <div className="text-center mb-6">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-ubuntu-orange to-gold flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#E95420] to-[#FFD700] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#E95420]/30">
             <span className="text-white font-bold text-xl">IG</span>
           </div>
-          <h1 className="text-2xl font-bold text-text-primary">Admin Login</h1>
-          <p className="text-sm text-text-secondary mt-1">iGamingUbuntu Dashboard</p>
+          <h1 className="text-2xl font-bold text-white">Admin Login</h1>
+          <p className="text-sm text-gray-400 mt-1">iGamingUbuntu Dashboard</p>
         </div>
 
         {error && (
-          <div className="bg-ubuntu-red/10 text-ubuntu-red text-sm p-3 rounded-lg mb-4">{error}</div>
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-4">{error}</div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-text-primary mb-1">Email</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1.5">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50"
+              className="w-full px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
+              placeholder="admin@example.com"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-text-primary mb-1">Password</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1.5">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ubuntu-orange/50"
+              className="w-full px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
+              placeholder="Enter password"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-ubuntu-orange text-white py-2.5 rounded-lg font-medium hover:opacity-90 transition disabled:opacity-50 cursor-pointer"
+            className="w-full bg-[#E95420] text-white py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20"
           >
             {loading ? "Logging in..." : "Login"}
           </button>

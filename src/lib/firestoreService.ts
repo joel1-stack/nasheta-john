@@ -157,5 +157,33 @@ export async function trackClick(linkId: string, placement: string): Promise<voi
     placement,
     timestamp: serverTimestamp(),
   })
-  await updateDoc(doc(fb, AFFILIATE_LINKS, linkId), { clicks: increment(1) })
+}
+
+// Newsletter Subscribers
+const SUBSCRIBERS = "subscribers"
+
+export async function addSubscriber(email: string, country?: string): Promise<string | null> {
+  const fb = getDb()
+  if (!fb) return null
+  try {
+    const ref = await addDoc(collection(fb, SUBSCRIBERS), {
+      email,
+      country: country || "",
+      subscribedAt: serverTimestamp(),
+    })
+    return ref.id
+  } catch {
+    return null
+  }
+}
+
+export async function getSubscribers(): Promise<any[]> {
+  const fb = getDb()
+  if (!fb) return []
+  try {
+    const snap = await getDocs(collection(fb, SUBSCRIBERS))
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+  } catch {
+    return []
+  }
 }

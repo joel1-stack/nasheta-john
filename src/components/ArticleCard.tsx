@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { formatDate } from "@/lib/utils"
 import type { Article } from "@/types"
 
@@ -9,9 +10,15 @@ interface ArticleCardProps {
 export default function ArticleCard({ article }: ArticleCardProps) {
   return (
     <Link href={`/blog/${article.slug}`} className="group block bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up">
-      <div className="aspect-[16/9] bg-gradient-to-br from-ubuntu-orange/10 to-ubuntu-purple/10 flex items-center justify-center overflow-hidden">
+      <div className="aspect-[16/9] bg-gradient-to-br from-ubuntu-orange/10 to-ubuntu-purple/10 flex items-center justify-center overflow-hidden relative">
         {article.featuredImage ? (
-          <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <Image
+            src={article.featuredImage}
+            alt={article.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition duration-500"
+          />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-ubuntu-orange/20 to-ubuntu-purple/20 flex items-center justify-center">
             <svg className="w-12 h-12 text-ubuntu-orange/30" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>

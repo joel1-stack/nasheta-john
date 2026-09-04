@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import type { Country } from "@/types"
 
 interface CountryCardProps {
@@ -26,8 +27,14 @@ export default function CountryCard({ country }: CountryCardProps) {
 
   return (
     <Link href={`/${country.slug}`} className="group block bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up">
-      <div className="aspect-[4/3] overflow-hidden">
-        <img src={img} alt={country.name} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+      <div className="aspect-[4/3] overflow-hidden relative">
+        <Image
+          src={img}
+          alt={country.name}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover group-hover:scale-110 transition duration-500"
+        />
       </div>
       <div className="p-5">
         <img src={getFlagUrl(country.slug)} alt={country.name} className="w-8 h-6 rounded shadow-sm mb-2 object-cover" />

@@ -7,7 +7,7 @@ import { formatDate } from "@/lib/utils"
 import AdSlot from "@/components/AdSlot"
 import Sidebar from "@/components/Sidebar"
 import AffiliateBox from "@/components/AffiliateBox"
-import { getArticleBySlug, getAllPublishedArticles, incrementViews } from "@/lib/firestoreService"
+import { getArticleBySlug, incrementViews } from "@/lib/firestoreService"
 import type { Article } from "@/types"
 
 export default function BlogArticlePage() {
@@ -21,18 +21,25 @@ export default function BlogArticlePage() {
 
   useEffect(() => {
     if (!slug) return
-    Promise.all([
-      getArticleBySlug(slug),
-      getAllPublishedArticles(),
-    ]).then(([found, all]) => {
+    getArticleBySlug(slug).then((found) => {
       setArticle(found)
       if (found) {
-        setRelated(all.filter(a => a.slug !== slug && a.category === found.category).slice(0, 3))
         setViewCount((found.views || 0) + 1)
         incrementViews(found.id).catch(() => {})
+
+        // Fetch related articles for this category
+        fetch(`/api/blog?action=related&category=${encodeURIComponent(found.category)}&slug=${slug}`)
+          .then((r) => r.json())
+          .then((d) => setRelated(d.articles || []))
+          .catch(() => {})
       }
-      setPopular([...all].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5))
     }).catch(() => {}).finally(() => setLoading(false))
+
+    // Fetch popular articles
+    fetch("/api/blog?action=popular")
+      .then((r) => r.json())
+      .then((d) => setPopular(d.articles || []))
+      .catch(() => {})
   }, [slug])
 
   if (loading) {

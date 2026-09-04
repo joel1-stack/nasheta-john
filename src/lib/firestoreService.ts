@@ -8,17 +8,25 @@ import {
   updateDoc,
   deleteDoc,
   serverTimestamp,
-  Timestamp,
   increment,
+  query,
+  where,
+  orderBy,
+  limit as fbLimit,
+  startAfter,
+  DocumentSnapshot,
 } from "firebase/firestore"
 import type { Article, AffiliateLink } from "@/types"
 
 const ARTICLES = "articles"
 const AFFILIATE_LINKS = "affiliateLinks"
 const CLICKS = "clicks"
+const SUBSCRIBERS = "subscribers"
 
-function toArticle(d: any): Article {
-  const data = d.data()
+const PAGE_SIZE = 12
+
+function toArticle(d: DocumentSnapshot): Article {
+  const data = d.data()!
   return {
     id: d.id,
     ...data,
@@ -28,37 +36,116 @@ function toArticle(d: any): Article {
   } as Article
 }
 
-export async function getArticles(): Promise<Article[]> {
+// Paginated published articles
+export async function getPublishedArticlesPage(
+  pageNum: number = 1,
+  pageSize: number = PAGE_SIZE,
+  category?: string,
+  country?: string
+): Promise<{ articles: Article[]; hasMore: boolean; total: number }> {
   const fb = getDb()
-  if (!fb) return []
-  const snap = await getDocs(collection(fb, ARTICLES))
-  const results = snap.docs.map(toArticle)
-  results.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""))
-  return results
+  if (!fb) return { articles: [], hasMore: false, total: 0 }
+
+  try {
+    // Build constraints
+    const constraints: any[] = [
+      where("status", "==", "published"),
+      orderBy("createdAt", "desc"),
+    ]
+
+    if (category && category !== "All") {
+      constraints.splice(1, 0, where("category", "==", category))
+    }
+    if (country && country !== "general") {
+      constraints.splice(1, 0, where("country", "==", country))
+    }
+
+    // Get total count (approximate with a count query if available, otherwise fetch all)
+    const countSnap = await getDocs(query(collection(fb, ARTICLES), ...constraints))
+    const total = countSnap.size
+
+    // If total is within first page, no need for cursor
+    if (pageNum === 1) {
+      const q = query(collection(fb, ARTICLES), ...constraints, fbLimit(pageSize))
+      const snap = await getDocs(q)
+      const articles = snap.docs.map(toArticle)
+      return { articles, hasMore: total > pageSize, total }
+    }
+
+    // For page 2+, use cursor-based pagination
+    // Get the last doc of previous page
+    const prevConstraints = [...constraints, fbLimit(pageSize * (pageNum - 1))]
+    const prevSnap = await getDocs(query(collection(fb, ARTICLES), ...prevConstraints))
+    const lastDoc = prevSnap.docs[prevSnap.docs.length - 1]
+
+    if (!lastDoc) return { articles: [], hasMore: false, total }
+
+    const q = query(
+      collection(fb, ARTICLES),
+      ...constraints,
+      startAfter(lastDoc),
+      fbLimit(pageSize)
+    )
+    const snap = await getDocs(q)
+    const articles = snap.docs.map(toArticle)
+    const hasMore = pageNum * pageSize < total
+
+    return { articles, hasMore, total }
+  } catch {
+    return { articles: [], hasMore: false, total: 0 }
+  }
 }
 
-export async function getArticlesByCategory(category: string, country?: string, limitCount?: number): Promise<Article[]> {
+// Get all published articles (for admin, sidebar, etc.)
+export async function getAllPublishedArticles(limitCount?: number): Promise<Article[]> {
   const fb = getDb()
   if (!fb) return []
   try {
-    const snap = await getDocs(collection(fb, ARTICLES))
-    let results = snap.docs.map(toArticle).filter(a => a.status === "published" && a.category === category)
-    if (country && country !== "general") results = results.filter(a => a.country === country)
-    results.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""))
-    return limitCount ? results.slice(0, limitCount) : results
+    const constraints: any[] = [
+      where("status", "==", "published"),
+      orderBy("createdAt", "desc"),
+    ]
+    if (limitCount) constraints.push(fbLimit(limitCount))
+    const snap = await getDocs(query(collection(fb, ARTICLES), ...constraints))
+    return snap.docs.map(toArticle)
   } catch {
     return []
   }
 }
 
-export async function getAllPublishedArticles(limitCount?: number): Promise<Article[]> {
+// Get all articles (admin - includes drafts)
+export async function getArticles(): Promise<Article[]> {
   const fb = getDb()
   if (!fb) return []
   try {
-    const snap = await getDocs(collection(fb, ARTICLES))
-    let results = snap.docs.map(toArticle).filter(a => a.status === "published")
-    results.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""))
-    return limitCount ? results.slice(0, limitCount) : results
+    const q = query(collection(fb, ARTICLES), orderBy("createdAt", "desc"))
+    const snap = await getDocs(q)
+    return snap.docs.map(toArticle)
+  } catch {
+    return []
+  }
+}
+
+// Get articles by category with pagination
+export async function getArticlesByCategory(
+  category: string,
+  country?: string,
+  limitCount?: number
+): Promise<Article[]> {
+  const fb = getDb()
+  if (!fb) return []
+  try {
+    const constraints: any[] = [
+      where("status", "==", "published"),
+      where("category", "==", category),
+      orderBy("createdAt", "desc"),
+    ]
+    if (country && country !== "general") {
+      constraints.splice(2, 0, where("country", "==", country))
+    }
+    if (limitCount) constraints.push(fbLimit(limitCount))
+    const snap = await getDocs(query(collection(fb, ARTICLES), ...constraints))
+    return snap.docs.map(toArticle)
   } catch {
     return []
   }
@@ -76,9 +163,15 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   const fb = getDb()
   if (!fb) return null
   try {
-    const snap = await getDocs(collection(fb, ARTICLES))
-    const match = snap.docs.map(toArticle).find(a => a.slug === slug && a.status === "published")
-    return match || null
+    const q = query(
+      collection(fb, ARTICLES),
+      where("slug", "==", slug),
+      where("status", "==", "published"),
+      fbLimit(1)
+    )
+    const snap = await getDocs(q)
+    if (snap.empty) return null
+    return toArticle(snap.docs[0])
   } catch {
     return null
   }
@@ -100,7 +193,7 @@ export async function createArticle(data: Omit<Article, "id" | "createdAt" | "up
 export async function updateArticle(id: string, data: Partial<Article>): Promise<void> {
   const fb = getDb()
   if (!fb) return
-  const updateData: any = { ...data, updatedAt: serverTimestamp() }
+  const updateData: Record<string, any> = { ...data, updatedAt: serverTimestamp() }
   if (typeof data.tags === "string") {
     updateData.tags = (data.tags as string).split(",").map((t: string) => t.trim())
   }
@@ -123,8 +216,9 @@ export async function getAffiliateLinks(articleId: string): Promise<AffiliateLin
   const fb = getDb()
   if (!fb) return []
   try {
-    const snap = await getDocs(collection(fb, AFFILIATE_LINKS))
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as AffiliateLink)).filter(l => l.articleId === articleId)
+    const q = query(collection(fb, AFFILIATE_LINKS), where("articleId", "==", articleId))
+    const snap = await getDocs(q)
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as AffiliateLink))
   } catch {
     return []
   }
@@ -158,9 +252,6 @@ export async function trackClick(linkId: string, placement: string): Promise<voi
     timestamp: serverTimestamp(),
   })
 }
-
-// Newsletter Subscribers
-const SUBSCRIBERS = "subscribers"
 
 export async function addSubscriber(email: string, country?: string): Promise<string | null> {
   const fb = getDb()

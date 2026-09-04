@@ -101,6 +101,28 @@ export default function ServicesPage() {
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-20">
 
+        {/* ===== SERVICE TYPE TABS ===== */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {[
+            { label: "SEO Content Writing", href: "/seo-content-writing", active: true },
+            { label: "Translation", href: "/translation-services", active: false },
+            { label: "Editing", href: "/editing-services", active: false },
+            { label: "Link Building", href: "/link-building-services", active: false },
+          ].map((tab) => (
+            <Link
+              key={tab.label}
+              href={tab.href}
+              className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                tab.active
+                  ? "bg-[#409824] text-white shadow-lg shadow-[#409824]/30"
+                  : "bg-white/10 text-[#B5ABB3] hover:bg-white/20 hover:text-[#FCFBFB] border border-white/10"
+              }`}
+            >
+              {tab.label}
+            </Link>
+          ))}
+        </div>
+
         {/* ===== HERO ===== */}
         <section className="text-center mb-20">
           <ScrollReveal>

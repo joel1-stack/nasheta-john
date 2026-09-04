@@ -1,10 +1,9 @@
 "use client"
 
-import { Suspense, useState, useEffect } from "react"
+import { Suspense, useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { FiEye, FiArrowRight, FiClock, FiCalendar } from "react-icons/fi"
-import { getAllPublishedArticles } from "@/lib/firestoreService"
+import { FiEye, FiArrowRight, FiClock, FiCalendar, FiChevronLeft, FiChevronRight } from "react-icons/fi"
 import { formatDate } from "@/lib/utils"
 import type { Article } from "@/types"
 
@@ -22,7 +21,7 @@ const exploreItems = [
 ]
 
 function getFlagEmoji(slug: string): string {
-  const map: Record<string, string> = { kenya: "🇰🇪", nigeria: "🇳🇬", "south-africa": "🇿🇦", ghana: "🇬🇭", tanzania: "🇹🇿" }
+  const map: Record<string, string> = { kenya: "KE", nigeria: "NG", "south-africa": "ZA", ghana: "GH", tanzania: "TZ" }
   return map[slug] || ""
 }
 
@@ -35,18 +34,41 @@ function BlogContent() {
   const [email, setEmail] = useState("")
   const [subscribed, setSubscribed] = useState(false)
   const [nlLoading, setNlLoading] = useState(false)
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(false)
+  const [total, setTotal] = useState(0)
+
+  const fetchArticles = useCallback(async (pageNum: number, cat: string, search: string) => {
+    setLoading(true)
+    try {
+      const params = new URLSearchParams({ page: String(pageNum) })
+      if (cat !== "All") params.set("category", cat)
+      if (search) params.set("search", search)
+      const res = await fetch(`/api/blog?${params}`)
+      const data = await res.json()
+      setArticles(data.articles || [])
+      setHasMore(data.hasMore || false)
+      setTotal(data.total || 0)
+    } catch {
+      setArticles([])
+    } finally {
+      setLoading(false)
+    }
+  }, [])
 
   useEffect(() => {
-    getAllPublishedArticles().then(setArticles).catch(() => {}).finally(() => setLoading(false))
-  }, [urlSearch])
+    setPage(1)
+    fetchArticles(1, category, urlSearch)
+  }, [category, urlSearch, fetchArticles])
 
-  const filtered = articles.filter((a) => {
-    const matchCategory = category === "All" || a.category === category
-    const matchSearch = !urlSearch || a.title.toLowerCase().includes(urlSearch.toLowerCase()) || a.excerpt?.toLowerCase().includes(urlSearch.toLowerCase())
-    return matchCategory && matchSearch
-  })
+  const loadPage = (p: number) => {
+    setPage(p)
+    fetchArticles(p, category, urlSearch)
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
 
   const popularPosts = [...articles].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5)
+  const totalPages = Math.ceil(total / 12)
 
   return (
     <div className="min-h-screen bg-[#FAFAF8]">
@@ -61,6 +83,7 @@ function BlogContent() {
           <p className="text-gray-500 max-w-xl mx-auto text-base">
             Expert insights, betting tips, casino reviews, and iGaming news across Africa.
           </p>
+          {total > 0 && <p className="text-xs text-gray-400 mt-2">{total} articles published</p>}
         </div>
       </section>
 
@@ -93,6 +116,13 @@ function BlogContent() {
               </div>
             )}
 
+            {/* Page indicator */}
+            {totalPages > 1 && (
+              <div className="mb-4 text-xs text-gray-400">
+                Page {page} of {totalPages} ({total} articles)
+              </div>
+            )}
+
             {/* Articles */}
             {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -107,50 +137,97 @@ function BlogContent() {
                   </div>
                 ))}
               </div>
-            ) : filtered.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {filtered.map((article) => (
-                  <Link
-                    key={article.slug}
-                    href={`/blog/${article.slug}`}
-                    className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-[#f59e0b]/30 hover:-translate-y-0.5 transition-all duration-300"
-                  >
-                    <div className="aspect-[16/9] overflow-hidden bg-gray-50 relative">
-                      {article.featuredImage ? (
-                        <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-gray-300 text-sm font-medium">iGamingUbuntu</span>
+            ) : articles.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {articles.map((article) => (
+                    <Link
+                      key={article.slug}
+                      href={`/blog/${article.slug}`}
+                      className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-[#f59e0b]/30 hover:-translate-y-0.5 transition-all duration-300"
+                    >
+                      <div className="aspect-[16/9] overflow-hidden bg-gray-50 relative">
+                        {article.featuredImage ? (
+                          <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <span className="text-gray-300 text-sm font-medium">iGamingUbuntu</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-5">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="bg-emerald-50 text-emerald-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">{article.category}</span>
+                          <span className="text-xs text-gray-400 flex items-center gap-1">
+                            <FiCalendar size={11} />
+                            {formatDate(article.createdAt)}
+                          </span>
                         </div>
-                      )}
-                    </div>
-                    <div className="p-5">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="bg-emerald-50 text-emerald-600 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">{article.category}</span>
-                        <span className="text-xs text-gray-400 flex items-center gap-1">
-                          <FiCalendar size={11} />
-                          {formatDate(article.createdAt)}
-                        </span>
+                        <h3 className="font-bold text-[#111827] group-hover:text-[#f59e0b] transition-colors line-clamp-2 mb-2 text-base leading-snug">{article.title}</h3>
+                        <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">{article.excerpt}</p>
+                        <div className="flex items-center justify-between text-xs pt-3 border-t border-gray-100">
+                          <span className="text-gray-400 flex items-center gap-1">
+                            <FiClock size={12} />
+                            {article.readTime} min read
+                          </span>
+                          <span className="text-gray-400 flex items-center gap-1">
+                            <FiEye size={12} />
+                            {article.views > 0 ? article.views.toLocaleString() : "0"}
+                          </span>
+                          <span className="text-[#f59e0b] font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            Read <FiArrowRight size={12} />
+                          </span>
+                        </div>
                       </div>
-                      <h3 className="font-bold text-[#111827] group-hover:text-[#f59e0b] transition-colors line-clamp-2 mb-2 text-base leading-snug">{article.title}</h3>
-                      <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">{article.excerpt}</p>
-                      <div className="flex items-center justify-between text-xs pt-3 border-t border-gray-100">
-                        <span className="text-gray-400 flex items-center gap-1">
-                          <FiClock size={12} />
-                          {article.readTime} min read
-                        </span>
-                        <span className="text-gray-400 flex items-center gap-1">
-                          <FiEye size={12} />
-                          {article.views > 0 ? article.views.toLocaleString() : "0"}
-                        </span>
-                        <span className="text-[#f59e0b] font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                          Read <FiArrowRight size={12} />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="flex items-center justify-center gap-2 mt-10">
+                    <button
+                      onClick={() => loadPage(page - 1)}
+                      disabled={page === 1}
+                      className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed shadow-sm cursor-pointer"
+                    >
+                      <FiChevronLeft size={14} /> Prev
+                    </button>
+                    {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
+                      let pageNum: number
+                      if (totalPages <= 7) {
+                        pageNum = i + 1
+                      } else if (page <= 4) {
+                        pageNum = i + 1
+                      } else if (page >= totalPages - 3) {
+                        pageNum = totalPages - 6 + i
+                      } else {
+                        pageNum = page - 3 + i
+                      }
+                      return (
+                        <button
+                          key={pageNum}
+                          onClick={() => loadPage(pageNum)}
+                          className={`w-9 h-9 rounded-lg text-sm font-medium border shadow-sm cursor-pointer transition-all ${
+                            page === pageNum
+                              ? "bg-[#f59e0b] text-white border-[#f59e0b]"
+                              : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      )
+                    })}
+                    <button
+                      onClick={() => loadPage(page + 1)}
+                      disabled={page === totalPages}
+                      className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed shadow-sm cursor-pointer"
+                    >
+                      Next <FiChevronRight size={14} />
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="text-center py-20 bg-white border border-gray-200 rounded-xl shadow-sm">
                 <p className="text-gray-500 font-medium">No articles found.</p>
@@ -195,7 +272,7 @@ function BlogContent() {
                 {exploreItems.map((item) => (
                   <Link key={item.slug} href={`/${item.slug}`} className="flex items-center gap-3 text-sm text-gray-500 hover:text-[#111827] hover:bg-gray-50 px-3 py-2 rounded-lg transition-all">
                     {item.isCountry ? (
-                      <span className="text-base">{getFlagEmoji(item.slug)}</span>
+                      <span className="w-6 h-5 flex items-center justify-center text-[10px] font-bold bg-gray-100 text-gray-500 rounded">{getFlagEmoji(item.slug)}</span>
                     ) : (
                       <span className="w-5 h-5 flex items-center justify-center text-xs bg-amber-50 text-[#f59e0b] rounded">◆</span>
                     )}

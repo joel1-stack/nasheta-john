@@ -38,6 +38,28 @@ export default function LinkBuildingPage() {
       <div className="fixed -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#409824]/8 blur-[120px] animate-orb-drift pointer-events-none" />
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-8">
 
+        {/* Service Type Tabs */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {[
+            { label: "SEO Content Writing", href: "/seo-content-writing" },
+            { label: "Translation", href: "/translation-services" },
+            { label: "Editing", href: "/editing-services" },
+            { label: "Link Building", href: "/link-building-services", active: true },
+          ].map((tab) => (
+            <Link
+              key={tab.label}
+              href={tab.href}
+              className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                tab.active
+                  ? "bg-[#409824] text-white shadow-lg shadow-[#409824]/30"
+                  : "bg-white/10 text-[#B5ABB3] hover:bg-white/20 hover:text-[#FCFBFB] border border-white/10"
+              }`}
+            >
+              {tab.label}
+            </Link>
+          ))}
+        </div>
+
         {/* Hero */}
         <section className="relative rounded-2xl overflow-hidden mb-16 bg-gradient-to-br from-[#0E1358] to-[#1B2385]">
           <div className="absolute inset-0">

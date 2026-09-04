@@ -5,6 +5,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { FiMenu, FiX, FiChevronDown } from "react-icons/fi"
 
+import { IgubFullLogo } from "./IgubLogo"
+
 const contentTypes = [
   { label: "SEO Content Writing", href: "/seo-content-writing", desc: "Data-led editorial content that ranks and converts" },
   { label: "Translation", href: "/translation-services", desc: "Maintain voice and SEO across multiple languages" },
@@ -73,10 +75,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <img src="/images/nasheta.png" alt="" className="w-8 h-8 rounded-full object-cover" />
-          <span className="text-lg md:text-xl font-bold text-[#FCFBFB]">
-            iGamingUbuntu
-          </span>
+          <IgubFullLogo />
         </Link>
 
         {/* Desktop Nav */}

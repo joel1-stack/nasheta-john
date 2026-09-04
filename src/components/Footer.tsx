@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { IgubFullLogo } from "./IgubLogo"
 
 const socialLinks = [
   {
@@ -49,9 +50,7 @@ export default function Footer({ hideNav }: FooterProps) {
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block mb-3">
-              <span className="text-xl font-bold" style={{ background: "linear-gradient(135deg, #FFD700, #E95420)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                iGamingUbuntu
-              </span>
+              <IgubFullLogo />
             </Link>
             <p className="text-white/50 text-sm leading-relaxed max-w-md">
               Africa's iGaming content authority — expert writing that ranks and converts.

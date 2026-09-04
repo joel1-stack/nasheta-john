@@ -54,6 +54,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="h-full">
+        <head>
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        </head>
         <body className={`${inter.className} min-h-full flex flex-col bg-[#110B18] text-text-primary antialiased`}>
         <NavbarWrapper />
          <main className="flex-1">

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { FiMenu, FiX, FiChevronDown, FiSearch } from "react-icons/fi"
+import { IgubLogo } from "./IgubLogo"
 
 const blogSections = [
   {
@@ -116,7 +117,7 @@ export default function BlogNavbar() {
     }`}>
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/blog" className="flex items-center gap-2 shrink-0 group">
-          <span className="text-lg font-bold text-[#111827] group-hover:text-[#f59e0b] transition-colors">iGamingUbuntu</span>
+          <IgubLogo size="sm" className="text-[#111827]" />
           <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full uppercase tracking-wider">Blog</span>
         </Link>
 

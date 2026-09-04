@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ScrollReveal, useScrollReveal, useCountUp } from "@/lib/scrollReveal"
 import { getAllPublishedArticles } from "@/lib/firestoreService"
+import { AfricaWatermark, IgubLogo } from "@/components/IgubLogo"
 import type { Article } from "@/types"
 
 const africanCountries = [
@@ -62,6 +63,11 @@ export default function HomePage() {
         <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-[#0E1358]/15 blur-[100px] animate-orb-drift-slow" />
         <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] rounded-full bg-[#409824]/8 blur-[80px] animate-orb-drift" style={{ animationDelay: "-10s" }} />
 
+        {/* African Map Hero Graphic - Right Side */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[600px] opacity-[0.07] pointer-events-none hidden lg:block">
+          <AfricaWatermark className="w-full h-full text-[#409824]" />
+        </div>
+
         <div className="particle" style={{ top: "20%", left: "10%", animation: "particle-drift 12s ease-in-out infinite" }} />
         <div className="particle" style={{ top: "40%", left: "80%", animation: "particle-drift 15s ease-in-out infinite 2s" }} />
         <div className="particle" style={{ top: "60%", left: "20%", animation: "particle-drift 18s ease-in-out infinite 4s" }} />
@@ -116,8 +122,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-10 border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-4">
+      <section className="py-10 border-t border-white/5 relative overflow-hidden">
+        <AfricaWatermark className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[360px] text-white/[0.02] pointer-events-none" />
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
           <p className="text-center text-xs text-[#56525E] uppercase tracking-widest mb-6">Trusted by 50+ Operators</p>
           <div className="overflow-hidden">
             <div className="flex animate-marquee gap-16 w-max">

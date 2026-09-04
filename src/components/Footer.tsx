@@ -19,6 +19,35 @@ const socialLinks = [
   },
 ]
 
+const africanCountries = [
+  { code: "dz", name: "Algeria" }, { code: "ao", name: "Angola" }, { code: "bj", name: "Benin" },
+  { code: "bw", name: "Botswana" }, { code: "bf", name: "Burkina Faso" }, { code: "bi", name: "Burundi" },
+  { code: "cv", name: "Cabo Verde" }, { code: "cm", name: "Cameroon" }, { code: "cf", name: "Central African Rep." },
+  { code: "td", name: "Chad" }, { code: "km", name: "Comoros" }, { code: "cg", name: "Congo" },
+  { code: "cd", name: "DR Congo" }, { code: "dj", name: "Djibouti" }, { code: "eg", name: "Egypt" },
+  { code: "gq", name: "Equatorial Guinea" }, { code: "er", name: "Eritrea" }, { code: "sz", name: "Eswatini" },
+  { code: "et", name: "Ethiopia" }, { code: "ga", name: "Gabon" }, { code: "gm", name: "Gambia" },
+  { code: "gh", name: "Ghana" }, { code: "gn", name: "Guinea" }, { code: "gw", name: "Guinea-Bissau" },
+  { code: "ci", name: "Ivory Coast" }, { code: "ke", name: "Kenya" }, { code: "ls", name: "Lesotho" },
+  { code: "lr", name: "Liberia" }, { code: "ly", name: "Libya" }, { code: "mg", name: "Madagascar" },
+  { code: "mw", name: "Malawi" }, { code: "ml", name: "Mali" }, { code: "mr", name: "Mauritania" },
+  { code: "mu", name: "Mauritius" }, { code: "ma", name: "Morocco" }, { code: "mz", name: "Mozambique" },
+  { code: "na", name: "Namibia" }, { code: "ne", name: "Niger" }, { code: "ng", name: "Nigeria" },
+  { code: "rw", name: "Rwanda" }, { code: "sn", name: "Senegal" }, { code: "sc", name: "Seychelles" },
+  { code: "sl", name: "Sierra Leone" }, { code: "so", name: "Somalia" }, { code: "za", name: "South Africa" },
+  { code: "ss", name: "South Sudan" }, { code: "sd", name: "Sudan" }, { code: "tz", name: "Tanzania" },
+  { code: "tg", name: "Togo" }, { code: "tn", name: "Tunisia" }, { code: "ug", name: "Uganda" },
+  { code: "zm", name: "Zambia" }, { code: "zw", name: "Zimbabwe" },
+]
+
+const blogCompanyLinks = [
+  { label: "Work With Me", href: "/work-with-me" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+  { label: "Newsletter", href: "/newsletter/confirm" },
+]
+
 interface FooterProps {
   hideNav?: boolean
 }
@@ -26,7 +55,6 @@ interface FooterProps {
 export default function Footer({ hideNav }: FooterProps) {
   return (
     <footer className="relative overflow-hidden text-white">
-      {/* Curved S-wave top separator */}
       <div className="absolute top-0 left-0 w-full z-20 pointer-events-none">
         <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-auto">
           <path d="M0,60 C240,120 480,0 720,50 C960,100 1200,20 1440,60 L1440,0 L0,0 Z" fill="#0E1358" />
@@ -39,21 +67,19 @@ export default function Footer({ hideNav }: FooterProps) {
         <div className="absolute inset-0 bg-gradient-to-br from-[#0E1358]/90 via-[#110B18]/80 to-[#0E1358]/90" />
       </div>
 
-      {/* Animated orbs */}
       <div className="absolute top-40 left-0 w-96 h-96 bg-[#772953]/10 rounded-full blur-3xl -translate-x-1/2 animate-orb-drift" />
       <div className="absolute bottom-20 right-0 w-80 h-80 bg-[#409824]/8 rounded-full blur-3xl translate-x-1/3 animate-orb-drift-slow" style={{ animationDelay: "1s" }} />
-      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-[#0E1358]/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-orb-drift" style={{ animationDelay: "2s" }} />
 
       <div className="max-w-6xl mx-auto px-4 pt-24 pb-16 relative z-10">
-        {/* 4-column grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-10 pb-10 border-b border-white/10">
+
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block mb-3">
               <IgubFullLogo />
             </Link>
             <p className="text-white/50 text-sm leading-relaxed max-w-md">
-              Africa's iGaming content authority — expert writing that ranks and converts.
+              Africa&apos;s iGaming content authority — expert writing that ranks and converts.
             </p>
             <div className="flex items-center gap-3 mt-5">
               {socialLinks.map((s) => (
@@ -64,8 +90,19 @@ export default function Footer({ hideNav }: FooterProps) {
             </div>
           </div>
 
-          {/* Navigate */}
-          {!hideNav && (
+          {/* Navigate (main site) or Company (blog) */}
+          {hideNav ? (
+            <div>
+              <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">Company</h4>
+              <div className="space-y-2.5">
+                {blogCompanyLinks.map((l) => (
+                  <Link key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-gold hover:translate-x-1 transition-all duration-300">
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : (
             <div>
               <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">Navigate</h4>
               <div className="space-y-2.5">
@@ -84,25 +121,46 @@ export default function Footer({ hideNav }: FooterProps) {
             </div>
           )}
 
-          {/* Markets */}
+          {/* Markets - 3D Rotating Countries */}
           <div>
             <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">Markets</h4>
-            <div className="space-y-2.5">
-              {[
-                { label: "Kenya", href: "/kenya" },
-                { label: "Nigeria", href: "/nigeria" },
-                { label: "South Africa", href: "/south-africa" },
-                { label: "Ghana", href: "/ghana" },
-                { label: "Tanzania", href: "/tanzania" },
-              ].map((l) => (
-                <Link key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-gold hover:translate-x-1 transition-all duration-300">
-                  {l.label}
-                </Link>
-              ))}
+            <div className="relative h-[180px] overflow-hidden" style={{ perspective: "400px" }}>
+              <div
+                className="absolute inset-0 flex flex-col items-center"
+                style={{
+                  animation: "footerCountriesSpin 30s linear infinite",
+                  transformStyle: "preserve-3d",
+                }}
+              >
+                {africanCountries.map((c, i) => {
+                  const angle = (360 / africanCountries.length) * i
+                  return (
+                    <Link
+                      key={c.code}
+                      href={`/${c.name.toLowerCase().replace(/\s+/g, "-").replace("dr-congo", "dr-congo")}`}
+                      className="absolute w-full text-center text-sm text-white/60 hover:text-gold transition-colors duration-300 whitespace-nowrap"
+                      style={{
+                        transform: `rotateX(${angle}deg) translateZ(90px)`,
+                        transformOrigin: "center center",
+                        top: "50%",
+                        left: "50%",
+                        marginTop: "-10px",
+                        marginLeft: "-60px",
+                        width: "120px",
+                      }}
+                    >
+                      <span className="inline-block w-5 h-4 text-[9px] font-bold bg-white/10 rounded flex items-center justify-center mr-1.5 align-middle">
+                        {c.code.toUpperCase()}
+                      </span>
+                      {c.name}
+                    </Link>
+                  )
+                })}
+              </div>
             </div>
           </div>
 
-          {/* Company */}
+          {/* Company (main site) or blank (blog) */}
           {!hideNav && (
             <div>
               <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">Company</h4>
@@ -121,9 +179,10 @@ export default function Footer({ hideNav }: FooterProps) {
               </div>
             </div>
           )}
+
+          {hideNav && <div />}
         </div>
 
-        {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
             <span className="text-white/30 text-xs">&copy; {new Date().getFullYear()} iGamingUbuntu. All rights reserved.</span>

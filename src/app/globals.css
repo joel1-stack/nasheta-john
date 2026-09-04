@@ -236,3 +236,9 @@ html {
   background: #D4AF37;
   pointer-events: none;
 }
+
+/* Footer 3D rotating countries */
+@keyframes footerCountriesSpin {
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(360deg); }
+}

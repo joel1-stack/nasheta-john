@@ -26,8 +26,8 @@ export default function CountryCard({ country }: CountryCardProps) {
   const img = countryImages[country.slug] || "/images/full backgound.png"
 
   return (
-    <Link href={`/${country.slug}`} className="group block bg-white rounded-xl border border-border overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up">
-      <div className="aspect-[4/3] overflow-hidden relative">
+    <Link href={`/${country.slug}`} className="group block bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up shadow-sm">
+      <div className="aspect-[4/3] overflow-hidden relative bg-gray-100">
         <Image
           src={img}
           alt={country.name}
@@ -38,9 +38,9 @@ export default function CountryCard({ country }: CountryCardProps) {
       </div>
       <div className="p-5">
         <img src={getFlagUrl(country.slug)} alt={country.name} className="w-8 h-6 rounded shadow-sm mb-2 object-cover" />
-        <h3 className="font-bold text-text-primary group-hover:text-ubuntu-orange transition-colors mb-1">{country.name}</h3>
-        <p className="text-sm text-text-secondary line-clamp-2 leading-relaxed">{country.description}</p>
-        <p className="text-xs text-ubuntu-orange font-medium mt-3 group-hover:translate-x-1 transition-transform">
+        <h3 className="font-bold text-[#111827] group-hover:text-[#f59e0b] transition-colors mb-1">{country.name}</h3>
+        <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">{country.description}</p>
+        <p className="text-xs text-[#f59e0b] font-medium mt-3 group-hover:translate-x-1 transition-transform">
           {country.articleCount} articles →
         </p>
       </div>

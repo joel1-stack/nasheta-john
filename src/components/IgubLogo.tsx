@@ -27,7 +27,7 @@ export function IgubFullLogo({ className = "", dark = false }: { className?: str
   const accentColor = "#409824"
 
   return (
-    <svg viewBox="0 0 260 50" width="180" height="36" className={className} xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 120 50" width="90" height="38" className={className} xmlns="http://www.w3.org/2000/svg">
       {/* African continent */}
       <g transform="translate(2, 6) scale(0.28)">
         <path
@@ -37,13 +37,9 @@ export function IgubFullLogo({ className = "", dark = false }: { className?: str
         />
         <ellipse cx="82" cy="160" rx="4" ry="10" fill={accentColor} opacity="0.7" transform="rotate(15 82 160)" />
       </g>
-      {/* iGUB */}
+      {/* iGUB text */}
       <text x="24" y="35" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="26" fill={textColor} letterSpacing="-0.5">
         iGUB
-      </text>
-      {/* GamingUbuntu */}
-      <text x="92" y="35" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="300" fontSize="22" fill={textColor} letterSpacing="-0.3">
-        amingUbuntu
       </text>
     </svg>
   )

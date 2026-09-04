@@ -148,6 +148,7 @@ export default function NewPostPage() {
               <option value="Guides" className="bg-[#0F0A1A]">Guides</option>
               <option value="Industry News" className="bg-[#0F0A1A]">Industry News</option>
               <option value="Events" className="bg-[#0F0A1A]">Events</option>
+              <option value="Events" className="bg-[#0F0A1A]">Events</option>
               <option value="News" className="bg-[#0F0A1A]">News</option>
             </select>
           </div>

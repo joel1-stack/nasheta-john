@@ -83,22 +83,17 @@ export default function HomePage() {
                 </span>
               </div>
 
-              <h1 className="mt-6 space-y-2">
-                {[
-                  { text: "iGaming Content", delay: 400 },
-                  { text: "That Ranks", delay: 600 },
-                ].map((part) => (
-                  <span key={part.text} className={`block text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight text-[#FCFBFB] transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: `${part.delay}ms` }}>
-                    {part.text}
-                  </span>
-                ))}
-                <span className={`block text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "800ms" }}>
-                  <span className="bg-gradient-to-r from-[#409824] to-[#FCFBFB] bg-clip-text text-transparent">&amp;</span> Converts
+              <h1 className="mt-6">
+                <span className={`block text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight text-[#FCFBFB] transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "400ms" }}>
+                  iGaming Content,
+                </span>
+                <span className={`block text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "600ms" }}>
+                  <span className="bg-gradient-to-r from-[#409824] to-[#FCFBFB] bg-clip-text text-transparent">Built for</span> Your Market.
                 </span>
               </h1>
 
-              <p className={`text-base md:text-lg text-[#56525E] max-w-md mt-6 leading-relaxed transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "1000ms" }}>
-                I write the articles that drive players to betting sites, casinos, and sportsbooks across Africa.
+              <p className={`text-base md:text-lg text-[#56525E] max-w-lg mt-6 leading-relaxed transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "800ms" }}>
+                We create clear, well-researched casino, sportsbook, and iGaming content tailored to your audience, market, and brand.
               </p>
 
               <div className={`flex flex-wrap gap-4 mt-8 transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "1200ms" }}>

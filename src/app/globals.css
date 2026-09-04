@@ -242,3 +242,28 @@ html {
   from { transform: rotateX(0deg); }
   to { transform: rotateX(360deg); }
 }
+
+@keyframes spinEast {
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(360deg); }
+}
+
+@keyframes spinWest {
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(-360deg); }
+}
+
+@keyframes spinCentral {
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(360deg); }
+}
+
+@keyframes spinNorth {
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(-360deg); }
+}
+
+@keyframes spinSouth {
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(360deg); }
+}

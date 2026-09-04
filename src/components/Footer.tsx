@@ -19,25 +19,63 @@ const socialLinks = [
   },
 ]
 
-const africanCountries = [
-  { code: "dz", name: "Algeria" }, { code: "ao", name: "Angola" }, { code: "bj", name: "Benin" },
-  { code: "bw", name: "Botswana" }, { code: "bf", name: "Burkina Faso" }, { code: "bi", name: "Burundi" },
-  { code: "cv", name: "Cabo Verde" }, { code: "cm", name: "Cameroon" }, { code: "cf", name: "Central African Rep." },
-  { code: "td", name: "Chad" }, { code: "km", name: "Comoros" }, { code: "cg", name: "Congo" },
-  { code: "cd", name: "DR Congo" }, { code: "dj", name: "Djibouti" }, { code: "eg", name: "Egypt" },
-  { code: "gq", name: "Equatorial Guinea" }, { code: "er", name: "Eritrea" }, { code: "sz", name: "Eswatini" },
-  { code: "et", name: "Ethiopia" }, { code: "ga", name: "Gabon" }, { code: "gm", name: "Gambia" },
-  { code: "gh", name: "Ghana" }, { code: "gn", name: "Guinea" }, { code: "gw", name: "Guinea-Bissau" },
-  { code: "ci", name: "Ivory Coast" }, { code: "ke", name: "Kenya" }, { code: "ls", name: "Lesotho" },
-  { code: "lr", name: "Liberia" }, { code: "ly", name: "Libya" }, { code: "mg", name: "Madagascar" },
-  { code: "mw", name: "Malawi" }, { code: "ml", name: "Mali" }, { code: "mr", name: "Mauritania" },
-  { code: "mu", name: "Mauritius" }, { code: "ma", name: "Morocco" }, { code: "mz", name: "Mozambique" },
-  { code: "na", name: "Namibia" }, { code: "ne", name: "Niger" }, { code: "ng", name: "Nigeria" },
-  { code: "rw", name: "Rwanda" }, { code: "sn", name: "Senegal" }, { code: "sc", name: "Seychelles" },
-  { code: "sl", name: "Sierra Leone" }, { code: "so", name: "Somalia" }, { code: "za", name: "South Africa" },
-  { code: "ss", name: "South Sudan" }, { code: "sd", name: "Sudan" }, { code: "tz", name: "Tanzania" },
-  { code: "tg", name: "Togo" }, { code: "tn", name: "Tunisia" }, { code: "ug", name: "Uganda" },
-  { code: "zm", name: "Zambia" }, { code: "zw", name: "Zimbabwe" },
+const FLAG = (code: string) => `https://flagcdn.com/w40/${code}.png`
+
+const regions = [
+  {
+    label: "East Africa",
+    color: "#409824",
+    anim: "spinEast 20s linear infinite",
+    countries: [
+      { code: "bi", name: "Burundi" }, { code: "dj", name: "Djibouti" }, { code: "er", name: "Eritrea" },
+      { code: "et", name: "Ethiopia" }, { code: "ke", name: "Kenya" }, { code: "mg", name: "Madagascar" },
+      { code: "mw", name: "Malawi" }, { code: "mu", name: "Mauritius" }, { code: "mz", name: "Mozambique" },
+      { code: "rw", name: "Rwanda" }, { code: "sc", name: "Seychelles" }, { code: "so", name: "Somalia" },
+      { code: "ss", name: "South Sudan" }, { code: "tz", name: "Tanzania" }, { code: "ug", name: "Uganda" },
+      { code: "zm", name: "Zambia" }, { code: "zw", name: "Zimbabwe" },
+    ],
+  },
+  {
+    label: "West Africa",
+    color: "#E95420",
+    anim: "spinWest 25s linear infinite reverse",
+    countries: [
+      { code: "bj", name: "Benin" }, { code: "bf", name: "Burkina Faso" }, { code: "cv", name: "Cabo Verde" },
+      { code: "ci", name: "Ivory Coast" }, { code: "gm", name: "Gambia" }, { code: "gh", name: "Ghana" },
+      { code: "gn", name: "Guinea" }, { code: "gw", name: "Guinea-Bissau" }, { code: "lr", name: "Liberia" },
+      { code: "ml", name: "Mali" }, { code: "mr", name: "Mauritania" }, { code: "ne", name: "Niger" },
+      { code: "ng", name: "Nigeria" }, { code: "sn", name: "Senegal" }, { code: "sl", name: "Sierra Leone" },
+      { code: "tg", name: "Togo" },
+    ],
+  },
+  {
+    label: "Central Africa",
+    color: "#772953",
+    anim: "spinCentral 22s linear infinite",
+    countries: [
+      { code: "cm", name: "Cameroon" }, { code: "cf", name: "Central African Rep." }, { code: "td", name: "Chad" },
+      { code: "cg", name: "Congo" }, { code: "cd", name: "DR Congo" }, { code: "gq", name: "Equatorial Guinea" },
+      { code: "ga", name: "Gabon" }, { code: "st", name: "Sao Tome & Principe" },
+    ],
+  },
+  {
+    label: "North Africa",
+    color: "#0E1358",
+    anim: "spinNorth 28s linear infinite reverse",
+    countries: [
+      { code: "dz", name: "Algeria" }, { code: "eg", name: "Egypt" },       { code: "ly", name: "Libya" },
+      { code: "ma", name: "Morocco" }, { code: "sd", name: "Sudan" }, { code: "tn", name: "Tunisia" },
+    ],
+  },
+  {
+    label: "Southern Africa",
+    color: "#FFD700",
+    anim: "spinSouth 18s linear infinite",
+    countries: [
+      { code: "ao", name: "Angola" }, { code: "bw", name: "Botswana" }, { code: "sz", name: "Eswatini" },
+      { code: "ls", name: "Lesotho" }, { code: "na", name: "Namibia" }, { code: "za", name: "South Africa" },
+    ],
+  },
 ]
 
 const blogCompanyLinks = [
@@ -121,42 +159,54 @@ export default function Footer({ hideNav }: FooterProps) {
             </div>
           )}
 
-          {/* Markets - 3D Rotating Countries */}
-          <div>
-            <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">Markets</h4>
-            <div className="relative h-[180px] overflow-hidden" style={{ perspective: "400px" }}>
-              <div
-                className="absolute inset-0 flex flex-col items-center"
-                style={{
-                  animation: "footerCountriesSpin 30s linear infinite",
-                  transformStyle: "preserve-3d",
-                }}
-              >
-                {africanCountries.map((c, i) => {
-                  const angle = (360 / africanCountries.length) * i
-                  return (
-                    <Link
-                      key={c.code}
-                      href={`/${c.name.toLowerCase().replace(/\s+/g, "-").replace("dr-congo", "dr-congo")}`}
-                      className="absolute w-full text-center text-sm text-white/60 hover:text-gold transition-colors duration-300 whitespace-nowrap"
-                      style={{
-                        transform: `rotateX(${angle}deg) translateZ(90px)`,
-                        transformOrigin: "center center",
-                        top: "50%",
-                        left: "50%",
-                        marginTop: "-10px",
-                        marginLeft: "-60px",
-                        width: "120px",
-                      }}
-                    >
-                      <span className="inline-block w-5 h-4 text-[9px] font-bold bg-white/10 rounded flex items-center justify-center mr-1.5 align-middle">
-                        {c.code.toUpperCase()}
-                      </span>
-                      {c.name}
-                    </Link>
-                  )
-                })}
-              </div>
+          {/* Markets - 5 Regional 3D Rotating Carousels */}
+          <div className="lg:col-span-2">
+            <h4 className="text-xs font-semibold text-gold tracking-widest uppercase mb-4">African Markets</h4>
+            <div className="grid grid-cols-5 gap-2">
+              {regions.map((region) => (
+                <div key={region.label} className="relative h-[160px] overflow-hidden" style={{ perspective: "300px" }}>
+                  <div className="text-center mb-1">
+                    <span className="text-[9px] font-bold uppercase tracking-wider" style={{ color: region.color }}>{region.label}</span>
+                  </div>
+                  <div
+                    className="absolute top-5 left-0 right-0"
+                    style={{
+                      height: "140px",
+                      animation: region.anim,
+                      transformStyle: "preserve-3d",
+                    }}
+                  >
+                    {region.countries.map((c, i) => {
+                      const angle = (360 / region.countries.length) * i
+                      return (
+                        <Link
+                          key={c.code}
+                          href={`/${c.name.toLowerCase().replace(/\s+/g, "-")}`}
+                          className="absolute left-1/2 flex items-center gap-1 whitespace-nowrap group"
+                          style={{
+                            transform: `rotateX(${angle}deg) translateZ(55px)`,
+                            transformOrigin: "center center",
+                            top: "50%",
+                            marginLeft: "-50px",
+                            marginTop: "-9px",
+                            width: "100px",
+                          }}
+                        >
+                          <img
+                            src={FLAG(c.code)}
+                            alt={c.name}
+                            className="w-4 h-3 rounded-sm object-cover shrink-0 shadow-sm border border-white/20"
+                            loading="lazy"
+                          />
+                          <span className="text-[9px] font-semibold text-white/60 group-hover:text-gold transition-colors truncate">
+                            {c.name}
+                          </span>
+                        </Link>
+                      )
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 

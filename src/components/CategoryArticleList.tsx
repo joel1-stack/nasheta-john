@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { getArticles } from "@/lib/firestoreService"
 import type { Article } from "@/types"
 
@@ -66,12 +65,10 @@ export default function CategoryArticleList({ category, country, limit: limitCou
           className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
         >
           <div className="relative h-48 overflow-hidden">
-            <Image
+            <img
               src={article.featuredImage || "/images/Green Data Network (ABSTRACT + TECH).png"}
               alt={article.title}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
             {article.category && (
               <span className="absolute top-3 left-3 bg-ubuntu-orange text-white text-xs font-semibold px-2.5 py-1 rounded-full">

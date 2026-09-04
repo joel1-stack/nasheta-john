@@ -8,11 +8,11 @@ interface LatestPostsProps {
 
 export default function LatestPosts({ articles }: LatestPostsProps) {
   return (
-    <section className="py-16">
+    <section className="py-16 bg-[#FAFAF8]">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-text-primary">Latest iGaming Insights</h2>
-          <Link href="/blog" className="text-sm text-ubuntu-orange font-medium hover:underline">
+          <h2 className="text-2xl font-bold text-[#111827]">Latest iGaming Insights</h2>
+          <Link href="/blog" className="text-sm text-[#f59e0b] font-medium hover:underline">
             View All →
           </Link>
         </div>

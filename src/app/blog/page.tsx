@@ -2,7 +2,6 @@
 
 import { Suspense, useState, useEffect } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { useSearchParams } from "next/navigation"
 import { FiEye, FiArrowRight, FiClock, FiCalendar } from "react-icons/fi"
 import { getAllPublishedArticles } from "@/lib/firestoreService"
@@ -118,7 +117,7 @@ function BlogContent() {
                   >
                     <div className="aspect-[16/9] overflow-hidden bg-gray-50 relative">
                       {article.featuredImage ? (
-                        <Image src={article.featuredImage} alt={article.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-[1.04] transition duration-500" />
+                        <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <span className="text-gray-300 text-sm font-medium">iGamingUbuntu</span>

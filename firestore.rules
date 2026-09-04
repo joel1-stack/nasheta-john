@@ -4,7 +4,7 @@ service cloud.firestore {
     // Allow anyone to read articles (needed for blog posts to load)
     match /articles/{article} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if true;
     }
     // Allow authenticated users to manage affiliate links
     match /affiliateLinks/{link} {

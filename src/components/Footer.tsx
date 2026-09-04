@@ -110,6 +110,7 @@ export default function Footer({ hideNav }: FooterProps) {
                 {[
                   { label: "Work With Me", href: "/work-with-me" },
                   { label: "Privacy Policy", href: "/privacy" },
+                  { label: "Terms of Service", href: "/terms" },
                   { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
                   { label: "Newsletter", href: "/newsletter/confirm" },
                 ].map((l) => (

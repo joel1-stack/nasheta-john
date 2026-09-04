@@ -11,7 +11,6 @@ let _initAttempted = false
 function initFirebase() {
   if (_initAttempted) return
   _initAttempted = true
-  if (typeof window === "undefined") return
   if (!firebaseConfig.apiKey) { console.warn("Firebase: no API key"); return }
   try {
     _app = getApps().length > 0 ? getApps()[0] : initializeApp(firebaseConfig)

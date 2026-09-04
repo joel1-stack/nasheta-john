@@ -1,20 +1,17 @@
 export function IgubLogo({ className = "", size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
-  const sizes = { sm: { w: 32, h: 28, text: 10 }, md: { w: 40, h: 34, text: 13 }, lg: { w: 56, h: 48, text: 18 } }
+  const sizes = { sm: { w: 32, h: 28 }, md: { w: 40, h: 34 }, lg: { w: 56, h: 48 } }
   const s = sizes[size]
 
   return (
-    <svg viewBox="0 0 120 50" width={s.w * 2.4} height={s.h * 1.4} className={className} xmlns="http://www.w3.org/2000/svg">
-      {/* African continent silhouette */}
+    <svg viewBox="0 0 140 50" width={s.w * 2.8} height={s.h * 1.4} className={className} xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(2, 2) scale(0.38)">
         <path
           d="M60 0 C55 2 50 5 48 8 C42 14 38 18 35 22 C30 28 26 36 24 42 C22 48 20 56 19 62 C18 68 18 74 20 80 C22 86 25 92 28 96 C30 99 32 102 32 106 C32 110 30 114 28 118 C26 122 24 128 24 134 C24 140 26 146 28 150 C30 154 32 158 32 162 C32 166 30 170 28 174 C26 178 26 182 28 186 C30 190 34 194 38 196 C42 198 46 198 50 196 C54 194 58 190 60 186 C62 182 64 178 66 174 C68 170 68 166 66 162 C64 158 60 154 58 150 C56 146 54 140 54 134 C54 128 56 122 58 118 C60 114 62 110 62 106 C62 102 64 98 66 94 C70 88 74 82 76 76 C78 70 80 64 80 58 C80 52 78 46 76 40 C74 34 70 28 66 22 C64 18 62 14 60 10 C58 6 58 2 60 0 Z"
           fill="currentColor"
           opacity="0.9"
         />
-        {/* Madagascar */}
         <ellipse cx="82" cy="160" rx="4" ry="10" fill="currentColor" opacity="0.7" transform="rotate(15 82 160)" />
       </g>
-      {/* iGUB text */}
       <text x="52" y="32" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="22" fill="currentColor" letterSpacing="-0.5">
         iGUB
       </text>
@@ -27,9 +24,8 @@ export function IgubFullLogo({ className = "", dark = false }: { className?: str
   const accentColor = "#409824"
 
   return (
-    <svg viewBox="0 0 120 50" width="90" height="38" className={className} xmlns="http://www.w3.org/2000/svg">
-      {/* African continent */}
-      <g transform="translate(2, 6) scale(0.28)">
+    <svg viewBox="0 0 140 50" width="110" height="40" className={className} xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(2, 4) scale(0.3)">
         <path
           d="M60 0 C55 2 50 5 48 8 C42 14 38 18 35 22 C30 28 26 36 24 42 C22 48 20 56 19 62 C18 68 18 74 20 80 C22 86 25 92 28 96 C30 99 32 102 32 106 C32 110 30 114 28 118 C26 122 24 128 24 134 C24 140 26 146 28 150 C30 154 32 158 32 162 C32 166 30 170 28 174 C26 178 26 182 28 186 C30 190 34 194 38 196 C42 198 46 198 50 196 C54 194 58 190 60 186 C62 182 64 178 66 174 C68 170 68 166 66 162 C64 158 60 154 58 150 C56 146 54 140 54 134 C54 128 56 122 58 118 C60 114 62 110 62 106 C62 102 64 98 66 94 C70 88 74 82 76 76 C78 70 80 64 80 58 C80 52 78 46 76 40 C74 34 70 28 66 22 C64 18 62 14 60 10 C58 6 58 2 60 0 Z"
           fill={accentColor}
@@ -37,8 +33,7 @@ export function IgubFullLogo({ className = "", dark = false }: { className?: str
         />
         <ellipse cx="82" cy="160" rx="4" ry="10" fill={accentColor} opacity="0.7" transform="rotate(15 82 160)" />
       </g>
-      {/* iGUB text */}
-      <text x="24" y="35" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="26" fill={textColor} letterSpacing="-0.5">
+      <text x="28" y="34" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="800" fontSize="28" fill={textColor} letterSpacing="-0.5">
         iGUB
       </text>
     </svg>

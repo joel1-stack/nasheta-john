@@ -79,7 +79,7 @@ export default function HomePage() {
             <div className="w-full pt-20 lg:pt-0 max-w-3xl">
               <div className={`transition-all duration-700 delay-200 ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
                 <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.2em]">
-                  Africa&apos;s iGaming Content Authority
+                  Africa&apos;s iGaming Publication
                 </span>
               </div>
 
@@ -107,10 +107,10 @@ export default function HomePage() {
               </div>
 
               <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-8 border-t border-white/5 transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "1400ms" }}>
-                <StatItem target={10} label="Years Experience" />
-                <StatItem target={500} label="Articles Written" />
-                <StatItem target={50} label="Operator Partners" />
-                <StatItem target={15} label="Markets Covered" />
+                <StatItem target={5} label="Years in iGaming" />
+                <StatItem target={100} label="Articles Published" />
+                <StatItem target={15} label="African Markets" />
+                <StatItem target={5} label="Countries Covered" />
               </div>
             </div>
           </div>
@@ -120,7 +120,7 @@ export default function HomePage() {
       <section className="py-10 border-t border-white/5 relative overflow-hidden">
         <AfricaWatermark className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[360px] text-white/[0.02] pointer-events-none" />
         <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <p className="text-center text-xs text-[#56525E] uppercase tracking-widest mb-6">Trusted by 50+ Operators</p>
+          <p className="text-center text-xs text-[#56525E] uppercase tracking-widest mb-6">Trusted by Leading Operators</p>
           <div className="overflow-hidden">
             <div className="flex animate-marquee gap-16 w-max">
               {[...Array(2)].map((_, idx) => (

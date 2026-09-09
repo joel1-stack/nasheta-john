@@ -22,6 +22,9 @@ export default function NewPostPage() {
   const [form, setForm] = useState({
     title: "", slug: "", excerpt: "", content: "", category: "Sports Betting",
     country: "kenya", featuredImage: "", tags: "", readTime: 5, status: "draft",
+    seoTitle: "", metaDescription: "", canonicalUrl: "", noindex: false, ogImage: "",
+    authorName: "Nasheta John", authorBio: "", authorPhoto: "",
+    isSponsored: false, sponsorName: "", isPressRelease: false, pressReleaseSource: "",
   })
 
   const [affiliates, setAffiliates] = useState<AffiliateField[]>([
@@ -58,6 +61,7 @@ export default function NewPostPage() {
     e.preventDefault()
     setSaving(true)
     try {
+      const status = form.isSponsored ? "sponsored" : form.isPressRelease ? "press-release" : form.status as "published" | "draft"
       const id = await createArticle({
         title: form.title,
         slug: form.slug,
@@ -69,8 +73,18 @@ export default function NewPostPage() {
         tags: form.tags.split(",").map((t) => t.trim()),
         readTime: form.readTime,
         author: "iGamingUbuntu",
-        status: form.status as "published" | "draft",
+        status,
         views: 0,
+        seoTitle: form.seoTitle,
+        metaDescription: form.metaDescription,
+        canonicalUrl: form.canonicalUrl,
+        noindex: form.noindex,
+        ogImage: form.ogImage,
+        authorName: form.authorName,
+        authorBio: form.authorBio,
+        authorPhoto: form.authorPhoto,
+        sponsorName: form.isSponsored ? form.sponsorName : "",
+        pressReleaseSource: form.isPressRelease ? form.pressReleaseSource : "",
       })
 
       if (id) {
@@ -176,6 +190,35 @@ export default function NewPostPage() {
           <input value={form.featuredImage} onChange={(e) => setForm((f) => ({ ...f, featuredImage: e.target.value }))} className={inputClass} placeholder="https://..." />
         </div>
 
+        {/* SEO Section */}
+        <div className="border-t border-white/10 pt-6">
+          <h2 className="font-bold text-white mb-3">SEO</h2>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1.5">SEO Title</label>
+              <input value={form.seoTitle} onChange={(e) => setForm((f) => ({ ...f, seoTitle: e.target.value }))} className={inputClass} placeholder="Custom title for search engines" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1.5">Meta Description</label>
+              <textarea value={form.metaDescription} onChange={(e) => setForm((f) => ({ ...f, metaDescription: e.target.value }))} rows={2} className={inputClass} placeholder="Custom description for search results" />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Canonical URL</label>
+                <input value={form.canonicalUrl} onChange={(e) => setForm((f) => ({ ...f, canonicalUrl: e.target.value }))} className={inputClass} placeholder="Leave empty for default" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">OG Image URL</label>
+                <input value={form.ogImage} onChange={(e) => setForm((f) => ({ ...f, ogImage: e.target.value }))} className={inputClass} placeholder="Social sharing image URL" />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <input type="checkbox" id="noindex" checked={form.noindex} onChange={(e) => setForm((f) => ({ ...f, noindex: e.target.checked }))} className="rounded border-white/10 bg-white/5 text-[#E95420] focus:ring-[#E95420]/50" />
+              <label htmlFor="noindex" className="text-sm text-gray-300">Hide from search engines</label>
+            </div>
+          </div>
+        </div>
+
         {/* Affiliate Links */}
         <div className="border-t border-white/10 pt-6">
           <h2 className="font-bold text-white mb-3">Affiliate Links</h2>
@@ -210,6 +253,52 @@ export default function NewPostPage() {
             <option value="draft" className="bg-[#0F0A1A]">Draft</option>
             <option value="published" className="bg-[#0F0A1A]">Published</option>
           </select>
+        </div>
+
+        {/* Article Type Section */}
+        <div className="border-t border-white/10 pt-6">
+          <h2 className="font-bold text-white mb-3">Article Type</h2>
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <input type="checkbox" id="isSponsored" checked={form.isSponsored} onChange={(e) => setForm((f) => ({ ...f, isSponsored: e.target.checked }))} className="rounded border-white/10 bg-white/5 text-[#E95420] focus:ring-[#E95420]/50" />
+              <label htmlFor="isSponsored" className="text-sm text-gray-300">This is a sponsored/paid article</label>
+            </div>
+            {form.isSponsored && (
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Sponsor Name</label>
+                <input value={form.sponsorName} onChange={(e) => setForm((f) => ({ ...f, sponsorName: e.target.value }))} className={inputClass} placeholder="Sponsor name" />
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              <input type="checkbox" id="isPressRelease" checked={form.isPressRelease} onChange={(e) => setForm((f) => ({ ...f, isPressRelease: e.target.checked }))} className="rounded border-white/10 bg-white/5 text-[#E95420] focus:ring-[#E95420]/50" />
+              <label htmlFor="isPressRelease" className="text-sm text-gray-300">This is a press release</label>
+            </div>
+            {form.isPressRelease && (
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">Press Release Source</label>
+                <input value={form.pressReleaseSource} onChange={(e) => setForm((f) => ({ ...f, pressReleaseSource: e.target.value }))} className={inputClass} placeholder="Source/PR agency" />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Author Section */}
+        <div className="border-t border-white/10 pt-6">
+          <h2 className="font-bold text-white mb-3">Author</h2>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1.5">Author Name</label>
+              <input value={form.authorName} onChange={(e) => setForm((f) => ({ ...f, authorName: e.target.value }))} className={inputClass} placeholder="Author name" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1.5">Author Bio</label>
+              <textarea value={form.authorBio} onChange={(e) => setForm((f) => ({ ...f, authorBio: e.target.value }))} rows={2} className={inputClass} placeholder="Brief author bio" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1.5">Author Photo URL</label>
+              <input value={form.authorPhoto} onChange={(e) => setForm((f) => ({ ...f, authorPhoto: e.target.value }))} className={inputClass} placeholder="Author photo URL" />
+            </div>
+          </div>
         </div>
 
         <div className="flex gap-3 pt-4 border-t border-white/10">

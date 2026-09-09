@@ -42,6 +42,12 @@ export default function BlogArticlePage() {
       .catch(() => {})
   }, [slug])
 
+  useEffect(() => {
+    if (article) {
+      document.title = article.seoTitle || `${article.title} | iGamingUbuntu`
+    }
+  }, [article])
+
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in bg-[#FAFAF8] min-h-screen">
@@ -95,6 +101,18 @@ export default function BlogArticlePage() {
 
             <div className="flex items-center gap-3 text-sm mb-4 flex-wrap">
               <span className="bg-emerald-50 text-emerald-600 px-3 py-0.5 rounded-full font-medium text-xs">{article.category}</span>
+              {article.status === "sponsored" && (
+                <span className="bg-amber-50 text-amber-600 px-3 py-0.5 rounded-full font-medium text-xs">Sponsored</span>
+              )}
+              {article.status === "sponsored" && article.sponsorName && (
+                <span className="text-xs text-gray-400">by {article.sponsorName}</span>
+              )}
+              {article.status === "press-release" && (
+                <span className="bg-blue-50 text-blue-600 px-3 py-0.5 rounded-full font-medium text-xs">Press Release</span>
+              )}
+              {article.status === "press-release" && article.pressReleaseSource && (
+                <span className="text-xs text-gray-400">Source: {article.pressReleaseSource}</span>
+              )}
               <span className="text-gray-400">{formatDate(article.createdAt)}</span>
               <span className="text-gray-400">&middot; {article.readTime} min read</span>
               <span className="text-gray-400 flex items-center gap-1">
@@ -165,11 +183,14 @@ export default function BlogArticlePage() {
 
             <div className="flex items-center gap-3 border-t border-gray-200 pt-6">
               <span className="text-sm font-medium text-[#111827]">Share this article:</span>
-              {[
-                { label: "Twitter", url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://nasheta-john.vercel.app/blog/${article.slug}`)}` },
-                { label: "LinkedIn", url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://nasheta-john.vercel.app/blog/${article.slug}`)}` },
-                { label: "WhatsApp", url: `https://wa.me/?text=${encodeURIComponent(`${article.title} https://nasheta-john.vercel.app/blog/${article.slug}`)}` },
-              ].map((s) => (
+              {(() => {
+                const articleUrl = article.canonicalUrl || `https://nasheta-john.vercel.app/blog/${article.slug}`
+                return [
+                  { label: "Twitter", url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(articleUrl)}` },
+                  { label: "LinkedIn", url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}` },
+                  { label: "WhatsApp", url: `https://wa.me/?text=${encodeURIComponent(`${article.title} ${articleUrl}`)}` },
+                ]
+              })().map((s) => (
                 <a key={s.label} href={s.url} target="_blank" rel="noopener" className="bg-gray-100 text-sm text-gray-600 px-3 py-1.5 rounded-lg hover:bg-amber-50 hover:text-[#f59e0b] transition">
                   {s.label}
                 </a>
@@ -178,14 +199,18 @@ export default function BlogArticlePage() {
 
             <div className="border-t border-gray-200 pt-6 mt-6">
               <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#E95420] to-[#772953] flex items-center justify-center text-white font-bold text-xl shrink-0">
-                  IG
-                </div>
+                {article.authorPhoto ? (
+                  <img src={article.authorPhoto} alt={article.authorName || "Author"} className="w-14 h-14 rounded-full object-cover shrink-0" />
+                ) : (
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#E95420] to-[#772953] flex items-center justify-center text-white font-bold text-xl shrink-0">
+                    {(article.authorName || article.author || "IG").split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
+                  </div>
+                )}
                 <div className="flex-1">
-                  <p className="font-bold text-[#111827]">iGamingUbuntu</p>
-                  <p className="text-sm text-gray-500">iGaming Content & Affiliate Partner, Africa</p>
+                  <p className="font-bold text-[#111827]">{article.authorName || article.author || "iGamingUbuntu"}</p>
+                  <p className="text-sm text-gray-500">{article.authorBio || "iGaming content specialist covering African markets"}</p>
                   <p className="text-xs text-gray-400 mt-1">
-                    Published {formatDate(article.createdAt)} &middot; Updated {formatDate(article.updatedAt)}
+                    Published {formatDate(article.createdAt)} · Updated {formatDate(article.updatedAt)}
                   </p>
                 </div>
               </div>
@@ -202,6 +227,31 @@ export default function BlogArticlePage() {
           </aside>
         </div>
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: article.title,
+            description: article.metaDescription || article.excerpt,
+            image: article.ogImage || article.featuredImage,
+            datePublished: article.createdAt,
+            dateModified: article.updatedAt,
+            author: {
+              "@type": "Person",
+              name: article.authorName || article.author || "Nasheta John",
+              description: article.authorBio || "iGaming content specialist covering African markets",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "iGamingUbuntu",
+              logo: { "@type": "ImageObject", url: "https://nasheta-john.vercel.app/favicon.svg" },
+            },
+            mainEntityOfPage: { "@type": "WebPage", "@id": `https://nasheta-john.vercel.app/blog/${article.slug}` },
+          }),
+        }}
+      />
     </div>
   )
 }

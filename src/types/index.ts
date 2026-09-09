@@ -10,10 +10,23 @@ export interface Article {
   tags: string[]
   readTime: number
   author: string
-  status: "published" | "draft"
+  status: "published" | "draft" | "sponsored" | "press-release"
   views: number
   createdAt: string
   updatedAt: string
+  // SEO fields
+  seoTitle?: string
+  metaDescription?: string
+  canonicalUrl?: string
+  noindex?: boolean
+  ogImage?: string
+  // Author fields
+  authorName?: string
+  authorBio?: string
+  authorPhoto?: string
+  // Sponsored/Press
+  sponsorName?: string
+  pressReleaseSource?: string
 }
 
 export interface AffiliateLink {

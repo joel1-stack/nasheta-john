@@ -66,6 +66,12 @@ export default function AdminDashboardPage() {
           >
             + New Post
           </Link>
+          <Link
+            href="/admin/dashboard/affiliates"
+            className="bg-white/10 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-white/20 transition"
+          >
+            Affiliate Stats
+          </Link>
           <button
             onClick={() => signOut(getAuthInstance()!)}
             className="bg-white/10 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-red-600/80 transition cursor-pointer"

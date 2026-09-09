@@ -83,6 +83,9 @@ const blogCompanyLinks = [
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
   { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+  { label: "Editorial Policy", href: "/editorial-policy" },
+  { label: "How We Review", href: "/how-we-review" },
+  { label: "Responsible Gambling", href: "/responsible-gambling" },
   { label: "Newsletter", href: "/newsletter/confirm" },
 ]
 
@@ -199,9 +202,15 @@ export default function Footer({ hideNav }: FooterProps) {
               <div className="space-y-2.5">
                 {[
                   { label: "Work With Me", href: "/work-with-me" },
+                  { label: "Advertise", href: "/advertise" },
+                  { label: "Editorial Team", href: "/editorial-team" },
                   { label: "Privacy Policy", href: "/privacy" },
                   { label: "Terms of Service", href: "/terms" },
                   { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+                  { label: "Editorial Policy", href: "/editorial-policy" },
+                  { label: "How We Review", href: "/how-we-review" },
+                  { label: "Responsible Gambling", href: "/responsible-gambling" },
+                  { label: "Corrections", href: "/corrections" },
                   { label: "Newsletter", href: "/newsletter/confirm" },
                 ].map((l) => (
                   <Link key={l.href} href={l.href} className="block text-sm text-white/50 hover:text-gold hover:translate-x-1 transition-all duration-300">

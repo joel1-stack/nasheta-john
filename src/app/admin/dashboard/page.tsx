@@ -140,6 +140,10 @@ export default function AdminDashboardPage() {
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
                         a.status === "published"
                           ? "bg-green-500/20 text-green-400"
+                          : a.status === "sponsored"
+                          ? "bg-purple-500/20 text-purple-400"
+                          : a.status === "press-release"
+                          ? "bg-blue-500/20 text-blue-400"
                           : "bg-yellow-500/20 text-yellow-400"
                       }`}>
                         {a.status}

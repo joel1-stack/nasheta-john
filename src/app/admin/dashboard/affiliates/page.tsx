@@ -16,10 +16,16 @@ interface AffiliateStats {
   clicks: number
 }
 
+interface ArticleTitle {
+  id: string
+  title: string
+}
+
 export default function AffiliateStatsPage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState<AffiliateStats[]>([])
+  const [articleTitles, setArticleTitles] = useState<Record<string, string>>({})
   const router = useRouter()
 
   useEffect(() => {
@@ -38,7 +44,20 @@ export default function AffiliateStatsPage() {
       const fb = getDb()
       if (!fb) return
       const snap = await getDocs(query(collection(fb, "affiliateLinks"), orderBy("clicks", "desc")))
-      setStats(snap.docs.map((d) => ({ id: d.id, ...d.data() } as AffiliateStats)))
+      const links = snap.docs.map((d) => ({ id: d.id, ...d.data() } as AffiliateStats))
+      setStats(links)
+
+      const articleIds = [...new Set(links.map((l) => l.articleId).filter(Boolean))]
+      if (articleIds.length > 0) {
+        const articleSnap = await getDocs(collection(fb, "articles"))
+        const titles: Record<string, string> = {}
+        articleSnap.docs.forEach((d) => {
+          if (articleIds.includes(d.id)) {
+            titles[d.id] = d.data().title || "Untitled"
+          }
+        })
+        setArticleTitles(titles)
+      }
     }
     fetchStats()
   }, [user])
@@ -83,6 +102,9 @@ export default function AffiliateStatsPage() {
               <div key={s.id} className="flex items-center justify-between px-5 py-3 hover:bg-white/5 transition">
                 <div>
                   <p className="font-medium text-white text-sm">{s.operatorName}</p>
+                  {s.articleId && articleTitles[s.articleId] && (
+                    <p className="text-xs text-gray-500 mt-0.5">in: {articleTitles[s.articleId]}</p>
+                  )}
                   <p className="text-xs text-gray-400 truncate max-w-xs">{s.bonusText || s.url}</p>
                 </div>
                 <div className="text-right">

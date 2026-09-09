@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import NavbarWrapper from "@/components/NavbarWrapper"
 import FooterWrapper from "@/components/FooterWrapper"
+import ContentProtection from "@/components/ContentProtection"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         </head>
         <body className={`${inter.className} min-h-full flex flex-col bg-[#110B18] text-text-primary antialiased`}>
+        <ContentProtection />
         <NavbarWrapper />
          <main className="flex-1 bg-[#110B18]">
           {children}

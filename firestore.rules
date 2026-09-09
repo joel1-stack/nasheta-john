@@ -1,12 +1,12 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow anyone to read articles (needed for blog posts to load)
+    // Articles: public read, only authenticated admin can write
     match /articles/{article} {
       allow read: if true;
-      allow write: if true;
+      allow write: if request.auth != null;
     }
-    // Allow authenticated users to manage affiliate links
+    // Affiliate links: public read, only authenticated admin can write
     match /affiliateLinks/{link} {
       allow read: if true;
       allow write: if request.auth != null;

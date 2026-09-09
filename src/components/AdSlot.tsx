@@ -5,6 +5,9 @@ import { useEffect, useRef } from "react"
 interface AdSlotProps {
   position: "leaderboard-top" | "sidebar-1" | "sidebar-2" | "in-content-1" | "in-content-2" | "footer-banner"
   className?: string
+  imageUrl?: string
+  linkUrl?: string
+  alt?: string
 }
 
 const adConfigs: Record<string, { width: string; height: string; label: string }> = {
@@ -16,7 +19,7 @@ const adConfigs: Record<string, { width: string; height: string; label: string }
   "footer-banner": { width: "728px", height: "90px", label: "Advertisement" },
 }
 
-export default function AdSlot({ position, className = "" }: AdSlotProps) {
+export default function AdSlot({ position, className = "", imageUrl, linkUrl, alt }: AdSlotProps) {
   const adRef = useRef<HTMLDivElement>(null)
   const config = adConfigs[position] || adConfigs["sidebar-1"]
 
@@ -27,6 +30,16 @@ export default function AdSlot({ position, className = "" }: AdSlotProps) {
       }
     } catch {}
   }, [])
+
+  if (imageUrl && linkUrl) {
+    return (
+      <div className={`ad-container rounded-xl overflow-hidden ${className}`} ref={adRef}>
+        <a href={linkUrl} target="_blank" rel="nofollow sponsored noopener" className="block">
+          <img src={imageUrl} alt={alt || "Advertisement"} className="w-full h-auto rounded-xl hover:opacity-90 transition" />
+        </a>
+      </div>
+    )
+  }
 
   return (
     <div className={`ad-container rounded-xl overflow-hidden ${className}`} ref={adRef}>

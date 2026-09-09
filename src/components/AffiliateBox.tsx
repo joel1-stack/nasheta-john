@@ -26,6 +26,11 @@ export default function AffiliateBox({ title, offers, placement = "sidebar" }: A
     }
   }
 
+  const getHref = (offer: AffiliateOffer) => {
+    if (offer.linkId) return `/go/${offer.linkId}`
+    return offer.url
+  }
+
   return (
     <div className="rounded-xl p-6 my-8 border border-amber-200 bg-gradient-to-br from-amber-50 to-white shadow-sm">
       <h3 className="text-lg font-bold text-[#111827] mb-4">{title}</h3>
@@ -37,7 +42,7 @@ export default function AffiliateBox({ title, offers, placement = "sidebar" }: A
               <p className="text-sm text-gray-500">{offer.bonusText}</p>
             </div>
             <a
-              href={offer.url}
+              href={getHref(offer)}
               target="_blank"
               rel="nofollow sponsored noopener"
               onClick={() => handleClick(offer)}

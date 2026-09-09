@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
       const auth = getAuthInstance()
       if (!auth) throw new Error("Firebase not initialized")
       await signInWithEmailAndPassword(auth, email, password)
-      router.push("/admin/dashboard")
+      router.push("/igub-cms-x7k9/dashboard")
     } catch (err: any) {
       const code = err.code || ""
       if (code === "auth/invalid-credential" || code === "auth/user-not-found") {

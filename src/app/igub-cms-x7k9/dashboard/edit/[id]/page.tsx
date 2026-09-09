@@ -38,7 +38,7 @@ export default function EditPostPage() {
     const auth = getAuthInstance()
     if (!auth) { setLoading(false); return }
     const unsub = onAuthStateChanged(auth, async (u) => {
-      if (!u) { router.push("/admin") } else { setUser(u) }
+      if (!u) { router.push("/igub-cms-x7k9") } else { setUser(u) }
       setLoading(false)
       if (u && id) {
         const article = await getArticleById(id)
@@ -136,7 +136,7 @@ export default function EditPostPage() {
         }
       }
 
-      router.push("/admin/dashboard")
+      router.push("/igub-cms-x7k9/dashboard")
     } catch (err) {
       alert("Failed to save. Check console.")
       console.error(err)
@@ -155,7 +155,7 @@ export default function EditPostPage() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white">Edit Article</h1>
-        <Link href="/admin/dashboard" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Dashboard</Link>
+        <Link href="/igub-cms-x7k9/dashboard" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Dashboard</Link>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 space-y-6">
@@ -336,7 +336,7 @@ export default function EditPostPage() {
           <button type="submit" disabled={saving} className="bg-[#E95420] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20">
             {saving ? "Saving..." : "Update Article"}
           </button>
-          <Link href="/admin/dashboard" className="bg-white/10 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/20 transition">
+          <Link href="/igub-cms-x7k9/dashboard" className="bg-white/10 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/20 transition">
             Cancel
           </Link>
         </div>

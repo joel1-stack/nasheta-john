@@ -25,7 +25,7 @@ export default function AdminDashboardPage() {
     setFirebaseReady(true)
     const unsub = onAuthStateChanged(auth, (u) => {
       if (!u) {
-        router.push("/admin")
+        router.push("/igub-cms-x7k9")
       } else {
         setUser(u)
         loadArticles()
@@ -61,13 +61,13 @@ export default function AdminDashboardPage() {
         </div>
         <div className="flex gap-3">
           <Link
-            href="/admin/dashboard/new"
+            href="/igub-cms-x7k9/dashboard/new"
             className="bg-[#E95420] text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#CC4A1C] transition shadow-lg shadow-[#E95420]/20"
           >
             + New Post
           </Link>
           <Link
-            href="/admin/dashboard/affiliates"
+            href="/igub-cms-x7k9/dashboard/affiliates"
             className="bg-white/10 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-white/20 transition"
           >
             Affiliate Stats
@@ -119,7 +119,7 @@ export default function AdminDashboardPage() {
                     <p className="font-medium mb-1 text-white">No articles yet</p>
                     <p className="text-sm mb-4">Create your first article to get started.</p>
                     <Link
-                      href="/admin/dashboard/new"
+                      href="/igub-cms-x7k9/dashboard/new"
                       className="bg-[#E95420] text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#CC4A1C] transition inline-block shadow-lg shadow-[#E95420]/20"
                     >
                       + Create First Article
@@ -154,7 +154,7 @@ export default function AdminDashboardPage() {
                     <td className="p-4">
                       <div className="flex gap-2">
                         <Link
-                          href={`/admin/dashboard/edit/${a.id}`}
+                          href={`/igub-cms-x7k9/dashboard/edit/${a.id}`}
                           className="text-sm text-[#f59e0b] hover:text-[#f59e0b]/80 font-medium transition"
                         >
                           Edit

@@ -7,7 +7,7 @@ import { formatDate } from "@/lib/utils"
 import AdSlot from "@/components/AdSlot"
 import Sidebar from "@/components/Sidebar"
 import AffiliateBox from "@/components/AffiliateBox"
-import { getArticleBySlug, incrementViews } from "@/lib/firestoreService"
+import { getArticleBySlug, incrementViews, getAffiliateLinks } from "@/lib/firestoreService"
 import type { Article } from "@/types"
 
 export default function BlogArticlePage() {
@@ -16,6 +16,7 @@ export default function BlogArticlePage() {
   const [article, setArticle] = useState<Article | null>(null)
   const [related, setRelated] = useState<Article[]>([])
   const [popular, setPopular] = useState<Article[]>([])
+  const [affiliateLinks, setAffiliateLinks] = useState<{ operatorName: string; bonusText: string; url: string; linkId: string }[]>([])
   const [loading, setLoading] = useState(true)
   const [viewCount, setViewCount] = useState(0)
 
@@ -27,7 +28,15 @@ export default function BlogArticlePage() {
         setViewCount((found.views || 0) + 1)
         incrementViews(found.id).catch(() => {})
 
-        // Fetch related articles for this category
+        getAffiliateLinks(found.id).then((links) => {
+          setAffiliateLinks(links.map((l) => ({
+            operatorName: l.operatorName,
+            bonusText: l.bonusText,
+            url: l.url,
+            linkId: l.id,
+          })))
+        }).catch(() => {})
+
         fetch(`/api/blog?action=related&category=${encodeURIComponent(found.category)}&slug=${slug}`)
           .then((r) => r.json())
           .then((d) => setRelated(d.articles || []))
@@ -78,13 +87,15 @@ export default function BlogArticlePage() {
     )
   }
 
-  const affiliateOffers = [
+  const fallbackOffers = [
     { operatorName: "SportPesa", bonusText: "200% Welcome Bonus up to KES 5,000, M-Pesa Accepted", url: "https://sportpesa.com/?ref=igamingubuntu" },
     { operatorName: "1xBet", bonusText: "100% Deposit Bonus + $100 Free Bet + Live Streaming", url: "https://1xbet.com/?btag=igamingubuntu" },
     { operatorName: "Betika", bonusText: "Free Bet on First Deposit + Instant M-Pesa Withdrawals", url: "https://betika.com/?aff=igamingubuntu" },
     { operatorName: "Betway", bonusText: "Up to $50 in Free Bets, Trusted Global Brand, Local Support", url: "https://betway.com/?aff=igamingubuntu" },
     { operatorName: "22Bet", bonusText: "100% Welcome Bonus + Daily Enhanced Odds on Major Leagues", url: "https://22bet.com/?btag=igamingubuntu" },
   ]
+
+  const displayOffers = affiliateLinks.length > 0 ? affiliateLinks : fallbackOffers
 
   return (
     <div className="min-h-screen bg-[#FAFAF8]">
@@ -148,7 +159,7 @@ export default function BlogArticlePage() {
 
             <AdSlot position="in-content-1" className="my-8" />
 
-            <AffiliateBox title="Best Odds & Betting Offers" offers={affiliateOffers.slice(0, 3)} />
+            <AffiliateBox title="Best Odds & Betting Offers" offers={displayOffers.slice(0, 3)} />
 
             {related.length > 0 && (
               <div className="bg-white rounded-xl p-6 my-8 border border-gray-200 shadow-sm">
@@ -169,7 +180,7 @@ export default function BlogArticlePage() {
 
             <AdSlot position="in-content-2" className="my-8" />
 
-            <AffiliateBox title="Top Betting Sites" offers={affiliateOffers} />
+            <AffiliateBox title="Top Betting Sites" offers={displayOffers} />
 
             {article.tags && article.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 my-8">

@@ -32,7 +32,7 @@ export default function AffiliateStatsPage() {
     const auth = getAuthInstance()
     if (!auth) { setLoading(false); return }
     const unsub = onAuthStateChanged(auth, (u) => {
-      if (!u) { router.push("/admin") } else { setUser(u) }
+      if (!u) { router.push("/igub-cms-x7k9") } else { setUser(u) }
       setLoading(false)
     })
     return () => unsub()
@@ -72,7 +72,7 @@ export default function AffiliateStatsPage() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white">Affiliate Performance</h1>
-        <Link href="/admin/dashboard" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Dashboard</Link>
+        <Link href="/igub-cms-x7k9/dashboard" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Dashboard</Link>
       </div>
 
       <div className="grid grid-cols-3 gap-4 mb-8">

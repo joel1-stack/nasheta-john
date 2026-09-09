@@ -13,6 +13,12 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["react-icons"],
   },
+  async redirects() {
+    return [
+      { source: "/admin", destination: "/igub-cms-x7k9", permanent: true },
+      { source: "/admin/:path*", destination: "/igub-cms-x7k9/:path*", permanent: true },
+    ]
+  },
 };
 
 export default nextConfig;

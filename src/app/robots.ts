@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin/", "/api/"],
+        disallow: ["/igub-cms-x7k9/", "/api/"],
       },
     ],
     sitemap: "https://nasheta-john.vercel.app/sitemap.xml",

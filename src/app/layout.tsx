@@ -4,10 +4,12 @@ import "./globals.css"
 import NavbarWrapper from "@/components/NavbarWrapper"
 import FooterWrapper from "@/components/FooterWrapper"
 import ContentProtection from "@/components/ContentProtection"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nasheta-john.vercel.app"),
+  metadataBase: new URL("https://igamingubuntu.com"),
   title: {
     default: "iGamingUbuntu — Africa's iGaming Content & Affiliate Authority",
     template: "%s | iGamingUbuntu",
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://nasheta-john.vercel.app",
+    url: "https://igamingubuntu.com",
     siteName: "iGamingUbuntu",
     title: "iGamingUbuntu — Africa's iGaming Content & Affiliate Authority",
     description: "Expert iGaming content, betting site reviews, and affiliate guides across Kenya, Nigeria, South Africa, Ghana, and Tanzania.",
@@ -65,6 +67,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <FooterWrapper />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

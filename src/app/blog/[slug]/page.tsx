@@ -195,7 +195,7 @@ export default function BlogArticlePage() {
             <div className="flex items-center gap-3 border-t border-gray-200 pt-6">
               <span className="text-sm font-medium text-[#111827]">Share this article:</span>
               {(() => {
-                const articleUrl = article.canonicalUrl || `https://nasheta-john.vercel.app/blog/${article.slug}`
+                const articleUrl = article.canonicalUrl || `https://igamingubuntu.com/blog/${article.slug}`
                 return [
                   { label: "Twitter", url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(articleUrl)}` },
                   { label: "LinkedIn", url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}` },
@@ -257,9 +257,9 @@ export default function BlogArticlePage() {
             publisher: {
               "@type": "Organization",
               name: "iGamingUbuntu",
-              logo: { "@type": "ImageObject", url: "https://nasheta-john.vercel.app/favicon.svg" },
+              logo: { "@type": "ImageObject", url: "https://igamingubuntu.com/favicon.svg" },
             },
-            mainEntityOfPage: { "@type": "WebPage", "@id": `https://nasheta-john.vercel.app/blog/${article.slug}` },
+            mainEntityOfPage: { "@type": "WebPage", "@id": `https://igamingubuntu.com/blog/${article.slug}` },
           }),
         }}
       />

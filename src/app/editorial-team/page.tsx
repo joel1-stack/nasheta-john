@@ -32,7 +32,7 @@ export default function EditorialTeamPage() {
 
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
           <h2 className="text-lg font-bold text-[#111827] mb-3">Join Our Team</h2>
-          <p className="text-sm text-gray-600 leading-relaxed">We are always looking for experienced iGaming writers, editors, and market analysts. If you have deep knowledge of African betting markets and a passion for accurate, helpful content, get in touch at <a href="mailto:salvagekyalo@gmail.com" className="text-[#f59e0b] hover:underline">salvagekyalo@gmail.com</a>.</p>
+          <p className="text-sm text-gray-600 leading-relaxed">We are always looking for experienced iGaming writers, editors, and market analysts. If you have deep knowledge of African betting markets and a passion for accurate, helpful content, get in touch at <a href="mailto:info@igamingubuntu.com" className="text-[#f59e0b] hover:underline">info@igamingubuntu.com</a>.</p>
         </div>
 
         <div className="mt-12 text-center"><Link href="/" className="inline-flex items-center gap-2 text-[#f59e0b] hover:underline font-medium text-sm">&larr; Back to Home</Link></div>

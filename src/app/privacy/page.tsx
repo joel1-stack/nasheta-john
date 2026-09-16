@@ -5,7 +5,7 @@ import Link from "next/link"
 const sections = [
   {
     title: "1. Introduction",
-    content: `iGamingUbuntu ("we", "us", "our") operates the website nasheta-john.vercel.app (the "Site"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, subscribe to our newsletter, or interact with our content and services.`,
+    content: `iGamingUbuntu ("we", "us", "our") operates the website igamingubuntu.com (the "Site"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, subscribe to our newsletter, or interact with our content and services.`,
   },
   {
     title: "2. Information We Collect",
@@ -73,7 +73,7 @@ No method of transmission over the Internet or method of electronic storage is 1
 - The right to object – You have the right to object to our processing of your data.
 - The right to data portability – You have the right to request transfer of your data.
 
-To exercise any of these rights, please contact us at salvagekyalo@gmail.com.`,
+To exercise any of these rights, please contact us at info@igamingubuntu.com.`,
   },
   {
     title: "9. Children's Privacy",
@@ -97,8 +97,8 @@ Changes to this Privacy Policy are effective when they are posted on this page.`
     title: "12. Contact Us",
     content: `If you have questions or concerns about this Privacy Policy, please contact us:
 
-Email: salvagekyalo@gmail.com
-Website: https://nasheta-john.vercel.app/contact`,
+Email: info@igamingubuntu.com
+Website: https://igamingubuntu.com/contact`,
   },
 ]
 
@@ -120,7 +120,7 @@ export default function PrivacyPage() {
       <div className="max-w-4xl mx-auto px-4 py-12">
         {/* Intro */}
         <p className="text-gray-600 leading-relaxed mb-10">
-          iGamingUbuntu (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) operates the website nasheta-john.vercel.app (the &quot;Site&quot;). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, subscribe to our newsletter, or interact with our content and services. Please read this policy carefully.
+          iGamingUbuntu (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) operates the website igamingubuntu.com (the &quot;Site&quot;). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, subscribe to our newsletter, or interact with our content and services. Please read this policy carefully.
         </p>
 
         {/* Sections */}

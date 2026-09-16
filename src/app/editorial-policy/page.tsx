@@ -6,7 +6,7 @@ const sections = [
   { title: "Editorial Independence", content: "Our editorial content is not influenced by advertisers, sponsors, or affiliate partners. We maintain strict separation between commercial and editorial content. No advertiser or partner can influence, review, or approve our editorial content before publication." },
   { title: "How We Fund Operations", content: "Revenue comes from affiliate commissions, advertising, and sponsored content. All affiliate relationships are disclosed on relevant pages and in our Affiliate Disclosure. Sponsored content is clearly labeled as such and does not appear in our editorial sections." },
   { title: "Content Standards", content: "All content is written by experienced iGaming journalists and reviewed before publication. We fact-check claims, verify information with primary sources, and update articles when new information becomes available. We never publish misleading or deceptive content." },
-  { title: "Corrections", content: "We correct errors promptly and transparently. If you find an error in any of our content, please contact us at salvagekyalo@gmail.com. We will investigate and correct verified errors within 24 hours. Significant corrections are noted at the bottom of the affected article." },
+  { title: "Corrections", content: "We correct errors promptly and transparently. If you find an error in any of our content, please contact us at info@igamingubuntu.com. We will investigate and correct verified errors within 24 hours. Significant corrections are noted at the bottom of the affected article." },
 ]
 
 export default function EditorialPolicyPage() {

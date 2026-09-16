@@ -26,7 +26,7 @@ export default function AdvertisePage() {
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
     }
     try {
-      await fetch("https://formsubmit.co/ajax/salvagekyalo@gmail.com", {
+      await fetch("https://formsubmit.co/ajax/info@igamingubuntu.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ ...data, _subject: `Advertise: ${data.company} - ${data.interest}` }),

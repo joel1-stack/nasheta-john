@@ -1,8 +1,8 @@
 export const firebaseConfig = {
-  apiKey: "AIzaSyBHY1EtoQutbqN-UPqP64Q4Q9P7koYD_UI",
-  authDomain: "nasheta-105b3.firebaseapp.com",
-  projectId: "nasheta-105b3",
-  storageBucket: "nasheta-105b3.firebasestorage.app",
-  messagingSenderId: "470224547103",
-  appId: "1:470224547103:web:51cba52ca51d701406542a",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
 }

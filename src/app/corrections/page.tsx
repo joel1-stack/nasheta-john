@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const sections = [
   { title: "Our Policy", content: "We are committed to accuracy and transparency in all our content. When we make mistakes, we correct them promptly and transparently. Our readers deserve to trust the information we publish." },
-  { title: "How to Report an Error", content: "If you find an error in any of our content, please email us at salvagekyalo@gmail.com with the article URL and a description of the error. We review all reports within 24 hours." },
+  { title: "How to Report an Error", content: "If you find an error in any of our content, please email us at info@igamingubuntu.com with the article URL and a description of the error. We review all reports within 24 hours." },
   { title: "Correction Types", content: "Factual errors (incorrect statistics, dates, or claims), outdated information (changes in regulation, operator terms, or market conditions), broken or outdated links, and misleading or unclear content." },
   { title: "Our Process", content: "When we verify an error, we correct the article immediately and add a correction note at the bottom of the article. The note includes what was changed and when. We do not silently edit articles." },
   { title: "Editorial Record", content: "All significant corrections and updates are logged here. For articles updated after initial publication, the update date is shown on the article page." },

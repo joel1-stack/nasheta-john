@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 
-const BASE_URL = "https://nasheta-john.vercel.app"
+const BASE_URL = "https://igamingubuntu.com"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [

@@ -5,7 +5,7 @@ import Link from "next/link"
 const sections = [
   {
     title: "1. Acceptance of Terms",
-    content: `By accessing and using the iGamingUbuntu website (nasheta-john.vercel.app) and its services (collectively, the "Site"), you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you must not use the Site.
+    content: `By accessing and using the iGamingUbuntu website (igamingubuntu.com) and its services (collectively, the "Site"), you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you must not use the Site.
 
 These terms apply to all visitors, users, and others who access or use the Site. By using the Site on behalf of an organization, you represent that you have the authority to bind that organization to these terms.`,
   },
@@ -130,8 +130,8 @@ We recommend reviewing this page periodically for any updates.`,
     title: "13. Contact Us",
     content: `If you have any questions about these Terms of Service, please contact us:
 
-Email: salvagekyalo@gmail.com
-Website: https://nasheta-john.vercel.app/contact`,
+Email: info@igamingubuntu.com
+Website: https://igamingubuntu.com/contact`,
   },
 ]
 

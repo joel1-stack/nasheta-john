@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "nasheta-john.vercel.app"
+        }
+      ],
+      "destination": "https://igamingubuntu.com/:path*",
+      "permanent": true
+    }
+  ]
+}

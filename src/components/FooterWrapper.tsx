@@ -8,5 +8,5 @@ const blogPaths = ["/blog", "/news", "/sports", "/casinos", "/events", "/press",
 export default function FooterWrapper() {
   const pathname = usePathname()
   const isBlogPath = blogPaths.some((p) => pathname === p || pathname.startsWith(p + "/"))
-  return <Footer hideNav={isBlogPath} />
+  return <Footer hideNav={isBlogPath} light={isBlogPath} />
 }

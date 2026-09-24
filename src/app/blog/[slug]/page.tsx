@@ -140,17 +140,15 @@ export default function BlogArticlePage() {
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                 {formatDate(article.createdAt)}
               </span>
+              <span className="text-gray-300" aria-hidden="true">·</span>
               <span className="flex items-center gap-1.5">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 {article.readTime} min read
               </span>
+              <span className="text-gray-300" aria-hidden="true">·</span>
               <span className="flex items-center gap-1.5">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
                 {viewCount.toLocaleString()} views
-              </span>
-              <span className="inline-flex items-center gap-1.5 bg-[#DCFCE7] text-[#166534] px-2.5 py-0.5 rounded-full text-xs font-medium">
-                <span className="w-1.5 h-1.5 bg-[#22C55E] rounded-full animate-pulse" />
-                Reading now
               </span>
             </div>
 
@@ -163,18 +161,29 @@ export default function BlogArticlePage() {
             </p>
 
             <div className="flex flex-wrap gap-2 mb-8">
-              <span className="bg-[#DCFCE7] text-[#166534] px-4 py-1.5 rounded-full text-[13px] font-medium">
-                {article.category}
-              </span>
-              {(article.tags || []).map((tag) => (
+              {(article.tags || []).length > 0 ? (
+                <>
+                  <span className="bg-[#DCFCE7] text-[#166534] px-4 py-1.5 rounded-full text-[13px] font-medium">
+                    {article.category}
+                  </span>
+                  {(article.tags || []).map((tag) => (
+                    <Link
+                      key={tag}
+                      href={`/blog?search=${tag}`}
+                      className="bg-[#F3F4F6] text-[#1A1F2B] px-4 py-1.5 rounded-full text-[13px] font-medium hover:bg-gray-200 transition"
+                    >
+                      {tag}
+                    </Link>
+                  ))}
+                </>
+              ) : (
                 <Link
-                  key={tag}
-                  href={`/blog?search=${tag}`}
+                  href={`/blog?search=${article.category}`}
                   className="bg-[#F3F4F6] text-[#1A1F2B] px-4 py-1.5 rounded-full text-[13px] font-medium hover:bg-gray-200 transition"
                 >
-                  {tag}
+                  {article.category}
                 </Link>
-              ))}
+              )}
             </div>
 
             <div

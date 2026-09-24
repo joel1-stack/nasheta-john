@@ -73,23 +73,30 @@ function BlogContent() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-gray-200/60">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/60 via-white to-emerald-50/40" />
-        <div className="relative max-w-6xl mx-auto px-4 py-14 md:py-18 text-center">
-          <span className="inline-block bg-[#f59e0b]/10 text-[#f59e0b] text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4">
-            iGaming Blog
-          </span>
-          <h1 className="text-4xl md:text-5xl font-bold text-[#111827] mb-3 tracking-tight">iGaming Blog</h1>
-          <p className="text-gray-500 max-w-xl mx-auto text-base">
-            Expert insights, betting tips, casino reviews, and iGaming news across Africa.
-          </p>
-          {total > 0 && <p className="text-xs text-gray-400 mt-2">{total} articles published</p>}
+      {/* Compact header: breadcrumb + small heading */}
+      <div className="border-b border-gray-200/60 bg-white">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-5 pt-6 pb-5">
+          <nav className="text-[13px] text-[#6B7280] mb-3 flex items-center gap-2 flex-wrap" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-[#1A1F2B] transition">Home</Link>
+            <span className="text-gray-300" aria-hidden="true">&rsaquo;</span>
+            <span className="text-[#1A1F2B] font-medium">Blog</span>
+          </nav>
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="text-[22px] sm:text-[28px] font-bold text-[#111827] tracking-tight">Blog</h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Expert insights, betting tips, casino reviews, and iGaming news across Africa.
+              </p>
+            </div>
+            {total > 0 && (
+              <p className="text-xs text-gray-400 shrink-0">{total} articles</p>
+            )}
+          </div>
         </div>
-      </section>
+      </div>
 
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 pb-16">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 pt-8 md:pt-10">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 pt-6 md:pt-8">
           {/* Main */}
           <div className="flex-1 min-w-0">
             {/* Filter pills */}
@@ -108,8 +115,6 @@ function BlogContent() {
                 </button>
               ))}
             </div>
-
-            {/* Search results indicator */}
             {urlSearch && (
               <div className="mb-6 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg px-4 py-3 shadow-sm">
                 Showing results for &ldquo;<span className="font-medium text-[#111827]">{urlSearch}</span>&rdquo;

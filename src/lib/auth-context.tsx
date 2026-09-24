@@ -19,6 +19,18 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
+async function readJson(res: Response) {
+  const text = await res.text()
+  try {
+    return JSON.parse(text)
+  } catch {
+    return {
+      success: false,
+      error: res.ok ? "Unexpected server response" : `Server error (${res.status})`,
+    }
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
@@ -40,8 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
       })
-      const data = await res.json()
-      return data
+      return await readJson(res)
     } catch {
       return { success: false, error: "Failed to send OTP" }
     }
@@ -54,16 +65,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp })
       })
-      const data = await res.json()
-      if (data.success && data.customToken) {
-        const auth = getAuthInstance()
-        if (auth) {
-          await signInWithCustomToken(auth, data.customToken)
+      const data = await readJson(res)
+      if (!data.success) return data
+
+      if (!data.customToken) {
+        return { success: false, error: "Login failed: no session token" }
+      }
+
+      const auth = getAuthInstance()
+      if (!auth) {
+        return { success: false, error: "Firebase auth is not initialized" }
+      }
+
+      try {
+        await signInWithCustomToken(auth, data.customToken)
+      } catch (e: any) {
+        return {
+          success: false,
+          error: e?.message || "Firebase sign-in failed",
         }
       }
-      return data
-    } catch {
-      return { success: false, error: "Failed to verify OTP" }
+
+      return { success: true }
+    } catch (e: any) {
+      return { success: false, error: e?.message || "Failed to verify OTP" }
     }
   }
 

@@ -1,8 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { getDb } from "@/lib/firebase"
 import { collection, addDoc, serverTimestamp } from "firebase/firestore"
+import { useAuth } from "@/lib/auth-context"
 
 const articles = [
   {
@@ -80,6 +82,20 @@ const articles = [
 export default function SeedPage() {
   const [status, setStatus] = useState<string>("")
   const [loading, setLoading] = useState(false)
+  const { user, loading: authLoading } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!authLoading && !user) router.replace("/igub-cms-x7k9")
+  }, [user, authLoading, router])
+
+  if (authLoading || !user) {
+    return (
+      <div className="min-h-screen bg-[#0F0A1A] flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-white/10 border-t-[#E95420] rounded-full animate-spin" />
+      </div>
+    )
+  }
 
   const handleSeed = async () => {
     setLoading(true)

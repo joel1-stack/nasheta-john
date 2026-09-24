@@ -131,16 +131,16 @@ export default function Footer({ hideNav }: FooterProps) {
           />
         </svg>
 
-        <div className="mx-auto max-w-6xl px-4 py-12 md:py-16 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 md:py-14 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr_0.75fr] gap-8 lg:gap-10 items-center">
+            <div className="min-w-0">
               <p
                 className="text-xs font-bold uppercase tracking-wider mb-3"
                 style={{ color: GREEN }}
               >
                 Stay Ahead of the Game
               </p>
-              <h2 className="text-[26px] md:text-[30px] font-bold leading-snug text-white mb-6 max-w-xl">
+              <h2 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold leading-snug text-white mb-5 max-w-xl">
                 Get the latest iGaming insights delivered to{" "}
                 <span style={{ color: GREEN }}>your inbox.</span>
               </h2>
@@ -151,9 +151,9 @@ export default function Footer({ hideNav }: FooterProps) {
               ) : (
                 <form
                   onSubmit={handleSubscribe}
-                  className="flex flex-col sm:flex-row gap-3 max-w-xl"
+                  className="flex flex-col sm:flex-row gap-3 w-full sm:max-w-[450px]"
                 >
-                  <div className="relative flex-1">
+                  <div className="relative flex-1 min-w-0">
                     <svg
                       className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40"
                       fill="none"
@@ -180,7 +180,7 @@ export default function Footer({ hideNav }: FooterProps) {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="rounded-full px-7 py-3 text-sm font-bold text-black bg-[#22C55E] hover:brightness-110 transition disabled:opacity-50 cursor-pointer whitespace-nowrap"
+                    className="rounded-full px-6 py-3 text-sm font-bold text-black bg-[#22C55E] hover:brightness-110 transition disabled:opacity-50 cursor-pointer whitespace-nowrap shrink-0"
                   >
                     {loading ? "..." : "Subscribe →"}
                   </button>
@@ -189,7 +189,9 @@ export default function Footer({ hideNav }: FooterProps) {
               {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
             </div>
 
-            <div className="lg:col-span-5 lg:pl-10 lg:border-l border-white/10">
+            <div className="hidden lg:block" aria-hidden="true" />
+
+            <div className="min-w-0 lg:pl-8 lg:border-l border-white/10">
               <p className="text-[13px] text-[#9CA3AF] leading-relaxed">
                 News, analysis and expert insights on Africa&apos;s iGaming industry,
                 straight to your inbox.
@@ -199,16 +201,16 @@ export default function Footer({ hideNav }: FooterProps) {
         </div>
       </section>
 
-      {/* Main footer grid */}
-      <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-0">
+      {/* Main footer grid: Brand ~25% | Quick ~15% | Markets ~30% | Company ~30% */}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 md:py-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.15fr_0.7fr_1.35fr_1.3fr] gap-8 lg:gap-0">
           {/* Brand */}
-          <div className="lg:pr-8">
+          <div className="min-w-0 lg:pr-6">
             <Link href="/" className="inline-block mb-4">
               <IgubFullLogo />
             </Link>
             <p
-              className="text-[11px] font-bold uppercase tracking-[0.2em] mb-4"
+              className="text-[11px] font-bold uppercase tracking-[0.18em] mb-4"
               style={{ color: GREEN }}
             >
               Africa&apos;s iGaming Publication
@@ -219,10 +221,10 @@ export default function Footer({ hideNav }: FooterProps) {
             </p>
             <a
               href="mailto:info@igamingubuntu.com"
-              className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-[#22C55E] transition-colors mb-6"
+              className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-[#22C55E] transition-colors mb-6 break-all"
             >
               <svg
-                className="w-4 h-4"
+                className="w-4 h-4 shrink-0"
                 style={{ color: GREEN }}
                 fill="none"
                 viewBox="0 0 24 24"
@@ -238,7 +240,7 @@ export default function Footer({ hideNav }: FooterProps) {
               </svg>
               info@igamingubuntu.com
             </a>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               {socialLinks.map((s) => (
                 <a
                   key={s.label}
@@ -257,9 +259,9 @@ export default function Footer({ hideNav }: FooterProps) {
           </div>
 
           {/* Quick Links */}
-          <div className="lg:px-8 lg:border-l border-white/10">
+          <div className="min-w-0 lg:px-6 lg:border-l border-white/10">
             <SectionHeading>Quick Links</SectionHeading>
-            <ul className="space-y-3.5">
+            <ul className="space-y-3">
               {quickLinks.map((l) => (
                 <li key={l.href}>
                   <Link
@@ -274,9 +276,9 @@ export default function Footer({ hideNav }: FooterProps) {
           </div>
 
           {/* African Markets */}
-          <div className="lg:px-8 lg:border-l border-white/10">
+          <div className="min-w-0 lg:px-6 lg:border-l border-white/10">
             <SectionHeading>African Markets</SectionHeading>
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {marketRegions.map((region) => (
                 <div key={region.label}>
                   <p
@@ -285,9 +287,9 @@ export default function Footer({ hideNav }: FooterProps) {
                   >
                     {region.label}
                   </p>
-                  <p className="text-sm text-[#9CA3AF] leading-relaxed">
+                  <p className="text-sm text-[#9CA3AF] leading-relaxed flex flex-wrap gap-x-1.5 gap-y-1">
                     {region.countries.map((c, i) => (
-                      <span key={c}>
+                      <span key={c} className="whitespace-nowrap inline-flex items-center gap-1.5">
                         <Link
                           href={marketHref(c)}
                           className="hover:text-white transition-colors"
@@ -295,7 +297,7 @@ export default function Footer({ hideNav }: FooterProps) {
                           {c}
                         </Link>
                         {i < region.countries.length - 1 && (
-                          <span className="mx-1.5 text-white/30">•</span>
+                          <span className="text-white/30" aria-hidden="true">•</span>
                         )}
                       </span>
                     ))}
@@ -306,9 +308,9 @@ export default function Footer({ hideNav }: FooterProps) {
           </div>
 
           {/* Company */}
-          <div className="lg:pl-8 lg:border-l border-white/10">
+          <div className="min-w-0 lg:pl-6 lg:border-l border-white/10">
             <SectionHeading>Company</SectionHeading>
-            <ul className="space-y-3.5">
+            <ul className="space-y-2.5">
               {companyLinks.map((l) => (
                 <li key={l.href}>
                   <Link
@@ -327,19 +329,19 @@ export default function Footer({ hideNav }: FooterProps) {
 
       {/* Bottom bar */}
       <div className="border-t border-[#1F2937]">
-        <div className="mx-auto max-w-6xl px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
           <span className="text-[13px] text-[#9CA3AF]">
             © {new Date().getFullYear()} iGamingUbuntu. All rights reserved.
           </span>
-          <div className="flex items-center gap-3 text-[13px] text-[#9CA3AF]">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[13px] text-[#9CA3AF]">
             <span
-              className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold"
+              className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0"
               style={{ backgroundColor: GREEN, color: "#000" }}
             >
               18+
             </span>
             <span>18+ Only</span>
-            <span className="text-white/20">|</span>
+            <span className="text-white/20" aria-hidden="true">|</span>
             <span>Gamble Responsibly</span>
           </div>
         </div>

@@ -63,8 +63,8 @@ export default function BlogArticlePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
-        <div className="max-w-[1280px] mx-auto px-5 py-10 animate-fade-in">
-          <div className="flex flex-col lg:flex-row gap-12">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-5 py-8 md:py-10 animate-fade-in">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
             <div className="flex-1 animate-pulse space-y-6">
               <div className="h-4 bg-gray-100 rounded w-1/4" />
               <div className="aspect-[16/9] bg-gray-100 rounded-lg" />
@@ -73,7 +73,7 @@ export default function BlogArticlePage() {
               <div className="h-4 bg-gray-100 rounded w-full" />
               <div className="h-4 bg-gray-100 rounded w-full" />
             </div>
-            <div className="w-full lg:w-[380px] shrink-0 hidden lg:block space-y-6">
+            <div className="w-full lg:w-[350px] shrink-0 hidden lg:block space-y-6">
               <div className="h-40 bg-gray-100 rounded-xl animate-pulse" />
               <div className="h-64 bg-gray-100 rounded-xl animate-pulse" />
             </div>
@@ -108,8 +108,8 @@ export default function BlogArticlePage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-[1280px] mx-auto px-5 py-10">
-        <div className="flex flex-col lg:flex-row gap-12">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 py-8 md:py-10">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
           <article className="flex-1 min-w-0">
             <nav className="text-[13px] text-[#6B7280] mb-5 flex items-center gap-2 flex-wrap">
               <Link href="/" className="hover:text-[#1A1F2B] transition">Home</Link>
@@ -154,11 +154,11 @@ export default function BlogArticlePage() {
               </span>
             </div>
 
-            <h1 className="text-[36px] md:text-[42px] font-extrabold text-[#1A1F2B] leading-[1.2] mb-4">
+            <h1 className="text-[28px] sm:text-[34px] md:text-[42px] font-extrabold text-[#1A1F2B] leading-[1.2] mb-4 break-words">
               {article.title}
             </h1>
 
-            <p className="text-lg text-[#6B7280] leading-relaxed mb-5">
+            <p className="text-base sm:text-lg text-[#6B7280] leading-relaxed mb-5">
               {article.excerpt}
             </p>
 
@@ -211,8 +211,8 @@ export default function BlogArticlePage() {
 
             <AffiliateBox title="Top Betting Sites" offers={displayOffers} placement="blog-bottom" />
 
-            <div className="flex items-center gap-3 border-t border-gray-200 pt-6">
-              <span className="text-sm font-medium text-[#1A1F2B]">Share this article:</span>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 border-t border-gray-200 pt-6">
+              <span className="text-sm font-medium text-[#1A1F2B] w-full sm:w-auto">Share this article:</span>
               {(() => {
                 const articleUrl = article.canonicalUrl || `https://igamingubuntu.com/blog/${article.slug}`
                 return [
@@ -228,7 +228,7 @@ export default function BlogArticlePage() {
             </div>
 
             <div className="border-t border-gray-200 pt-6 mt-6">
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 bg-gray-50 rounded-xl">
                 {article.authorPhoto ? (
                   <img src={article.authorPhoto} alt={article.authorName || "Author"} className="w-14 h-14 rounded-full object-cover shrink-0" />
                 ) : (
@@ -252,7 +252,7 @@ export default function BlogArticlePage() {
             </div>
           </article>
 
-          <aside className="w-full lg:w-[380px] shrink-0">
+          <aside className="w-full lg:w-[350px] shrink-0">
             <Sidebar popularPosts={popular} />
           </aside>
         </div>

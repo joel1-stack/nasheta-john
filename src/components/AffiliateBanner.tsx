@@ -52,16 +52,18 @@ function getDomainFavicon(url: string): string | null {
 
 function OperatorBadge({ name, imageUrl, url }: { name: string; imageUrl?: string; url?: string }) {
   const favicon = url ? getDomainFavicon(url) : null
+  const initials = name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
+
   if (imageUrl) {
     return (
-      <div className="w-12 h-12 rounded-xl overflow-hidden bg-white/10 shrink-0 border border-white/20 shadow-lg ad-badge-pop">
+      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-white/10 shrink-0 border border-white/20 shadow-lg ad-badge-pop">
         <img src={imageUrl} alt={name} className="w-full h-full object-cover" />
       </div>
     )
   }
   if (favicon) {
     return (
-      <div className="w-12 h-12 rounded-xl bg-white shrink-0 border border-white/30 shadow-lg ad-badge-pop flex items-center justify-center overflow-hidden p-1.5">
+      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white shrink-0 border border-white/30 shadow-lg ad-badge-pop flex items-center justify-center overflow-hidden p-1.5">
         <img
           src={favicon}
           alt={name}
@@ -71,17 +73,15 @@ function OperatorBadge({ name, imageUrl, url }: { name: string; imageUrl?: strin
             el.style.display = "none"
             const parent = el.parentElement
             if (parent) {
-              const initials = name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
-              parent.innerHTML = `<span style="font-weight:900;font-size:16px;color:#111">${initials}</span>`
+              parent.innerHTML = `<span style="font-weight:900;font-size:14px;color:#111">${initials}</span>`
             }
           }}
         />
       </div>
     )
   }
-  const initials = name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
   return (
-    <div className="w-12 h-12 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center text-white font-black text-lg shrink-0 border border-white/25 shadow-lg ad-badge-pop">
+    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center text-white font-black text-sm sm:text-lg shrink-0 border border-white/25 shadow-lg ad-badge-pop">
       {initials}
     </div>
   )
@@ -152,14 +152,14 @@ export default function AffiliateBanner({
             target="_blank"
             rel="nofollow sponsored noopener"
             onClick={() => trackClick(o.linkId, placement)}
-            className={`group flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br ${gradients[i % gradients.length]} text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ad-shine`}
+            className={`group flex items-center gap-2.5 p-3 rounded-xl bg-gradient-to-br ${gradients[i % gradients.length]} text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ad-shine`}
           >
             <OperatorBadge name={o.operatorName} imageUrl={o.imageUrl} url={o.url} />
             <div className="min-w-0 flex-1">
               <p className="font-bold text-sm truncate">{o.operatorName}</p>
               <p className="text-[11px] text-white/90 line-clamp-2">{o.bonusText}</p>
             </div>
-            <span className="text-xs font-bold bg-[#FACC15] text-[#1A1F2B] px-3 py-1.5 rounded group-hover:scale-110 transition ad-float whitespace-nowrap">
+            <span className="text-[11px] font-bold bg-[#FACC15] text-[#1A1F2B] px-2.5 py-1.5 rounded shrink-0 min-w-[52px] text-center group-hover:brightness-105 transition whitespace-nowrap">
               GO →
             </span>
           </a>

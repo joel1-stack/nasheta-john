@@ -88,8 +88,8 @@ function BlogContent() {
         </div>
       </section>
 
-      <div className="max-w-[1280px] mx-auto px-5 pb-16">
-        <div className="flex flex-col lg:flex-row gap-12 pt-10">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-5 pb-16">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 pt-8 md:pt-10">
           {/* Main */}
           <div className="flex-1 min-w-0">
             {/* Filter pills */}
@@ -240,7 +240,7 @@ function BlogContent() {
           </div>
 
           {/* Sidebar */}
-          <div className="w-full lg:w-[380px] shrink-0 space-y-6 lg:sticky lg:top-24 lg:self-start">
+          <div className="w-full lg:w-[350px] shrink-0 space-y-6 lg:sticky lg:top-24 lg:self-start">
             <AffiliateBanner
               offers={[
                 { operatorName: "SportPesa", bonusText: "200% Welcome Bonus up to KES 5,000 · M-Pesa", url: "https://sportpesa.com/?ref=igamingubuntu" },
@@ -334,8 +334,8 @@ export default function BlogPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-white">
-          <div className="max-w-[1280px] mx-auto px-5 py-10 animate-fade-in">
-            <div className="flex flex-col lg:flex-row gap-12">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-5 py-8 md:py-10 animate-fade-in">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
               <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[1, 2, 3, 4].map((i) => (
                   <div key={i} className="rounded-xl overflow-hidden border border-gray-200 animate-pulse bg-white shadow-sm">
@@ -348,7 +348,7 @@ export default function BlogPage() {
                   </div>
                 ))}
               </div>
-              <div className="w-full lg:w-[380px] shrink-0 space-y-6">
+              <div className="w-full lg:w-[350px] shrink-0 space-y-6">
                 <div className="h-48 bg-gray-100 rounded-xl animate-pulse" />
                 <div className="h-72 bg-gray-100 rounded-xl animate-pulse" />
               </div>

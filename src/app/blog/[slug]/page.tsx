@@ -62,15 +62,21 @@ export default function BlogArticlePage() {
 
   if (loading) {
     return (
-      <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in bg-white min-h-screen">
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="flex-1 animate-pulse space-y-6">
-            <div className="h-4 bg-gray-100 rounded w-1/4" />
-            <div className="aspect-[16/9] bg-gray-100 rounded-lg" />
-            <div className="h-4 bg-gray-100 rounded w-1/3" />
-            <div className="h-10 bg-gray-100 rounded w-3/4" />
-            <div className="h-4 bg-gray-100 rounded w-full" />
-            <div className="h-4 bg-gray-100 rounded w-full" />
+      <div className="min-h-screen bg-white">
+        <div className="max-w-[1280px] mx-auto px-5 py-10 animate-fade-in">
+          <div className="flex flex-col lg:flex-row gap-12">
+            <div className="flex-1 animate-pulse space-y-6">
+              <div className="h-4 bg-gray-100 rounded w-1/4" />
+              <div className="aspect-[16/9] bg-gray-100 rounded-lg" />
+              <div className="h-4 bg-gray-100 rounded w-1/3" />
+              <div className="h-10 bg-gray-100 rounded w-3/4" />
+              <div className="h-4 bg-gray-100 rounded w-full" />
+              <div className="h-4 bg-gray-100 rounded w-full" />
+            </div>
+            <div className="w-full lg:w-[380px] shrink-0 hidden lg:block space-y-6">
+              <div className="h-40 bg-gray-100 rounded-xl animate-pulse" />
+              <div className="h-64 bg-gray-100 rounded-xl animate-pulse" />
+            </div>
           </div>
         </div>
       </div>

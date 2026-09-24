@@ -20,10 +20,10 @@ interface AffiliateBannerProps {
 }
 
 const gradients = [
-  "from-[#1a0a2e] via-[#772953] to-[#E95420]",
-  "from-[#0F0A1A] via-[#E95420] to-[#FFD700]",
-  "from-[#772953] via-[#E95420] to-[#409824]",
-  "from-[#0B1A3A] via-[#1B2385] to-[#E95420]",
+  "from-[#4C1D95] to-[#EC4899]",
+  "from-[#1E3A8A] to-[#14B8A6]",
+  "from-[#EA580C] to-[#FACC15]",
+  "from-[#772953] via-[#E95420] to-[#FFD700]",
   "from-[#1a2e05] via-[#409824] to-[#FFD700]",
 ]
 
@@ -144,27 +144,27 @@ export default function AffiliateBanner({
   if (variant === "sidebar") {
     return (
       <div className={`space-y-3 ${className}`}>
-        {title && <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">{title}</p>}
-        {offers.slice(0, 4).map((o, i) => (
+        {title && <p className="text-xs font-bold uppercase tracking-wider text-[#1A1F2B] mb-1">{title}</p>}
+        {offers.slice(0, 3).map((o, i) => (
           <a
             key={i}
             href={getHref(o)}
             target="_blank"
             rel="nofollow sponsored noopener"
             onClick={() => trackClick(o.linkId, placement)}
-            className={`group flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-gradient-to-br ${gradients[i % gradients.length]} text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ad-shine`}
+            className={`group flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br ${gradients[i % gradients.length]} text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ad-shine`}
           >
             <OperatorBadge name={o.operatorName} imageUrl={o.imageUrl} url={o.url} />
             <div className="min-w-0 flex-1">
               <p className="font-bold text-sm truncate">{o.operatorName}</p>
-              <p className="text-[11px] text-white/75 line-clamp-2">{o.bonusText}</p>
+              <p className="text-[11px] text-white/90 line-clamp-2">{o.bonusText}</p>
             </div>
-            <span className="text-[10px] font-black bg-amber-400 text-black px-2 py-1 rounded-md group-hover:scale-110 transition ad-float">
-              GO
+            <span className="text-xs font-bold bg-[#FACC15] text-[#1A1F2B] px-3 py-1.5 rounded group-hover:scale-110 transition ad-float whitespace-nowrap">
+              GO →
             </span>
           </a>
         ))}
-        <p className="text-[10px] text-gray-500">18+ · Affiliate link · Gamble responsibly</p>
+        <p className="text-[11px] text-[#6B7280]">18+ · Affiliate link · Gamble responsibly</p>
       </div>
     )
   }

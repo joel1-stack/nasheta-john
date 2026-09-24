@@ -43,17 +43,30 @@ export default function Sidebar({ popularPosts }: SidebarProps) {
 
       {popularPosts && popularPosts.length > 0 && (
         <div className="bg-white rounded-xl border border-gray-200 p-5 animate-fade-up shadow-sm">
-          <h3 className="font-bold text-[#111827] mb-4 pb-3 border-b border-gray-100 flex items-center gap-2">
-            <span className="w-1 h-5 bg-[#f59e0b] rounded-full inline-block" />
-            Most Read
-          </h3>
+          <div className="flex items-center justify-between mb-4 border-l-4 border-[#22C55E] pl-3">
+            <h3 className="font-bold text-[#1A1F2B] text-sm uppercase tracking-wide">Most Read</h3>
+            <Link href="/blog" className="text-xs text-[#22C55E] font-medium hover:underline">
+              View All →
+            </Link>
+          </div>
           <div className="space-y-4">
             {popularPosts.slice(0, 5).map((post, i) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="flex gap-3 group">
-                <span className="text-[#f59e0b] font-bold text-lg w-7 shrink-0 leading-none">{String(i + 1).padStart(2, "0")}</span>
+              <Link key={post.slug} href={`/blog/${post.slug}`} className="flex gap-3 group items-start">
+                <span className="text-[#F59E0B] font-extrabold text-xl w-8 shrink-0 leading-none pt-0.5">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {post.featuredImage && (
+                  <img
+                    src={post.featuredImage}
+                    alt=""
+                    className="w-20 h-[60px] rounded-md object-cover shrink-0"
+                  />
+                )}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-[#111827] group-hover:text-[#f59e0b] transition-colors line-clamp-2">{post.title}</p>
-                  <div className="flex items-center gap-2 text-xs text-gray-400 mt-1">
+                  <p className="text-[15px] font-bold text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors line-clamp-2 leading-snug">
+                    {post.title}
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-[#6B7280] mt-1.5">
                     <span>{post.views.toLocaleString()} views</span>
                     <span>· {post.readTime} min</span>
                   </div>

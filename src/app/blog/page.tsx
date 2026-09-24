@@ -72,7 +72,7 @@ function BlogContent() {
   const totalPages = Math.ceil(total / 12)
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8]">
+    <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-gray-200/60">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50/60 via-white to-emerald-50/40" />
@@ -164,7 +164,7 @@ function BlogContent() {
                             {formatDate(article.createdAt)}
                           </span>
                         </div>
-                        <h3 className="font-bold text-[#111827] group-hover:text-[#f59e0b] transition-colors line-clamp-2 mb-2 text-base leading-snug">{article.title}</h3>
+                        <h3 className="font-bold text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors line-clamp-2 mb-2 text-base leading-snug">{article.title}</h3>
                         <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">{article.excerpt}</p>
                         <div className="flex items-center justify-between text-xs pt-3 border-t border-gray-100">
                           <span className="text-gray-400 flex items-center gap-1">
@@ -255,17 +255,17 @@ function BlogContent() {
             {/* Most Read */}
             {popularPosts.length > 0 && (
               <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
-                <h3 className="font-bold text-[#111827] mb-4 pb-3 border-b border-gray-100 flex items-center gap-2">
-                  <span className="w-1 h-5 bg-[#f59e0b] rounded-full inline-block" />
-                  Most Read
+                <h3 className="font-bold text-[#1A1F2B] mb-4 border-l-4 border-[#22C55E] pl-3 text-sm uppercase tracking-wide flex items-center justify-between">
+                  <span>Most Read</span>
+                  <span className="text-xs text-[#22C55E] normal-case tracking-normal font-medium">View All →</span>
                 </h3>
                 <div className="space-y-4">
                   {popularPosts.map((post, i) => (
                     <Link key={post.slug} href={`/blog/${post.slug}`} className="flex gap-3 group">
-                      <span className="text-[#f59e0b] font-bold text-lg w-7 shrink-0 leading-none">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="text-[#F59E0B] font-extrabold text-xl w-7 shrink-0 leading-none">{String(i + 1).padStart(2, "0")}</span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-[#111827] group-hover:text-[#f59e0b] transition-colors line-clamp-2">{post.title}</p>
-                        <div className="flex items-center gap-2 text-xs text-gray-400 mt-1">
+                        <p className="text-[15px] font-bold text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors line-clamp-2">{post.title}</p>
+                        <div className="flex items-center gap-2 text-xs text-[#6B7280] mt-1">
                           <FiEye size={11} />
                           <span>{post.views.toLocaleString()} views</span>
                           <span>· {post.readTime} min</span>
@@ -318,7 +318,7 @@ function BlogContent() {
 
 export default function BlogPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#FAFAF8]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
       <BlogContent />
     </Suspense>
   )

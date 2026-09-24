@@ -1,46 +1,46 @@
 import { NextResponse } from "next/server"
 import { initializeApp, getApps, cert, getApp } from "firebase-admin/app"
-import { getAuth } from "firebase-admin/auth"
 import { getFirestore, Timestamp } from "firebase-admin/firestore"
 import nodemailer from "nodemailer"
 
+const OTP_INBOX = "salvagekyalo@gmail.com"
+
 function getAdminApp() {
   if (!getApps().length) {
-    initializeApp({
-      credential: cert({
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-      }),
-    })
+    const projectId = process.env.FIREBASE_PROJECT_ID
+    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL
+    const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n")
+    if (!projectId || !clientEmail || !privateKey) {
+      throw new Error("Missing FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, or FIREBASE_PRIVATE_KEY")
+    }
+    initializeApp({ credential: cert({ projectId, clientEmail, privateKey }) })
   }
   return getApp()
 }
 
 export const runtime = "nodejs"
 
-const OTP_INBOX = "salvagekyalo@gmail.com"
-
 export async function POST(req: Request) {
   try {
     const { email } = await req.json()
     if (!email || !email.includes("@")) {
-      return NextResponse.json({ error: "Valid email required" }, { status: 400 })
+      return NextResponse.json({ success: false, error: "Valid email required" }, { status: 400 })
     }
 
     const app = getAdminApp()
-    const adminAuth = getAuth(app)
     const db = getFirestore(app)
-
-    const userRecord = await adminAuth.getUserByEmail(email).catch(() => null)
-    if (!userRecord) {
-      return NextResponse.json({ error: "No admin account with this email" }, { status: 404 })
-    }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString()
     const expires = Timestamp.fromMillis(Date.now() + 10 * 60 * 1000)
+    await db.collection("otps").doc(email).set({ otp, expires, used: false, updatedAt: Date.now() })
 
-    await db.collection("otps").doc(email).set({ otp, expires, used: false })
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      console.error("SMTP_USER / SMTP_PASS not set — cannot send OTP email")
+      return NextResponse.json({
+        success: false,
+        error: "Email is not configured on the server (SMTP_USER/SMTP_PASS missing).",
+      }, { status: 500 })
+    }
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.gmail.com",
@@ -52,6 +52,7 @@ export async function POST(req: Request) {
       },
     })
 
+    await transporter.verify()
     await transporter.sendMail({
       from: `"iGamingUbuntu CMS" <${process.env.SMTP_USER}>`,
       to: OTP_INBOX,
@@ -73,9 +74,12 @@ export async function POST(req: Request) {
     })
 
     console.log(`OTP for ${email} sent to ${OTP_INBOX}`)
-    return NextResponse.json({ success: true, message: "OTP sent to the admin inbox" })
-  } catch (error) {
+    return NextResponse.json({ success: true, message: `OTP sent to ${OTP_INBOX}` })
+  } catch (error: any) {
     console.error("Send OTP error:", error)
-    return NextResponse.json({ error: "Failed to send OTP" }, { status: 500 })
+    return NextResponse.json({
+      success: false,
+      error: error?.message || "Failed to send OTP",
+    }, { status: 500 })
   }
 }

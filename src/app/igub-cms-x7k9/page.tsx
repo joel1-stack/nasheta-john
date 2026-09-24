@@ -77,7 +77,7 @@ export default function AdminLoginPage() {
           </form>
         ) : (
           <form onSubmit={handleVerifyOTP} className="space-y-4">
-            <p className="text-sm text-gray-400 text-center">We sent a 6-digit code to <strong>{email}</strong></p>
+            <p className="text-sm text-gray-400 text-center">A 6-digit code was sent to the secure admin inbox for <strong>{email}</strong></p>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1.5">Enter OTP</label>
               <input

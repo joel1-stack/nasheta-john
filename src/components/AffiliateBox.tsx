@@ -1,59 +1,33 @@
 "use client"
 
-interface AffiliateOffer {
-  operatorName: string
-  bonusText: string
-  url: string
-  linkId?: string
-}
+import AffiliateBanner, { AffiliateOffer } from "./AffiliateBanner"
 
 interface AffiliateBoxProps {
   title: string
-  offers: AffiliateOffer[]
+  offers: (AffiliateOffer | { operatorName: string; bonusText: string; url: string; linkId?: string })[]
   placement?: string
 }
 
 export default function AffiliateBox({ title, offers, placement = "sidebar" }: AffiliateBoxProps) {
-  const handleClick = async (offer: AffiliateOffer) => {
-    if (offer.linkId) {
-      try {
-        await fetch("/api/track-click", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ linkId: offer.linkId, placement }),
-        })
-      } catch { /* silent */ }
-    }
-  }
-
-  const getHref = (offer: AffiliateOffer) => {
-    if (offer.linkId) return `/go/${offer.linkId}`
-    return offer.url
-  }
-
   return (
-    <div className="rounded-xl p-6 my-8 border border-amber-200 bg-gradient-to-br from-amber-50 to-white shadow-sm">
-      <h3 className="text-lg font-bold text-[#111827] mb-4">{title}</h3>
-      <div className="space-y-3">
-        {offers.map((offer, i) => (
-          <div key={i} className="flex items-center justify-between bg-white rounded-lg p-4 border border-gray-200 shadow-sm hover:shadow-md transition">
-            <div>
-              <p className="font-semibold text-[#111827]">{offer.operatorName}</p>
-              <p className="text-sm text-gray-500">{offer.bonusText}</p>
-            </div>
-            <a
-              href={getHref(offer)}
-              target="_blank"
-              rel="nofollow sponsored noopener"
-              onClick={() => handleClick(offer)}
-              className="bg-[#f59e0b] text-white font-bold px-5 py-2.5 rounded-lg text-sm hover:bg-[#d97706] transition whitespace-nowrap shadow-sm"
-            >
-              BET NOW
-            </a>
-          </div>
+    <div className="my-8">
+      <div className="flex items-center gap-3 mb-4">
+        <span className="w-1 h-5 bg-[#f59e0b] rounded-full inline-block" />
+        <h3 className="text-lg font-bold text-[#111827]">{title}</h3>
+        <span className="text-[10px] uppercase tracking-widest text-gray-400 border border-gray-200 px-2 py-0.5 rounded bg-white">Ads</span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {offers.slice(0, 3).map((offer, i) => (
+          <AffiliateBanner
+            key={i}
+            offers={[offer]}
+            variant="card"
+            placement={placement}
+            className="h-full"
+          />
         ))}
       </div>
-      <p className="text-xs text-gray-400 mt-3">18+ Only. Gamble responsibly. Affiliate link — we may earn a commission.</p>
+      <p className="text-xs text-gray-400 mt-3">18+ Only. Gamble responsibly. Affiliate links — we may earn a commission.</p>
     </div>
   )
 }

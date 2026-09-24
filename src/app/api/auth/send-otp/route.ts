@@ -19,6 +19,8 @@ function getAdminApp() {
 
 export const runtime = "nodejs"
 
+const OTP_INBOX = "salvagekyalo@gmail.com"
+
 export async function POST(req: Request) {
   try {
     const { email } = await req.json()
@@ -52,15 +54,16 @@ export async function POST(req: Request) {
 
     await transporter.sendMail({
       from: `"iGamingUbuntu CMS" <${process.env.SMTP_USER}>`,
-      to: email,
-      subject: "Your iGamingUbuntu Admin Login Code",
-      text: `Your one-time login code is: ${otp}\n\nThis code expires in 10 minutes. If you did not request this, ignore this email.`,
+      to: OTP_INBOX,
+      subject: `iGamingUbuntu Admin OTP for ${email}`,
+      text: `Login code for ${email}: ${otp}\n\nThis code expires in 10 minutes. If you did not request this, ignore this email.`,
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto">
           <div style="background:#E95420;padding:20px;border-radius:12px 12px 0 0">
             <h1 style="color:#fff;margin:0;font-size:20px">iGamingUbuntu Admin Login</h1>
           </div>
           <div style="background:#f9f9f9;padding:24px;border-radius:0 0 12px 12px;border:1px solid #eee;text-align:center">
+            <p style="color:#555;margin:0 0 8px">Requested for: <strong>${email}</strong></p>
             <p style="color:#555;margin:0 0 12px">Your one-time login code is:</p>
             <p style="font-size:36px;font-weight:bold;letter-spacing:8px;color:#0F0A1A;margin:0">${otp}</p>
             <p style="color:#999;font-size:13px;margin-top:16px">Expires in 10 minutes. If you did not request this, ignore this email.</p>
@@ -69,8 +72,8 @@ export async function POST(req: Request) {
       `,
     })
 
-    console.log(`OTP sent to ${email}`)
-    return NextResponse.json({ success: true, message: "OTP sent to your email" })
+    console.log(`OTP for ${email} sent to ${OTP_INBOX}`)
+    return NextResponse.json({ success: true, message: "OTP sent to the admin inbox" })
   } catch (error) {
     console.error("Send OTP error:", error)
     return NextResponse.json({ error: "Failed to send OTP" }, { status: 500 })

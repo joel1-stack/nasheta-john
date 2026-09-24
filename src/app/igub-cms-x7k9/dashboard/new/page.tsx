@@ -6,11 +6,15 @@ import { getAuthInstance } from "@/lib/firebase"
 import { createArticle, createAffiliateLink } from "@/lib/firestoreService"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import ImageUpload from "@/components/ImageUpload"
+import ArticlePreview from "@/components/ArticlePreview"
 
 interface AffiliateField {
   operatorName: string
   url: string
   bonusText: string
+  imageUrl?: string
+  ctaLabel?: string
 }
 
 export default function NewPostPage() {
@@ -28,8 +32,9 @@ export default function NewPostPage() {
   })
 
   const [affiliates, setAffiliates] = useState<AffiliateField[]>([
-    { operatorName: "", url: "", bonusText: "" },
+    { operatorName: "", url: "", bonusText: "", imageUrl: "", ctaLabel: "" },
   ])
+  const [previewOpen, setPreviewOpen] = useState(false)
 
   useEffect(() => {
     const auth = getAuthInstance()
@@ -46,7 +51,7 @@ export default function NewPostPage() {
   }
 
   const addAffiliate = () => {
-    setAffiliates((prev) => [...prev, { operatorName: "", url: "", bonusText: "" }])
+    setAffiliates((prev) => [...prev, { operatorName: "", url: "", bonusText: "", imageUrl: "", ctaLabel: "" }])
   }
 
   const removeAffiliate = (i: number) => {
@@ -97,6 +102,8 @@ export default function NewPostPage() {
               trackingId: `${id}-${aff.operatorName.toLowerCase().replace(/\s+/g, "-")}`,
               bonusText: aff.bonusText,
               clicks: 0,
+              imageUrl: aff.imageUrl || "",
+              ctaLabel: aff.ctaLabel || "",
             })
           }
         }
@@ -185,8 +192,12 @@ export default function NewPostPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1.5">Featured Image URL</label>
-          <input value={form.featuredImage} onChange={(e) => setForm((f) => ({ ...f, featuredImage: e.target.value }))} className={inputClass} placeholder="https://..." />
+          <ImageUpload
+            label="Featured Image"
+            value={form.featuredImage}
+            onChange={(url) => setForm((f) => ({ ...f, featuredImage: url }))}
+            folder="articles/featured"
+          />
         </div>
 
         {/* SEO Section */}
@@ -220,26 +231,38 @@ export default function NewPostPage() {
 
         {/* Affiliate Links */}
         <div className="border-t border-white/10 pt-6">
-          <h2 className="font-bold text-white mb-3">Affiliate Links</h2>
-          <p className="text-xs text-gray-400 mb-4">Add operator affiliate links that will appear in this article.</p>
+          <h2 className="font-bold text-white mb-3">Affiliate Ads</h2>
+          <p className="text-xs text-gray-400 mb-4">These appear as animated ad banners around the article. Add an ad image for a richer creative.</p>
           {affiliates.map((aff, i) => (
-            <div key={i} className="grid grid-cols-3 gap-3 mb-3 p-4 bg-white/5 rounded-xl border border-white/5">
-              <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">Operator</label>
-                <input value={aff.operatorName} onChange={(e) => updateAffiliate(i, "operatorName", e.target.value)} className={inputClass} placeholder="SportPesa" />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">Affiliate URL</label>
-                <input value={aff.url} onChange={(e) => updateAffiliate(i, "url", e.target.value)} className={inputClass} placeholder="https://..." />
-              </div>
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <label className="block text-xs font-medium text-gray-300 mb-1">Bonus Text</label>
-                  <input value={aff.bonusText} onChange={(e) => updateAffiliate(i, "bonusText", e.target.value)} className={inputClass} placeholder="200% bonus" />
+            <div key={i} className="mb-4 p-4 bg-white/5 rounded-xl border border-white/5 space-y-3">
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-300 mb-1">Operator</label>
+                  <input value={aff.operatorName} onChange={(e) => updateAffiliate(i, "operatorName", e.target.value)} className={inputClass} placeholder="SportPesa" />
                 </div>
-                {affiliates.length > 1 && (
-                  <button type="button" onClick={() => removeAffiliate(i)} className="text-red-400 text-lg mt-5 hover:text-red-300 cursor-pointer">&times;</button>
-                )}
+                <div>
+                  <label className="block text-xs font-medium text-gray-300 mb-1">Affiliate URL</label>
+                  <input value={aff.url} onChange={(e) => updateAffiliate(i, "url", e.target.value)} className={inputClass} placeholder="https://..." />
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="block text-xs font-medium text-gray-300 mb-1">Bonus Text</label>
+                    <input value={aff.bonusText} onChange={(e) => updateAffiliate(i, "bonusText", e.target.value)} className={inputClass} placeholder="200% bonus" />
+                  </div>
+                  {affiliates.length > 1 && (
+                    <button type="button" onClick={() => removeAffiliate(i)} className="text-red-400 text-lg mt-5 hover:text-red-300 cursor-pointer">&times;</button>
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-300 mb-1">Ad Image URL (optional)</label>
+                  <input value={aff.imageUrl || ""} onChange={(e) => updateAffiliate(i, "imageUrl", e.target.value)} className={inputClass} placeholder="https://... banner/logo image" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-300 mb-1">CTA Label (optional)</label>
+                  <input value={aff.ctaLabel || ""} onChange={(e) => updateAffiliate(i, "ctaLabel", e.target.value)} className={inputClass} placeholder="CLAIM OFFER →" />
+                </div>
               </div>
             </div>
           ))}
@@ -300,15 +323,33 @@ export default function NewPostPage() {
           </div>
         </div>
 
-        <div className="flex gap-3 pt-4 border-t border-white/10">
+        <div className="flex flex-wrap gap-3 pt-4 border-t border-white/10">
           <button type="submit" disabled={saving} className="bg-[#E95420] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20">
-            {saving ? "Saving..." : "Save Article"}
+            {saving ? "Saving..." : form.status === "published" ? "Publish Article" : "Save Draft"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setPreviewOpen(true)}
+            className="bg-white/10 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/20 transition cursor-pointer"
+          >
+            Preview
           </button>
           <Link href="/igub-cms-x7k9/dashboard" className="bg-white/10 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/20 transition">
             Cancel
           </Link>
         </div>
       </form>
+
+      <ArticlePreview
+        open={previewOpen}
+        onClose={() => setPreviewOpen(false)}
+        title={form.title}
+        excerpt={form.excerpt}
+        content={form.content}
+        category={form.category}
+        featuredImage={form.featuredImage}
+        status={form.status}
+      />
     </div>
   )
 }

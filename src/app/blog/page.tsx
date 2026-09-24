@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { FiEye, FiArrowRight, FiClock, FiCalendar, FiChevronLeft, FiChevronRight } from "react-icons/fi"
 import { formatDate } from "@/lib/utils"
+import AffiliateBanner from "@/components/AffiliateBanner"
 import type { Article } from "@/types"
 
 const categories = ["All", "Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Industry News", "Events"]
@@ -240,6 +241,17 @@ function BlogContent() {
 
           {/* Sidebar */}
           <div className="w-full lg:w-80 shrink-0 space-y-6 lg:sticky lg:top-24 lg:self-start">
+            <AffiliateBanner
+              offers={[
+                { operatorName: "SportPesa", bonusText: "200% Welcome Bonus up to KES 5,000 · M-Pesa", url: "https://sportpesa.com/?ref=igamingubuntu" },
+                { operatorName: "1xBet", bonusText: "100% Deposit Bonus + $100 Free Bet", url: "https://1xbet.com/?btag=igamingubuntu" },
+                { operatorName: "Betika", bonusText: "Free Bet on First Deposit", url: "https://betika.com/?aff=igamingubuntu" },
+              ]}
+              variant="sidebar"
+              title="Top Offers"
+              placement="blog-list-sidebar"
+            />
+
             {/* Most Read */}
             {popularPosts.length > 0 && (
               <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">

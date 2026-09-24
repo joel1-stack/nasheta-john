@@ -1,11 +1,13 @@
 import { initializeApp, getApps } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
+import { getStorage } from "firebase/storage"
 import { firebaseConfig } from "./firebaseConfig"
 
 let _app: any = null
 let _db: any = null
 let _auth: any = null
+let _storage: any = null
 let _initAttempted = false
 
 function initFirebase() {
@@ -23,6 +25,11 @@ function initFirebase() {
   } catch (e) {
     console.error("Firebase init error (auth):", e)
   }
+  try {
+    _storage = getStorage(_app)
+  } catch (e) {
+    console.error("Firebase init error (storage):", e)
+  }
 }
 
 export function getDb() {
@@ -33,4 +40,9 @@ export function getDb() {
 export function getAuthInstance() {
   initFirebase()
   return _auth
+}
+
+export function getStorageInstance() {
+  initFirebase()
+  return _storage
 }

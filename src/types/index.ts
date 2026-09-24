@@ -37,6 +37,8 @@ export interface AffiliateLink {
   trackingId: string
   bonusText: string
   clicks: number
+  imageUrl?: string
+  ctaLabel?: string
 }
 
 export interface Country {

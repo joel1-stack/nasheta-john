@@ -7,6 +7,7 @@ import { formatDate } from "@/lib/utils"
 import AdSlot from "@/components/AdSlot"
 import Sidebar from "@/components/Sidebar"
 import AffiliateBox from "@/components/AffiliateBox"
+import AffiliateBanner from "@/components/AffiliateBanner"
 import { getArticleBySlug, incrementViews, getAffiliateLinks } from "@/lib/firestoreService"
 import type { Article } from "@/types"
 
@@ -16,7 +17,7 @@ export default function BlogArticlePage() {
   const [article, setArticle] = useState<Article | null>(null)
   const [related, setRelated] = useState<Article[]>([])
   const [popular, setPopular] = useState<Article[]>([])
-  const [affiliateLinks, setAffiliateLinks] = useState<{ operatorName: string; bonusText: string; url: string; linkId: string }[]>([])
+  const [affiliateLinks, setAffiliateLinks] = useState<{ operatorName: string; bonusText: string; url: string; linkId: string; imageUrl?: string; ctaLabel?: string }[]>([])
   const [loading, setLoading] = useState(true)
   const [viewCount, setViewCount] = useState(0)
 
@@ -34,6 +35,8 @@ export default function BlogArticlePage() {
             bonusText: l.bonusText,
             url: l.url,
             linkId: l.id,
+            imageUrl: l.imageUrl || undefined,
+            ctaLabel: l.ctaLabel || undefined,
           })))
         }).catch(() => {})
 
@@ -110,6 +113,8 @@ export default function BlogArticlePage() {
               <Link href={`/blog?category=${article.category}`} className="hover:text-[#f59e0b] transition">{article.category}</Link>
             </nav>
 
+            <AffiliateBanner offers={displayOffers} variant="leaderboard" placement="blog-top" className="mb-6" />
+
             <div className="flex items-center gap-3 text-sm mb-4 flex-wrap">
               <span className="bg-emerald-50 text-emerald-600 px-3 py-0.5 rounded-full font-medium text-xs">{article.category}</span>
               {article.status === "sponsored" && (
@@ -157,9 +162,11 @@ export default function BlogArticlePage() {
             <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-4 prose-headings:text-[#111827] prose-headings:font-bold prose-strong:text-[#111827] prose-a:text-[#f59e0b] prose-a:no-underline hover:prose-a:underline"
               dangerouslySetInnerHTML={{ __html: article.content || "" }} />
 
+            <AffiliateBanner offers={displayOffers.slice(0, 3)} variant="marquee" placement="blog-mid" className="my-8" />
+
             <AdSlot position="in-content-1" className="my-8" />
 
-            <AffiliateBox title="Best Odds & Betting Offers" offers={displayOffers.slice(0, 3)} />
+            <AffiliateBox title="Best Odds & Betting Offers" offers={displayOffers.slice(0, 3)} placement="blog-mid" />
 
             {related.length > 0 && (
               <div className="bg-white rounded-xl p-6 my-8 border border-gray-200 shadow-sm">
@@ -180,7 +187,9 @@ export default function BlogArticlePage() {
 
             <AdSlot position="in-content-2" className="my-8" />
 
-            <AffiliateBox title="Top Betting Sites" offers={displayOffers} />
+            <AffiliateBanner offers={displayOffers} variant="leaderboard" placement="blog-bottom" className="mb-4" />
+
+            <AffiliateBox title="Top Betting Sites" offers={displayOffers} placement="blog-bottom" />
 
             {article.tags && article.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 my-8">

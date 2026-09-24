@@ -6,6 +6,8 @@ import { getAuthInstance } from "@/lib/firebase"
 import { getArticleById, updateArticle, getAffiliateLinks, createAffiliateLink, updateAffiliateLink, deleteAffiliateLink } from "@/lib/firestoreService"
 import { useRouter, useParams } from "next/navigation"
 import Link from "next/link"
+import ImageUpload from "@/components/ImageUpload"
+import ArticlePreview from "@/components/ArticlePreview"
 import type { AffiliateLink } from "@/types"
 
 interface AffiliateField {
@@ -13,6 +15,8 @@ interface AffiliateField {
   operatorName: string
   url: string
   bonusText: string
+  imageUrl?: string
+  ctaLabel?: string
   isNew?: boolean
 }
 
@@ -33,6 +37,7 @@ export default function EditPostPage() {
   })
 
   const [affiliates, setAffiliates] = useState<AffiliateField[]>([])
+  const [previewOpen, setPreviewOpen] = useState(false)
 
   useEffect(() => {
     const auth = getAuthInstance()
@@ -70,7 +75,14 @@ export default function EditPostPage() {
         }
         const links = await getAffiliateLinks(id)
         if (links.length > 0) {
-          setAffiliates(links.map((l: AffiliateLink) => ({ id: l.id, operatorName: l.operatorName, url: l.url, bonusText: l.bonusText })))
+          setAffiliates(links.map((l: AffiliateLink) => ({
+            id: l.id,
+            operatorName: l.operatorName,
+            url: l.url,
+            bonusText: l.bonusText,
+            imageUrl: l.imageUrl || "",
+            ctaLabel: l.ctaLabel || "",
+          })))
         }
       }
     })
@@ -78,7 +90,7 @@ export default function EditPostPage() {
   }, [id, router])
 
   const addAffiliate = () => {
-    setAffiliates((prev) => [...prev, { operatorName: "", url: "", bonusText: "", isNew: true }])
+    setAffiliates((prev) => [...prev, { operatorName: "", url: "", bonusText: "", imageUrl: "", ctaLabel: "", isNew: true }])
   }
 
   const removeAffiliate = async (i: number) => {
@@ -125,12 +137,16 @@ export default function EditPostPage() {
               trackingId: `${id}-${aff.operatorName.toLowerCase().replace(/\s+/g, "-")}`,
               bonusText: aff.bonusText,
               clicks: 0,
+              imageUrl: aff.imageUrl || "",
+              ctaLabel: aff.ctaLabel || "",
             })
           } else if (aff.id) {
             await updateAffiliateLink(aff.id, {
               operatorName: aff.operatorName,
               url: aff.url,
               bonusText: aff.bonusText,
+              imageUrl: aff.imageUrl || "",
+              ctaLabel: aff.ctaLabel || "",
             })
           }
         }
@@ -219,8 +235,12 @@ export default function EditPostPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1.5">Featured Image URL</label>
-          <input value={form.featuredImage} onChange={(e) => setForm((f) => ({ ...f, featuredImage: e.target.value }))} className={inputClass} />
+          <ImageUpload
+            label="Featured Image"
+            value={form.featuredImage}
+            onChange={(url) => setForm((f) => ({ ...f, featuredImage: url }))}
+            folder="articles/featured"
+          />
         </div>
 
         {/* SEO Section */}
@@ -254,24 +274,36 @@ export default function EditPostPage() {
 
         {/* Affiliate Links */}
         <div className="border-t border-white/10 pt-6">
-          <h2 className="font-bold text-white mb-3">Affiliate Links</h2>
-          <p className="text-xs text-gray-400 mb-4">Manage operator affiliate links for this article.</p>
+          <h2 className="font-bold text-white mb-3">Affiliate Ads</h2>
+          <p className="text-xs text-gray-400 mb-4">These appear as animated ad banners around the article. Add an ad image for a richer creative.</p>
           {affiliates.map((aff, i) => (
-            <div key={i} className="grid grid-cols-3 gap-3 mb-3 p-4 bg-white/5 rounded-xl border border-white/5">
-              <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">Operator</label>
-                <input value={aff.operatorName} onChange={(e) => updateAffiliate(i, "operatorName", e.target.value)} className={inputClass} />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">Affiliate URL</label>
-                <input value={aff.url} onChange={(e) => updateAffiliate(i, "url", e.target.value)} className={inputClass} />
-              </div>
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <label className="block text-xs font-medium text-gray-300 mb-1">Bonus Text</label>
-                  <input value={aff.bonusText} onChange={(e) => updateAffiliate(i, "bonusText", e.target.value)} className={inputClass} />
+            <div key={i} className="mb-4 p-4 bg-white/5 rounded-xl border border-white/5 space-y-3">
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-300 mb-1">Operator</label>
+                  <input value={aff.operatorName} onChange={(e) => updateAffiliate(i, "operatorName", e.target.value)} className={inputClass} />
                 </div>
-                <button type="button" onClick={() => removeAffiliate(i)} className="text-red-400 text-lg mt-5 hover:text-red-300 cursor-pointer">&times;</button>
+                <div>
+                  <label className="block text-xs font-medium text-gray-300 mb-1">Affiliate URL</label>
+                  <input value={aff.url} onChange={(e) => updateAffiliate(i, "url", e.target.value)} className={inputClass} />
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="block text-xs font-medium text-gray-300 mb-1">Bonus Text</label>
+                    <input value={aff.bonusText} onChange={(e) => updateAffiliate(i, "bonusText", e.target.value)} className={inputClass} />
+                  </div>
+                  <button type="button" onClick={() => removeAffiliate(i)} className="text-red-400 text-lg mt-5 hover:text-red-300 cursor-pointer">&times;</button>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-300 mb-1">Ad Image URL (optional)</label>
+                  <input value={aff.imageUrl || ""} onChange={(e) => updateAffiliate(i, "imageUrl", e.target.value)} className={inputClass} placeholder="https://... banner/logo image" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-300 mb-1">CTA Label (optional)</label>
+                  <input value={aff.ctaLabel || ""} onChange={(e) => updateAffiliate(i, "ctaLabel", e.target.value)} className={inputClass} placeholder="CLAIM OFFER →" />
+                </div>
               </div>
             </div>
           ))}
@@ -332,15 +364,33 @@ export default function EditPostPage() {
           </div>
         </div>
 
-        <div className="flex gap-3 pt-4 border-t border-white/10">
+        <div className="flex flex-wrap gap-3 pt-4 border-t border-white/10">
           <button type="submit" disabled={saving} className="bg-[#E95420] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20">
-            {saving ? "Saving..." : "Update Article"}
+            {saving ? "Saving..." : form.status === "published" ? "Update & Publish" : "Save Draft"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setPreviewOpen(true)}
+            className="bg-white/10 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/20 transition cursor-pointer"
+          >
+            Preview
           </button>
           <Link href="/igub-cms-x7k9/dashboard" className="bg-white/10 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/20 transition">
             Cancel
           </Link>
         </div>
       </form>
+
+      <ArticlePreview
+        open={previewOpen}
+        onClose={() => setPreviewOpen(false)}
+        title={form.title}
+        excerpt={form.excerpt}
+        content={form.content}
+        category={form.category}
+        featuredImage={form.featuredImage}
+        status={form.status}
+      />
     </div>
   )
 }

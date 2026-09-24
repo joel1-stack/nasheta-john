@@ -1,11 +1,45 @@
 import { NextResponse } from "next/server"
 import nodemailer from "nodemailer"
+import { initializeApp, getApps, cert, getApp } from "firebase-admin/app"
+import { getFirestore, Timestamp } from "firebase-admin/firestore"
+
+function getAdminApp() {
+  if (!getApps().length) {
+    const projectId = process.env.FIREBASE_PROJECT_ID
+    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL
+    const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n")
+    if (!projectId || !clientEmail || !privateKey) {
+      throw new Error("Missing FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, or FIREBASE_PRIVATE_KEY")
+    }
+    initializeApp({ credential: cert({ projectId, clientEmail, privateKey }) })
+  }
+  return getApp()
+}
 
 export async function POST(req: Request) {
   try {
     const { name, email, projectType, message } = await req.json()
     if (!name || !email || !message) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+    }
+
+    try {
+      const app = getAdminApp()
+      const db = getFirestore(app)
+      await db.collection("contactMessages").add({
+        name,
+        email,
+        projectType: projectType || "other",
+        message,
+        read: false,
+        createdAt: Timestamp.now(),
+      })
+    } catch (dbErr) {
+      console.error("Failed to save contact to Firestore:", dbErr)
+    }
+
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      return NextResponse.json({ success: true, warning: "Saved but email not configured" })
     }
 
     const transporter = nodemailer.createTransport({

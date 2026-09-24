@@ -30,19 +30,10 @@ export default function ContactPage() {
     }
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/info@igamingubuntu.com", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          "Project Type": projectLabels[projectType] || projectType || "Not specified",
-          message,
-          _subject: `iGamingUbuntu Contact: ${name} - ${projectLabels[projectType] || projectType || "General"}`,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, projectType, message }),
       })
       if (!res.ok) throw new Error("Failed")
       setSent(true)

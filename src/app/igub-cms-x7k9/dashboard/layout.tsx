@@ -33,6 +33,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <nav className="hidden md:flex items-center gap-6 text-sm">
               <a href="/igub-cms-x7k9/dashboard" className="text-gray-300 hover:text-white transition">Dashboard</a>
               <a href="/igub-cms-x7k9/dashboard/new" className="text-gray-300 hover:text-white transition">New Article</a>
+              <a href="/igub-cms-x7k9/dashboard/messages" className="text-gray-300 hover:text-white transition">Messages</a>
               <a href="/igub-cms-x7k9/dashboard/media" className="text-gray-300 hover:text-white transition">Media Library</a>
               <a href="/igub-cms-x7k9/dashboard/affiliates" className="text-gray-300 hover:text-white transition">Affiliates</a>
               <a href="/igub-cms-x7k9/dashboard/analytics" className="text-gray-300 hover:text-white transition">Analytics</a>

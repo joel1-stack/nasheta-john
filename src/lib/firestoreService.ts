@@ -16,12 +16,13 @@ import {
   startAfter,
   DocumentSnapshot,
 } from "firebase/firestore"
-import type { Article, AffiliateLink } from "@/types"
+import type { Article, AffiliateLink, ContactMessage } from "@/types"
 
 const ARTICLES = "articles"
 const AFFILIATE_LINKS = "affiliateLinks"
 const CLICKS = "clicks"
 const SUBSCRIBERS = "subscribers"
+const CONTACT_MESSAGES = "contactMessages"
 
 const PAGE_SIZE = 12
 
@@ -277,4 +278,55 @@ export async function getSubscribers(): Promise<any[]> {
   } catch {
     return []
   }
+}
+
+export async function addContactMessage(data: {
+  name: string
+  email: string
+  projectType: string
+  message: string
+}): Promise<string | null> {
+  const fb = getDb()
+  if (!fb) return null
+  try {
+    const ref = await addDoc(collection(fb, CONTACT_MESSAGES), {
+      ...data,
+      read: false,
+      createdAt: serverTimestamp(),
+    })
+    return ref.id
+  } catch {
+    return null
+  }
+}
+
+export async function getContactMessages(): Promise<ContactMessage[]> {
+  const fb = getDb()
+  if (!fb) return []
+  try {
+    const q = query(collection(fb, CONTACT_MESSAGES), orderBy("createdAt", "desc"))
+    const snap = await getDocs(q)
+    return snap.docs.map((d) => {
+      const data = d.data()
+      return {
+        id: d.id,
+        ...data,
+        createdAt: data.createdAt?.toDate?.()?.toISOString?.()?.split("T")[0] || data.createdAt?.toDate?.()?.toLocaleString?.() || "",
+      } as ContactMessage
+    })
+  } catch {
+    return []
+  }
+}
+
+export async function markContactMessageRead(id: string): Promise<void> {
+  const fb = getDb()
+  if (!fb) return
+  await updateDoc(doc(fb, CONTACT_MESSAGES, id), { read: true })
+}
+
+export async function deleteContactMessage(id: string): Promise<void> {
+  const fb = getDb()
+  if (!fb) return
+  await deleteDoc(doc(fb, CONTACT_MESSAGES, id))
 }

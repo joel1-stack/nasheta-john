@@ -40,11 +40,42 @@ function getHref(offer: AffiliateOffer) {
   return offer.linkId ? `/go/${offer.linkId}` : offer.url
 }
 
-function OperatorBadge({ name, imageUrl }: { name: string; imageUrl?: string }) {
+function getDomainFavicon(url: string): string | null {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "")
+    if (!host || host.includes("localhost")) return null
+    return `https://www.google.com/s2/favicons?domain=${host}&sz=128`
+  } catch {
+    return null
+  }
+}
+
+function OperatorBadge({ name, imageUrl, url }: { name: string; imageUrl?: string; url?: string }) {
+  const favicon = url ? getDomainFavicon(url) : null
   if (imageUrl) {
     return (
       <div className="w-12 h-12 rounded-xl overflow-hidden bg-white/10 shrink-0 border border-white/20 shadow-lg ad-badge-pop">
         <img src={imageUrl} alt={name} className="w-full h-full object-cover" />
+      </div>
+    )
+  }
+  if (favicon) {
+    return (
+      <div className="w-12 h-12 rounded-xl bg-white shrink-0 border border-white/30 shadow-lg ad-badge-pop flex items-center justify-center overflow-hidden p-1.5">
+        <img
+          src={favicon}
+          alt={name}
+          className="w-full h-full object-contain"
+          onError={(e) => {
+            const el = e.currentTarget
+            el.style.display = "none"
+            const parent = el.parentElement
+            if (parent) {
+              const initials = name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
+              parent.innerHTML = `<span style="font-weight:900;font-size:16px;color:#111">${initials}</span>`
+            }
+          }}
+        />
       </div>
     )
   }
@@ -94,6 +125,9 @@ export default function AffiliateBanner({
                 onClick={() => trackClick(offer.linkId, placement)}
                 className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/20 rounded-full px-4 py-1.5 text-sm text-white transition"
               >
+                {offer.url && getDomainFavicon(offer.url) && (
+                  <img src={getDomainFavicon(offer.url)!} alt="" className="w-4 h-4 rounded-sm bg-white object-contain p-px" />
+                )}
                 <span className="font-bold">{offer.operatorName}</span>
                 <span className="text-amber-300 text-xs">★ {offer.bonusText.slice(0, 40)}</span>
               </a>
@@ -120,7 +154,7 @@ export default function AffiliateBanner({
             onClick={() => trackClick(o.linkId, placement)}
             className={`group flex items-center gap-3 p-3 rounded-xl border border-white/10 bg-gradient-to-br ${gradients[i % gradients.length]} text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ad-shine`}
           >
-            <OperatorBadge name={o.operatorName} imageUrl={o.imageUrl} />
+            <OperatorBadge name={o.operatorName} imageUrl={o.imageUrl} url={o.url} />
             <div className="min-w-0 flex-1">
               <p className="font-bold text-sm truncate">{o.operatorName}</p>
               <p className="text-[11px] text-white/75 line-clamp-2">{o.bonusText}</p>
@@ -152,7 +186,7 @@ export default function AffiliateBanner({
           </div>
         </div>
         <div className="flex items-center gap-4 relative z-10 ad-float">
-          <OperatorBadge name={offer.operatorName} imageUrl={offer.imageUrl} />
+          <OperatorBadge name={offer.operatorName} imageUrl={offer.imageUrl} url={offer.url} />
           <div className="flex-1 min-w-0">
             <p className="font-black text-lg leading-tight">{offer.operatorName}</p>
             <p className="text-sm text-white/85 mt-0.5">{offer.bonusText}</p>
@@ -190,7 +224,7 @@ export default function AffiliateBanner({
             </div>
           </div>
           <div className="flex items-center gap-4 ad-float">
-            <OperatorBadge name={offer.operatorName} imageUrl={offer.imageUrl} />
+            <OperatorBadge name={offer.operatorName} imageUrl={offer.imageUrl} url={offer.url} />
             <div className="min-w-0">
               <p className="font-black text-xl sm:text-2xl leading-tight">{offer.operatorName}</p>
               <p className="text-sm sm:text-base text-white/90 mt-1">{offer.bonusText}</p>

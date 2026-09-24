@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import ImageUpload from "@/components/ImageUpload"
 import ArticlePreview from "@/components/ArticlePreview"
+import ContentEditor from "@/components/ContentEditor"
 
 interface AffiliateField {
   operatorName: string
@@ -154,8 +155,8 @@ export default function NewPostPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1.5">Content (HTML)</label>
-          <textarea value={form.content} onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))} rows={15} className={`${inputClass} font-mono`} required />
+          <label className="block text-sm font-medium text-gray-300 mb-1.5">Content</label>
+          <ContentEditor value={form.content} onChange={(v) => setForm((f) => ({ ...f, content: v }))} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">

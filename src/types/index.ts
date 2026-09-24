@@ -66,3 +66,13 @@ export interface Subscriber {
   country: string
   subscribedAt: string
 }
+
+export interface ContactMessage {
+  id: string
+  name: string
+  email: string
+  projectType: string
+  message: string
+  read: boolean
+  createdAt: string
+}

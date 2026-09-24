@@ -85,15 +85,15 @@ export default function HomePage() {
 
               <h1 className="mt-6">
                 <span className={`block text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight text-[#FCFBFB] transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "400ms" }}>
-                  iGaming Content,
+                  The Pulse of
                 </span>
                 <span className={`block text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "600ms" }}>
-                  <span className="bg-gradient-to-r from-[#409824] to-[#FCFBFB] bg-clip-text text-transparent">Built for</span> Your Market.
+                  <span className="bg-gradient-to-r from-[#409824] to-[#FCFBFB] bg-clip-text text-transparent">African</span> iGaming Business.
                 </span>
               </h1>
 
               <p className={`text-base md:text-lg text-[#56525E] max-w-lg mt-6 leading-relaxed transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "800ms" }}>
-                We create clear, well-researched casino, sportsbook, and iGaming content tailored to your audience, market, and brand.
+                B2B intelligence, regulatory tracking, and fintech updates driving the future of sports betting and digital casino operations across Africa.
               </p>
 
               <div className={`flex flex-wrap gap-4 mt-8 transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "1200ms" }}>

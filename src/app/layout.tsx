@@ -11,12 +11,12 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   metadataBase: new URL("https://igamingubuntu.com"),
   title: {
-    default: "iGamingUbuntu — Africa's iGaming Content & Affiliate Authority",
+    default: "iGamingUbuntu — The Pulse of African iGaming Business",
     template: "%s | iGamingUbuntu",
   },
   description:
-    "Expert iGaming content, betting site reviews, and affiliate guides across Kenya, Nigeria, South Africa, Ghana, and Tanzania.",
-  keywords: ["iGaming", "betting", "casino", "Africa", "Kenya", "Nigeria", "South Africa", "Ghana", "Tanzania", "affiliate", "sports betting", "content writing"],
+    "B2B intelligence, regulatory tracking, and fintech updates driving the future of sports betting and digital casino operations across Africa.",
+  keywords: ["iGaming", "betting", "casino", "Africa", "Kenya", "Nigeria", "South Africa", "Ghana", "Tanzania", "affiliate", "sports betting", "B2B intelligence", "regulatory tracking", "fintech"],
   authors: [{ name: "Nasheta John" }],
   creator: "iGamingUbuntu",
   openGraph: {
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://igamingubuntu.com",
     siteName: "iGamingUbuntu",
-    title: "iGamingUbuntu — Africa's iGaming Content & Affiliate Authority",
-    description: "Expert iGaming content, betting site reviews, and affiliate guides across Kenya, Nigeria, South Africa, Ghana, and Tanzania.",
+    title: "iGamingUbuntu — The Pulse of African iGaming Business",
+    description: "B2B intelligence, regulatory tracking, and fintech updates driving the future of sports betting and digital casino operations across Africa.",
     images: [
       {
         url: "/images/nasheta.png",
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@SalvageNasheta",
     creator: "@SalvageNasheta",
-    title: "iGamingUbuntu — Africa's iGaming Content & Affiliate Authority",
-    description: "Expert iGaming content, betting site reviews, and affiliate guides across Kenya, Nigeria, South Africa, Ghana, and Tanzania.",
+    title: "iGamingUbuntu — The Pulse of African iGaming Business",
+    description: "B2B intelligence, regulatory tracking, and fintech updates driving the future of sports betting and digital casino operations across Africa.",
     images: ["/images/nasheta.png"],
   },
   robots: {

@@ -103,7 +103,7 @@ export default function Footer({ hideNav }: FooterProps) {
   }
 
   return (
-    <footer className="w-full bg-[#0A0D14] text-white">
+    <footer className="relative z-10 w-full bg-[#110B18] text-white">
       {/* Newsletter CTA */}
       <section className="relative overflow-hidden border-b border-white/5">
         <svg

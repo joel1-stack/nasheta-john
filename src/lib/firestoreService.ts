@@ -16,13 +16,16 @@ import {
   startAfter,
   DocumentSnapshot,
 } from "firebase/firestore"
-import type { Article, AffiliateLink, ContactMessage } from "@/types"
+import type { Article, AffiliateLink, ContactMessage, Operator, Category, SiteSettings, ClickEvent } from "@/types"
 
 const ARTICLES = "articles"
 const AFFILIATE_LINKS = "affiliateLinks"
 const CLICKS = "clicks"
 const SUBSCRIBERS = "subscribers"
 const CONTACT_MESSAGES = "contactMessages"
+const OPERATORS = "operators"
+const CATEGORIES = "categories"
+const SETTINGS = "settings"
 
 const PAGE_SIZE = 12
 
@@ -329,4 +332,158 @@ export async function deleteContactMessage(id: string): Promise<void> {
   const fb = getDb()
   if (!fb) return
   await deleteDoc(doc(fb, CONTACT_MESSAGES, id))
+}
+
+function toDateStr(value: any): string {
+  return value?.toDate?.()?.toISOString?.()?.split("T")[0] || value || ""
+}
+
+// --- Operators ---
+
+export async function getOperators(): Promise<Operator[]> {
+  const fb = getDb()
+  if (!fb) return []
+  try {
+    const q = query(collection(fb, OPERATORS), orderBy("name", "asc"))
+    const snap = await getDocs(q)
+    return snap.docs.map((d) => {
+      const data = d.data()
+      return {
+        id: d.id,
+        ...data,
+        countries: data.countries || [],
+        pros: data.pros || [],
+        cons: data.cons || [],
+        rating: data.rating || 0,
+        createdAt: toDateStr(data.createdAt),
+        updatedAt: toDateStr(data.updatedAt),
+      } as Operator
+    })
+  } catch {
+    return []
+  }
+}
+
+export async function getOperatorById(id: string): Promise<Operator | null> {
+  const fb = getDb()
+  if (!fb) return null
+  try {
+    const snap = await getDoc(doc(fb, OPERATORS, id))
+    if (!snap.exists()) return null
+    const data = snap.data()
+    return { id: snap.id, ...data, countries: data.countries || [], pros: data.pros || [], cons: data.cons || [] } as Operator
+  } catch {
+    return null
+  }
+}
+
+export async function createOperator(data: Omit<Operator, "id">): Promise<string | null> {
+  const fb = getDb()
+  if (!fb) return null
+  const ref = await addDoc(collection(fb, OPERATORS), {
+    ...data,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  })
+  return ref.id
+}
+
+export async function updateOperator(id: string, data: Partial<Operator>): Promise<void> {
+  const fb = getDb()
+  if (!fb) return
+  await updateDoc(doc(fb, OPERATORS, id), { ...data, updatedAt: serverTimestamp() })
+}
+
+export async function deleteOperator(id: string): Promise<void> {
+  const fb = getDb()
+  if (!fb) return
+  await deleteDoc(doc(fb, OPERATORS, id))
+}
+
+// --- All affiliate links (standalone manager) ---
+
+export async function getAllAffiliateLinks(): Promise<AffiliateLink[]> {
+  const fb = getDb()
+  if (!fb) return []
+  try {
+    const q = query(collection(fb, AFFILIATE_LINKS), orderBy("clicks", "desc"))
+    const snap = await getDocs(q)
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as AffiliateLink))
+  } catch {
+    return []
+  }
+}
+
+// --- Categories ---
+
+export async function getCategories(): Promise<Category[]> {
+  const fb = getDb()
+  if (!fb) return []
+  try {
+    const q = query(collection(fb, CATEGORIES), orderBy("name", "asc"))
+    const snap = await getDocs(q)
+    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Category))
+  } catch {
+    return []
+  }
+}
+
+export async function createCategory(data: Omit<Category, "id">): Promise<string | null> {
+  const fb = getDb()
+  if (!fb) return null
+  const ref = await addDoc(collection(fb, CATEGORIES), data)
+  return ref.id
+}
+
+export async function updateCategory(id: string, data: Partial<Category>): Promise<void> {
+  const fb = getDb()
+  if (!fb) return
+  await updateDoc(doc(fb, CATEGORIES, id), data)
+}
+
+export async function deleteCategory(id: string): Promise<void> {
+  const fb = getDb()
+  if (!fb) return
+  await deleteDoc(doc(fb, CATEGORIES, id))
+}
+
+// --- Site settings ---
+
+const SETTINGS_DOC = "site"
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  const fb = getDb()
+  if (!fb) return null
+  try {
+    const snap = await getDoc(doc(fb, SETTINGS, SETTINGS_DOC))
+    if (!snap.exists()) return null
+    const data = snap.data()
+    return { id: snap.id, ...data, updatedAt: toDateStr(data.updatedAt) } as SiteSettings
+  } catch {
+    return null
+  }
+}
+
+export async function saveSiteSettings(data: Omit<SiteSettings, "id">): Promise<void> {
+  const fb = getDb()
+  if (!fb) return
+  const { setDoc } = await import("firebase/firestore")
+  await setDoc(doc(fb, SETTINGS, SETTINGS_DOC), { ...data, updatedAt: serverTimestamp() }, { merge: true })
+}
+
+// --- Clicks ---
+
+export async function getClickEvents(limitCount = 200): Promise<ClickEvent[]> {
+  const fb = getDb()
+  if (!fb) return []
+  try {
+    const q = query(collection(fb, CLICKS), orderBy("timestamp", "desc"), fbLimit(limitCount))
+    const snap = await getDocs(q)
+    return snap.docs.map((d) => {
+      const data = d.data()
+      return { id: d.id, ...data, timestamp: toDateStr(data.timestamp) } as ClickEvent
+    })
+  } catch {
+    return []
+  }
 }

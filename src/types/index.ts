@@ -1,3 +1,11 @@
+export type ArticleStatus =
+  | "published"
+  | "draft"
+  | "review"
+  | "scheduled"
+  | "sponsored"
+  | "press-release"
+
 export interface Article {
   id: string
   title: string
@@ -10,10 +18,11 @@ export interface Article {
   tags: string[]
   readTime: number
   author: string
-  status: "published" | "draft" | "sponsored" | "press-release"
+  status: ArticleStatus
   views: number
   createdAt: string
   updatedAt: string
+  scheduledAt?: string
   // SEO fields
   seoTitle?: string
   metaDescription?: string
@@ -39,6 +48,68 @@ export interface AffiliateLink {
   clicks: number
   imageUrl?: string
   ctaLabel?: string
+  campaign?: string
+  network?: string
+  destination?: string
+  country?: string
+  placement?: string
+  status?: "active" | "paused" | "expired"
+  updatedAt?: string
+}
+
+export interface Operator {
+  id: string
+  name: string
+  slug: string
+  logo?: string
+  brand?: string
+  website?: string
+  type: "sportsbook" | "casino" | "both"
+  countries: string[]
+  license?: string
+  payments?: string
+  minDeposit?: string
+  maxPayout?: string
+  welcomeOffer?: string
+  rating: number
+  pros: string[]
+  cons: string[]
+  affiliateUrl?: string
+  trackingUrl?: string
+  status: "active" | "paused" | "archived"
+  lastVerified?: string
+  nextReview?: string
+  notes?: string
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface Category {
+  id: string
+  name: string
+  slug: string
+  description?: string
+  articleCount?: number
+}
+
+export interface SiteSettings {
+  id: string
+  siteName: string
+  tagline: string
+  contactEmail: string
+  twitter?: string
+  linkedin?: string
+  affiliateDisclosure: string
+  responsibleGambling: string
+  primaryCountry?: string
+  updatedAt?: string
+}
+
+export interface ClickEvent {
+  id: string
+  linkId: string
+  placement?: string
+  timestamp?: string
 }
 
 export interface Country {

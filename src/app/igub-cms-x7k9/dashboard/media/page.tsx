@@ -9,7 +9,7 @@ import { getApp } from "firebase/app"
 export default function MediaLibraryPage() {
   const { user, loading: authLoading } = useAuth()
   const [loading, setLoading] = useState(true)
-  const [images, setImages] = useState<{ name: string; url: string; size: number; time: string }[]>([])
+  const [images, setImages] = useState<{ name: string; url: string; size: number; time: string; created: string }[]>([])
   const [uploading, setUploading] = useState(false)
   const [dragActive, setDragActive] = useState(false)
 
@@ -24,17 +24,27 @@ export default function MediaLibraryPage() {
       const storage = getStorage(getApp())
       const imagesRef = ref(storage, "articles")
       const res = await listAll(imagesRef)
-      const urls = await Promise.all(res.items.map(async (itemRef) => {
-        const url = await getDownloadURL(itemRef)
-        const metadata = await getMetadata(itemRef)
-        return {
-          name: itemRef.name,
-          url,
-          size: metadata.size,
-          time: new Date(metadata.timeCreated).toLocaleDateString(),
-        }
-      }))
-      setImages(urls.sort((a, b) => b.time.localeCompare(a.time)))
+
+      const allItemRefs = [...res.items]
+      for (const prefix of res.prefixes) {
+        const sub = await listAll(prefix)
+        allItemRefs.push(...sub.items)
+      }
+
+      const urls = await Promise.all(
+        allItemRefs.map(async (itemRef) => {
+          const url = await getDownloadURL(itemRef)
+          const metadata = await getMetadata(itemRef)
+          return {
+            name: itemRef.fullPath.replace("articles/", ""),
+            url,
+            size: metadata.size,
+            time: new Date(metadata.timeCreated).toLocaleDateString(),
+            created: metadata.timeCreated,
+          }
+        })
+      )
+      setImages(urls.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()))
     } catch (e) {
       console.error("Failed to load images:", e)
     }

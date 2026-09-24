@@ -111,7 +111,7 @@ export default function EditPostPage() {
     setSaving(true)
     try {
       const tags = form.tags?.split(",").map((t) => t.trim()).filter(Boolean) || []
-      const status = form.isSponsored ? "sponsored" : form.isPressRelease ? "press-release" : form.status as "published" | "draft"
+      const status = form.isSponsored ? "sponsored" : form.isPressRelease ? "press-release" : (form.status as "published" | "draft" | "review" | "scheduled")
       await updateArticle(id, {
         ...form,
         tags,
@@ -315,6 +315,8 @@ export default function EditPostPage() {
           <label className="block text-sm font-medium text-gray-300">Status:</label>
           <select value={form.status} onChange={(e) => setForm((f) => ({ ...f, status: e.target.value }))} className={`${selectClass} w-auto`}>
             <option value="draft" className="bg-[#0F0A1A]">Draft</option>
+            <option value="review" className="bg-[#0F0A1A]">In Review</option>
+            <option value="scheduled" className="bg-[#0F0A1A]">Scheduled</option>
             <option value="published" className="bg-[#0F0A1A]">Published</option>
           </select>
         </div>

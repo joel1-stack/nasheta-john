@@ -3,6 +3,7 @@
 import { useAuth } from "@/lib/auth-context"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import CmsSidebar from "@/components/cms/CmsSidebar"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { user, loading, signOut } = useAuth()
@@ -26,31 +27,26 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="min-h-screen bg-[#0F0A1A]">
-      <header className="border-b border-white/10 bg-white/5 backdrop-blur sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="text-xl font-bold bg-gradient-to-r from-[#E95420] to-[#FFD700] bg-clip-text text-transparent">iGUB CMS</span>
-            <nav className="hidden md:flex items-center gap-6 text-sm">
-              <a href="/igub-cms-x7k9/dashboard" className="text-gray-300 hover:text-white transition">Dashboard</a>
-              <a href="/igub-cms-x7k9/dashboard/new" className="text-gray-300 hover:text-white transition">New Article</a>
-              <a href="/igub-cms-x7k9/dashboard/messages" className="text-gray-300 hover:text-white transition">Messages</a>
-              <a href="/igub-cms-x7k9/dashboard/media" className="text-gray-300 hover:text-white transition">Media Library</a>
-              <a href="/igub-cms-x7k9/dashboard/affiliates" className="text-gray-300 hover:text-white transition">Affiliates</a>
-              <a href="/igub-cms-x7k9/dashboard/analytics" className="text-gray-300 hover:text-white transition">Analytics</a>
-            </nav>
+      <CmsSidebar />
+      <div className="lg:pl-64">
+        <header className="border-b border-white/10 bg-white/5 backdrop-blur sticky top-0 z-30">
+          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <span className="text-sm font-medium text-gray-300">iGamingUbuntu CMS</span>
+            <div className="flex items-center gap-4">
+              <span className="hidden sm:block text-sm text-gray-400">{user?.email}</span>
+              <button
+                onClick={() => {
+                  signOut().then(() => router.replace("/igub-cms-x7k9"))
+                }}
+                className="text-sm text-gray-400 hover:text-red-400 transition cursor-pointer"
+              >
+                Logout
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-400">{user?.email}</span>
-            <button
-              onClick={() => { signOut().then(() => router.replace("/igub-cms-x7k9")) }}
-              className="text-sm text-gray-400 hover:text-red-400 transition cursor-pointer"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </header>
-      <main className="max-w-7xl mx-auto px-4 py-8">{children}</main>
+        </header>
+        <main className="max-w-7xl mx-auto px-4 py-8">{children}</main>
+      </div>
     </div>
   )
 }

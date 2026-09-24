@@ -1,5 +1,6 @@
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
+import SectionHeader from "@/components/SectionHeader"
 import type { Article } from "@/types"
 
 const guides: Article[] = [
@@ -11,35 +12,52 @@ const guides: Article[] = [
 ]
 
 export default function GuidesPage() {
+  const [featured, ...rest] = guides
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      {/* Hero */}
-      <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-green to-ubuntu-purple">
-        <div className="absolute inset-0 opacity-15">
-          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Betting guides" className="w-full h-full object-cover" />
-        </div>
-        <div className="relative z-10 p-8 md:p-12 text-white">
-          <h1 className="text-3xl md:text-4xl font-bold">Betting Guides & Tips</h1>
-          <p className="text-white/80 mt-1 max-w-2xl">Learn how to bet smarter. Beginner-friendly guides, expert tips, and winning strategies for African punters.</p>
-        </div>
-      </div>
+    <div className="max-w-6xl mx-auto px-4 sm:px-5 pb-16">
+      <SectionHeader
+        title="Betting Guides & Tips"
+        description="Learn how to bet smarter. Beginner-friendly guides, expert tips, and winning strategies for African punters."
+        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Guides" }]}
+      />
 
       <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
 
+      <Link
+        href={`/blog/${featured.slug}`}
+        className="group block bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all mb-6"
+      >
+        <div className="grid md:grid-cols-[1.4fr_1fr]">
+          <div className="relative h-52 md:h-full min-h-[200px] overflow-hidden">
+            <img src={featured.featuredImage} alt={featured.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          </div>
+          <div className="p-5 md:p-6 flex flex-col justify-center">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#f59e0b] mb-2">Featured</span>
+            <div className="flex items-center gap-2 text-xs text-gray-400 mb-2">
+              <span className="bg-gray-100 px-2 py-0.5 rounded font-medium text-[#f59e0b]">Guide</span>
+              <span>{featured.readTime} min read</span>
+            </div>
+            <h2 className="font-bold text-[#111827] group-hover:text-[#f59e0b] transition text-lg md:text-xl leading-snug mb-2">{featured.title}</h2>
+            <p className="text-sm text-gray-500 line-clamp-3">{featured.excerpt}</p>
+            <span className="mt-4 text-sm font-semibold text-[#f59e0b] group-hover:translate-x-1 transition-transform">Read article →</span>
+          </div>
+        </div>
+      </Link>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {guides.map((g) => (
-          <Link key={g.slug} href={`/blog/${g.slug}`} className="group bg-white border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all hover:-translate-y-0.5">
+        {rest.map((g) => (
+          <Link key={g.slug} href={`/blog/${g.slug}`} className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all hover:-translate-y-0.5">
             <div className="aspect-[16/9] overflow-hidden">
               <img src={g.featuredImage} alt={g.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="p-5">
-              <div className="flex items-center gap-2 text-xs text-text-muted mb-2">
-                <span className="bg-card px-2 py-0.5 rounded font-medium text-ubuntu-orange">Guide</span>
+              <div className="flex items-center gap-2 text-xs text-gray-400 mb-2">
+                <span className="bg-gray-100 px-2 py-0.5 rounded font-medium text-[#f59e0b]">Guide</span>
                 <span>{g.readTime} min read</span>
                 <span>· {g.views.toLocaleString()} views</span>
               </div>
-              <h3 className="font-bold text-text-primary group-hover:text-ubuntu-orange transition mb-1">{g.title}</h3>
-              <p className="text-sm text-text-secondary">{g.excerpt}</p>
+              <h3 className="font-bold text-[#111827] group-hover:text-[#f59e0b] transition mb-1">{g.title}</h3>
+              <p className="text-sm text-gray-500">{g.excerpt}</p>
             </div>
           </Link>
         ))}

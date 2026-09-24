@@ -145,8 +145,46 @@ function BlogContent() {
               </div>
             ) : articles.length > 0 ? (
               <>
+                {articles[0] && (
+                  <Link
+                    href={`/blog/${articles[0].slug}`}
+                    className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-[#f59e0b]/30 transition-all duration-300 mb-6"
+                  >
+                    <div className="grid md:grid-cols-[1.4fr_1fr]">
+                      <div className="relative h-52 md:h-full min-h-[200px] overflow-hidden bg-gray-50">
+                        {articles[0].featuredImage ? (
+                          <img src={articles[0].featuredImage} alt={articles[0].title} className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <span className="text-gray-300 text-sm font-medium">iGamingUbuntu</span>
+                          </div>
+                        )}
+                        <span className="absolute top-3 left-3 bg-[#f59e0b] text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                          {articles[0].category}
+                        </span>
+                      </div>
+                      <div className="p-5 md:p-6 flex flex-col justify-center">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#f59e0b] mb-2">Featured</span>
+                        <div className="flex items-center gap-2 mb-2 text-xs text-gray-400">
+                          <FiCalendar size={11} />
+                          {formatDate(articles[0].createdAt)}
+                          <span>·</span>
+                          <FiClock size={11} />
+                          {articles[0].readTime} min read
+                        </div>
+                        <h2 className="font-bold text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors text-lg md:text-xl leading-snug mb-2">
+                          {articles[0].title}
+                        </h2>
+                        <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed">{articles[0].excerpt}</p>
+                        <span className="mt-4 text-sm font-semibold text-[#f59e0b] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                          Read article <FiArrowRight size={12} />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {articles.map((article) => (
+                  {articles.slice(1).map((article) => (
                     <Link
                       key={article.slug}
                       href={`/blog/${article.slug}`}

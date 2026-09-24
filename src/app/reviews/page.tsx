@@ -1,6 +1,7 @@
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import AffiliateBox from "@/components/AffiliateBox"
+import SectionHeader from "@/components/SectionHeader"
 
 const casinoReviews = [
   { name: "SportPesa", rating: 4.8, bonus: "200% up to KES 5,000", payments: "M-Pesa, Airtel, Card", license: "BCLB Kenya", logo: "/images/full backgound.png" },
@@ -36,16 +37,12 @@ const ratingCriteria = [
 
 export default function ReviewsPage() {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
-      <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-purple to-ubuntu-orange">
-        <div className="absolute inset-0 opacity-15">
-          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Casino reviews" className="w-full h-full object-cover" />
-        </div>
-        <div className="relative z-10 p-8 md:p-12 text-white">
-          <h1 className="text-3xl md:text-4xl font-bold">Casino & Betting Site Reviews</h1>
-          <p className="text-white/80 mt-1 max-w-2xl">Honest, expert reviews of the best betting sites and online casinos in Africa. We only recommend licensed, trusted operators.</p>
-        </div>
-      </div>
+    <div className="max-w-6xl mx-auto px-4 sm:px-5 pb-16 animate-fade-in">
+      <SectionHeader
+        title="Casino & Betting Site Reviews"
+        description="Honest, expert reviews of the best betting sites and online casinos in Africa. We only recommend licensed, trusted operators."
+        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Casino Reviews" }]}
+      />
 
       <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
 

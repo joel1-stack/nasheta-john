@@ -102,8 +102,8 @@ export default function BlogArticlePage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+      <div className="max-w-[1280px] mx-auto px-5 py-10">
+        <div className="flex flex-col lg:flex-row gap-12">
           <article className="flex-1 min-w-0">
             <nav className="text-[13px] text-[#6B7280] mb-5 flex items-center gap-2 flex-wrap">
               <Link href="/" className="hover:text-[#1A1F2B] transition">Home</Link>
@@ -171,8 +171,10 @@ export default function BlogArticlePage() {
               ))}
             </div>
 
-            <div className="prose prose-lg max-w-none text-[#6B7280] leading-[1.8] text-[16px] space-y-4 prose-headings:text-[#1A1F2B] prose-headings:font-bold prose-strong:text-[#1A1F2B] prose-a:text-[#22C55E] prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg"
-              dangerouslySetInnerHTML={{ __html: article.content || "" }} />
+            <div
+              className="prose prose-lg max-w-none text-[#6B7280] leading-[1.8] text-[16px] space-y-4 prose-headings:text-[#1A1F2B] prose-headings:font-bold prose-strong:text-[#1A1F2B] prose-a:text-[#22C55E] prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg prose-img:w-full [&_img.float-left]:float-left [&_img.float-left]:w-[45%] [&_img.float-left]:mr-6 [&_img.float-left]:mb-4 [&_img.float-left]:rounded-lg [&_img.float-right]:float-right [&_img.float-right]:w-[45%] [&_img.float-right]:ml-6 [&_img.float-right]:mb-4 [&_img.float-right]:rounded-lg"
+              dangerouslySetInnerHTML={{ __html: article.content || "" }}
+            />
 
             <AffiliateBanner offers={displayOffers.slice(0, 3)} variant="marquee" placement="blog-mid" className="my-8" />
 
@@ -244,7 +246,7 @@ export default function BlogArticlePage() {
             </div>
           </article>
 
-          <aside className="w-full lg:w-[360px] shrink-0">
+          <aside className="w-full lg:w-[380px] shrink-0">
             <Sidebar popularPosts={popular} />
           </aside>
         </div>

@@ -88,8 +88,8 @@ function BlogContent() {
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 pb-16">
-        <div className="flex flex-col lg:flex-row gap-8 pt-8">
+      <div className="max-w-[1280px] mx-auto px-5 pb-16">
+        <div className="flex flex-col lg:flex-row gap-12 pt-10">
           {/* Main */}
           <div className="flex-1 min-w-0">
             {/* Filter pills */}
@@ -240,7 +240,7 @@ function BlogContent() {
           </div>
 
           {/* Sidebar */}
-          <div className="w-full lg:w-80 shrink-0 space-y-6 lg:sticky lg:top-24 lg:self-start">
+          <div className="w-full lg:w-[380px] shrink-0 space-y-6 lg:sticky lg:top-24 lg:self-start">
             <AffiliateBanner
               offers={[
                 { operatorName: "SportPesa", bonusText: "200% Welcome Bonus up to KES 5,000 · M-Pesa", url: "https://sportpesa.com/?ref=igamingubuntu" },
@@ -255,17 +255,30 @@ function BlogContent() {
             {/* Most Read */}
             {popularPosts.length > 0 && (
               <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
-                <h3 className="font-bold text-[#1A1F2B] mb-4 border-l-4 border-[#22C55E] pl-3 text-sm uppercase tracking-wide flex items-center justify-between">
-                  <span>Most Read</span>
-                  <span className="text-xs text-[#22C55E] normal-case tracking-normal font-medium">View All →</span>
-                </h3>
+                <div className="flex items-center justify-between mb-4 border-l-4 border-[#22C55E] pl-3">
+                  <h3 className="font-bold text-[#1A1F2B] text-sm uppercase tracking-wide">Most Read</h3>
+                  <Link href="/blog" className="text-xs text-[#22C55E] font-medium hover:underline">
+                    View All →
+                  </Link>
+                </div>
                 <div className="space-y-4">
                   {popularPosts.map((post, i) => (
-                    <Link key={post.slug} href={`/blog/${post.slug}`} className="flex gap-3 group">
-                      <span className="text-[#F59E0B] font-extrabold text-xl w-7 shrink-0 leading-none">{String(i + 1).padStart(2, "0")}</span>
+                    <Link key={post.slug} href={`/blog/${post.slug}`} className="flex gap-3 group items-start">
+                      <span className="text-[#F59E0B] font-extrabold text-xl w-8 shrink-0 leading-none pt-0.5">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      {post.featuredImage && (
+                        <img
+                          src={post.featuredImage}
+                          alt=""
+                          className="w-20 h-[60px] rounded-md object-cover shrink-0"
+                        />
+                      )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-[15px] font-bold text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors line-clamp-2">{post.title}</p>
-                        <div className="flex items-center gap-2 text-xs text-[#6B7280] mt-1">
+                        <p className="text-[15px] font-bold text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors line-clamp-2 leading-snug">
+                          {post.title}
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-[#6B7280] mt-1.5">
                           <FiEye size={11} />
                           <span>{post.views.toLocaleString()} views</span>
                           <span>· {post.readTime} min</span>

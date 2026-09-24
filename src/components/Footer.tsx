@@ -105,7 +105,10 @@ export default function Footer({ hideNav }: FooterProps) {
   return (
     <footer className="relative z-10 w-full bg-[#110B18] text-white">
       {/* Newsletter CTA */}
-      <section className="relative overflow-hidden border-b border-white/5">
+      <section
+        className="relative overflow-hidden border-b border-[#1F2937]"
+        style={{ background: "linear-gradient(to right, #110B18, #0E1A13)" }}
+      >
         <svg
           className="absolute right-0 top-0 h-full w-1/3 pointer-events-none"
           viewBox="0 0 400 240"
@@ -330,8 +333,8 @@ export default function Footer({ hideNav }: FooterProps) {
           </span>
           <div className="flex items-center gap-3 text-[13px] text-[#9CA3AF]">
             <span
-              className="w-7 h-7 rounded-full border-2 flex items-center justify-center text-[10px] font-bold"
-              style={{ borderColor: GREEN, color: GREEN }}
+              className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold"
+              style={{ backgroundColor: GREEN, color: "#000" }}
             >
               18+
             </span>

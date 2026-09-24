@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
     await transporter.sendMail({
       from: `"Contact Form" <${process.env.SMTP_USER || "nashetajohn@gmail.com"}>`,
-      to: "nashetajohn@gmail.com",
+      to: "info@igamingubuntu.com",
       replyTo: email,
       subject: `iGamingUbuntu Contact: ${name} - ${projectLabels[projectType] || projectType || "General"}`,
       text: `Name: ${name}\nEmail: ${email}\nProject: ${projectLabels[projectType] || projectType || "Not specified"}\n\nMessage:\n${message}`,

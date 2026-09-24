@@ -1,40 +1,42 @@
 "use client"
 
 import { useState } from "react"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { getAuthInstance } from "@/lib/firebase"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/lib/auth-context"
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [otp, setOtp] = useState("")
+  const [step, setStep] = useState<"email" | "otp">("email")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const { sendOTP, verifyOTP } = useAuth()
   const router = useRouter()
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError("")
-    try {
-      const auth = getAuthInstance()
-      if (!auth) throw new Error("Firebase not initialized")
-      await signInWithEmailAndPassword(auth, email, password)
-      router.push("/igub-cms-x7k9/dashboard")
-    } catch (err: any) {
-      const code = err.code || ""
-      if (code === "auth/invalid-credential" || code === "auth/user-not-found") {
-        setError("Invalid email or password")
-      } else if (code === "auth/too-many-requests") {
-        setError("Too many attempts. Try again later.")
-      } else if (code === "auth/network-request-failed") {
-        setError("Network error. Check your connection.")
-      } else {
-        setError(err.message || "Login failed")
-      }
-    } finally {
-      setLoading(false)
+    const res = await sendOTP(email)
+    if (res.success) {
+      setStep("otp")
+    } else {
+      setError(res.error || "Failed to send OTP")
     }
+    setLoading(false)
+  }
+
+  const handleVerifyOTP = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError("")
+    const res = await verifyOTP(email, otp)
+    if (res.success) {
+      router.push("/igub-cms-x7k9/dashboard")
+    } else {
+      setError(res.error || "Invalid OTP")
+    }
+    setLoading(false)
   }
 
   return (
@@ -52,37 +54,58 @@ export default function AdminLoginPage() {
           <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-4">{error}</div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1.5">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
-              placeholder="admin@example.com"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1.5">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
-              placeholder="Enter password"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-[#E95420] text-white py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
+        {step === "email" ? (
+          <form onSubmit={handleSendOTP} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1.5">Admin Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
+                placeholder="admin@igamingubuntu.com"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-[#E95420] text-white py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20"
+            >
+              {loading ? "Sending OTP..." : "Send OTP"}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleVerifyOTP} className="space-y-4">
+            <p className="text-sm text-gray-400 text-center">We sent a 6-digit code to <strong>{email}</strong></p>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1.5">Enter OTP</label>
+              <input
+                type="text"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                required
+                maxLength={6}
+                className="w-full px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm text-center tracking-widest focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
+                placeholder="123456"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-[#E95420] text-white py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20"
+            >
+              {loading ? "Verifying..." : "Verify & Login"}
+            </button>
+            <button
+              type="button"
+              onClick={() => setStep("email")}
+              className="w-full text-sm text-gray-400 hover:text-white transition"
+            >
+              &larr; Back
+            </button>
+          </form>
+        )}
       </div>
     </div>
   )

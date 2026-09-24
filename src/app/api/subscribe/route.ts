@@ -1,4 +1,19 @@
 import { NextResponse } from "next/server"
+import { initializeApp, getApps, cert } from "firebase-admin/app"
+import { getFirestore } from "firebase-admin/firestore"
+
+const serviceAccount = {
+  projectId: process.env.FIREBASE_PROJECT_ID || "nasheta-105b3",
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+  privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+}
+
+function getAdminDb() {
+  if (!getApps().length) {
+    initializeApp({ credential: cert(serviceAccount) })
+  }
+  return getFirestore()
+}
 
 export async function POST(req: Request) {
   try {
@@ -7,15 +22,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Valid email required" }, { status: 400 })
     }
 
-    const { addSubscriber } = await import("@/lib/firestoreService")
-    const id = await addSubscriber(email, country || "")
+    const db = getAdminDb()
+    const ref = await db.collection("subscribers").add({
+      email,
+      country: country || "",
+      subscribedAt: new Date(),
+    })
 
-    if (!id) {
-      return NextResponse.json({ error: "Failed to subscribe" }, { status: 500 })
-    }
-
-    return NextResponse.json({ success: true, id })
-  } catch {
+    return NextResponse.json({ success: true, id: ref.id })
+  } catch (error) {
+    console.error("Subscribe error:", error)
     return NextResponse.json({ error: "Failed to subscribe" }, { status: 500 })
   }
 }

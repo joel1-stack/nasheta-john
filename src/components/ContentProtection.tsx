@@ -4,11 +4,16 @@ import { useEffect } from "react"
 
 export default function ContentProtection() {
   useEffect(() => {
+    const isDashboard = () =>
+      window.location.pathname.startsWith("/igub-cms-x7k9")
+
     const handleContextMenu = (e: MouseEvent) => {
+      if (isDashboard()) return
       e.preventDefault()
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isDashboard()) return
       if (
         e.ctrlKey && (e.key === "c" || e.key === "C") ||
         e.ctrlKey && (e.key === "u" || e.key === "U") ||

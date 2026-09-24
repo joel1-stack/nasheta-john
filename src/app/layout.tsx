@@ -37,6 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@SalvageNasheta",
+    creator: "@SalvageNasheta",
     title: "iGamingUbuntu — Africa's iGaming Content & Affiliate Authority",
     description: "Expert iGaming content, betting site reviews, and affiliate guides across Kenya, Nigeria, South Africa, Ghana, and Tanzania.",
     images: ["/images/nasheta.png"],

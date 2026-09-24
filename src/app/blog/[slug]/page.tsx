@@ -206,7 +206,7 @@ export default function BlogArticlePage() {
               {(() => {
                 const articleUrl = article.canonicalUrl || `https://igamingubuntu.com/blog/${article.slug}`
                 return [
-                  { label: "Twitter", url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(articleUrl)}` },
+                  { label: "X", url: `https://x.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(articleUrl)}` },
                   { label: "LinkedIn", url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}` },
                   { label: "WhatsApp", url: `https://wa.me/?text=${encodeURIComponent(`${article.title} ${articleUrl}`)}` },
                 ]

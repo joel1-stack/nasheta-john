@@ -1,8 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { getAuthInstance, getStorageInstance } from "@/lib/firebase"
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
+import { CLOUDINARY_FOLDER, uploadToCloudinary } from "@/lib/cloudinary"
 
 interface ImageUploadProps {
   value: string
@@ -44,63 +43,14 @@ export default function ImageUpload({
     setUploading(true)
 
     try {
-      const auth = getAuthInstance()
-      const user = auth?.currentUser
-      if (!user) throw new Error("Your admin session has expired. Sign in again and retry.")
-
-      const storage = getStorageInstance()
-      if (!storage) throw new Error("Firebase Storage is not initialized.")
-
-      const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "-")
-      const fileName = `${Date.now()}-${safeName}`
-      const fileRef = ref(storage, `${folder}/${fileName}`)
-      const task = uploadBytesResumable(fileRef, file, { contentType: file.type })
-
-      await new Promise<void>((resolve, reject) => {
-        let settled = false
-        const finish = (fn: () => void) => {
-          if (settled) return
-          settled = true
-          fn()
-        }
-
-        const timeout = window.setTimeout(() => {
-          task.cancel()
-          finish(() => reject(new Error("Upload timed out. Check Firebase Storage rules and try again.")))
-        }, 60_000)
-
-        task.on(
-          "state_changed",
-          (snapshot) => {
-            setProgress(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100))
-          },
-          (uploadError) => {
-            window.clearTimeout(timeout)
-            finish(() => reject(uploadError))
-          },
-          () => {
-            window.clearTimeout(timeout)
-            finish(resolve)
-          }
-        )
+      const url = await uploadToCloudinary(file, {
+        folder: `${CLOUDINARY_FOLDER}/${folder}`,
+        onProgress: setProgress,
       })
-
-      const url = await getDownloadURL(fileRef)
       onChange(url)
       setProgress(100)
-    } catch (e: any) {
-      const code = e?.code || ""
-      const message =
-        code === "storage/unauthorized"
-          ? "Firebase Storage denied this upload. Check Storage Rules and make sure you are signed in."
-          : code === "storage/unauthenticated"
-            ? "Your admin session is not authenticated. Sign in again and retry."
-            : code === "storage/quota-exceeded"
-              ? "Firebase Storage quota has been exceeded."
-              : code === "storage/object-not-found"
-                ? "The uploaded file could not be found after upload."
-                : e?.message || "Upload failed."
-      setError(message)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Upload failed.")
       setProgress(0)
     } finally {
       setUploading(false)

@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useAuth } from "@/lib/auth-context"
-import { getAuthInstance } from "@/lib/firebase"
-import { getStorage, ref, uploadBytes, getDownloadURL, listAll, getMetadata } from "firebase/storage"
-import { getApp } from "firebase/app"
+import { CLOUDINARY_FOLDER, uploadToCloudinary } from "@/lib/cloudinary"
 
 interface MediaImage {
   name: string
@@ -15,54 +13,36 @@ interface MediaImage {
 }
 
 async function fetchImageList(): Promise<MediaImage[]> {
-  getAuthInstance()
-  const storage = getStorage(getApp())
-  const imagesRef = ref(storage, "articles")
-  const res = await listAll(imagesRef)
-
-  const allItemRefs = [...res.items]
-  for (const prefix of res.prefixes) {
-    const sub = await listAll(prefix)
-    allItemRefs.push(...sub.items)
+  const res = await fetch("/api/cloudinary/list", { cache: "no-store" })
+  const data = (await res.json().catch(() => null)) as { images?: MediaImage[]; error?: string } | null
+  if (!res.ok || data?.error || !data?.images) {
+    throw new Error(data?.error || `Failed to load images (HTTP ${res.status}).`)
   }
-
-  const urls = await Promise.all(
-    allItemRefs.map(async (itemRef) => {
-      const url = await getDownloadURL(itemRef)
-      const metadata = await getMetadata(itemRef)
-      return {
-        name: itemRef.fullPath.replace("articles/", ""),
-        url,
-        size: metadata.size,
-        time: new Date(metadata.timeCreated).toLocaleDateString(),
-        created: metadata.timeCreated,
-      }
-    })
-  )
-  return urls.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
+  return data.images
 }
+
+const MAX_SIZE = 8 * 1024 * 1024
+const ACCEPTED = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"]
 
 export default function MediaLibraryPage() {
   const { user, loading: authLoading } = useAuth()
-  const [loading, setLoading] = useState(true)
+  const [listLoading, setListLoading] = useState(true)
   const [images, setImages] = useState<MediaImage[]>([])
   const [uploading, setUploading] = useState(false)
+  const [uploadStatus, setUploadStatus] = useState("")
   const [dragActive, setDragActive] = useState(false)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
 
-  const MAX_SIZE = 10 * 1024 * 1024
-  const ACCEPTED = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif", "image/svg+xml"]
-
   const validateFiles = (files: File[]): File[] => {
     const valid: File[] = []
-    for (const file of Array.from(files)) {
+    for (const file of files) {
       if (!ACCEPTED.includes(file.type)) {
         setError(`"${file.name}" is not a supported image type.`)
         continue
       }
       if (file.size > MAX_SIZE) {
-        setError(`"${file.name}" exceeds the 10MB limit (${(file.size / 1024 / 1024).toFixed(1)}MB).`)
+        setError(`"${file.name}" exceeds the 8MB limit (${(file.size / 1024 / 1024).toFixed(1)}MB).`)
         continue
       }
       valid.push(file)
@@ -74,8 +54,8 @@ export default function MediaLibraryPage() {
     if (!user) return
     fetchImageList()
       .then(setImages)
-      .catch((e) => console.error("Failed to load images:", e))
-      .finally(() => setLoading(false))
+      .catch((e) => setError(e instanceof Error ? e.message : String(e)))
+      .finally(() => setListLoading(false))
   }, [user])
 
   const handleUpload = async (files: FileList) => {
@@ -86,29 +66,29 @@ export default function MediaLibraryPage() {
 
     setUploading(true)
     try {
-      getAuthInstance()
-      const storage = getStorage(getApp())
-      for (const file of valid) {
-        const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "-")}`
-        const fileRef = ref(storage, `articles/${fileName}`)
-        await uploadBytes(fileRef, file)
+      for (let i = 0; i < valid.length; i++) {
+        const file = valid[i]
+        setUploadStatus(`Uploading ${i + 1} of ${valid.length}...`)
+        await uploadToCloudinary(file, {
+          onProgress: (pct) => setUploadStatus(`Uploading ${i + 1} of ${valid.length}... ${pct}%`),
+        })
       }
-      await fetchImageList().then(setImages)
+      const refreshed = await fetchImageList()
+      setImages(refreshed)
       setSuccess(`Uploaded ${valid.length} image${valid.length > 1 ? "s" : ""} successfully.`)
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e)
       console.error("Upload failed:", e)
-      if (msg.includes("storage/unauthorized") || msg.includes("permission")) {
-        setError("Upload failed: you don't have permission. Sign in again and retry.")
-      } else if (msg.includes("quota") || msg.includes("quota-exceeded")) {
-        setError("Upload failed: storage quota exceeded.")
-      } else if (msg.includes("network")) {
+      if (msg.includes("not configured")) {
+        setError(msg)
+      } else if (msg.includes("Network") || msg.includes("network")) {
         setError("Upload failed: network error. Check your connection and retry.")
       } else {
         setError(`Upload failed: ${msg}`)
       }
     } finally {
       setUploading(false)
+      setUploadStatus("")
     }
   }
 
@@ -122,8 +102,9 @@ export default function MediaLibraryPage() {
     if (e.target.files?.length) handleUpload(e.target.files)
   }
 
-  if (authLoading || loading) return <div className="p-8 text-center text-gray-400">Loading...</div>
+  if (authLoading) return <div className="p-8 text-center text-gray-400">Loading...</div>
   if (!user) return null
+  if (listLoading) return <div className="p-8 text-center text-gray-400">Loading...</div>
 
   return (
     <div className="space-y-8">
@@ -138,7 +119,7 @@ export default function MediaLibraryPage() {
         </label>
       </div>
 
-      <div 
+      <div
         className={`bg-white/5 backdrop-blur rounded-2xl border-2 border-dashed p-12 text-center transition ${
           dragActive ? "border-[#E95420] bg-[#E95420]/10" : "border-white/10 hover:border-[#E95420]/50"
         }`}
@@ -151,14 +132,14 @@ export default function MediaLibraryPage() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
         </svg>
         <p className="text-gray-300 mb-2">Drag & drop images here, or click to browse</p>
-        <p className="text-xs text-gray-500">Supports: JPG, PNG, WebP, AVIF (max 10MB each)</p>
+        <p className="text-xs text-gray-500">Supports: JPG, PNG, WebP, AVIF, GIF (max 8MB each)</p>
         {uploading && (
           <div className="mt-4 flex items-center justify-center gap-2 text-[#E95420]">
             <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
             </svg>
-            Uploading...
+            {uploadStatus || "Uploading..."}
           </div>
         )}
         {error && <p className="mt-4 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{error}</p>}
@@ -187,7 +168,7 @@ export default function MediaLibraryPage() {
                   <p className="text-xs text-white truncate font-medium">{img.name}</p>
                   <p className="text-xs text-gray-400 mt-1">{img.time} • {(img.size / 1024).toFixed(1)} KB</p>
                 </div>
-                <button 
+                <button
                   onClick={() => { navigator.clipboard.writeText(img.url); alert("URL copied!"); }}
                   className="absolute bottom-2 right-2 bg-[#E95420] text-white px-3 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition"
                 >

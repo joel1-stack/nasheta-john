@@ -83,11 +83,11 @@ export async function POST(req: Request) {
 
     console.log(`OTP for ${recipient} sent to ${recipient} (${getAllowedAdminEmails().length} admin(s) allowed)`)
     return NextResponse.json({ success: true, message: `OTP sent to ${recipient}` })
-  } catch (error: any) {
+  } catch (error) {
     console.error("Send OTP error:", error)
     return NextResponse.json({
       success: false,
-      error: error?.message || "Failed to send OTP",
+      error: error instanceof Error ? error.message : "Failed to send OTP",
     }, { status: 500 })
   }
 }

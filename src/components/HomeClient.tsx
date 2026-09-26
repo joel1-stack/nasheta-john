@@ -53,7 +53,7 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
   return (
     <div className="bg-[#110B18] min-h-screen overflow-hidden relative">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <img src="/images/full backgound.png" alt="" width={1920} height={1200} className="w-full h-full object-cover" />
+        <Image src="/images/full backgound.png" alt="iGamingUbuntu green abstract background" width={1920} height={1200} loading="lazy" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#110B18]/60" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/20 via-transparent to-[#110B18]/40" />
       </div>
@@ -156,7 +156,7 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
               </div>
               <div className="flex items-center gap-4 mt-8 pt-6 border-t border-white/5">
                 <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 relative">
-                  <Image src="/images/nasheta.png" alt="Nasheta" fill className="object-cover" />
+                  <Image src="/images/nasheta.png" alt="Nasheta" width={48} height={48} className="h-full w-full object-cover" />
                 </div>
                 <div>
                   <p className="text-sm text-[#FCFBFB] font-medium">Nasheta - iGaming Content Specialist</p>
@@ -186,7 +186,7 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
               <ScrollReveal key={s.title} delay={i * 80}>
                 <Link href="/services" className="group block glass-card rounded-2xl p-6 hover:border-[#409824]/40 hover:-translate-y-1 transition-all duration-300">
                   <div className="w-10 h-10 rounded-lg overflow-hidden mb-4 border border-white/5 relative">
-                    <Image src={s.img} alt={s.title} fill className="object-cover" />
+                    <Image src={s.img} alt={s.title} width={40} height={40} className="h-full w-full object-cover" />
                   </div>
                   <h3 className="text-lg font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors mb-2">{s.title}</h3>
                   <p className="text-sm text-[#56525E] leading-relaxed">{s.desc}</p>
@@ -268,7 +268,7 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
                 <Link href={`/blog/${article.slug}`} className="group block rounded-2xl overflow-hidden border border-white/5 hover:border-[#409824]/30 transition-all duration-300 hover:-translate-y-1">
                   <div className="aspect-[16/9] overflow-hidden relative bg-white/5">
                     {article.featuredImage ? (
-                      <Image src={article.featuredImage} alt={article.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <Image src={article.featuredImage} alt={article.title} width={640} height={360} sizes="(max-width: 768px) 100vw, 33vw" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     ) : (
                       <div
                         className="w-full h-full flex items-center justify-center bg-cover bg-center"
@@ -317,7 +317,7 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
               <div key={idx} className="flex gap-10 items-center">
                 {africanCountries.map((c) => (
                   <Link key={c.code} href={`/${c.name.toLowerCase().replace(/\s+/g, "-")}`} className="group flex items-center gap-3 glass-card rounded-full px-4 py-2 hover:border-[#409824]/40 transition-all duration-300 whitespace-nowrap hover:scale-105">
-                    <img src={`https://flagcdn.com/24x18/${c.code}.png`} alt={c.name} width={24} height={18} loading="lazy" className="w-6 h-4 rounded object-cover" />
+                    <Image src={`https://flagcdn.com/24x18/${c.code}.png`} alt={c.name} width={24} height={18} loading="lazy" className="w-6 h-4 rounded object-cover" />
                     <span className="text-sm text-[#B5ABB3] group-hover:text-[#FCFBFB] transition-colors">{c.name}</span>
                   </Link>
                 ))}

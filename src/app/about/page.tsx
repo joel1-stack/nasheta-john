@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { ScrollReveal } from "@/lib/scrollReveal"
 import LetterReveal from "@/components/LetterReveal"
 
@@ -40,7 +41,7 @@ export default function AboutPage() {
       {/* ===== HERO ===== */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} className="w-full h-full object-cover" />
+          <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/70 via-[#110B18]/60 to-[#110B18]/85" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/40 to-transparent" />
         </div>
@@ -50,7 +51,7 @@ export default function AboutPage() {
         <div className="relative z-10 max-w-6xl mx-auto px-4 w-full py-20">
           <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
               <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl overflow-hidden border-4 border-[#409824]/30 shadow-2xl shadow-[#409824]/10 shrink-0 -rotate-2 hover:rotate-0 transition-transform duration-500">
-                <img src="/images/nasheta.png" alt="Nasheta John" width={1024} height={782} className="w-full h-full object-cover" />
+                <Image src="/images/nasheta.png" alt="Nasheta John" width={1024} height={782} loading="lazy" className="w-full h-full object-cover" />
             </div>
             <div className="text-center md:text-left">
               <div className="inline-block text-xs font-semibold text-[#409824] uppercase tracking-[0.2em] bg-[#409824]/10 px-4 py-1.5 rounded-full mb-4">
@@ -103,7 +104,7 @@ export default function AboutPage() {
       {/* ===== FOUNDER STORY ===== */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover opacity-20" />
+          <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#110B18] via-[#110B18]/95 to-[#110B18]" />
         </div>
         <div className="relative z-10 max-w-5xl mx-auto px-4">
@@ -111,7 +112,7 @@ export default function AboutPage() {
             <div className="glass-card rounded-3xl p-8 md:p-12 border border-white/5">
               <div className="flex flex-col md:flex-row items-start gap-8">
                 <div className="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden shrink-0 shadow-xl border border-white/10">
-                  <img src="/images/nasheta.png" alt="Nasheta John" width={1024} height={782} loading="lazy" className="w-full h-full object-cover" />
+                  <Image src="/images/nasheta.png" alt="Nasheta John" width={1024} height={782} loading="lazy" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h2 className="text-3xl font-light text-[#FCFBFB] mb-1">Content strategist and iGaming specialist since 2016</h2>
@@ -151,7 +152,7 @@ export default function AboutPage() {
       {/* ===== TIMELINE ===== */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover opacity-[0.08]" />
+          <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover opacity-[0.08]" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4">
           <ScrollReveal className="text-center mb-12">
@@ -225,7 +226,7 @@ export default function AboutPage() {
       {/* ===== CTA ===== */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
+          <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/90 to-[#110B18]/95" />
         </div>
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-[#409824]/10 blur-[120px]" />

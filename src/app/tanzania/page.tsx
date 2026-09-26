@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import AdSlot from "@/components/AdSlot"
 import AffiliateBox from "@/components/AffiliateBox"
 import type { Article } from "@/types"
@@ -28,10 +29,10 @@ export default function TanzaniaPage() {
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-green to-ubuntu-orange">
         <div className="absolute inset-0 opacity-20">
-          <img src="/images/full backgound.png" alt="Tanzania betting" width={1920} height={1200} className="w-full h-full object-cover" />
+          <Image src="/images/full backgound.png" alt="Tanzania betting" width={1920} height={1200} loading="lazy" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 flex items-center gap-4">
-          <img src="https://flagcdn.com/48x36/tz.png" alt="Tanzania" width={48} height={36} loading="lazy" className="w-12 h-9 rounded shadow-lg" />
+          <Image src="https://flagcdn.com/48x36/tz.png" alt="Tanzania" width={48} height={36} loading="lazy" className="w-12 h-9 rounded shadow-lg" />
           <div className="text-white">
             <h1 className="text-3xl md:text-4xl font-bold">Tanzania iGaming Guide</h1>
             <p className="text-white/80 mt-1 max-w-xl">Your guide to betting in Tanzania. Best sites, bonuses, and Tigo-Pesa betting tips.</p>
@@ -67,7 +68,7 @@ export default function TanzaniaPage() {
       <div className="bg-card rounded-xl p-8 mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">Tanzania Gambling Laws</h2>
         <p className="text-text-secondary leading-relaxed mb-4">
-          Tanzania's gambling is regulated by the Gaming Board of Tanzania. Sports betting and casino games are legal and licensed.
+          Tanzania&apos;s gambling is regulated by the Gaming Board of Tanzania. Sports betting and casino games are legal and licensed.
           Mobile money (Tigo-Pesa, M-Pesa, Airtel Money) is the most popular payment method for Tanzanian punters.
         </p>
         <p className="text-text-secondary leading-relaxed">

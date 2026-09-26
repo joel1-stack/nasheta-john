@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ScrollReveal } from "@/lib/scrollReveal"
 import LetterReveal from "@/components/LetterReveal"
 
@@ -92,7 +93,7 @@ export default function ServicesPage() {
   return (
     <div className="bg-[#110B18] min-h-screen relative overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <img src="/images/full backgound.png" alt="" width={1920} height={1200} className="w-full h-full object-cover" />
+        <Image src="/images/full backgound.png" alt="iGamingUbuntu green abstract background" width={1920} height={1200} loading="lazy" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#110B18]/60" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/20 via-transparent to-[#110B18]/40" />
       </div>
@@ -230,7 +231,7 @@ export default function ServicesPage() {
         {/* ===== CTA ===== */}
         <section className="relative rounded-2xl overflow-hidden p-8 md:p-12 text-white text-center">
           <div className="absolute inset-0">
-            <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
+            <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/90 to-[#110B18]/95" />
           </div>
           <div className="relative z-10">
@@ -257,7 +258,7 @@ export default function ServicesPage() {
                   <h2 className="text-2xl font-bold text-[#FCFBFB]">Request a project estimate</h2>
                   <button onClick={() => setShowForm(false)} className="text-[#56525E] hover:text-[#FCFBFB] cursor-pointer"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg></button>
                 </div>
-                <p className="text-[#56525E] text-sm mb-6">Tell us about your content needs and we'll send you a tailored proposal within 24 hours.</p>
+                <p className="text-[#56525E] text-sm mb-6">Tell us about your content needs and we&apos;ll send you a tailored proposal within 24 hours.</p>
                 <ContactForm />
               </div>
             </ScrollReveal>
@@ -297,7 +298,7 @@ function ContactForm() {
           <svg className="w-7 h-7 text-[#409824]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
         </div>
         <p className="font-bold text-[#FCFBFB]">Thank you!</p>
-        <p className="text-sm text-[#56525E]">We'll review your details and get back to you within 24 hours.</p>
+        <p className="text-sm text-[#56525E]">We&apos;ll review your details and get back to you within 24 hours.</p>
       </div>
     )
   }

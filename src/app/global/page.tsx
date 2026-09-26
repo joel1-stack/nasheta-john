@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ScrollReveal } from "@/lib/scrollReveal"
 import LetterReveal from "@/components/LetterReveal"
 
@@ -19,7 +20,7 @@ export default function GlobalPage() {
   return (
     <div className="bg-[#110B18] min-h-screen relative overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} className="w-full h-full object-cover" />
+        <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#110B18]/70" />
       </div>
       <div className="fixed -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#409824]/8 blur-[120px] animate-orb-drift pointer-events-none" />
@@ -105,12 +106,12 @@ export default function GlobalPage() {
         {/* CTA */}
         <section className="relative rounded-2xl overflow-hidden p-8 md:p-12 text-white text-center">
           <div className="absolute inset-0">
-            <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
+            <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/90 to-[#110B18]/95" />
           </div>
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-light tracking-tight">Ready to enter a new market?</h2>
-            <p className="text-[#B5ABB3] mt-3 mb-6 max-w-md mx-auto">Let's discuss your global content strategy. We'll send you a tailored proposal within 24 hours.</p>
+            <p className="text-[#B5ABB3] mt-3 mb-6 max-w-md mx-auto">Let&apos;s discuss your global content strategy. We&apos;ll send you a tailored proposal within 24 hours.</p>
             <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#409824]/90 transition shadow-lg shadow-[#409824]/20">Start a project</Link>
           </div>
         </section>

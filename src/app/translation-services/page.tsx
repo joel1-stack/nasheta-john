@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ScrollReveal } from "@/lib/scrollReveal"
 import LetterReveal from "@/components/LetterReveal"
 
@@ -33,7 +34,7 @@ export default function TranslationPage() {
   return (
     <div className="bg-[#110B18] min-h-screen relative overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} className="w-full h-full object-cover" />
+        <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#110B18]/60" />
       </div>
       <div className="fixed -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#409824]/8 blur-[120px] animate-orb-drift pointer-events-none" />
@@ -64,13 +65,13 @@ export default function TranslationPage() {
         {/* Hero */}
         <section className="relative rounded-2xl overflow-hidden mb-16 bg-gradient-to-br from-[#0E1358] to-[#1B2385]">
           <div className="absolute inset-0">
-            <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover opacity-40" />
+            <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover opacity-40" />
           </div>
           <div className="absolute inset-0 bg-[#110B18]/40" />
           <div className="relative z-10 p-8 md:p-16 text-white text-center">
             <LetterReveal text="iGaming Translation & Localisation" className="text-4xl md:text-6xl font-bold leading-tight max-w-3xl mx-auto" delay={300} stagger={30} />
             <LetterReveal text="Multilingual content that keeps your brand voice — and your SEO — intact across every market you enter." as="p" className="text-white/80 text-lg mt-4 max-w-xl mx-auto" delay={2000} stagger={15} />
-            <p className="text-white/60 text-sm mt-2 max-w-lg mx-auto animate-fade-in" style={{ animationDelay: "3s", animationFillMode: "both" }}>Whether you're localising for Swahili-speaking players in Kenya, Pidgin audiences in Nigeria, or Afrikaans markets in South Africa, we translate and adapt iGaming content so it feels native and ranks locally.</p>
+            <p className="text-white/60 text-sm mt-2 max-w-lg mx-auto animate-fade-in" style={{ animationDelay: "3s", animationFillMode: "both" }}>Whether you&apos;re localising for Swahili-speaking players in Kenya, Pidgin audiences in Nigeria, or Afrikaans markets in South Africa, we translate and adapt iGaming content so it feels native and ranks locally.</p>
             <div className="flex flex-wrap gap-3 mt-6 justify-center animate-fade-in" style={{ animationDelay: "3.5s", animationFillMode: "both" }}>
               <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-[#409824] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#409824]/90 transition shadow-lg shadow-[#409824]/20">Get a quote</Link>
             </div>
@@ -154,11 +155,11 @@ export default function TranslationPage() {
         {/* CTA */}
         <section className="relative rounded-2xl overflow-hidden p-8 md:p-12 text-white text-center">
           <div className="absolute inset-0">
-            <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
+            <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/90 to-[#110B18]/95" />
           </div>
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-light tracking-tight">Don't let language barriers limit your growth.</h2>
+            <h2 className="text-3xl md:text-4xl font-light tracking-tight">Don&apos;t let language barriers limit your growth.</h2>
             <p className="text-[#B5ABB3] mt-3 mb-6 max-w-md mx-auto">Get quick, reliable, and accurate iGaming translations that keep your brand consistent across every market.</p>
             <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#409824]/90 transition shadow-lg shadow-[#409824]/20">Get a quote</Link>
           </div>

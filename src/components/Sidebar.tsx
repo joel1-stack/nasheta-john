@@ -2,6 +2,7 @@ import AdSlot from "./AdSlot"
 import Newsletter from "./Newsletter"
 import AffiliateBanner from "./AffiliateBanner"
 import Link from "next/link"
+import Image from "next/image"
 import type { Article } from "@/types"
 
 interface SidebarProps {
@@ -88,7 +89,7 @@ export default function Sidebar({ popularPosts }: SidebarProps) {
           {categories.map((cat) => (
             <Link key={cat.slug} href={`/${cat.slug}`} className="flex items-center gap-2 text-sm text-gray-500 hover:text-[#111827] hover:bg-gray-50 px-3 py-2 rounded-lg transition-all">
               {["kenya", "nigeria", "south-africa", "ghana", "tanzania"].includes(cat.slug) ? (
-                <img src={getFlagUrl(cat.slug)} alt="" width={20} height={15} loading="lazy" className="w-5 h-3.5 rounded object-cover" />
+                <Image src={getFlagUrl(cat.slug)} alt={cat.name} width={20} height={15} loading="lazy" className="w-5 h-3.5 rounded object-cover" />
               ) : (
                 <span className="w-5 h-5 flex items-center justify-center text-xs bg-amber-50 text-[#f59e0b] rounded">◆</span>
               )}

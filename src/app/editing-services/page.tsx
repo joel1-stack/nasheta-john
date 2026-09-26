@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ScrollReveal } from "@/lib/scrollReveal"
 import LetterReveal from "@/components/LetterReveal"
 
@@ -42,7 +43,7 @@ export default function EditingPage() {
   return (
     <div className="bg-[#110B18] min-h-screen relative overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} className="w-full h-full object-cover" />
+        <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#110B18]/60" />
       </div>
       <div className="fixed -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#409824]/8 blur-[120px] animate-orb-drift pointer-events-none" />
@@ -73,7 +74,7 @@ export default function EditingPage() {
         {/* Hero */}
         <section className="relative rounded-2xl overflow-hidden mb-16 bg-gradient-to-br from-[#0E1358] to-[#1B2385]">
           <div className="absolute inset-0">
-            <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover opacity-40" />
+            <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover opacity-40" />
           </div>
           <div className="absolute inset-0 bg-[#110B18]/40" />
           <div className="relative z-10 p-8 md:p-16 text-white text-center">
@@ -176,7 +177,7 @@ export default function EditingPage() {
         {/* CTA */}
         <section className="relative rounded-2xl overflow-hidden p-8 md:p-12 text-white text-center">
           <div className="absolute inset-0">
-            <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
+            <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/90 to-[#110B18]/95" />
           </div>
           <div className="relative z-10">

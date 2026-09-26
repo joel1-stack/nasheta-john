@@ -129,7 +129,7 @@ export default function AffiliateBanner({
                 className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/20 rounded-full px-4 py-1.5 text-sm text-white transition"
               >
                 {offer.url && getDomainFavicon(offer.url) && (
-                  <img src={getDomainFavicon(offer.url)!} alt="" width={16} height={16} loading="lazy" className="w-4 h-4 rounded-sm bg-white object-contain p-px" />
+                  <img src={getDomainFavicon(offer.url)!} alt={offer.operatorName} width={16} height={16} loading="lazy" className="w-4 h-4 rounded-sm bg-white object-contain p-px" />
                 )}
                 <span className="font-bold">{offer.operatorName}</span>
                 <span className="text-amber-300 text-xs">★ {offer.bonusText.slice(0, 40)}</span>

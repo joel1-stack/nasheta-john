@@ -75,10 +75,10 @@ export async function POST(req: Request) {
 
     const customToken = await adminAuth.createCustomToken(userRecord.uid)
     return NextResponse.json({ success: true, customToken })
-  } catch (error: any) {
+  } catch (error) {
     console.error("Verify OTP error:", error)
     return NextResponse.json(
-      { success: false, error: error?.message || "Failed to verify OTP" },
+      { success: false, error: error instanceof Error ? error.message : "Failed to verify OTP" },
       { status: 500 }
     )
   }

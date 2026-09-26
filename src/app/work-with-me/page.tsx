@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function WorkWithMePage() {
   const [sent, setSent] = useState(false)
@@ -43,7 +44,7 @@ export default function WorkWithMePage() {
     <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in relative z-10">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-orange to-gold/80 p-8 md:p-12 text-white">
         <div className="absolute inset-0 opacity-20">
-          <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Work with me" width={800} height={449} className="w-full h-full object-cover opacity-40" />
+          <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Work with me" width={800} height={449} loading="lazy" className="w-full h-full object-cover opacity-40" />
         </div>
         <div className="relative z-10">
           <h1 className="text-3xl md:text-4xl font-bold">Work With Me</h1>
@@ -140,7 +141,7 @@ export default function WorkWithMePage() {
           <div className="glass-card rounded-xl p-6">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-12 h-12 rounded-full overflow-hidden">
-                <img src="/images/nasheta.png" alt="Nasheta" width={1024} height={782} loading="lazy" className="w-full h-full object-cover" />
+                <Image src="/images/nasheta.png" alt="Nasheta" width={1024} height={782} loading="lazy" className="w-full h-full object-cover" />
               </div>
               <div>
                 <p className="font-bold text-[#FCFBFB]">Nasheta</p>

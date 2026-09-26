@@ -15,17 +15,16 @@ interface ArticleViewProps {
 }
 
 export default function ArticleView({ initialArticle }: ArticleViewProps) {
-  const [article, setArticle] = useState<Article | null>(initialArticle)
+  const [article] = useState<Article | null>(initialArticle)
   const [related, setRelated] = useState<Article[]>([])
   const [popular, setPopular] = useState<Article[]>([])
   const [affiliateLinks, setAffiliateLinks] = useState<{ operatorName: string; bonusText: string; url: string; linkId: string; imageUrl?: string; ctaLabel?: string }[]>([])
-  const [viewCount, setViewCount] = useState((initialArticle.views || 0) + 1)
+  const viewCount = (initialArticle.views || 0) + 1
 
   const slug = initialArticle.slug
 
   useEffect(() => {
     if (!article) return
-    setViewCount((article.views || 0) + 1)
     incrementViews(article.id).catch(() => {})
 
     getAffiliateLinks(article.id)
@@ -93,7 +92,7 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
 
             <div className="relative rounded-lg overflow-hidden mb-5">
               {article.featuredImage ? (
-                <img src={article.featuredImage} alt={article.title} width={1200} height={675} className="w-full aspect-[16/9] object-cover" />
+                <img src={article.featuredImage} alt={article.title} width={1200} height={675} loading="lazy" className="w-full aspect-[16/9] object-cover" />
               ) : (
                 <div
                   className="w-full aspect-[16/9] bg-cover bg-center flex items-center justify-center"

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ScrollReveal } from "@/lib/scrollReveal"
 import LetterReveal from "@/components/LetterReveal"
 
@@ -49,7 +50,7 @@ export default function ContactPage() {
 
       {/* Background */}
       <div className="fixed inset-0 z-0">
-        <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} className="w-full h-full object-cover" />
+        <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#110B18]/70" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/40 via-transparent to-[#110B18]/60" />
       </div>

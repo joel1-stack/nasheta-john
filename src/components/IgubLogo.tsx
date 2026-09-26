@@ -1,13 +1,16 @@
+import Image from "next/image"
+
 const LOGO_SRC = "/images/igub-logo.png"
 
 export function IgubLogo({ className = "", size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
   const heights = { sm: 34, md: 40, lg: 48 }
   return (
-    <img
+    <Image
       src={LOGO_SRC}
       alt="iGamingUbuntu"
       width={500}
       height={206}
+      loading="lazy"
       className={`w-auto rounded-lg ${className}`}
       style={{ height: heights[size] }}
     />
@@ -16,11 +19,12 @@ export function IgubLogo({ className = "", size = "md" }: { className?: string; 
 
 export function IgubFullLogo({ className = "" }: { className?: string; dark?: boolean }) {
   return (
-    <img
+    <Image
       src={LOGO_SRC}
       alt="iGamingUbuntu"
       width={500}
       height={206}
+      loading="lazy"
       className={`w-auto rounded-lg ${className}`}
       style={{ height: 40 }}
     />

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
@@ -43,7 +44,7 @@ export default function ByMarketPage() {
             href={`/casinos?country=${market.slug}`}
             className="bg-white border border-gray-200 rounded-xl p-4 text-center hover:shadow-md hover:border-[#f59e0b]/30 transition-all group"
           >
-            <img src={`https://flagcdn.com/48x36/${market.flag}.png`} alt={market.name} width={48} height={36} loading="lazy" className="w-10 h-7.5 mx-auto mb-2 rounded object-cover" />
+            <Image src={`https://flagcdn.com/48x36/${market.flag}.png`} alt={market.name} width={48} height={36} loading="lazy" className="w-10 h-7.5 mx-auto mb-2 rounded object-cover" />
             <p className="text-sm font-medium text-[#111827] group-hover:text-[#f59e0b] transition">{market.name}</p>
           </Link>
         ))}

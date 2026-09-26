@@ -84,7 +84,7 @@ export default function AffiliateLinksPage() {
       destination: link.destination || "",
       country: link.country || "",
       placement: link.placement || "",
-      status: (link.status || "active") as any,
+      status: (link.status || "active") as "active" | "paused" | "expired",
     })
     setShowForm(true)
     window.scrollTo({ top: 0, behavior: "smooth" })

@@ -6,62 +6,110 @@ import { getAuthInstance } from "@/lib/firebase"
 import { getStorage, ref, uploadBytes, getDownloadURL, listAll, getMetadata } from "firebase/storage"
 import { getApp } from "firebase/app"
 
+interface MediaImage {
+  name: string
+  url: string
+  size: number
+  time: string
+  created: string
+}
+
+async function fetchImageList(): Promise<MediaImage[]> {
+  getAuthInstance()
+  const storage = getStorage(getApp())
+  const imagesRef = ref(storage, "articles")
+  const res = await listAll(imagesRef)
+
+  const allItemRefs = [...res.items]
+  for (const prefix of res.prefixes) {
+    const sub = await listAll(prefix)
+    allItemRefs.push(...sub.items)
+  }
+
+  const urls = await Promise.all(
+    allItemRefs.map(async (itemRef) => {
+      const url = await getDownloadURL(itemRef)
+      const metadata = await getMetadata(itemRef)
+      return {
+        name: itemRef.fullPath.replace("articles/", ""),
+        url,
+        size: metadata.size,
+        time: new Date(metadata.timeCreated).toLocaleDateString(),
+        created: metadata.timeCreated,
+      }
+    })
+  )
+  return urls.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
+}
+
 export default function MediaLibraryPage() {
   const { user, loading: authLoading } = useAuth()
   const [loading, setLoading] = useState(true)
-  const [images, setImages] = useState<{ name: string; url: string; size: number; time: string; created: string }[]>([])
+  const [images, setImages] = useState<MediaImage[]>([])
   const [uploading, setUploading] = useState(false)
   const [dragActive, setDragActive] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
+
+  const MAX_SIZE = 10 * 1024 * 1024
+  const ACCEPTED = ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif", "image/svg+xml"]
+
+  const validateFiles = (files: File[]): File[] => {
+    const valid: File[] = []
+    for (const file of Array.from(files)) {
+      if (!ACCEPTED.includes(file.type)) {
+        setError(`"${file.name}" is not a supported image type.`)
+        continue
+      }
+      if (file.size > MAX_SIZE) {
+        setError(`"${file.name}" exceeds the 10MB limit (${(file.size / 1024 / 1024).toFixed(1)}MB).`)
+        continue
+      }
+      valid.push(file)
+    }
+    return valid
+  }
 
   useEffect(() => {
     if (!user) return
-    loadImages()
+    fetchImageList()
+      .then(setImages)
+      .catch((e) => console.error("Failed to load images:", e))
+      .finally(() => setLoading(false))
   }, [user])
 
-  const loadImages = async () => {
+  const handleUpload = async (files: FileList) => {
+    setError("")
+    setSuccess("")
+    const valid = validateFiles(Array.from(files))
+    if (valid.length === 0) return
+
+    setUploading(true)
     try {
       getAuthInstance()
       const storage = getStorage(getApp())
-      const imagesRef = ref(storage, "articles")
-      const res = await listAll(imagesRef)
-
-      const allItemRefs = [...res.items]
-      for (const prefix of res.prefixes) {
-        const sub = await listAll(prefix)
-        allItemRefs.push(...sub.items)
+      for (const file of valid) {
+        const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "-")}`
+        const fileRef = ref(storage, `articles/${fileName}`)
+        await uploadBytes(fileRef, file)
       }
-
-      const urls = await Promise.all(
-        allItemRefs.map(async (itemRef) => {
-          const url = await getDownloadURL(itemRef)
-          const metadata = await getMetadata(itemRef)
-          return {
-            name: itemRef.fullPath.replace("articles/", ""),
-            url,
-            size: metadata.size,
-            time: new Date(metadata.timeCreated).toLocaleDateString(),
-            created: metadata.timeCreated,
-          }
-        })
-      )
-      setImages(urls.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()))
-    } catch (e) {
-      console.error("Failed to load images:", e)
+      await fetchImageList().then(setImages)
+      setSuccess(`Uploaded ${valid.length} image${valid.length > 1 ? "s" : ""} successfully.`)
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e)
+      console.error("Upload failed:", e)
+      if (msg.includes("storage/unauthorized") || msg.includes("permission")) {
+        setError("Upload failed: you don't have permission. Sign in again and retry.")
+      } else if (msg.includes("quota") || msg.includes("quota-exceeded")) {
+        setError("Upload failed: storage quota exceeded.")
+      } else if (msg.includes("network")) {
+        setError("Upload failed: network error. Check your connection and retry.")
+      } else {
+        setError(`Upload failed: ${msg}`)
+      }
+    } finally {
+      setUploading(false)
     }
-    setLoading(false)
-  }
-
-  const handleUpload = async (files: FileList) => {
-    setUploading(true)
-    getAuthInstance()
-    const storage = getStorage(getApp())
-    for (const file of Array.from(files)) {
-      const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "-")}`
-      const fileRef = ref(storage, `articles/${fileName}`)
-      await uploadBytes(fileRef, file)
-    }
-    await loadImages()
-    setUploading(false)
   }
 
   const handleDrop = (e: React.DragEvent) => {
@@ -104,7 +152,17 @@ export default function MediaLibraryPage() {
         </svg>
         <p className="text-gray-300 mb-2">Drag & drop images here, or click to browse</p>
         <p className="text-xs text-gray-500">Supports: JPG, PNG, WebP, AVIF (max 10MB each)</p>
-        {uploading && <p className="mt-4 text-[#E95420]">Uploading...</p>}
+        {uploading && (
+          <div className="mt-4 flex items-center justify-center gap-2 text-[#E95420]">
+            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+            </svg>
+            Uploading...
+          </div>
+        )}
+        {error && <p className="mt-4 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">{error}</p>}
+        {success && <p className="mt-4 text-sm text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2">{success}</p>}
       </div>
 
       {images.length === 0 ? (

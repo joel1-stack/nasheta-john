@@ -123,11 +123,11 @@ export default function BlogArticlePage() {
               {article.featuredImage ? (
                 <img src={article.featuredImage} alt={article.title} className="w-full aspect-[16/9] object-cover" />
               ) : (
-                <div className="w-full aspect-[16/9] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                  <svg className="w-16 h-16 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                <div
+                  className="w-full aspect-[16/9] bg-cover bg-center flex items-center justify-center"
+                  style={{ backgroundImage: "url('/images/full backgound.png')" }}
+                >
+                  <span className="text-white text-sm font-semibold bg-black/40 px-3 py-1 rounded-full">iGamingUbuntu</span>
                 </div>
               )}
               <span className="absolute top-5 left-5 bg-[#F59E0B] text-white text-[13px] font-semibold px-4 py-1.5 rounded-full">

@@ -10,10 +10,22 @@ interface CloudinaryResource {
   created_at?: string
 }
 
+function getCloudinaryServerConfig(): { cloud: string; key: string; secret: string } {
+  let cloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME || ""
+  let key = process.env.CLOUDINARY_API_KEY || ""
+  let secret = process.env.CLOUDINARY_API_SECRET || ""
+  const url = process.env.CLOUDINARY_URL || ""
+  const match = url.match(/^cloudinary:\/\/([^:]+):(.+)@(.+)$/)
+  if (match) {
+    if (!key) key = match[1]
+    if (!secret) secret = match[2]
+    if (!cloud) cloud = match[3]
+  }
+  return { cloud, key, secret }
+}
+
 export async function GET() {
-  const cloud = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME
-  const key = process.env.CLOUDINARY_API_KEY
-  const secret = process.env.CLOUDINARY_API_SECRET
+  const { cloud, key, secret } = getCloudinaryServerConfig()
 
   if (!cloud || !key || !secret) {
     return NextResponse.json(

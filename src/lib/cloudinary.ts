@@ -12,10 +12,15 @@ export function uploadToCloudinary(
   options: { folder?: string; onProgress?: (pct: number) => void } = {}
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    if (!isCloudinaryConfigured()) {
+    const missing: string[] = []
+    if (!CLOUD_NAME) missing.push("NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME")
+    if (!UPLOAD_PRESET) missing.push("NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET")
+    if (missing.length > 0) {
       reject(
         new Error(
-          "Cloudinary is not configured. Set NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET in the environment."
+          `Cloudinary is not configured. Missing: ${missing.join(", ")}. Add ${
+            missing.length > 1 ? "them" : "it"
+          } in Vercel → Settings → Environment Variables, then redeploy.`
         )
       )
       return

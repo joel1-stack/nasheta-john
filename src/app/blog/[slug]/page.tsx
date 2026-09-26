@@ -285,7 +285,7 @@ export default function BlogArticlePage() {
             publisher: {
               "@type": "Organization",
               name: "iGamingUbuntu",
-              logo: { "@type": "ImageObject", url: "https://igamingubuntu.com/favicon.svg" },
+              logo: { "@type": "ImageObject", url: "https://igamingubuntu.com/favicon.png" },
             },
             mainEntityOfPage: { "@type": "WebPage", "@id": `https://igamingubuntu.com/blog/${article.slug}` },
           }),

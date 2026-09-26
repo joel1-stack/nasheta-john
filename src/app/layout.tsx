@@ -60,6 +60,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="h-full">
         <head>
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="icon" type="image/png" href="/favicon.png" sizes="512x512" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         </head>
         <body className={`${inter.className} min-h-full flex flex-col bg-[#110B18] text-text-primary antialiased`}>

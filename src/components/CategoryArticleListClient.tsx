@@ -111,6 +111,9 @@ export default function CategoryArticleList({
               <img
                 src={featured.featuredImage}
                 alt={featured.title}
+                width={1200}
+                height={675}
+                loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             ) : (
@@ -157,6 +160,9 @@ export default function CategoryArticleList({
                   <img
                     src={article.featuredImage}
                     alt={article.title}
+                    width={1200}
+                    height={675}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 ) : (

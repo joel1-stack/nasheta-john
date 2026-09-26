@@ -1,5 +1,10 @@
 import { queryArticles } from "@/lib/serverArticles"
 import HomeClient from "@/components/HomeClient"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+}
 
 export const revalidate = 300
 

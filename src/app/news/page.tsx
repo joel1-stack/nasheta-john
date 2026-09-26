@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "iGaming News for African Markets",
+  description:
+    "Latest developments, regulatory updates and industry news across African iGaming markets, covering Kenya, Nigeria, South Africa, Ghana and Tanzania.",
+  alternates: { canonical: "/news" },
+}
 
 export default function NewsPage() {
   return (

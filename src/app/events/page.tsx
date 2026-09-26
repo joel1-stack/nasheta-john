@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "iGaming Events, Summits and Webinars",
+  description:
+    "Find iGaming conferences, summits, webinars and industry meetups across Africa. Dates, locations and highlights for the events shaping the betting industry.",
+  alternates: { canonical: "/events" },
+}
 
 export default function EventsPage() {
   const subs = [

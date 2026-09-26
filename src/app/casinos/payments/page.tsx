@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Casino Payment Methods for African Bettors",
+  description:
+    "Compare casino payment methods for African bettors, including M-Pesa, Airtel Money, bank transfers and cards. Find fast, safe deposit and withdrawal options.",
+  alternates: { canonical: "/casinos/payments" },
+}
 
 export default function PaymentsPage() {
   return (

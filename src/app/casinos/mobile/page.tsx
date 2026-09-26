@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Mobile Casinos Optimised for Betting",
+  description:
+    "Play at the best mobile casinos optimised for betting on the go. Compare apps, mobile bonuses, fast withdrawals and payment options for African players.",
+  alternates: { canonical: "/casinos/mobile" },
+}
 
 export default function MobileCasinosPage() {
   return (

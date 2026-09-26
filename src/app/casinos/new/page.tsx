@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "New Online Casinos Launched in 2026",
+  description:
+    "Explore newly launched online casinos reviewed and ranked. See welcome bonuses, game selections, payment methods and safety checks before you sign up.",
+  alternates: { canonical: "/casinos/new" },
+}
 
 export default function NewCasinosPage() {
   return (

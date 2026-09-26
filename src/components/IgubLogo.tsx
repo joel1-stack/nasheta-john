@@ -6,6 +6,8 @@ export function IgubLogo({ className = "", size = "md" }: { className?: string; 
     <img
       src={LOGO_SRC}
       alt="iGamingUbuntu"
+      width={500}
+      height={206}
       className={`w-auto rounded-lg ${className}`}
       style={{ height: heights[size] }}
     />
@@ -17,6 +19,8 @@ export function IgubFullLogo({ className = "" }: { className?: string; dark?: bo
     <img
       src={LOGO_SRC}
       alt="iGamingUbuntu"
+      width={500}
+      height={206}
       className={`w-auto rounded-lg ${className}`}
       style={{ height: 40 }}
     />

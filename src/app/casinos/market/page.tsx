@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Online Casinos by Country and Market",
+  description:
+    "Filter online casinos by your country: Kenya, Nigeria, South Africa, Ghana, Tanzania and global markets. Find licensed operators that accept local payments.",
+  alternates: { canonical: "/casinos/market" },
+}
 
 export default function ByMarketPage() {
   return (
@@ -35,7 +43,7 @@ export default function ByMarketPage() {
             href={`/casinos?country=${market.slug}`}
             className="bg-white border border-gray-200 rounded-xl p-4 text-center hover:shadow-md hover:border-[#f59e0b]/30 transition-all group"
           >
-            <img src={`https://flagcdn.com/48x36/${market.flag}.png`} alt={market.name} className="w-10 h-7.5 mx-auto mb-2 rounded object-cover" />
+            <img src={`https://flagcdn.com/48x36/${market.flag}.png`} alt={market.name} width={48} height={36} loading="lazy" className="w-10 h-7.5 mx-auto mb-2 rounded object-cover" />
             <p className="text-sm font-medium text-[#111827] group-hover:text-[#f59e0b] transition">{market.name}</p>
           </Link>
         ))}

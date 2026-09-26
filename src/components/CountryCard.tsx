@@ -37,7 +37,7 @@ export default function CountryCard({ country }: CountryCardProps) {
         />
       </div>
       <div className="p-5">
-        <img src={getFlagUrl(country.slug)} alt={country.name} className="w-8 h-6 rounded shadow-sm mb-2 object-cover" />
+        <img src={getFlagUrl(country.slug)} alt={country.name} width={32} height={24} loading="lazy" className="w-8 h-6 rounded shadow-sm mb-2 object-cover" />
         <h3 className="font-bold text-[#111827] group-hover:text-[#f59e0b] transition-colors mb-1">{country.name}</h3>
         <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">{country.description}</p>
         <p className="text-xs text-[#f59e0b] font-medium mt-3 group-hover:translate-x-1 transition-transform">

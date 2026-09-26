@@ -1,4 +1,12 @@
 import Link from "next/link"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Newsletter Subscription Confirmed",
+  description:
+    "You are on the iGamingUbuntu mailing list. Expect betting tips, bonus offers and iGaming insights delivered to your inbox on a regular basis.",
+  alternates: { canonical: "/newsletter/confirm" },
+}
 
 export default function NewsletterConfirmPage() {
   return (

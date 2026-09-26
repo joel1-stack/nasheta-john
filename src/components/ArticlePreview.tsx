@@ -49,7 +49,7 @@ export default function ArticlePreview({
           {excerpt && <p className="text-gray-500 text-base mb-5 leading-relaxed">{excerpt}</p>}
           {featuredImage && (
             <div className="rounded-xl overflow-hidden mb-5">
-              <img src={featuredImage} alt="" className="w-full h-48 object-cover" />
+              <img src={featuredImage} alt={title} width={1200} height={675} loading="lazy" className="w-full h-48 object-cover" />
             </div>
           )}
           <div

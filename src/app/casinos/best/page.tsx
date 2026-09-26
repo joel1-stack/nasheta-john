@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Best Online Casinos Ranked & Reviewed",
+  description:
+    "Discover the best online casinos for 2026, ranked by our expert team. Compare bonuses, licences, payment methods and games from trusted operators.",
+  alternates: { canonical: "/casinos/best" },
+}
 
 export default function BestCasinosPage() {
   return (

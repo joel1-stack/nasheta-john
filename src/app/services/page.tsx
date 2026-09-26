@@ -92,7 +92,7 @@ export default function ServicesPage() {
   return (
     <div className="bg-[#110B18] min-h-screen relative overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <img src="/images/full backgound.png" alt="" className="w-full h-full object-cover" />
+        <img src="/images/full backgound.png" alt="" width={1920} height={1200} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#110B18]/60" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/20 via-transparent to-[#110B18]/40" />
       </div>
@@ -230,7 +230,7 @@ export default function ServicesPage() {
         {/* ===== CTA ===== */}
         <section className="relative rounded-2xl overflow-hidden p-8 md:p-12 text-white text-center">
           <div className="absolute inset-0">
-            <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" className="w-full h-full object-cover" />
+            <img src="/images/Green Data Network (ABSTRACT + TECH).png" alt="" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/90 to-[#110B18]/95" />
           </div>
           <div className="relative z-10">

@@ -35,7 +35,7 @@ export default function AdSlot({ position, className = "", imageUrl, linkUrl, al
     return (
       <div className={`ad-container rounded-xl overflow-hidden ${className}`} ref={adRef}>
         <a href={linkUrl} target="_blank" rel="nofollow sponsored noopener" className="block">
-          <img src={imageUrl} alt={alt || "Advertisement"} className="w-full h-auto rounded-xl hover:opacity-90 transition" />
+          <img src={imageUrl} alt={alt || "Advertisement"} width={1200} height={675} loading="lazy" className="w-full h-auto rounded-xl hover:opacity-90 transition" />
         </a>
       </div>
     )

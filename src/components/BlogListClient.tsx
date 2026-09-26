@@ -168,7 +168,7 @@ export default function BlogListClient({
                     <div className="grid md:grid-cols-[1.4fr_1fr]">
                       <div className="relative h-52 md:h-full min-h-[200px] overflow-hidden bg-gray-50">
                         {articles[0].featuredImage ? (
-                          <img src={articles[0].featuredImage} alt={articles[0].title} className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
+                          <img src={articles[0].featuredImage} alt={articles[0].title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
                         ) : (
                           <div
                             className="w-full h-full flex items-center justify-center bg-cover bg-center"
@@ -210,7 +210,7 @@ export default function BlogListClient({
                     >
                       <div className="aspect-[16/9] overflow-hidden bg-gray-50 relative">
                         {article.featuredImage ? (
-                          <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
+                          <img src={article.featuredImage} alt={article.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
                         ) : (
                           <div
                             className="w-full h-full flex items-center justify-center bg-cover bg-center"
@@ -334,7 +334,10 @@ export default function BlogListClient({
                       {post.featuredImage ? (
                         <img
                           src={post.featuredImage}
-                          alt=""
+                          alt={post.title}
+                          width={80}
+                          height={60}
+                          loading="lazy"
                           className="w-20 h-[60px] rounded-md object-cover shrink-0"
                         />
                       ) : (

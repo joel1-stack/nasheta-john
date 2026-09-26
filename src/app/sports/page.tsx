@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Sports Betting Guides, Tips and Coverage",
+  description:
+    "Sports betting guides, expert tips and market coverage for football, rugby, cricket and more, with insights for bettors across African markets.",
+  alternates: { canonical: "/sports" },
+}
 
 export default function SportsBettingPage() {
   const subs = [

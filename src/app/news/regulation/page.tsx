@@ -2,6 +2,15 @@
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "iGaming Regulation and Compliance News",
+  description:
+    "Stay current on regulatory changes and compliance updates across African gambling markets, including licensing, taxation and player protection rules.",
+  alternates: { canonical: "/news/regulation" },
+}
+
 
 
 export default function RegulationWatchPage() {

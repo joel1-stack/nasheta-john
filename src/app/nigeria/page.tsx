@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import AffiliateBox from "@/components/AffiliateBox"
 import type { Article } from "@/types"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Nigeria Betting Guide: Sites, Bonuses and Tips",
+  description:
+    "Your complete guide to betting in Nigeria. Compare the best betting sites, welcome bonuses, Naira payments and expert tips for Nigerian players.",
+  alternates: { canonical: "/nigeria" },
+}
 
 const topSites = [
   { operatorName: "Betway Nigeria", bonusText: "Up to $50 in Free Bets — Trusted Global Brand", url: "https://betway.com/?aff=igamingubuntu" },
@@ -23,10 +31,10 @@ export default function NigeriaPage() {
       {/* Hero section with image */}
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-purple to-ubuntu-orange">
         <div className="absolute inset-0 opacity-20">
-          <img src="/images/full backgound.png" alt="Nigeria betting" className="w-full h-full object-cover" />
+          <img src="/images/full backgound.png" alt="Nigeria betting" width={1920} height={1200} className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 flex items-center gap-4">
-          <img src="https://flagcdn.com/48x36/ng.png" alt="Nigeria" className="w-12 h-9 rounded shadow-lg" />
+          <img src="https://flagcdn.com/48x36/ng.png" alt="Nigeria" width={48} height={36} loading="lazy" className="w-12 h-9 rounded shadow-lg" />
           <div className="text-white">
             <h1 className="text-3xl md:text-4xl font-bold">Nigeria iGaming Guide</h1>
             <p className="text-white/80 mt-1 max-w-xl">Your guide to betting in Nigeria. Best sites, bonuses, odds, and local tips for Naija punters.</p>
@@ -46,7 +54,7 @@ export default function NigeriaPage() {
         {nigeriaArticles.map((a) => (
           <Link key={a.slug} href={`/blog/${a.slug}`} className="group bg-white border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all hover:-translate-y-0.5">
             <div className="aspect-[16/9] overflow-hidden">
-              <img src={a.featuredImage} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src={a.featuredImage} alt={a.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="p-5">
               <span className="text-xs text-ubuntu-orange font-medium bg-ubuntu-orange/10 px-2 py-0.5 rounded">{a.category}</span>

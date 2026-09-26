@@ -21,7 +21,7 @@ export default function CasinoOfferCard({ offer, placement = "directory" }: Casi
       {placement !== "sidebar" && (
         <div className="bg-gradient-to-r from-ubuntu-orange/5 to-gold/5 px-5 py-4 flex items-center gap-4 border-b border-border">
           <div className="w-14 h-14 rounded-xl overflow-hidden bg-card shrink-0 shadow-sm">
-            <img src={offer.logo} alt={offer.name} className="w-full h-full object-cover" />
+              <img src={offer.logo} alt={offer.name} width={40} height={40} loading="lazy" className="w-full h-full object-cover" />
           </div>
           <div>
             <h3 className="font-bold text-text-primary text-lg">{offer.name}</h3>
@@ -39,7 +39,7 @@ export default function CasinoOfferCard({ offer, placement = "directory" }: Casi
         {placement === "sidebar" && (
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-lg overflow-hidden bg-card shrink-0">
-              <img src={offer.logo} alt={offer.name} className="w-full h-full object-cover" />
+            <img src={offer.logo} alt={offer.name} width={56} height={56} loading="lazy" className="w-full h-full object-cover" />
             </div>
             <h4 className="font-bold text-text-primary">{offer.name}</h4>
           </div>

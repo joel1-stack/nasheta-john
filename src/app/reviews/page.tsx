@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import AffiliateBox from "@/components/AffiliateBox"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Casino and Betting Site Reviews",
+  description:
+    "Honest expert reviews of the best betting sites and online casinos in Africa. We test bonuses, payments and licences, and only recommend trusted operators.",
+  alternates: { canonical: "/reviews" },
+}
 
 const casinoReviews = [
   { name: "SportPesa", rating: 4.8, bonus: "200% up to KES 5,000", payments: "M-Pesa, Airtel, Card", license: "BCLB Kenya", logo: "/images/full backgound.png" },
@@ -64,7 +72,7 @@ export default function ReviewsPage() {
                 <td className="p-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg overflow-hidden bg-card shrink-0">
-                      <img src={c.logo} alt={c.name} className="w-full h-full object-cover" />
+                      <img src={c.logo} alt={c.name} width={40} height={40} loading="lazy" className="w-full h-full object-cover" />
                     </div>
                     <span className="font-bold text-text-primary">{c.name}</span>
                   </div>
@@ -102,7 +110,7 @@ export default function ReviewsPage() {
           {ratingCriteria.map((criterion) => (
             <div key={criterion.title} className="bg-white rounded-xl overflow-hidden shadow-sm border border-border group">
               <div className="h-32 overflow-hidden">
-                <img src={criterion.img} alt={criterion.title} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                <img src={criterion.img} alt={criterion.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
               </div>
               <div className="p-5">
                 <h3 className="font-semibold text-text-primary mb-2">{criterion.title}</h3>

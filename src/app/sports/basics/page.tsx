@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Betting Basics: Odds, Markets Explained",
+  description:
+    "Beginner-friendly guides to betting fundamentals, explaining odds, markets and strategies so new punters can bet with confidence from the very start.",
+  alternates: { canonical: "/sports/basics" },
+}
 
 export default function BettingExplainedPage() {
   return (

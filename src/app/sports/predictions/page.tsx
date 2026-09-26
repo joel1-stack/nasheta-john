@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Sports Predictions and Betting Tips",
+  description:
+    "Expert match predictions and betting tips across African and international leagues, with form analysis, value picks and recommended odds for each fixture.",
+  alternates: { canonical: "/sports/predictions" },
+}
 
 export default function PredictionsPage() {
   return (

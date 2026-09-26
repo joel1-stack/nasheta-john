@@ -2,6 +2,14 @@
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Football League Betting Guides",
+  description:
+    "Betting guides for the Premier League, La Liga, NPFL, Ghana Premier League and more, with form analysis, odds previews and tips for every league.",
+  alternates: { canonical: "/sports/leagues" },
+}
 
 export default function LeagueGuidesPage() {
   return (

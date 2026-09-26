@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "The Desk: Inside iGamingUbuntu's Content",
+  description:
+    "Go behind the scenes at iGamingUbuntu to see how we research, write and optimise iGaming content that ranks and converts across African markets.",
+  alternates: { canonical: "/the-desk" },
+}
 
 export default function TheDeskPage() {
   return (

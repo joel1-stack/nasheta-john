@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import SectionHeader from "@/components/SectionHeader"
 import type { Article } from "@/types"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Betting Guides, Tips and Strategies",
+  description:
+    "Learn how to bet smarter with beginner-friendly betting guides, expert tips and winning strategies for African punters, covering odds, markets and more.",
+  alternates: { canonical: "/guides" },
+}
 
 const guides: Article[] = [
   { id: "g1", slug: "world-cup-2026-betting-guide", title: "World Cup 2026 Betting Guide: Tips, Odds & Best Sites", excerpt: "Complete betting guide for the 2026 FIFA World Cup. Team analysis, predictions, and where to bet.", category: "Guides", country: "", featuredImage: "/images/full backgound.png", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 3421, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06" },
@@ -29,7 +37,7 @@ export default function GuidesPage() {
       >
         <div className="grid md:grid-cols-[1.4fr_1fr]">
           <div className="relative h-52 md:h-full min-h-[200px] overflow-hidden">
-            <img src={featured.featuredImage} alt={featured.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <img src={featured.featuredImage} alt={featured.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           </div>
           <div className="p-5 md:p-6 flex flex-col justify-center">
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#f59e0b] mb-2">Featured</span>
@@ -48,7 +56,7 @@ export default function GuidesPage() {
         {rest.map((g) => (
           <Link key={g.slug} href={`/blog/${g.slug}`} className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all hover:-translate-y-0.5">
             <div className="aspect-[16/9] overflow-hidden">
-              <img src={g.featuredImage} alt={g.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src={g.featuredImage} alt={g.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="p-5">
               <div className="flex items-center gap-2 text-xs text-gray-400 mb-2">

@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Live Sports Events and In-Play Betting",
+  description:
+    "Follow live sports events with real-time odds, in-play betting insights and match coverage across football, rugby and other sports popular in Africa.",
+  alternates: { canonical: "/sports/live" },
+}
 
 export default function LiveEventsPage() {
   return (

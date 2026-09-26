@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Online Casino Directory for African Players",
+  description:
+    "Browse our directory of online casinos available to African players, with expert reviews, new operator launches, payment options and market-specific guides.",
+  alternates: { canonical: "/casinos" },
+}
 
 export default function CasinoDirectoryPage() {
   const subs = [

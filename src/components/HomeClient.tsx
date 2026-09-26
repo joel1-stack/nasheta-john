@@ -53,7 +53,7 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
   return (
     <div className="bg-[#110B18] min-h-screen overflow-hidden relative">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <img src="/images/full backgound.png" alt="" className="w-full h-full object-cover" />
+        <img src="/images/full backgound.png" alt="" width={1920} height={1200} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#110B18]/60" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/20 via-transparent to-[#110B18]/40" />
       </div>
@@ -317,7 +317,7 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
               <div key={idx} className="flex gap-10 items-center">
                 {africanCountries.map((c) => (
                   <Link key={c.code} href={`/${c.name.toLowerCase().replace(/\s+/g, "-")}`} className="group flex items-center gap-3 glass-card rounded-full px-4 py-2 hover:border-[#409824]/40 transition-all duration-300 whitespace-nowrap hover:scale-105">
-                    <img src={`https://flagcdn.com/24x18/${c.code}.png`} alt={c.name} className="w-6 h-4 rounded object-cover" />
+                    <img src={`https://flagcdn.com/24x18/${c.code}.png`} alt={c.name} width={24} height={18} loading="lazy" className="w-6 h-4 rounded object-cover" />
                     <span className="text-sm text-[#B5ABB3] group-hover:text-[#FCFBFB] transition-colors">{c.name}</span>
                   </Link>
                 ))}

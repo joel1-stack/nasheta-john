@@ -90,7 +90,7 @@ export default function ImageUpload({
       {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
       {value && (
         <div className="mt-2 rounded-lg overflow-hidden border border-white/10 max-h-40">
-          <img src={value} alt="Preview" className="w-full h-32 object-cover" />
+          <img src={value} alt="Preview" width={1200} height={675} loading="lazy" className="w-full h-32 object-cover" />
         </div>
       )}
     </div>

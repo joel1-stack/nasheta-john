@@ -1,6 +1,6 @@
 import { queryArticles } from "@/lib/serverArticles"
 
-const BASE_URL = "https://igamingubuntu.com"
+const BASE_URL = "https://www.igamingubuntu.com"
 
 const blogHubPaths = [
   "/blog",

@@ -2,6 +2,15 @@
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "iGaming Event Recaps and Takeaways",
+  description:
+    "Read highlights and key takeaways from past iGaming industry events, conferences and webinars. Catch up on what was said without attending in person.",
+  alternates: { canonical: "/events/recaps" },
+}
+
 
 
 export default function EventRecapsPage() {

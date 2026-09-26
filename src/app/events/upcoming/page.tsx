@@ -2,6 +2,15 @@
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Upcoming iGaming Conferences and Meetups",
+  description:
+    "Plan ahead with our calendar of upcoming iGaming conferences, summits and industry meetups across Africa, with dates, venues and registration details.",
+  alternates: { canonical: "/events/upcoming" },
+}
+
 
 
 export default function UpcomingEventsPage() {

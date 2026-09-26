@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 
-const BASE_URL = "https://igamingubuntu.com"
+const BASE_URL = "https://www.igamingubuntu.com"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
@@ -42,7 +42,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/translation-services",
     "/editing-services",
     "/link-building-services",
+    "/advertise",
     "/privacy",
+    "/terms",
     "/affiliate-disclosure",
   ]
 

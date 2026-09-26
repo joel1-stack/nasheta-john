@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "iGaming Industry News and Market Analysis",
+  description:
+    "Read the latest iGaming industry developments and market analysis across Africa, from operator launches and mergers to affiliate trends and technology.",
+  alternates: { canonical: "/news/industry" },
+}
 
 export default function IndustryNewsPage() {
   return (

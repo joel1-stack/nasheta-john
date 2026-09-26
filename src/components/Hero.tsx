@@ -7,6 +7,8 @@ export default function Hero() {
         <img
           src="/images/Green Data Network (ABSTRACT + TECH).png"
           alt="iGaming content strategy"
+          width={800}
+          height={449}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/70" />
@@ -80,6 +82,8 @@ export default function Hero() {
                 <img
                   src="/images/nasheta.png"
                   alt="iGamingUbuntu"
+                  width={1024}
+                  height={782}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
               </div>

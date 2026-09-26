@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import AffiliateBox from "@/components/AffiliateBox"
 import type { Article } from "@/types"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Kenya Betting Guide: Sites, Bonuses and M-Pesa",
+  description:
+    "Everything you need to bet legally and safely in Kenya. Compare top betting sites, welcome bonuses and M-Pesa deposits with expert local guidance.",
+  alternates: { canonical: "/kenya" },
+}
 
 const kenyaArticles: Article[] = [
   { id: "k1", slug: "sportpesa-welcome-bonus-2026", title: "SportPesa Welcome Bonus 2026: How to Claim 200%", excerpt: "Step-by-step guide to claiming the SportPesa welcome bonus.", category: "Bonuses", country: "kenya", featuredImage: "/images/sports betting analytics.png", tags: [], readTime: 5, author: "iGamingUbuntu", status: "published", views: 4521, content: "", createdAt: "2026-07-05", updatedAt: "2026-07-05" },
@@ -24,10 +32,10 @@ export default function KenyaPage() {
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-green to-ubuntu-orange">
         <div className="absolute inset-0 opacity-20">
-          <img src="/images/full backgound.png" alt="Kenya betting" className="w-full h-full object-cover" />
+          <img src="/images/full backgound.png" alt="Kenya betting" width={1920} height={1200} className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 flex items-center gap-4">
-          <img src="https://flagcdn.com/48x36/ke.png" alt="Kenya" className="w-12 h-9 rounded shadow-lg" />
+          <img src="https://flagcdn.com/48x36/ke.png" alt="Kenya" width={48} height={36} loading="lazy" className="w-12 h-9 rounded shadow-lg" />
           <div className="text-white">
             <h1 className="text-3xl md:text-4xl font-bold">Kenya iGaming Guide</h1>
             <p className="text-white/80 mt-1 max-w-xl">Everything you need to bet legally and safely in Kenya.</p>
@@ -55,7 +63,7 @@ export default function KenyaPage() {
           <Link key={a.slug} href={`/blog/${a.slug}`} className="group bg-white border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all hover:-translate-y-0.5">
             <div className="aspect-[16/9] overflow-hidden">
               {a.featuredImage ? (
-                <img src={a.featuredImage} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={a.featuredImage} alt={a.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-ubuntu-orange/20 to-ubuntu-purple/20 flex items-center justify-center">
                   <svg className="w-10 h-10 text-ubuntu-orange/30" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>

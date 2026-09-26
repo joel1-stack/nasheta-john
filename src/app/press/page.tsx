@@ -1,6 +1,14 @@
 import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Press Releases from iGaming Operators",
+  description:
+    "Official press releases submitted by licensed operators and industry stakeholders. Submit your announcements to the iGamingUbuntu editorial team for review.",
+  alternates: { canonical: "/press" },
+}
 
 export default function PressReleasesPage() {
   return (

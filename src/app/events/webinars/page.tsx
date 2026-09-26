@@ -2,6 +2,14 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import CategoryArticleList from "@/components/CategoryArticleList"
 import SectionHeader from "@/components/SectionHeader"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "iGaming Webinars and Expert Panels",
+  description:
+    "Watch expert discussions and panels on demand. Our webinar library covers regulation, affiliate strategy, payments and market trends across iGaming.",
+  alternates: { canonical: "/events/webinars" },
+}
 
 export default function WebinarsPage() {
   return (

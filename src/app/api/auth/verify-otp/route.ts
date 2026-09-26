@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { initializeApp, getApps, cert, getApp } from "firebase-admin/app"
 import { getFirestore } from "firebase-admin/firestore"
+import { isAllowedAdmin } from "@/lib/adminEmails"
 
 function getAdminApp() {
   if (!getApps().length) {
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
     let otp = ""
     try {
       const body = await req.json()
-      email = String(body?.email || "").trim()
+      email = String(body?.email || "").trim().toLowerCase()
       otp = String(body?.otp || "").trim()
     } catch {
       return NextResponse.json({ success: false, error: "Invalid JSON body" }, { status: 400 })
@@ -31,6 +32,10 @@ export async function POST(req: Request) {
 
     if (!email || !otp) {
       return NextResponse.json({ success: false, error: "Email and OTP required" }, { status: 400 })
+    }
+
+    if (!isAllowedAdmin(email)) {
+      return NextResponse.json({ success: false, error: "This email is not authorized for the CMS." }, { status: 403 })
     }
 
     const app = getAdminApp()

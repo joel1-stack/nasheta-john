@@ -2,8 +2,7 @@ import { NextResponse } from "next/server"
 import { initializeApp, getApps, cert, getApp } from "firebase-admin/app"
 import { getFirestore, Timestamp } from "firebase-admin/firestore"
 import nodemailer from "nodemailer"
-
-const OTP_INBOX = "salvagekyalo@gmail.com"
+import { isAllowedAdmin, getAllowedAdminEmails } from "@/lib/adminEmails"
 
 function getAdminApp() {
   if (!getApps().length) {
@@ -27,12 +26,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: "Valid email required" }, { status: 400 })
     }
 
+    const recipient = String(email).trim().toLowerCase()
+    if (!isAllowedAdmin(recipient)) {
+      console.warn(`OTP request denied for unauthorized email: ${recipient}`)
+      return NextResponse.json(
+        { success: false, error: "This email is not authorized for the CMS. Ask an admin to add it to ADMIN_EMAILS." },
+        { status: 403 }
+      )
+    }
+
     const app = getAdminApp()
     const db = getFirestore(app)
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString()
     const expires = Timestamp.fromMillis(Date.now() + 10 * 60 * 1000)
-    await db.collection("otps").doc(email).set({ otp, expires, used: false, updatedAt: Date.now() })
+    await db.collection("otps").doc(recipient).set({ otp, expires, used: false, updatedAt: Date.now() })
 
     if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
       console.error("SMTP_USER / SMTP_PASS not set — cannot send OTP email")
@@ -55,9 +63,9 @@ export async function POST(req: Request) {
     await transporter.verify()
     await transporter.sendMail({
       from: `"iGamingUbuntu CMS" <${process.env.SMTP_USER}>`,
-      to: OTP_INBOX,
-      subject: `iGamingUbuntu Admin OTP for ${email}`,
-      text: `Login code for ${email}: ${otp}\n\nThis code expires in 10 minutes. If you did not request this, ignore this email.`,
+      to: recipient,
+      subject: `iGamingUbuntu Admin OTP for ${recipient}`,
+      text: `Login code for ${recipient}: ${otp}\n\nThis code expires in 10 minutes. If you did not request this, ignore this email.`,
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto">
           <div style="background:#E95420;padding:20px;border-radius:12px 12px 0 0">
@@ -73,8 +81,8 @@ export async function POST(req: Request) {
       `,
     })
 
-    console.log(`OTP for ${email} sent to ${OTP_INBOX}`)
-    return NextResponse.json({ success: true, message: `OTP sent to ${OTP_INBOX}` })
+    console.log(`OTP for ${recipient} sent to ${recipient} (${getAllowedAdminEmails().length} admin(s) allowed)`)
+    return NextResponse.json({ success: true, message: `OTP sent to ${recipient}` })
   } catch (error: any) {
     console.error("Send OTP error:", error)
     return NextResponse.json({

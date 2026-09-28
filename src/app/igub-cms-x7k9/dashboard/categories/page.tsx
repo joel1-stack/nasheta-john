@@ -17,6 +17,7 @@ export default function CategoriesPage() {
   const [description, setDescription] = useState("")
   const [editId, setEditId] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
+  const [feedback, setFeedback] = useState<{ type: "ok" | "err"; msg: string } | null>(null)
 
   useEffect(() => {
     if (!user) return
@@ -36,18 +37,23 @@ export default function CategoriesPage() {
     e.preventDefault()
     if (!name.trim()) return
     setBusy(true)
+    setFeedback(null)
     try {
       const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
       if (editId) {
         await updateCategory(editId, { name: name.trim(), slug, description })
         setCategories((prev) => prev.map((c) => (c.id === editId ? { ...c, name: name.trim(), slug, description } : c)))
+        setFeedback({ type: "ok", msg: "Category updated." })
       } else {
         const id = await createCategory({ name: name.trim(), slug, description })
         if (id) setCategories((prev) => [...prev, { id, name: name.trim(), slug, description }].sort((a, b) => a.name.localeCompare(b.name)))
+        setFeedback({ type: "ok", msg: `“${name.trim()}” saved — it now appears in article dropdowns and blog filters.` })
       }
       setName("")
       setDescription("")
       setEditId(null)
+    } catch (err) {
+      setFeedback({ type: "err", msg: err instanceof Error ? err.message : "Could not save the category." })
     } finally {
       setBusy(false)
     }
@@ -57,16 +63,41 @@ export default function CategoriesPage() {
     setEditId(c.id)
     setName(c.name)
     setDescription(c.description || "")
+    setFeedback(null)
   }
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this category? Articles keep their category string.")) return
-    await deleteCategory(id)
-    setCategories((prev) => prev.filter((c) => c.id !== id))
-    if (editId === id) {
-      setEditId(null)
-      setName("")
-      setDescription("")
+    setBusy(true)
+    setFeedback(null)
+    try {
+      await deleteCategory(id)
+      setCategories((prev) => prev.filter((c) => c.id !== id))
+      setFeedback({ type: "ok", msg: "Category deleted." })
+      if (editId === id) {
+        setEditId(null)
+        setName("")
+        setDescription("")
+      }
+    } catch (err) {
+      setFeedback({ type: "err", msg: err instanceof Error ? err.message : "Could not delete the category." })
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const handleAdopt = async (categoryName: string) => {
+    setBusy(true)
+    setFeedback(null)
+    try {
+      const slug = categoryName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
+      const id = await createCategory({ name: categoryName, slug, description: "" })
+      if (id) setCategories((prev) => [...prev, { id, name: categoryName, slug, description: "" }].sort((a, b) => a.name.localeCompare(b.name)))
+      setFeedback({ type: "ok", msg: `“${categoryName}” added to managed categories.` })
+    } catch (err) {
+      setFeedback({ type: "err", msg: err instanceof Error ? err.message : "Could not save the category." })
+    } finally {
+      setBusy(false)
     }
   }
 
@@ -86,6 +117,19 @@ export default function CategoriesPage() {
         <h1 className="text-3xl font-bold text-white">Categories</h1>
         <p className="text-gray-400 mt-1">Taxonomy for articles across the publication</p>
       </div>
+
+      {feedback && (
+        <div
+          role="status"
+          className={`text-sm px-4 py-3 rounded-xl border ${
+            feedback.type === "ok"
+              ? "bg-green-500/10 border-green-500/30 text-green-400"
+              : "bg-red-500/10 border-red-500/30 text-red-400"
+          }`}
+        >
+          {feedback.msg}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 space-y-4">
         <h2 className="font-bold text-white">{editId ? "Edit Category" : "New Category"}</h2>
@@ -154,8 +198,9 @@ export default function CategoriesPage() {
                 </div>
                 <span className="text-sm text-gray-400 bg-white/10 px-2.5 py-1 rounded-full">{counts[name]} articles</span>
                 <button
-                  onClick={() => setName(name)}
-                  className="text-sm text-[#f59e0b] font-medium cursor-pointer"
+                  onClick={() => handleAdopt(name)}
+                  disabled={busy}
+                  className="text-sm text-[#f59e0b] font-medium cursor-pointer disabled:opacity-50"
                   title="Add to managed categories"
                 >
                   Adopt

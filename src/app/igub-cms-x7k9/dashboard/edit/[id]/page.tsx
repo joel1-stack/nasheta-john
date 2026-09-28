@@ -1,15 +1,17 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { onAuthStateChanged } from "firebase/auth"
+import { onAuthStateChanged, type User } from "firebase/auth"
 import { getAuthInstance } from "@/lib/firebase"
-import { getArticleById, updateArticle, getAffiliateLinks, createAffiliateLink, updateAffiliateLink, deleteAffiliateLink } from "@/lib/firestoreService"
+import { getArticleById, updateArticle, getAffiliateLinks, createAffiliateLink, updateAffiliateLink, deleteAffiliateLink, getCategories } from "@/lib/firestoreService"
 import { useRouter, useParams } from "next/navigation"
 import Link from "next/link"
 import ImageUpload from "@/components/ImageUpload"
 import ArticlePreview from "@/components/ArticlePreview"
 import ContentEditor from "@/components/ContentEditor"
 import type { AffiliateLink } from "@/types"
+
+const defaultCategories = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Guides", "Industry News", "Events", "News"]
 
 interface AffiliateField {
   id?: string
@@ -22,7 +24,7 @@ interface AffiliateField {
 }
 
 export default function EditPostPage() {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const router = useRouter()
@@ -39,10 +41,17 @@ export default function EditPostPage() {
 
   const [affiliates, setAffiliates] = useState<AffiliateField[]>([])
   const [previewOpen, setPreviewOpen] = useState(false)
+  const [categoryOptions, setCategoryOptions] = useState<string[]>(defaultCategories)
+
+  useEffect(() => {
+    getCategories().then((cats) => {
+      if (cats.length) setCategoryOptions(Array.from(new Set([...defaultCategories, ...cats.map((c) => c.name)])))
+    })
+  }, [])
 
   useEffect(() => {
     const auth = getAuthInstance()
-    if (!auth) { setLoading(false); return }
+    if (!auth) { router.replace("/igub-cms-x7k9"); return }
     const unsub = onAuthStateChanged(auth, async (u) => {
       if (!u) { router.push("/igub-cms-x7k9") } else { setUser(u) }
       setLoading(false)
@@ -206,14 +215,9 @@ export default function EditPostPage() {
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1.5">Category</label>
             <select value={form.category} onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))} className={selectClass}>
-              <option value="Sports Betting" className="bg-[#0F0A1A]">Sports Betting</option>
-              <option value="Casino Reviews" className="bg-[#0F0A1A]">Casino Reviews</option>
-              <option value="Bonuses" className="bg-[#0F0A1A]">Bonuses</option>
-              <option value="Betting Tips" className="bg-[#0F0A1A]">Betting Tips</option>
-              <option value="Guides" className="bg-[#0F0A1A]">Guides</option>
-              <option value="Industry News" className="bg-[#0F0A1A]">Industry News</option>
-              <option value="Events" className="bg-[#0F0A1A]">Events</option>
-              <option value="News" className="bg-[#0F0A1A]">News</option>
+              {Array.from(new Set([...categoryOptions, form.category].filter(Boolean))).map((c) => (
+                <option key={c} value={c} className="bg-[#0F0A1A]">{c}</option>
+              ))}
             </select>
           </div>
           <div>

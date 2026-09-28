@@ -1,4 +1,4 @@
-import { getDb } from "./firebase"
+import { getDb, getAuthInstance } from "./firebase"
 import {
   collection,
   doc,
@@ -15,6 +15,8 @@ import {
   limit as fbLimit,
   startAfter,
   DocumentSnapshot,
+  QueryConstraint,
+  DocumentData,
 } from "firebase/firestore"
 import type { Article, AffiliateLink, ContactMessage, Operator, Category, SiteSettings, ClickEvent } from "@/types"
 
@@ -24,7 +26,6 @@ const CLICKS = "clicks"
 const SUBSCRIBERS = "subscribers"
 const CONTACT_MESSAGES = "contactMessages"
 const OPERATORS = "operators"
-const CATEGORIES = "categories"
 const SETTINGS = "settings"
 
 const PAGE_SIZE = 12
@@ -52,7 +53,7 @@ export async function getPublishedArticlesPage(
 
   try {
     // Build constraints
-    const constraints: any[] = [
+    const constraints: QueryConstraint[] = [
       where("status", "==", "published"),
       orderBy("createdAt", "desc"),
     ]
@@ -105,7 +106,7 @@ export async function getAllPublishedArticles(limitCount?: number): Promise<Arti
   const fb = getDb()
   if (!fb) return []
   try {
-    const constraints: any[] = [
+    const constraints: QueryConstraint[] = [
       where("status", "==", "published"),
       orderBy("createdAt", "desc"),
     ]
@@ -139,7 +140,7 @@ export async function getArticlesByCategory(
   const fb = getDb()
   if (!fb) return []
   try {
-    const constraints: any[] = [
+    const constraints: QueryConstraint[] = [
       where("status", "==", "published"),
       where("category", "==", category),
       orderBy("createdAt", "desc"),
@@ -197,7 +198,7 @@ export async function createArticle(data: Omit<Article, "id" | "createdAt" | "up
 export async function updateArticle(id: string, data: Partial<Article>): Promise<void> {
   const fb = getDb()
   if (!fb) return
-  const updateData: Record<string, any> = { ...data, updatedAt: serverTimestamp() }
+  const updateData: Record<string, unknown> = { ...data, updatedAt: serverTimestamp() }
   if (typeof data.tags === "string") {
     updateData.tags = (data.tags as string).split(",").map((t: string) => t.trim())
   }
@@ -272,7 +273,7 @@ export async function addSubscriber(email: string, country?: string): Promise<st
   }
 }
 
-export async function getSubscribers(): Promise<any[]> {
+export async function getSubscribers(): Promise<Array<{ id: string } & DocumentData>> {
   const fb = getDb()
   if (!fb) return []
   try {
@@ -334,8 +335,23 @@ export async function deleteContactMessage(id: string): Promise<void> {
   await deleteDoc(doc(fb, CONTACT_MESSAGES, id))
 }
 
-function toDateStr(value: any): string {
-  return value?.toDate?.()?.toISOString?.()?.split("T")[0] || value || ""
+function toDateStr(value: unknown): string {
+  if (value == null) return ""
+  if (typeof value === "string") return value
+  if (typeof value === "number") return new Date(value).toISOString().split("T")[0]
+  if (value instanceof Date) return value.toISOString().split("T")[0]
+  if (typeof value === "object" && "toDate" in value) {
+    const toDate = (value as { toDate?: unknown }).toDate
+    if (typeof toDate === "function") {
+      try {
+        const date = (toDate as () => Date).call(value)
+        if (date instanceof Date) return date.toISOString().split("T")[0]
+      } catch {
+        return ""
+      }
+    }
+  }
+  return ""
 }
 
 // --- Operators ---
@@ -415,36 +431,60 @@ export async function getAllAffiliateLinks(): Promise<AffiliateLink[]> {
 }
 
 // --- Categories ---
+// Category CRUD goes through /api/categories (Firebase Admin SDK on the server)
+// because the deployed Firestore security rules do not allow client access
+// to the "categories" collection.
+
+async function getCategoryToken(): Promise<string> {
+  const auth = getAuthInstance()
+  if (!auth?.currentUser) throw new Error("Please sign in to the CMS again.")
+  return auth.currentUser.getIdToken()
+}
+
+async function categoryRequest(path: string, options: { method: string; body?: unknown }): Promise<Response> {
+  const headers: Record<string, string> = {}
+  if (options.method !== "GET") {
+    headers["Content-Type"] = "application/json"
+    headers["Authorization"] = `Bearer ${await getCategoryToken()}`
+  }
+  return fetch(`/api/categories${path}`, {
+    method: options.method,
+    headers,
+    body: options.body === undefined ? undefined : JSON.stringify(options.body),
+  })
+}
+
+async function readCategoryError(res: Response, fallback: string): Promise<string> {
+  const data = await res.json().catch(() => ({}))
+  return data?.error || `${fallback} (HTTP ${res.status})`
+}
 
 export async function getCategories(): Promise<Category[]> {
-  const fb = getDb()
-  if (!fb) return []
   try {
-    const q = query(collection(fb, CATEGORIES), orderBy("name", "asc"))
-    const snap = await getDocs(q)
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Category))
+    const res = await fetch("/api/categories")
+    if (!res.ok) return []
+    const data = await res.json()
+    return (data.categories || []) as Category[]
   } catch {
     return []
   }
 }
 
 export async function createCategory(data: Omit<Category, "id">): Promise<string | null> {
-  const fb = getDb()
-  if (!fb) return null
-  const ref = await addDoc(collection(fb, CATEGORIES), data)
-  return ref.id
+  const res = await categoryRequest("", { method: "POST", body: data })
+  if (!res.ok) throw new Error(await readCategoryError(res, "Could not save category"))
+  const json = await res.json()
+  return json.id || null
 }
 
 export async function updateCategory(id: string, data: Partial<Category>): Promise<void> {
-  const fb = getDb()
-  if (!fb) return
-  await updateDoc(doc(fb, CATEGORIES, id), data)
+  const res = await categoryRequest("", { method: "PATCH", body: { id, data } })
+  if (!res.ok) throw new Error(await readCategoryError(res, "Could not update category"))
 }
 
 export async function deleteCategory(id: string): Promise<void> {
-  const fb = getDb()
-  if (!fb) return
-  await deleteDoc(doc(fb, CATEGORIES, id))
+  const res = await categoryRequest(`?id=${encodeURIComponent(id)}`, { method: "DELETE" })
+  if (!res.ok) throw new Error(await readCategoryError(res, "Could not delete category"))
 }
 
 // --- Site settings ---

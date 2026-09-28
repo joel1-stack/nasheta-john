@@ -1,13 +1,14 @@
 "use client"
 
-import { useState, useEffect, useCallback, useRef } from "react"
+import { useState, useEffect, useMemo, useCallback, useRef } from "react"
 import Link from "next/link"
 import { FiEye, FiArrowRight, FiClock, FiCalendar, FiChevronLeft, FiChevronRight } from "react-icons/fi"
 import { formatDate } from "@/lib/utils"
+import { getCategories } from "@/lib/firestoreService"
 import AffiliateBanner from "@/components/AffiliateBanner"
 import type { Article } from "@/types"
 
-const categories = ["All", "Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Industry News", "Events"]
+const defaultCategories = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Industry News", "Events"]
 
 const exploreItems = [
   { name: "Kenya", slug: "kenya", isCountry: true },
@@ -47,6 +48,20 @@ export default function BlogListClient({
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(initialHasMore)
   const [total, setTotal] = useState(initialTotal)
+  const [storedCategories, setStoredCategories] = useState<string[]>([])
+
+  useEffect(() => {
+    getCategories().then((cats) => setStoredCategories(cats.map((c) => c.name).filter(Boolean)))
+  }, [])
+
+  const categories = useMemo(() => {
+    const seen = new Set<string>(defaultCategories)
+    storedCategories.forEach((c) => seen.add(c))
+    articles.forEach((a) => {
+      if (a.category) seen.add(a.category)
+    })
+    return ["All", ...Array.from(seen)]
+  }, [storedCategories, articles])
 
   const fetchArticles = useCallback(async (pageNum: number, cat: string, search: string) => {
     setLoading(true)

@@ -184,15 +184,21 @@ export default function NewPostPage() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1.5">Country</label>
-            <select value={form.country} onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))} className={selectClass}>
-              <option value="kenya" className="bg-[#0F0A1A]">Kenya</option>
-              <option value="nigeria" className="bg-[#0F0A1A]">Nigeria</option>
-              <option value="south-africa" className="bg-[#0F0A1A]">South Africa</option>
-              <option value="ghana" className="bg-[#0F0A1A]">Ghana</option>
-              <option value="tanzania" className="bg-[#0F0A1A]">Tanzania</option>
-              <option value="global" className="bg-[#0F0A1A]">Global</option>
-              <option value="" className="bg-[#0F0A1A]">General</option>
-            </select>
+            <input list="country-options" value={form.country} onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))} className={inputClass} placeholder="Pick from list or type any country (e.g. egypt, morocco)" />
+            <datalist id="country-options">
+              <option value="kenya" />
+              <option value="nigeria" />
+              <option value="south-africa" />
+              <option value="ghana" />
+              <option value="tanzania" />
+              <option value="uganda" />
+              <option value="zambia" />
+              <option value="rwanda" />
+              <option value="egypt" />
+              <option value="morocco" />
+              <option value="global" />
+              <option value="general" />
+            </datalist>
           </div>
         </div>
 

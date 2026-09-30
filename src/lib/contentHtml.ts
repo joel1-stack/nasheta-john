@@ -10,6 +10,13 @@ function wrapParagraphs(text: string): string {
     .join("")
 }
 
+function ensureImgAlt(html: string): string {
+  return html.replace(/<img\b([^>]*)>/gi, (full, attrs: string) => {
+    if (/\balt\s*=/i.test(attrs)) return full
+    return `<img${attrs.replace(/\s*\/\s*$/, "")} alt="">`
+  })
+}
+
 export function withParagraphs(html: string): string {
   if (!html || !html.trim()) return html || ""
 
@@ -35,5 +42,5 @@ export function withParagraphs(html: string): string {
 
   const tail = html.slice(last)
   out += depth === 0 ? wrapParagraphs(tail) : tail
-  return out
+  return ensureImgAlt(out)
 }

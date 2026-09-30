@@ -62,18 +62,25 @@ export default async function BlogArticlePage({ params }: PageProps) {
   }
 
   const articleUrl = article.canonicalUrl || `https://www.igamingubuntu.com/blog/${article.slug}`
+  const rawImage = article.ogImage || article.featuredImage || ""
+  const absoluteImage = rawImage.startsWith("http")
+    ? rawImage
+    : rawImage
+      ? `https://www.igamingubuntu.com${rawImage.startsWith("/") ? "" : "/"}${rawImage}`
+      : "https://www.igamingubuntu.com/images/nasheta.png"
+  const description = article.metaDescription || article.excerpt || ""
   const ldJson = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: article.title,
-    description: article.metaDescription || article.excerpt,
-    image: article.ogImage || article.featuredImage,
-    datePublished: article.createdAt,
-    dateModified: article.updatedAt,
+    headline: article.title || article.slug,
+    ...(description ? { description } : {}),
+    image: absoluteImage,
+    ...(article.createdAt ? { datePublished: article.createdAt } : {}),
+    ...(article.updatedAt ? { dateModified: article.updatedAt } : {}),
     author: {
       "@type": "Person",
       name: article.authorName || article.author || "Nasheta John",
-      description: article.authorBio || "iGaming content specialist covering African markets",
+      ...(article.authorBio ? { description: article.authorBio } : { description: "iGaming content specialist covering African markets" }),
     },
     publisher: {
       "@type": "Organization",

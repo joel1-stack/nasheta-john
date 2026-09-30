@@ -43,6 +43,7 @@ export default function EditPostPage() {
   const [affiliates, setAffiliates] = useState<AffiliateField[]>([])
   const [previewOpen, setPreviewOpen] = useState(false)
   const [categoryOptions, setCategoryOptions] = useState<string[]>(defaultCategories)
+  const [updatedAt, setUpdatedAt] = useState("")
 
   useEffect(() => {
     getCategories().then((cats) => {
@@ -59,6 +60,7 @@ export default function EditPostPage() {
       if (u && id) {
         const article = await getArticleById(id)
         if (article) {
+          setUpdatedAt(article.updatedAt || article.createdAt || "")
           setForm({
             title: article.title,
             slug: article.slug,
@@ -227,15 +229,21 @@ export default function EditPostPage() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1.5">Country</label>
-            <select value={form.country} onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))} className={selectClass}>
-              <option value="kenya" className="bg-[#0F0A1A]">Kenya</option>
-              <option value="nigeria" className="bg-[#0F0A1A]">Nigeria</option>
-              <option value="south-africa" className="bg-[#0F0A1A]">South Africa</option>
-              <option value="ghana" className="bg-[#0F0A1A]">Ghana</option>
-              <option value="tanzania" className="bg-[#0F0A1A]">Tanzania</option>
-              <option value="global" className="bg-[#0F0A1A]">Global</option>
-              <option value="" className="bg-[#0F0A1A]">General</option>
-            </select>
+            <input list="country-options" value={form.country} onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))} className={inputClass} placeholder="Pick from list or type any country (e.g. egypt, morocco)" />
+            <datalist id="country-options">
+              <option value="kenya" />
+              <option value="nigeria" />
+              <option value="south-africa" />
+              <option value="ghana" />
+              <option value="tanzania" />
+              <option value="uganda" />
+              <option value="zambia" />
+              <option value="rwanda" />
+              <option value="egypt" />
+              <option value="morocco" />
+              <option value="global" />
+              <option value="general" />
+            </datalist>
           </div>
         </div>
 
@@ -279,6 +287,30 @@ export default function EditPostPage() {
               <input type="checkbox" id="noindex" checked={form.noindex} onChange={(e) => setForm((f) => ({ ...f, noindex: e.target.checked }))} className="rounded border-white/10 bg-white/5 text-[#E95420] focus:ring-[#E95420]/50" />
               <label htmlFor="noindex" className="text-sm text-gray-300">Hide from search engines</label>
             </div>
+            {form.slug && (() => {
+              const previewUrl = form.canonicalUrl || `https://www.igamingubuntu.com/blog/${form.slug}`
+              const richResultUrl = `https://search.google.com/test/rich-results?url=${encodeURIComponent(previewUrl)}`
+              const schemaUrl = `https://validator.schema.org/?url=${encodeURIComponent(previewUrl)}`
+              return (
+                <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <span className="text-sm font-semibold text-white">Schema & Rich Results</span>
+                    <span className="text-xs text-gray-400">{updatedAt ? `Last updated: ${updatedAt}` : "Not yet saved"}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <a href={richResultUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[#E95420] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#C7421B]">
+                      Google Rich Result Test
+                    </a>
+                    <a href={schemaUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold text-gray-300 hover:bg-white/5">
+                      Schema Validator
+                    </a>
+                    <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold text-gray-300 hover:bg-white/5">
+                      View live article
+                    </a>
+                  </div>
+                </div>
+              )
+            })()}
           </div>
         </div>
 

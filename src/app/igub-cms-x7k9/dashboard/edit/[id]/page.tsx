@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { onAuthStateChanged, type User } from "firebase/auth"
 import { getAuthInstance } from "@/lib/firebase"
 import { getArticleById, updateArticle, getAffiliateLinks, createAffiliateLink, updateAffiliateLink, deleteAffiliateLink, getCategories } from "@/lib/firestoreService"
+import { submitToIndexNow } from "@/lib/indexnow"
 import { useRouter, useParams } from "next/navigation"
 import Link from "next/link"
 import ImageUpload from "@/components/ImageUpload"
@@ -160,6 +161,10 @@ export default function EditPostPage() {
             })
           }
         }
+      }
+
+      if (status === "published" && !form.noindex && form.slug) {
+        submitToIndexNow([`https://www.igamingubuntu.com/blog/${form.slug}`])
       }
 
       router.push("/igub-cms-x7k9/dashboard")

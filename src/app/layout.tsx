@@ -109,6 +109,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5956809831211575"
           crossOrigin="anonymous"
         />
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6VTKQHDR04" />
+        <Script id="ga4-config" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6VTKQHDR04');`}
+        </Script>
       </body>
     </html>
   )

@@ -3,7 +3,6 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import NavbarWrapper from "@/components/NavbarWrapper"
 import FooterWrapper from "@/components/FooterWrapper"
-import ContentProtection from "@/components/ContentProtection"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Script from "next/script"
@@ -98,7 +97,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to main content
         </a>
-        <ContentProtection />
         <NavbarWrapper />
          <main id="main-content" className="flex-1 bg-[#110B18]">
           {children}

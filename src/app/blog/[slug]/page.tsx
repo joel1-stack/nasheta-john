@@ -18,6 +18,7 @@ function buildArticleMetadata(article: Article, slug: string): Metadata {
     title,
     description,
     alternates: { canonical },
+    ...(article.noindex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       type: "article",
       title,

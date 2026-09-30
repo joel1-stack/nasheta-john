@@ -48,6 +48,8 @@ const marketRegions = [
 const marketHref = (name: string) =>
   `/${name.toLowerCase().replace(/\s+/g, "-")}`
 
+const existingMarketPages = new Set(["/ghana", "/kenya", "/nigeria", "/south-africa", "/tanzania"])
+
 const companyLinks = [
   { label: "Work With Me", href: "/work-with-me" },
   { label: "Advertise", href: "/advertise" },
@@ -230,7 +232,11 @@ export default function Footer({ hideNav, light = false }: FooterProps) {
                   <p className="text-[13px] text-[#6B7280] leading-relaxed flex flex-wrap gap-x-1.5 gap-y-1">
                     {region.countries.map((c, i) => (
                       <span key={c} className="whitespace-nowrap">
-                        <Link href={marketHref(c)} className="hover:text-[#111827] transition-colors">{c}</Link>
+                        {existingMarketPages.has(marketHref(c)) ? (
+                          <Link href={marketHref(c)} className="hover:text-[#111827] transition-colors">{c}</Link>
+                        ) : (
+                          <span>{c}</span>
+                        )}
                         {i < region.countries.length - 1 && <span className="text-gray-300">,</span>}
                       </span>
                     ))}
@@ -455,12 +461,13 @@ export default function Footer({ hideNav, light = false }: FooterProps) {
                   <p className="text-sm text-[#9CA3AF] leading-relaxed flex flex-wrap gap-x-1.5 gap-y-1">
                     {region.countries.map((c, i) => (
                       <span key={c} className="whitespace-nowrap inline-flex items-center gap-1.5">
-                        <Link
-                          href={marketHref(c)}
-                          className="hover:text-white transition-colors"
-                        >
-                          {c}
-                        </Link>
+                        {existingMarketPages.has(marketHref(c)) ? (
+                          <Link href={marketHref(c)} className="hover:text-white transition-colors">
+                            {c}
+                          </Link>
+                        ) : (
+                          <span>{c}</span>
+                        )}
                         {i < region.countries.length - 1 && (
                           <span className="text-white/30" aria-hidden="true">•</span>
                         )}

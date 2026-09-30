@@ -29,6 +29,8 @@ const africanCountries = [
   { code: "ug", name: "Uganda" }, { code: "zm", name: "Zambia" }, { code: "zw", name: "Zimbabwe" },
 ]
 
+const existingMarketPages = new Set(["ghana", "kenya", "nigeria", "south-africa", "tanzania"])
+
 function StatItem({ target, label }: { target: number; label: string }) {
   const [ref, visible] = useScrollReveal(0.5)
   const count = useCountUp(target, visible)
@@ -315,12 +317,21 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
           <div className="flex animate-marquee gap-10 w-max">
             {[...Array(2)].map((_, idx) => (
               <div key={idx} className="flex gap-10 items-center">
-                {africanCountries.map((c) => (
-                  <Link key={c.code} href={`/${c.name.toLowerCase().replace(/\s+/g, "-")}`} className="group flex items-center gap-3 glass-card rounded-full px-4 py-2 hover:border-[#409824]/40 transition-all duration-300 whitespace-nowrap hover:scale-105">
-                    <Image src={`https://flagcdn.com/24x18/${c.code}.png`} alt={c.name} width={24} height={18} loading="lazy" className="w-6 h-4 rounded object-cover" />
-                    <span className="text-sm text-[#B5ABB3] group-hover:text-[#FCFBFB] transition-colors">{c.name}</span>
-                  </Link>
-                ))}
+                {africanCountries.map((c) => {
+                  const slug = c.name.toLowerCase().replace(/\s+/g, "-")
+                  const cls = "group flex items-center gap-3 glass-card rounded-full px-4 py-2 hover:border-[#409824]/40 transition-all duration-300 whitespace-nowrap hover:scale-105"
+                  const inner = (
+                    <>
+                      <Image src={`https://flagcdn.com/24x18/${c.code}.png`} alt={c.name} width={24} height={18} loading="lazy" className="w-6 h-4 rounded object-cover" />
+                      <span className="text-sm text-[#B5ABB3] group-hover:text-[#FCFBFB] transition-colors">{c.name}</span>
+                    </>
+                  )
+                  return existingMarketPages.has(slug) ? (
+                    <Link key={c.code} href={`/${slug}`} className={cls}>{inner}</Link>
+                  ) : (
+                    <span key={c.code} className={cls}>{inner}</span>
+                  )
+                })}
               </div>
             ))}
           </div>

@@ -160,7 +160,7 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
 
             <div
               className="prose prose-lg max-w-none text-[#6B7280] leading-[1.8] text-[16px] space-y-4 prose-headings:text-[#1A1F2B] prose-headings:font-bold prose-strong:text-[#1A1F2B] prose-a:text-[#22C55E] prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg prose-img:w-full [&_img.float-left]:float-left [&_img.float-left]:w-[45%] [&_img.float-left]:mr-6 [&_img.float-left]:mb-4 [&_img.float-left]:rounded-lg [&_img.float-right]:float-right [&_img.float-right]:w-[45%] [&_img.float-right]:ml-6 [&_img.float-right]:mb-4 [&_img.float-right]:rounded-lg"
-              dangerouslySetInnerHTML={{ __html: withParagraphs(article.content || "") }}
+              dangerouslySetInnerHTML={{ __html: withParagraphs(article.content || "", article.title) }}
             />
 
             <AffiliateBanner offers={displayOffers.slice(0, 3)} variant="marquee" placement="blog-mid" className="my-8" />

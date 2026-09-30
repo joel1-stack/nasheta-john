@@ -17,7 +17,27 @@ function ensureImgAlt(html: string): string {
   })
 }
 
-export function withParagraphs(html: string): string {
+function normalizeHeading(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, "")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+function demoteH1(html: string): string {
+  return html
+    .replace(/<h1(\s[^>]*)?>/gi, (_m, attrs?: string) => `<h2${attrs || ""}>`)
+    .replace(/<\/h1>/gi, "</h2>")
+}
+
+export function withParagraphs(html: string, dropLeadingHeading?: string): string {
   if (!html || !html.trim()) return html || ""
 
   let out = ""
@@ -42,5 +62,14 @@ export function withParagraphs(html: string): string {
 
   const tail = html.slice(last)
   out += depth === 0 ? wrapParagraphs(tail) : tail
-  return ensureImgAlt(out)
+  out = ensureImgAlt(out)
+
+  if (dropLeadingHeading) {
+    const wanted = normalizeHeading(dropLeadingHeading)
+    out = out.replace(
+      /^\s*<h[1-6][^>]*>([\s\S]*?)<\/h[1-6]>/i,
+      (full, inner: string) => (normalizeHeading(inner) === wanted ? "" : full)
+    )
+  }
+  return demoteH1(out)
 }

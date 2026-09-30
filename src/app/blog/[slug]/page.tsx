@@ -8,20 +8,31 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
+const TITLE_SUFFIX = " | iGamingUbuntu"
+const MAX_TITLE_LENGTH = 65
+
+function fitSearchTitle(base: string): string | { absolute: string } {
+  const budget = MAX_TITLE_LENGTH - TITLE_SUFFIX.length
+  if (base.length <= budget) return base
+  if (base.length <= MAX_TITLE_LENGTH) return { absolute: base }
+  const cut = base.slice(0, MAX_TITLE_LENGTH - 1).replace(/\s+\S*$/, "").trimEnd()
+  return { absolute: `${cut || base.slice(0, MAX_TITLE_LENGTH - 1)}…` }
+}
+
 function buildArticleMetadata(article: Article, slug: string): Metadata {
-  const title = article.seoTitle || article.title
+  const fullTitle = article.seoTitle || article.title
   const description = article.metaDescription || article.excerpt || ""
   const canonical = article.canonicalUrl || `/blog/${slug}`
   const image = article.ogImage || article.featuredImage
 
   return {
-    title,
+    title: fitSearchTitle(fullTitle),
     description,
     alternates: { canonical },
     ...(article.noindex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       type: "article",
-      title,
+      title: fullTitle,
       description,
       url: canonical,
       siteName: "iGamingUbuntu",
@@ -30,7 +41,7 @@ function buildArticleMetadata(article: Article, slug: string): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: fullTitle,
       description,
       ...(image ? { images: [image] } : {}),
     },

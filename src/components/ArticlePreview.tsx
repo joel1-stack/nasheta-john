@@ -56,7 +56,7 @@ export default function ArticlePreview({
           )}
           <div
             className="prose prose-lg max-w-none text-gray-600 leading-relaxed prose-headings:text-[#111827] prose-a:text-[#f59e0b]"
-            dangerouslySetInnerHTML={{ __html: withParagraphs(content) || "<p>No content yet.</p>" }}
+            dangerouslySetInnerHTML={{ __html: withParagraphs(content, title) || "<p>No content yet.</p>" }}
           />
         </div>
       </div>

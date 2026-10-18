@@ -1,6 +1,25 @@
 import { NextResponse } from "next/server"
 import { getDb } from "@/lib/firebase"
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore"
+
+const SAMPLE_SLUGS = [
+  "african-esports-betting-guide-2026",
+  "best-mobile-betting-apps-kenya-2026",
+  "top-5-online-casinos-kenya-2026",
+  "sportpesa-welcome-bonus-2026",
+  "sa-gambling-rules-2026",
+  "ghana-igaming-conference-2026",
+  "behind-the-desk-igaming-content",
+]
 
 const articles = [
   {
@@ -59,5 +78,25 @@ export async function POST() {
     return NextResponse.json({ success: true, count: results.length, articles: results })
   } catch (error) {
     return NextResponse.json({ error: "Failed to seed articles" }, { status: 500 })
+  }
+}
+
+export async function DELETE() {
+  const fb = getDb()
+  if (!fb) return NextResponse.json({ error: "Firebase not configured" }, { status: 500 })
+
+  try {
+    let deleted = 0
+    for (const slug of SAMPLE_SLUGS) {
+      const q = query(collection(fb, "articles"), where("slug", "==", slug))
+      const snap = await getDocs(q)
+      for (const d of snap.docs) {
+        await deleteDoc(doc(fb, "articles", d.id))
+        deleted++
+      }
+    }
+    return NextResponse.json({ success: true, deleted })
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to delete sample articles" }, { status: 500 })
   }
 }

@@ -29,7 +29,7 @@ export default function NewPostPage() {
 
   const [form, setForm] = useState({
     title: "", slug: "", excerpt: "", content: "", category: "Sports Betting",
-    country: "kenya", featuredImage: "", tags: "", readTime: 5, status: "draft",
+    country: "kenya", featuredImage: "", featuredImageAlt: "", tags: "", readTime: 5, status: "draft",
     seoTitle: "", metaDescription: "", canonicalUrl: "", noindex: false, ogImage: "",
     authorName: "Nasheta John", authorBio: "", authorPhoto: "",
     isSponsored: false, sponsorName: "", isPressRelease: false, pressReleaseSource: "",
@@ -86,6 +86,7 @@ export default function NewPostPage() {
         category: form.category,
         country: form.country,
         featuredImage: form.featuredImage,
+        featuredImageAlt: form.featuredImageAlt,
         tags: form.tags.split(",").map((t) => t.trim()),
         readTime: form.readTime,
         author: "iGamingUbuntu",
@@ -211,7 +212,9 @@ export default function NewPostPage() {
           <ImageUpload
             label="Featured Image"
             value={form.featuredImage}
+            alt={form.featuredImageAlt}
             onChange={(url) => setForm((f) => ({ ...f, featuredImage: url }))}
+            onAltChange={(alt) => setForm((f) => ({ ...f, featuredImageAlt: alt }))}
             folder="articles/featured"
           />
         </div>

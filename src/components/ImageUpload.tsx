@@ -6,6 +6,8 @@ import { CLOUDINARY_FOLDER, uploadToCloudinary } from "@/lib/cloudinary"
 interface ImageUploadProps {
   value: string
   onChange: (url: string) => void
+  alt?: string
+  onAltChange?: (alt: string) => void
   label?: string
   folder?: string
   className?: string
@@ -17,6 +19,8 @@ const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/g
 export default function ImageUpload({
   value,
   onChange,
+  alt,
+  onAltChange,
   label = "Image",
   folder = "articles",
   className = "",
@@ -66,6 +70,12 @@ export default function ImageUpload({
           onChange={(e) => onChange(e.target.value)}
           className="flex-1 px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
           placeholder="https://... or upload"
+        />
+        <input
+          value={alt || ""}
+          onChange={(e) => onAltChange?.(e.target.value)}
+          className="flex-1 px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
+          placeholder="Alt text (for accessibility & SEO)"
         />
         <button
           type="button"

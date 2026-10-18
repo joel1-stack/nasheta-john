@@ -93,7 +93,7 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
 
             <div className="relative rounded-lg overflow-hidden mb-5">
               {article.featuredImage ? (
-                <img src={article.featuredImage} alt={article.title} width={1200} height={675} loading="lazy" className="w-full aspect-[16/9] object-cover" />
+                <img src={article.featuredImage} alt={article.featuredImageAlt || article.title} width={1200} height={675} loading="lazy" className="w-full aspect-[16/9] object-cover" />
               ) : (
                 <div
                   className="w-full aspect-[16/9] bg-cover bg-center flex items-center justify-center"

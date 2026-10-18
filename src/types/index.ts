@@ -15,6 +15,7 @@ export interface Article {
   category: string
   country: string
   featuredImage: string
+  featuredImageAlt?: string
   tags: string[]
   readTime: number
   author: string

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 import { getArticleBySlug } from "@/lib/firestoreService"
 import ArticleView from "./article-view"
 import type { Article } from "@/types"
@@ -19,10 +20,22 @@ function fitSearchTitle(base: string): string | { absolute: string } {
   return { absolute: `${cut || base.slice(0, MAX_TITLE_LENGTH - 1)}…` }
 }
 
+function isValidCanonical(value: string, slug: string): boolean {
+  if (!value || value.trim() === "") return false
+  const trimmed = value.trim()
+  const pathRegex = /^\/blog\/[a-z0-9-]+$/
+  const urlRegex = /^https:\/\/www\.igamingubuntu\.com\/blog\/[a-z0-9-]+$/
+  return pathRegex.test(trimmed) || urlRegex.test(trimmed)
+}
+
 function buildArticleMetadata(article: Article, slug: string): Metadata {
   const fullTitle = article.seoTitle || article.title
   const description = article.metaDescription || article.excerpt || ""
-  const canonical = article.canonicalUrl || `/blog/${slug}`
+  const canonical = isValidCanonical(article.canonicalUrl || "", slug)
+    ? article.canonicalUrl!.startsWith("http")
+      ? article.canonicalUrl!
+      : `https://www.igamingubuntu.com${article.canonicalUrl!}`
+    : `https://www.igamingubuntu.com/blog/${slug}`
   const image = article.ogImage || article.featuredImage
 
   return {
@@ -60,19 +73,14 @@ export default async function BlogArticlePage({ params }: PageProps) {
   const article = await getArticleBySlug(slug)
 
   if (!article) {
-    return (
-      <div className="max-w-4xl mx-auto px-4 py-24 text-center animate-fade-up bg-white min-h-screen">
-        <svg className="w-16 h-16 mx-auto mb-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01M5.07 19h13.86a2 2 0 001.74-3L13.74 4a2 2 0 00-3.48 0L3.34 16a2 2 0 001.73 3z" />
-        </svg>
-        <h1 className="text-2xl font-bold text-[#1A1F2B] mb-2">Article Not Found</h1>
-        <p className="text-[#6B7280]">The article you&apos;re looking for doesn&apos;t exist or has been moved.</p>
-        <Link href="/blog" className="inline-block mt-4 text-[#22C55E] font-medium hover:underline">&larr; Back to Blog</Link>
-      </div>
-    )
+    notFound()
   }
 
-  const articleUrl = article.canonicalUrl || `https://www.igamingubuntu.com/blog/${article.slug}`
+  const articleUrl = isValidCanonical(article.canonicalUrl || "", slug)
+    ? article.canonicalUrl!.startsWith("http")
+      ? article.canonicalUrl!
+      : `https://www.igamingubuntu.com${article.canonicalUrl!}`
+    : `https://www.igamingubuntu.com/blog/${article.slug}`
   const rawImage = article.ogImage || article.featuredImage || ""
   const absoluteImage = rawImage.startsWith("http")
     ? rawImage

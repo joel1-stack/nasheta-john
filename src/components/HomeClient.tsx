@@ -108,10 +108,9 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
                 </Link>
               </div>
 
-              <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-8 border-t border-white/5 transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "1400ms" }}>
+              <div className={`grid grid-cols-2 md:grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/5 transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "1400ms" }}>
                 <StatItem target={5} label="Years in iGaming" />
-                <StatItem target={100} label="Articles Published" />
-                <StatItem target={15} label="African Markets" />
+                <StatItem target={5} label="Markets Covered" />
                 <StatItem target={5} label="Countries Covered" />
               </div>
             </div>
@@ -119,28 +118,7 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
         </div>
       </section>
 
-      <section className="py-10 border-t border-white/5 relative overflow-hidden">
-        <AfricaWatermark className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[360px] text-white/[0.02] pointer-events-none" />
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <p className="text-center text-xs text-[#56525E] uppercase tracking-widest mb-6">Trusted by Leading Operators</p>
-          <div className="overflow-hidden">
-            <div className="flex animate-marquee gap-16 w-max">
-              {[...Array(2)].map((_, idx) => (
-                <div key={idx} className="flex gap-16 items-center">
-                  {["SportPesa", "Betika", "1xBet", "Betway", "22Bet", "Melbet", "HollywoodBets", "Bet9ja"].map((brand) => (
-                    <span key={brand} className="text-lg font-bold text-[#56525E] opacity-60 hover:opacity-100 hover:text-[#FCFBFB] transition-all duration-300 whitespace-nowrap">
-                      {brand}
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-[#772953]/8 blur-[100px] -translate-y-1/2 animate-orb-drift-slow" />
         <div className="max-w-5xl mx-auto px-4">
           <ScrollReveal>
             <div className="glass-card rounded-3xl p-8 md:p-12">

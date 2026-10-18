@@ -34,7 +34,7 @@ export default function EditPostPage() {
 
   const [form, setForm] = useState({
     title: "", slug: "", excerpt: "", content: "", category: "Sports Betting",
-    country: "kenya", featuredImage: "", tags: "", readTime: 5, status: "draft",
+    country: "kenya", featuredImage: "", featuredImageAlt: "", tags: "", readTime: 5, status: "draft",
     seoTitle: "", metaDescription: "", canonicalUrl: "", noindex: false, ogImage: "",
     authorName: "", authorBio: "", authorPhoto: "",
     isSponsored: false, sponsorName: "", isPressRelease: false, pressReleaseSource: "",
@@ -69,6 +69,7 @@ export default function EditPostPage() {
             category: article.category,
             country: article.country,
             featuredImage: article.featuredImage,
+            featuredImageAlt: article.featuredImageAlt || "",
             tags: Array.isArray(article.tags) ? article.tags.join(", ") : article.tags || "",
             readTime: article.readTime,
             status: article.status,
@@ -133,6 +134,7 @@ export default function EditPostPage() {
         canonicalUrl: form.canonicalUrl,
         noindex: form.noindex,
         ogImage: form.ogImage,
+        featuredImageAlt: form.featuredImageAlt,
         authorName: form.authorName,
         authorBio: form.authorBio,
         authorPhoto: form.authorPhoto,
@@ -256,7 +258,9 @@ export default function EditPostPage() {
           <ImageUpload
             label="Featured Image"
             value={form.featuredImage}
+            alt={form.featuredImageAlt}
             onChange={(url) => setForm((f) => ({ ...f, featuredImage: url }))}
+            onAltChange={(alt) => setForm((f) => ({ ...f, featuredImageAlt: alt }))}
             folder="articles/featured"
           />
         </div>

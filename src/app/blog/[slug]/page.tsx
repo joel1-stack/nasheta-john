@@ -9,6 +9,8 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
+export const dynamic = "force-dynamic"
+
 const TITLE_SUFFIX = " | iGamingUbuntu"
 const MAX_TITLE_LENGTH = 65
 

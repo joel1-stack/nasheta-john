@@ -36,15 +36,29 @@ function StatItem({ target, label }: { target: number; label: string }) {
   const count = useCountUp(target, visible)
   return (
     <div ref={ref} className="text-center">
-      <span className="text-3xl md:text-4xl font-light text-[#FCFBFB] tabular-nums">{count}{target >= 100 ? "+" : "+"}</span>
+      <span className="text-3xl md:text-4xl font-light text-[#FCFBFB] tabular-nums">{count}</span>
       <p className="text-xs text-[#56525E] uppercase tracking-wider mt-1">{label}</p>
     </div>
   )
 }
 
-export default function HomeClient({ initialArticles = [] }: { initialArticles?: Article[] }) {
+export interface HomeStats {
+  articles: number
+  markets: number
+  guides: number
+}
+
+export default function HomeClient({
+  initialArticles = [],
+  stats,
+}: {
+  initialArticles?: Article[]
+  stats?: HomeStats
+}) {
   const [heroLoaded, setHeroLoaded] = useState(false)
   const [articles] = useState<Article[]>(initialArticles)
+  // All three figures come from the CMS, so they cannot drift out of date.
+  const homeStats: HomeStats = stats || { articles: initialArticles.length, markets: 0, guides: 0 }
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => setHeroLoaded(true))
@@ -108,9 +122,9 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
               </div>
 
               <div className={`grid grid-cols-2 md:grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/5 transition-all duration-700 ease-out ${heroLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "1400ms" }}>
-                <StatItem target={5} label="Years in iGaming" />
-                <StatItem target={5} label="Markets Covered" />
-                <StatItem target={5} label="Countries Covered" />
+                <StatItem target={homeStats.articles} label="Articles Published" />
+                <StatItem target={homeStats.markets} label="Markets Covered" />
+                <StatItem target={homeStats.guides} label="Country Guides" />
               </div>
             </div>
           </div>

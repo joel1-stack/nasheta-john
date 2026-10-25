@@ -42,6 +42,17 @@ function normalize(value?: string): string {
   return (value || "").trim().toLowerCase().replace(/[\s_]+/g, "-")
 }
 
+/** Tolerates "Regulation" vs "Regulations" and similar CMS inconsistencies. */
+function normalizeCategory(value?: string): string {
+  return normalize(value).replace(/s$/, "")
+}
+
+export function sameCategory(a?: string, b?: string): boolean {
+  const left = normalizeCategory(a)
+  const right = normalizeCategory(b)
+  return !!left && left === right
+}
+
 /** All publicly visible articles, newest first. */
 export async function getAllPublicArticles(): Promise<Article[]> {
   const fb = getDb()
@@ -68,7 +79,7 @@ export async function queryArticles(opts: QueryOptions = {}): Promise<QueryResul
   let articles = await getAllPublicArticles()
 
   if (category && category !== "All") {
-    articles = articles.filter((a) => normalize(a.category) === normalize(category))
+    articles = articles.filter((a) => sameCategory(a.category, category))
   }
   if (country && country !== "general") {
     articles = articles.filter((a) =>
@@ -134,7 +145,7 @@ export async function getRelatedArticles(article: Article, count = 4): Promise<A
   }
 
   if (targetCategory) {
-    pool.filter((a) => normalize(a.category) === targetCategory).forEach(push)
+    pool.filter((a) => sameCategory(a.category, article.category)).forEach(push)
   }
 
   // Fill up with the newest remaining articles so the block is never empty.

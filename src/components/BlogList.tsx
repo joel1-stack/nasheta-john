@@ -273,7 +273,9 @@ export default function BlogList({
           </div>
 
           <div className="w-full lg:w-[350px] shrink-0 space-y-6 lg:sticky lg:top-24 lg:self-start">
-            {popular.length > 0 && (
+            {/* Real CMS view counts only: hidden until at least three articles
+                have been read, so there is no placeholder content. */}
+            {popular.length >= 3 && (
               <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
                 <div className="flex items-center justify-between mb-4 border-l-4 border-[#22C55E] pl-3">
                   <h3 className="font-bold text-[#1A1F2B] text-sm uppercase tracking-wide">Most Read</h3>

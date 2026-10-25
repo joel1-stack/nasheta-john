@@ -35,7 +35,9 @@ export default function Sidebar({ popularPosts }: SidebarProps) {
     <aside className="space-y-6 lg:sticky lg:top-24">
       <AdSlot position="sidebar-1" />
 
-      {popularPosts && popularPosts.length > 0 && (
+      {/* "Most Read" only appears once there are real view counts for at least
+          three articles — no placeholder or sample articles, ever. */}
+      {popularPosts && popularPosts.length >= 3 && (
         <div className="bg-white rounded-xl border border-gray-200 p-5 animate-fade-up shadow-sm">
           <div className="flex items-center justify-between mb-4 border-l-4 border-[#22C55E] pl-3">
             <h3 className="font-bold text-[#1A1F2B] text-sm uppercase tracking-wide">Most Read</h3>

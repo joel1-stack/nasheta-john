@@ -2,7 +2,8 @@ import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import SectionHeader from "@/components/SectionHeader"
 import ArticleGrid from "@/components/ArticleGrid"
-import { queryArticles } from "@/lib/serverArticles"
+import { getLatestArticles, queryArticles } from "@/lib/serverArticles"
+import type { Article } from "@/types"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -14,8 +15,23 @@ export const metadata: Metadata = {
 
 export const revalidate = 300
 
+/** Categories that hold how-to material. */
+const GUIDE_CATEGORIES = ["Guides", "Betting Tips", "Payments", "Sports Betting"]
+
 export default async function GuidesPage() {
-  const { articles } = await queryArticles({ category: "Guides", perPage: 9 })
+  // Prefer genuine how-to articles; if none are published yet, fall back to the
+  // newest published articles instead of showing an empty page.
+  let articles: Article[] = []
+  for (const category of GUIDE_CATEGORIES) {
+    const result = await queryArticles({ category, perPage: 9 })
+    articles = result.articles
+    if (articles.length > 0) break
+  }
+
+  const usingFallback = articles.length === 0
+  if (usingFallback) {
+    articles = await getLatestArticles(9)
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-5 pb-16">
@@ -26,6 +42,12 @@ export default async function GuidesPage() {
       />
 
       <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
+
+      {usingFallback && (
+        <p className="text-sm text-gray-500 mb-6">
+          Latest guides and explainers from the editorial desk.
+        </p>
+      )}
 
       <ArticleGrid
         articles={articles}

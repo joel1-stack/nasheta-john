@@ -5,7 +5,6 @@ import Link from "next/link"
 import { formatDate } from "@/lib/utils"
 import AdSlot from "@/components/AdSlot"
 import Sidebar from "@/components/Sidebar"
-import { incrementViews } from "@/lib/firestoreService"
 import { finalizeArticleHtml } from "@/lib/contentHtml"
 import { isSponsoredStatus } from "@/lib/site"
 import type { Article } from "@/types"
@@ -26,8 +25,18 @@ export default function ArticleView({ initialArticle, related = [], popular = []
 
   useEffect(() => {
     if (!article?.id) return
-    incrementViews(article.id)
-      .then(() => setViewCount((current) => current + 1))
+    // Real view count: incremented server-side (Firestore rules block writes
+    // from the browser), and skipped for the owner's own visits.
+    fetch("/api/track-view", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ articleId: article.id }),
+      keepalive: true,
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.counted && typeof data.views === "number") setViewCount(data.views)
+      })
       .catch(() => {})
   }, [article?.id])
 

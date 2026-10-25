@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useRef, useState } from "react"
 
@@ -9,6 +9,24 @@ export interface AffiliateOffer {
   linkId?: string
   imageUrl?: string
   ctaLabel?: string
+  /** Campaign status from the CMS "Affiliate Links" section. */
+  status?: "active" | "paused" | "expired"
+}
+
+/**
+ * Only offers that come from the CMS "Affiliate Links" section may be shown.
+ * A CMS offer has a linkId, which routes through /go/<id> where the campaign
+ * status is checked. Hardcoded developer placeholders (SportPesa, 1xBet,
+ * Betika, ...) have no linkId and are therefore never rendered.
+ */
+export function isBookableOffer(offer: AffiliateOffer): boolean {
+  if (!offer || !offer.linkId) return false
+  if (offer.status && offer.status !== "active") return false
+  return true
+}
+
+export function bookableOffers(offers: AffiliateOffer[]): AffiliateOffer[] {
+  return (offers || []).filter(isBookableOffer)
 }
 
 interface AffiliateBannerProps {
@@ -100,20 +118,23 @@ export default function AffiliateBanner({
   const [active, setActive] = useState(0)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
+  // Placeholder offers are hidden: nothing renders without live CMS campaigns.
+  const liveOffers = bookableOffers(offers)
+
   useEffect(() => {
-    if (offers.length <= 1 || variant === "marquee") return
+    if (liveOffers.length <= 1 || variant === "marquee") return
     timerRef.current = setInterval(() => {
-      setActive((i) => (i + 1) % offers.length)
+      setActive((i) => (i + 1) % liveOffers.length)
     }, 5000)
     return () => {
       if (timerRef.current) clearInterval(timerRef.current)
     }
-  }, [offers.length, variant])
+  }, [liveOffers.length, variant])
 
-  if (!offers.length) return null
+  if (!liveOffers.length) return null
 
   if (variant === "marquee") {
-    const doubled = [...offers, ...offers]
+    const doubled = [...liveOffers, ...liveOffers]
     return (
       <div className={`relative rounded-xl overflow-hidden border border-amber-300/40 bg-gradient-to-r from-[#0F0A1A] via-[#772953] to-[#E95420] ${className}`}>
         <div className="absolute top-1 left-3 z-10 text-[9px] uppercase tracking-widest text-white/60 bg-black/30 px-2 py-0.5 rounded">Sponsored</div>
@@ -141,14 +162,13 @@ export default function AffiliateBanner({
     )
   }
 
-  const offer = offers[Math.min(active, offers.length - 1)]
-  const gradient = gradients[active % gradients.length]
+  const offer = liveOffers[Math.min(active, liveOffers.length - 1)]
 
   if (variant === "sidebar") {
     return (
       <div className={`space-y-3 ${className}`}>
         {title && <p className="text-xs font-bold uppercase tracking-wider text-[#1A1F2B] mb-1">{title}</p>}
-        {offers.slice(0, 3).map((o, i) => (
+        {liveOffers.slice(0, 3).map((o, i) => (
           <a
             key={i}
             href={getHref(o)}
@@ -178,7 +198,7 @@ export default function AffiliateBanner({
         <div className="flex items-center justify-between mb-3 relative z-10">
           <span className="text-[10px] uppercase tracking-widest bg-white/15 px-2 py-0.5 rounded">Sponsored</span>
           <div className="flex gap-1.5">
-            {offers.map((_, i) => (
+            {liveOffers.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setActive(i)}
@@ -204,7 +224,7 @@ export default function AffiliateBanner({
         >
           {offer.ctaLabel || "CLAIM OFFER →"}
         </a>
-        <p className="text-[10px] text-white/50 mt-2 relative z-10">18+ · T&Cs apply · Affiliate link</p>
+        <p className="text-[10px] text-white/50 mt-2 relative z-10">18+ · T&amp;Cs apply · Affiliate link</p>
       </div>
     )
   }
@@ -216,7 +236,7 @@ export default function AffiliateBanner({
           <div className="flex items-center gap-2 mb-3">
             <span className="text-[10px] uppercase tracking-widest bg-white/15 px-2 py-0.5 rounded">Sponsored</span>
             <div className="flex gap-1.5">
-              {offers.map((_, i) => (
+              {liveOffers.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setActive(i)}

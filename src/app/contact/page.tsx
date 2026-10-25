@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ScrollReveal } from "@/lib/scrollReveal"
 import LetterReveal from "@/components/LetterReveal"
+import { trackLead } from "@/lib/analytics"
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false)
@@ -38,6 +39,7 @@ export default function ContactPage() {
       })
       if (!res.ok) throw new Error("Failed")
       setSent(true)
+      trackLead("contact")
     } catch {
       setError("Failed to send. Please email directly or try again.")
     } finally {

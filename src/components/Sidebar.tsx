@@ -1,6 +1,5 @@
 import AdSlot from "./AdSlot"
 import Newsletter from "./Newsletter"
-import AffiliateBanner from "./AffiliateBanner"
 import Link from "next/link"
 import Image from "next/image"
 import type { Article } from "@/types"
@@ -8,13 +7,6 @@ import type { Article } from "@/types"
 interface SidebarProps {
   popularPosts?: Article[]
 }
-
-const sidebarOffers = [
-  { operatorName: "SportPesa", bonusText: "200% Welcome Bonus up to KES 5,000 · M-Pesa", url: "https://sportpesa.com/?ref=igamingubuntu" },
-  { operatorName: "1xBet", bonusText: "100% Deposit Bonus + $100 Free Bet", url: "https://1xbet.com/?btag=igamingubuntu" },
-  { operatorName: "Betika", bonusText: "Free Bet on First Deposit · Instant Withdrawals", url: "https://betika.com/?aff=igamingubuntu" },
-  { operatorName: "Betway", bonusText: "Up to $50 in Free Bets · Trusted Brand", url: "https://betway.com/?aff=igamingubuntu" },
-]
 
 function getFlagUrl(slug: string): string {
   const map: Record<string, string> = {
@@ -36,10 +28,11 @@ const categories = [
 ]
 
 export default function Sidebar({ popularPosts }: SidebarProps) {
+  // Developer-placeholder offer boxes are hidden until real, active campaigns
+  // from the CMS "Affiliate Links" section exist (see AffiliateBanner).
+
   return (
     <aside className="space-y-6 lg:sticky lg:top-24">
-      <AffiliateBanner offers={sidebarOffers} variant="sidebar" title="Top Offers" placement="sidebar" />
-
       <AdSlot position="sidebar-1" />
 
       {popularPosts && popularPosts.length > 0 && (
@@ -59,7 +52,7 @@ export default function Sidebar({ popularPosts }: SidebarProps) {
                 {post.featuredImage && (
                   <img
                     src={post.featuredImage}
-                    alt={post.title}
+                    alt={post.featuredImageAlt || post.title}
                     width={80}
                     height={60}
                     loading="lazy"
@@ -72,7 +65,7 @@ export default function Sidebar({ popularPosts }: SidebarProps) {
                   </p>
                   <div className="flex items-center gap-2 text-xs text-[#6B7280] mt-1.5">
                     <span>{post.views.toLocaleString()} views</span>
-                    <span>· {post.readTime} min</span>
+                    <span>· {post.readTime || 3} min</span>
                   </div>
                 </div>
               </Link>

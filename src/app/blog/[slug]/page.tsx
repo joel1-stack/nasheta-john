@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getArticleBySlug } from "@/lib/firestoreService"
+import { getPopularArticles, getRelatedArticles } from "@/lib/serverArticles"
+import { absoluteUrl, isSponsoredStatus } from "@/lib/site"
 import ArticleView from "./article-view"
 import type { Article } from "@/types"
 
@@ -22,7 +23,7 @@ function fitSearchTitle(base: string): string | { absolute: string } {
   return { absolute: `${cut || base.slice(0, MAX_TITLE_LENGTH - 1)}…` }
 }
 
-function isValidCanonical(value: string, slug: string): boolean {
+function isValidCanonical(value: string): boolean {
   if (!value || value.trim() === "") return false
   const trimmed = value.trim()
   const pathRegex = /^\/blog\/[a-z0-9-]+$/
@@ -30,14 +31,19 @@ function isValidCanonical(value: string, slug: string): boolean {
   return pathRegex.test(trimmed) || urlRegex.test(trimmed)
 }
 
-function buildArticleMetadata(article: Article, slug: string): Metadata {
+/** Empty canonical field falls back to the article's own URL. */
+function resolveCanonical(article: Article): string {
+  const raw = (article.canonicalUrl || "").trim()
+  if (isValidCanonical(raw)) {
+    return raw.startsWith("http") ? raw : `https://www.igamingubuntu.com${raw}`
+  }
+  return `https://www.igamingubuntu.com/blog/${article.slug}`
+}
+
+function buildArticleMetadata(article: Article): Metadata {
   const fullTitle = article.seoTitle || article.title
   const description = article.metaDescription || article.excerpt || ""
-  const canonical = isValidCanonical(article.canonicalUrl || "", slug)
-    ? article.canonicalUrl!.startsWith("http")
-      ? article.canonicalUrl!
-      : `https://www.igamingubuntu.com${article.canonicalUrl!}`
-    : `https://www.igamingubuntu.com/blog/${slug}`
+  const canonical = resolveCanonical(article)
   const image = article.ogImage || article.featuredImage
 
   return {
@@ -53,6 +59,7 @@ function buildArticleMetadata(article: Article, slug: string): Metadata {
       siteName: "iGamingUbuntu",
       ...(image ? { images: [{ url: image }] } : {}),
       ...(article.createdAt ? { publishedTime: article.createdAt } : {}),
+      ...(article.updatedAt ? { modifiedTime: article.updatedAt } : {}),
     },
     twitter: {
       card: "summary_large_image",
@@ -66,30 +73,33 @@ function buildArticleMetadata(article: Article, slug: string): Metadata {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const article = await getArticleBySlug(slug)
-  if (!article) return { title: "Article Not Found" }
-  return buildArticleMetadata(article, slug)
+  if (!article) notFound()
+  return buildArticleMetadata(article)
 }
 
 export default async function BlogArticlePage({ params }: PageProps) {
   const { slug } = await params
   const article = await getArticleBySlug(slug)
 
+  // Soft 404 fix: an unknown slug now returns a real HTTP 404.
   if (!article) {
     notFound()
   }
 
-  const articleUrl = isValidCanonical(article.canonicalUrl || "", slug)
-    ? article.canonicalUrl!.startsWith("http")
-      ? article.canonicalUrl!
-      : `https://www.igamingubuntu.com${article.canonicalUrl!}`
-    : `https://www.igamingubuntu.com/blog/${article.slug}`
+  // Related articles and the "Most Read" list are computed on the server so
+  // their links are in the HTML that Google receives.
+  const [related, popular] = await Promise.all([getRelatedArticles(article, 4), getPopularArticles(5)])
+
+  const articleUrl = resolveCanonical(article)
   const rawImage = article.ogImage || article.featuredImage || ""
-  const absoluteImage = rawImage.startsWith("http")
-    ? rawImage
-    : rawImage
-      ? `https://www.igamingubuntu.com${rawImage.startsWith("/") ? "" : "/"}${rawImage}`
-      : "https://www.igamingubuntu.com/images/nasheta.png"
+  const absoluteImage = rawImage
+    ? rawImage.startsWith("http")
+      ? rawImage
+      : absoluteUrl(rawImage.startsWith("/") ? rawImage : `/${rawImage}`)
+    : absoluteUrl("/images/nasheta.png")
   const description = article.metaDescription || article.excerpt || ""
+  const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
+
   const ldJson = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -97,23 +107,33 @@ export default async function BlogArticlePage({ params }: PageProps) {
     ...(description ? { description } : {}),
     image: absoluteImage,
     ...(article.createdAt ? { datePublished: article.createdAt } : {}),
-    ...(article.updatedAt ? { dateModified: article.updatedAt } : {}),
+    // dateModified only when the article was actually edited after publishing.
+    ...(wasUpdated ? { dateModified: article.updatedAt } : {}),
     author: {
       "@type": "Person",
       name: article.authorName || article.author || "Nasheta John",
-      ...(article.authorBio ? { description: article.authorBio } : { description: "iGaming content specialist covering African markets" }),
+      ...(article.authorBio
+        ? { description: article.authorBio }
+        : { description: "iGaming content specialist covering African markets" }),
     },
     publisher: {
       "@type": "Organization",
       name: "iGamingUbuntu",
-      logo: { "@type": "ImageObject", url: "https://www.igamingubuntu.com/favicon.png" },
+      logo: { "@type": "ImageObject", url: absoluteUrl("/favicon.png") },
     },
+    ...(isSponsoredStatus(article.status) ? { isAccessibleForFree: true } : {}),
     mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
   }
 
   return (
     <>
-      <ArticleView key={slug} initialArticle={article} />
+      <ArticleView
+        key={slug}
+        initialArticle={article}
+        related={related}
+        popular={popular}
+        canonicalUrl={articleUrl}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ldJson) }}

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { trackLead } from "@/lib/analytics"
 
 export default function WorkWithMePage() {
   const [sent, setSent] = useState(false)
@@ -33,6 +34,7 @@ export default function WorkWithMePage() {
       })
       if (!res.ok) throw new Error("Failed")
       setSent(true)
+      trackLead("quote")
     } catch {
       setError("Failed to send. Please email directly or try again.")
     } finally {

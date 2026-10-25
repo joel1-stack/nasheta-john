@@ -1,4 +1,3 @@
-import Link from "next/link"
 import AdSlot from "@/components/AdSlot"
 import AffiliateBox from "@/components/AffiliateBox"
 import SectionHeader from "@/components/SectionHeader"
@@ -19,10 +18,13 @@ const casinoReviews = [
   { name: "22Bet", rating: 4.4, bonus: "100% Welcome Bonus", payments: "M-Pesa, Crypto, Card", license: "Curacao", logo: "/images/sports betting analytics.png" },
 ]
 
+// Plain links to the operators' own sites. No affiliate/placeholder tracking
+// tags are used until a real campaign exists in the CMS "Affiliate Links"
+// section, so this page cannot imply a partnership that does not exist.
 const topSites = casinoReviews.map((c) => ({
   operatorName: c.name,
   bonusText: `${c.bonus} — ${c.payments}`,
-  url: `https://${c.name.toLowerCase()}.com/?ref=igamingubuntu`,
+  url: `https://www.${c.name.toLowerCase()}.com`,
 }))
 
 const ratingCriteria = [
@@ -88,7 +90,7 @@ export default function ReviewsPage() {
                   <a
                     href={topSites.find((s) => s.operatorName === c.name)?.url || "#"}
                     target="_blank"
-                    rel="nofollow sponsored"
+                    rel="noopener"
                     className="inline-block bg-gold text-black font-bold px-5 py-2.5 rounded-lg text-sm hover:bg-gold/90 transition shadow-md shadow-gold/20"
                   >
                     Join Now

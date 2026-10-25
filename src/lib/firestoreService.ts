@@ -19,6 +19,7 @@ import {
   DocumentData,
 } from "firebase/firestore"
 import type { Article, AffiliateLink, ContactMessage, Operator, Category, SiteSettings, ClickEvent } from "@/types"
+import { isPublicStatus, REMOVED_DEMO_SLUG_SET, PUBLIC_ARTICLE_STATUSES } from "@/lib/site"
 
 const ARTICLES = "articles"
 const AFFILIATE_LINKS = "affiliateLinks"
@@ -54,7 +55,7 @@ export async function getPublishedArticlesPage(
   try {
     // Build constraints
     const constraints: QueryConstraint[] = [
-      where("status", "==", "published"),
+      where("status", "in", [...PUBLIC_ARTICLE_STATUSES]),
       orderBy("createdAt", "desc"),
     ]
 
@@ -106,10 +107,7 @@ export async function getAllPublishedArticles(limitCount?: number): Promise<Arti
   const fb = getDb()
   if (!fb) return []
   try {
-    const constraints: QueryConstraint[] = [
-      where("status", "==", "published"),
-      orderBy("createdAt", "desc"),
-    ]
+    const constraints: QueryConstraint[] = [where("status", "in", [...PUBLIC_ARTICLE_STATUSES]), orderBy("createdAt", "desc")]
     if (limitCount) constraints.push(fbLimit(limitCount))
     const snap = await getDocs(query(collection(fb, ARTICLES), ...constraints))
     return snap.docs.map(toArticle)
@@ -141,7 +139,7 @@ export async function getArticlesByCategory(
   if (!fb) return []
   try {
     const constraints: QueryConstraint[] = [
-      where("status", "==", "published"),
+      where("status", "in", [...PUBLIC_ARTICLE_STATUSES]),
       where("category", "==", category),
       orderBy("createdAt", "desc"),
     ]
@@ -166,17 +164,17 @@ export async function getArticleById(id: string): Promise<Article | null> {
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   const fb = getDb()
-  if (!fb) return null
+  if (!fb || !slug) return null
+  // A removed demo slug must 404 (and be redirected) instead of rendering.
+  if (REMOVED_DEMO_SLUG_SET.has(slug)) return null
   try {
-    const q = query(
-      collection(fb, ARTICLES),
-      where("slug", "==", slug),
-      where("status", "==", "published"),
-      fbLimit(1)
-    )
+    const q = query(collection(fb, ARTICLES), where("slug", "==", slug), fbLimit(10))
     const snap = await getDocs(q)
-    if (snap.empty) return null
-    return toArticle(snap.docs[0])
+    const match = snap.docs
+      .map(toArticle)
+      .filter((a) => isPublicStatus(a.status))
+      .sort((a, b) => (b.updatedAt || "").localeCompare(a.updatedAt || ""))[0]
+    return match || null
   } catch {
     return null
   }

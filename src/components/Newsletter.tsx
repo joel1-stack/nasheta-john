@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { trackLead } from "@/lib/analytics"
 
 export default function Newsletter() {
   const [email, setEmail] = useState("")
@@ -22,6 +23,8 @@ export default function Newsletter() {
       if (!res.ok) throw new Error("Failed")
       setSubscribed(true)
       setEmail("")
+      // GA4: newsletter sign-up converted.
+      trackLead("newsletter")
     } catch {
       setError("Failed to subscribe. Try again.")
     } finally {

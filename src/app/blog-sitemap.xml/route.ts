@@ -1,6 +1,5 @@
 import { queryArticles } from "@/lib/serverArticles"
-
-const BASE_URL = "https://www.igamingubuntu.com"
+import { SITE_URL, STATIC_PAGE_LASTMOD } from "@/lib/site"
 
 const blogHubPaths = [
   "/blog",
@@ -37,23 +36,30 @@ function escapeXml(value: string): string {
     .replace(/'/g, "&apos;")
 }
 
+function isoDay(value?: string): string | null {
+  if (!value) return null
+  const parsed = new Date(value)
+  if (isNaN(parsed.getTime())) return null
+  return parsed.toISOString().slice(0, 10)
+}
+
 export const dynamic = "force-dynamic"
 
 export async function GET(): Promise<Response> {
-  const today = new Date().toISOString().slice(0, 10)
   const { articles } = await queryArticles({ page: 1, perPage: 10000 })
 
   const entries: { loc: string; lastmod: string }[] = blogHubPaths.map((path) => ({
-    loc: `${BASE_URL}${path}`,
-    lastmod: today,
+    loc: `${SITE_URL}${path}`,
+    // Fixed date for hub pages, not the build time.
+    lastmod: STATIC_PAGE_LASTMOD,
   }))
 
   for (const article of articles) {
     if (!article.slug) continue
-    const lastmod = (article.updatedAt || article.createdAt || today).slice(0, 10)
+    const lastmod = isoDay(article.updatedAt) || isoDay(article.createdAt) || STATIC_PAGE_LASTMOD
     entries.push({
-      loc: `${BASE_URL}/blog/${article.slug}`,
-      lastmod: /^\d{4}-\d{2}-\d{2}$/.test(lastmod) ? lastmod : today,
+      loc: `${SITE_URL}/blog/${article.slug}`,
+      lastmod,
     })
   }
 

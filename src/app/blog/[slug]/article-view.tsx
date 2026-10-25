@@ -5,78 +5,34 @@ import Link from "next/link"
 import { formatDate } from "@/lib/utils"
 import AdSlot from "@/components/AdSlot"
 import Sidebar from "@/components/Sidebar"
-import AffiliateBox from "@/components/AffiliateBox"
-import AffiliateBanner from "@/components/AffiliateBanner"
-import { incrementViews, getAffiliateLinks } from "@/lib/firestoreService"
-import { withParagraphs } from "@/lib/contentHtml"
+import { incrementViews } from "@/lib/firestoreService"
+import { finalizeArticleHtml } from "@/lib/contentHtml"
+import { isSponsoredStatus } from "@/lib/site"
 import type { Article } from "@/types"
 
 interface ArticleViewProps {
   initialArticle: Article
+  /** Related articles, server-rendered by the page (same country, then category). */
+  related?: Article[]
+  popular?: Article[]
+  canonicalUrl?: string
 }
 
-export default function ArticleView({ initialArticle }: ArticleViewProps) {
-  const [article] = useState<Article | null>(initialArticle)
-  const [related, setRelated] = useState<Article[]>([])
-  const [popular, setPopular] = useState<Article[]>([])
-  const [affiliateLinks, setAffiliateLinks] = useState<{ operatorName: string; bonusText: string; url: string; linkId: string; imageUrl?: string; ctaLabel?: string }[]>([])
-  const viewCount = (initialArticle.views || 0) + 1
+export default function ArticleView({ initialArticle, related = [], popular = [], canonicalUrl }: ArticleViewProps) {
+  const article = initialArticle
+  const [viewCount, setViewCount] = useState(initialArticle.views || 0)
 
-  const slug = initialArticle.slug
+  const sponsored = isSponsoredStatus(initialArticle.status)
 
   useEffect(() => {
-    if (!article) return
-    incrementViews(article.id).catch(() => {})
-
-    getAffiliateLinks(article.id)
-      .then((links) => {
-        setAffiliateLinks(
-          links.map((l) => ({
-            operatorName: l.operatorName,
-            bonusText: l.bonusText,
-            url: l.url,
-            linkId: l.id,
-            imageUrl: l.imageUrl || undefined,
-            ctaLabel: l.ctaLabel || undefined,
-          }))
-        )
-      })
+    if (!article?.id) return
+    incrementViews(article.id)
+      .then(() => setViewCount((current) => current + 1))
       .catch(() => {})
-
-    fetch(`/api/blog?action=related&category=${encodeURIComponent(article.category)}&slug=${slug}`)
-      .then((r) => r.json())
-      .then((d) => setRelated(d.articles || []))
-      .catch(() => {})
-
-    fetch("/api/blog?action=popular")
-      .then((r) => r.json())
-      .then((d) => setPopular(d.articles || []))
-      .catch(() => {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [article?.id])
 
-  if (!article) {
-    return (
-      <div className="max-w-4xl mx-auto px-4 py-24 text-center animate-fade-up bg-white min-h-screen">
-        <svg className="w-16 h-16 mx-auto mb-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01M5.07 19h13.86a2 2 0 001.74-3L13.74 4a2 2 0 00-3.48 0L3.34 16a2 2 0 001.73 3z" />
-        </svg>
-        <h1 className="text-2xl font-bold text-[#1A1F2B] mb-2">Article Not Found</h1>
-        <p className="text-[#6B7280]">The article you&apos;re looking for doesn&apos;t exist or has been moved.</p>
-        <Link href="/blog" className="inline-block mt-4 text-[#22C55E] font-medium hover:underline">&larr; Back to Blog</Link>
-      </div>
-    )
-  }
-
-  const fallbackOffers = [
-    { operatorName: "SportPesa", bonusText: "200% Welcome Bonus up to KES 5,000, M-Pesa Accepted", url: "https://sportpesa.com/?ref=igamingubuntu" },
-    { operatorName: "1xBet", bonusText: "100% Deposit Bonus + $100 Free Bet + Live Streaming", url: "https://1xbet.com/?btag=igamingubuntu" },
-    { operatorName: "Betika", bonusText: "Free Bet on First Deposit + Instant M-Pesa Withdrawals", url: "https://betika.com/?aff=igamingubuntu" },
-    { operatorName: "Betway", bonusText: "Up to $100 in Free Bets, Trusted Global Brand, Local Support", url: "https://betway.com/?aff=igamingubuntu" },
-    { operatorName: "22Bet", bonusText: "100% Welcome Bonus + Daily Enhanced Odds on Major Leagues", url: "https://22bet.com/?aff=igamingubuntu" },
-  ]
-
-  const displayOffers = affiliateLinks.length > 0 ? affiliateLinks : fallbackOffers
+  const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
+  const shareUrl = canonicalUrl || `https://www.igamingubuntu.com/blog/${article.slug}`
 
   return (
     <div className="min-h-screen bg-white">
@@ -93,7 +49,7 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
 
             <div className="relative rounded-lg overflow-hidden mb-5">
               {article.featuredImage ? (
-                <img src={article.featuredImage} alt={article.featuredImageAlt || article.title} width={1200} height={675} loading="lazy" className="w-full aspect-[16/9] object-cover" />
+                <img src={article.featuredImage} alt={article.featuredImageAlt || article.title} width={1200} height={675} className="w-full aspect-[16/9] object-cover" />
               ) : (
                 <div
                   className="w-full aspect-[16/9] bg-cover bg-center flex items-center justify-center"
@@ -105,6 +61,11 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
               <span className="absolute top-5 left-5 bg-[#F59E0B] text-white text-[13px] font-semibold px-4 py-1.5 rounded-full">
                 {article.category}
               </span>
+              {sponsored && (
+                <span className="absolute top-5 right-5 bg-[#1A1F2B] text-white text-[11px] uppercase tracking-wider font-semibold px-3 py-1.5 rounded-full">
+                  {article.status === "press-release" ? "Press release" : "Sponsored"}
+                </span>
+              )}
             </div>
 
             <div className="flex items-center gap-4 text-[13px] text-[#6B7280] mb-5 flex-wrap">
@@ -115,13 +76,24 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
               <span className="text-gray-300" aria-hidden="true">·</span>
               <span className="flex items-center gap-1.5">
                 <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                {article.readTime} min read
+                {article.readTime || 3} min read
               </span>
-              <span className="text-gray-300" aria-hidden="true">·</span>
-              <span className="flex items-center gap-1.5">
-                <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-                {viewCount.toLocaleString()} views
-              </span>
+              {/* Real view count from the CMS only — nothing is shown until it is above zero. */}
+              {viewCount > 0 && (
+                <>
+                  <span className="text-gray-300" aria-hidden="true">·</span>
+                  <span className="flex items-center gap-1.5">
+                    <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                    {viewCount.toLocaleString()} views
+                  </span>
+                </>
+              )}
+              {wasUpdated && (
+                <>
+                  <span className="text-gray-300" aria-hidden="true">·</span>
+                  <span className="font-medium text-[#1A1F2B]">Updated {formatDate(article.updatedAt)}</span>
+                </>
+              )}
             </div>
 
             <h1 className="text-[28px] sm:text-[34px] md:text-[42px] font-extrabold text-[#1A1F2B] leading-[1.2] mb-4 break-words">
@@ -141,7 +113,7 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
                   {(article.tags || []).map((tag) => (
                     <Link
                       key={tag}
-                      href={`/blog?search=${tag}`}
+                      href={`/blog?search=${encodeURIComponent(tag)}`}
                       className="bg-[#F3F4F6] text-[#1A1F2B] px-4 py-1.5 rounded-full text-[13px] font-medium hover:bg-gray-200 transition"
                     >
                       {tag}
@@ -150,7 +122,7 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
                 </>
               ) : (
                 <Link
-                  href={`/blog?search=${article.category}`}
+                  href={`/blog?search=${encodeURIComponent(article.category || "")}`}
                   className="bg-[#F3F4F6] text-[#1A1F2B] px-4 py-1.5 rounded-full text-[13px] font-medium hover:bg-gray-200 transition"
                 >
                   {article.category}
@@ -160,48 +132,43 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
 
             <div
               className="prose prose-lg max-w-none text-[#6B7280] leading-[1.8] text-[16px] space-y-4 prose-headings:text-[#1A1F2B] prose-headings:font-bold prose-strong:text-[#1A1F2B] prose-a:text-[#22C55E] prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg prose-img:w-full [&_img.float-left]:float-left [&_img.float-left]:w-[45%] [&_img.float-left]:mr-6 [&_img.float-left]:mb-4 [&_img.float-left]:rounded-lg [&_img.float-right]:float-right [&_img.float-right]:w-[45%] [&_img.float-right]:ml-6 [&_img.float-right]:mb-4 [&_img.float-right]:rounded-lg"
-              dangerouslySetInnerHTML={{ __html: withParagraphs(article.content || "", article.title) }}
+              dangerouslySetInnerHTML={{
+                __html: finalizeArticleHtml(article.content || "", {
+                  dropLeadingHeading: article.title,
+                  sponsored,
+                }),
+              }}
             />
-
-            <AffiliateBanner offers={displayOffers.slice(0, 3)} variant="marquee" placement="blog-mid" className="my-8" />
 
             <AdSlot position="in-content-1" className="my-8" />
 
-            <AffiliateBox title="Best Odds & Betting Offers" offers={displayOffers.slice(0, 3)} placement="blog-mid" />
-
+            {/* Related articles are rendered on the server and passed in as props. */}
             {related.length > 0 && (
-              <div className="bg-white rounded-xl p-6 my-8 border border-gray-200 shadow-sm">
-                <h3 className="font-bold text-[#1A1F2B] mb-4">Related Articles</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {related.map((r) => (
+              <section aria-labelledby="related-heading" className="bg-white rounded-xl p-6 my-8 border border-gray-200 shadow-sm">
+                <h2 id="related-heading" className="font-bold text-[#1A1F2B] mb-4 text-lg">Related articles</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {related.slice(0, 4).map((r) => (
                     <Link key={r.slug} href={`/blog/${r.slug}`} className="group block bg-gray-50 rounded-lg p-4 hover:shadow-md transition-all border border-gray-100">
                       <p className="text-sm font-medium text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors line-clamp-2">{r.title}</p>
                       <div className="flex items-center gap-2 text-xs text-[#6B7280] mt-2">
                         <span>{r.category}</span>
-                        <span>&middot; {r.readTime} min</span>
+                        <span>&middot; {r.readTime || 3} min</span>
                       </div>
                     </Link>
                   ))}
                 </div>
-              </div>
+              </section>
             )}
 
             <AdSlot position="in-content-2" className="my-8" />
 
-            <AffiliateBanner offers={displayOffers} variant="leaderboard" placement="blog-bottom" className="mb-4" />
-
-            <AffiliateBox title="Top Betting Sites" offers={displayOffers} placement="blog-bottom" />
-
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 border-t border-gray-200 pt-6">
               <span className="text-sm font-medium text-[#1A1F2B] w-full sm:w-auto">Share this article:</span>
-              {(() => {
-                const articleUrl = article.canonicalUrl || `https://www.igamingubuntu.com/blog/${article.slug}`
-                return [
-                  { label: "X", url: `https://x.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(articleUrl)}` },
-                  { label: "LinkedIn", url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}` },
-                  { label: "WhatsApp", url: `https://wa.me/?text=${encodeURIComponent(`${article.title} ${articleUrl}`)}` },
-                ]
-              })().map((s) => (
+              {[
+                { label: "X", url: `https://x.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(shareUrl)}` },
+                { label: "LinkedIn", url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}` },
+                { label: "WhatsApp", url: `https://wa.me/?text=${encodeURIComponent(`${article.title} ${shareUrl}`)}` },
+              ].map((s) => (
                 <a key={s.label} href={s.url} target="_blank" rel="noopener" className="bg-gray-100 text-sm text-[#6B7280] px-3 py-1.5 rounded-lg hover:bg-[#DCFCE7] hover:text-[#166534] transition">
                   {s.label}
                 </a>
@@ -221,13 +188,13 @@ export default function ArticleView({ initialArticle }: ArticleViewProps) {
                   <p className="font-bold text-[#1A1F2B]">{article.authorName || article.author || "iGamingUbuntu"}</p>
                   <p className="text-sm text-[#6B7280]">{article.authorBio || "iGaming content specialist covering African markets"}</p>
                   <p className="text-xs text-[#6B7280] mt-1">
-                    Published {formatDate(article.createdAt)} · Updated {formatDate(article.updatedAt)}
+                    Published {formatDate(article.createdAt)}
+                    {wasUpdated ? ` · Updated ${formatDate(article.updatedAt)}` : ""}
                   </p>
                 </div>
               </div>
               <p className="text-xs text-[#6B7280] mt-4 leading-relaxed">
-                This article contains affiliate links. We may earn a commission when you sign up through our links at no extra cost to you.
-                All opinions, reviews, and recommendations are our own based on independent research and expertise.
+                All opinions, reviews and recommendations are our own, based on independent research.
                 <span className="text-red-500 font-medium"> Please gamble responsibly. 18+.</span>
               </p>
             </div>

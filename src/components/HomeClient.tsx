@@ -4,8 +4,8 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ScrollReveal, useScrollReveal, useCountUp } from "@/lib/scrollReveal"
-import { getAllPublishedArticles } from "@/lib/firestoreService"
 import { AfricaWatermark } from "@/components/IgubLogo"
+import { trackLead } from "@/lib/analytics"
 import type { Article } from "@/types"
 
 const africanCountries = [
@@ -44,11 +44,10 @@ function StatItem({ target, label }: { target: number; label: string }) {
 
 export default function HomeClient({ initialArticles = [] }: { initialArticles?: Article[] }) {
   const [heroLoaded, setHeroLoaded] = useState(false)
-  const [articles, setArticles] = useState<Article[]>(initialArticles)
+  const [articles] = useState<Article[]>(initialArticles)
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => setHeroLoaded(true))
-    getAllPublishedArticles(6).then((a) => { if (a.length) setArticles(a) }).catch(() => {})
     return () => cancelAnimationFrame(raf)
   }, [])
 
@@ -243,12 +242,12 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
             <Link href="/blog" className="text-sm text-[#409824] font-medium hover:underline hidden sm:block">View All &rarr;</Link>
           </ScrollReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {articles.slice(0, 3).map((article, i) => (
+            {articles.map((article, i) => (
               <ScrollReveal key={article.slug} delay={i * 100}>
                 <Link href={`/blog/${article.slug}`} className="group block rounded-2xl overflow-hidden border border-white/5 hover:border-[#409824]/30 transition-all duration-300 hover:-translate-y-1">
                   <div className="aspect-[16/9] overflow-hidden relative bg-white/5">
                     {article.featuredImage ? (
-                      <Image src={article.featuredImage} alt={article.title} width={640} height={360} sizes="(max-width: 768px) 100vw, 33vw" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <Image src={article.featuredImage} alt={article.featuredImageAlt || article.title} width={640} height={360} sizes="(max-width: 768px) 100vw, 33vw" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     ) : (
                       <div
                         className="w-full h-full flex items-center justify-center bg-cover bg-center"
@@ -267,15 +266,20 @@ export default function HomeClient({ initialArticles = [] }: { initialArticles?:
                       <span>{article.readTime} min read</span>
                     </div>
                     <h3 className="text-base font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors leading-snug mb-2 line-clamp-2">{article.title}</h3>
-                    <div className="flex items-center gap-2 text-xs text-[#56525E] mt-3">
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                      <span>{(article.views || 0).toLocaleString()} views</span>
-                    </div>
+                    {(article.views || 0) > 0 && (
+                      <div className="flex items-center gap-2 text-xs text-[#56525E] mt-3">
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                        <span>{(article.views || 0).toLocaleString()} views</span>
+                      </div>
+                    )}
                   </div>
                 </Link>
               </ScrollReveal>
             ))}
           </div>
+          {articles.length === 0 && (
+            <p className="text-center text-sm text-[#56525E]">New articles are on the way. <Link href="/blog" className="text-[#409824] hover:underline">Visit the blog</Link>.</p>
+          )}
           <div className="text-center mt-8 sm:hidden">
             <Link href="/blog" className="text-sm text-[#409824] font-medium hover:underline">View All Articles &rarr;</Link>
           </div>
@@ -360,6 +364,7 @@ function NewsletterForm() {
       })
       setSubscribed(true)
       setEmail("")
+      trackLead("newsletter")
     } catch {}
     setLoading(false)
   }

@@ -39,7 +39,9 @@ export default function ArticlesPage() {
   )
 
   const filtered = articles.filter((a) => {
-    if (filter !== "all" && a.status !== filter) return false
+    // Articles with no status field are drafts (legacy records).
+    const articleStatus = a.status || "draft"
+    if (filter !== "all" && articleStatus !== filter) return false
     if (category !== "all" && a.category !== category) return false
     if (country !== "all" && a.country !== country) return false
     if (search && !a.title.toLowerCase().includes(search.toLowerCase())) return false
@@ -72,6 +74,18 @@ export default function ArticlesPage() {
     sponsored: "bg-purple-500/20 text-purple-400",
     "press-release": "bg-cyan-500/20 text-cyan-400",
   }
+
+  // Drafts saved before the status field existed have no value at all,
+  // which used to render an empty badge.
+  const statusLabel = (status?: string) => {
+    if (!status) return "Draft"
+    return status
+      .split("-")
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ")
+  }
+
+  const statusKey = (status?: string) => status || "draft"
 
   return (
     <div className="space-y-6">
@@ -188,10 +202,10 @@ export default function ArticlesPage() {
                     <td className="p-4">
                       <span
                         className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                          statusColors[a.status] || "bg-gray-500/20 text-gray-400"
+                          statusColors[statusKey(a.status)] || "bg-gray-500/20 text-gray-400"
                         }`}
                       >
-                        {a.status}
+                        {statusLabel(a.status)}
                       </span>
                     </td>
                     <td className="p-4 hidden md:table-cell">

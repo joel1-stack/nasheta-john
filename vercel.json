@@ -1,15 +1,17 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
       "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "nasheta-john.vercel.app"
-        }
-      ],
-      "destination": "https://igamingubuntu.com/:path*",
-      "permanent": true
+      "has": [{ "type": "host", "value": "igamingubuntu.com" }],
+      "destination": "https://www.igamingubuntu.com/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "nasheta-john.vercel.app" }],
+      "destination": "https://www.igamingubuntu.com/:path*",
+      "statusCode": 301
     }
   ]
 }

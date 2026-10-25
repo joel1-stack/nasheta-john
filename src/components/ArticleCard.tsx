@@ -11,7 +11,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
     <Link href={`/blog/${article.slug}`} className="group block bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up">
       <div className="aspect-[16/9] bg-gradient-to-br from-amber-50 to-emerald-50 flex items-center justify-center overflow-hidden">
         {article.featuredImage ? (
-          <img src={article.featuredImage} alt={article.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+          <img src={article.featuredImage} alt={article.featuredImageAlt || article.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-amber-100 to-emerald-100 flex items-center justify-center">
             <svg className="w-12 h-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -27,10 +27,12 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         <h3 className="font-bold text-[#111827] group-hover:text-[#f59e0b] transition-colors line-clamp-2 mb-2 text-lg">{article.title}</h3>
         <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">{article.excerpt}</p>
         <div className="flex items-center gap-3 mt-4 text-xs text-gray-400">
-          <span className="flex items-center gap-1">
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-            {article.views.toLocaleString()}
-          </span>
+          {(article.views || 0) > 0 && (
+            <span className="flex items-center gap-1">
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              {article.views.toLocaleString()}
+            </span>
+          )}
           <span className="text-[#f59e0b] font-medium group-hover:translate-x-1 transition-transform">Read more →</span>
         </div>
       </div>

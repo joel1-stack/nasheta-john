@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import NavbarWrapper from "@/components/NavbarWrapper"
 import FooterWrapper from "@/components/FooterWrapper"
+import GoogleAnalytics from "@/components/GoogleAnalytics"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Script from "next/script"
@@ -117,13 +118,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5956809831211575"
           crossOrigin="anonymous"
         />
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6VTKQHDR04" />
-        <Script id="ga4-config" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-6VTKQHDR04');`}
-        </Script>
+        {/* GA4 is loaded exactly once, from this component. It is skipped
+            entirely on /igub-cms-x7k9 and adds traffic_type:"internal" for the
+            owner's browser (see src/lib/analytics.ts). */}
+        <GoogleAnalytics />
       </body>
     </html>
   )

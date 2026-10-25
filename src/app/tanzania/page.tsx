@@ -1,8 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
 import AdSlot from "@/components/AdSlot"
-import AffiliateBox from "@/components/AffiliateBox"
-import type { Article } from "@/types"
+import ArticleGrid from "@/components/ArticleGrid"
+import { queryArticles } from "@/lib/serverArticles"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -12,24 +12,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/tanzania" },
 }
 
-const topSites = [
-  { operatorName: "1xBet Tanzania", bonusText: "100% Bonus + TZS 200,000 Free Bet", url: "https://1xbet.com/?btag=igamingubuntu" },
-  { operatorName: "Betway Tanzania", bonusText: "Up to TZS 100,000 in Free Bets", url: "https://betway.com/?aff=igamingubuntu" },
-  { operatorName: "22Bet Tanzania", bonusText: "100% Welcome Bonus + Tigo-Pesa Accepted", url: "https://22bet.com/?btag=igamingubuntu" },
-]
+export const revalidate = 300
 
-const tzArticles: Article[] = [
-  { id: "tz1", slug: "best-tanzania-betting-sites-2026", title: "Best Betting Sites in Tanzania 2026: Top Bookmakers", excerpt: "Expert guide to the best Tanzania betting sites with Tigo-Pesa and M-Pesa support.", category: "Sports Betting", country: "tanzania", featuredImage: "/images/sports betting analytics.png", tags: [], readTime: 8, author: "iGamingUbuntu", status: "published", views: 1890, content: "", createdAt: "2026-07-06", updatedAt: "2026-07-06" },
-  { id: "tz2", slug: "tigo-pesa-betting-guide", title: "Tigo-Pesa Betting Guide: How to Deposit & Withdraw", excerpt: "Step-by-step guide for using Tigo-Pesa at Tanzania betting sites.", category: "Guides", country: "tanzania", featuredImage: "/images/Green Data Network (ABSTRACT + TECH).png", tags: [], readTime: 5, author: "iGamingUbuntu", status: "published", views: 1456, content: "", createdAt: "2026-07-04", updatedAt: "2026-07-04" },
-  { id: "tz3", slug: "tanzania-premier-league-betting", title: "Tanzania Premier League Betting Tips 2026/27", excerpt: "Expert predictions and betting tips for the NBC Premier League.", category: "Betting Tips", country: "tanzania", featuredImage: "/images/full backgound.png", tags: [], readTime: 6, author: "iGamingUbuntu", status: "published", views: 1234, content: "", createdAt: "2026-07-02", updatedAt: "2026-07-02" },
-]
+export default async function TanzaniaPage() {
+  const { articles } = await queryArticles({ country: "tanzania", perPage: 8 })
 
-export default function TanzaniaPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-green to-ubuntu-orange">
         <div className="absolute inset-0 opacity-20">
-          <Image src="/images/full backgound.png" alt="Tanzania betting" width={1920} height={1200} loading="lazy" className="w-full h-full object-cover" />
+          <Image src="/images/full backgound.png" alt="" width={1920} height={1200} loading="lazy" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 p-8 md:p-12 flex items-center gap-4">
           <Image src="https://flagcdn.com/48x36/tz.png" alt="Tanzania" width={48} height={36} loading="lazy" className="w-12 h-9 rounded shadow-lg" />
@@ -40,32 +32,25 @@ export default function TanzaniaPage() {
         </div>
       </div>
 
-      <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
-
-      <div className="mb-12">
-        <h2 className="text-2xl font-bold text-text-primary mb-6">Top Betting Sites in Tanzania</h2>
-        <AffiliateBox title="Best Tanzania Betting Sites 2026" offers={topSites} />
+      <div className="flex flex-wrap gap-3 mb-8">
+        <Link href="#guides" className="bg-ubuntu-orange text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">Tanzania Guides</Link>
+        <Link href="#laws" className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">Tanzania Gambling Laws</Link>
+        <Link href="/blog" className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">All Articles</Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-        {tzArticles.map((a) => (
-          <Link key={a.slug} href={`/blog/${a.slug}`} className="group bg-white border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all hover:-translate-y-0.5">
-            <div className="aspect-[16/9] overflow-hidden">
-              <img src={a.featuredImage} alt={a.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            </div>
-            <div className="p-5">
-              <span className="text-xs text-ubuntu-orange font-medium bg-ubuntu-orange/10 px-2 py-0.5 rounded">{a.category}</span>
-              <h3 className="font-bold text-text-primary group-hover:text-ubuntu-orange transition mt-2 mb-1">{a.title}</h3>
-              <p className="text-sm text-text-secondary">{a.excerpt}</p>
-              <p className="text-xs text-text-muted mt-2">{a.readTime} min read · {a.views.toLocaleString()} views</p>
-            </div>
-          </Link>
-        ))}
+      <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
+
+      <div id="guides" className="mb-12">
+        <h2 className="text-2xl font-bold text-text-primary mb-6">Latest Tanzania iGaming Articles</h2>
+        <ArticleGrid
+          articles={articles}
+          emptyMessage="No Tanzania articles have been published yet. New market guides and operator reviews are added every week."
+        />
       </div>
 
       <AdSlot position="in-content-1" className="mb-12 rounded-xl overflow-hidden" />
 
-      <div className="bg-card rounded-xl p-8 mb-12">
+      <div id="laws" className="bg-card rounded-xl p-8 mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">Tanzania Gambling Laws</h2>
         <p className="text-text-secondary leading-relaxed mb-4">
           Tanzania&apos;s gambling is regulated by the Gaming Board of Tanzania. Sports betting and casino games are legal and licensed.

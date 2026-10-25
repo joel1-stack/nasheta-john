@@ -37,6 +37,39 @@ function demoteH1(html: string): string {
     .replace(/<\/h1>/gi, "</h2>")
 }
 
+/**
+ * Adds rel="sponsored noopener" (and target="_blank") to every external link.
+ * Applied to articles marked "sponsored" or "press-release" so paid links are
+ * always disclosed to Google, without the editor having to touch each link.
+ */
+export function withSponsoredLinks(html: string): string {
+  return html.replace(/<a\b([^>]*)>/gi, (full, attrs: string) => {
+    const hrefMatch = attrs.match(/\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i)
+    const href = hrefMatch ? hrefMatch[1] ?? hrefMatch[2] ?? hrefMatch[3] ?? "" : ""
+    if (!/^https?:\/\//i.test(href)) return full
+
+    const cleaned = attrs
+      .replace(/\s*\brel\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+      .replace(/\s*\btarget\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+      .replace(/\s+$/, "")
+
+    return `<a${cleaned} rel="sponsored noopener" target="_blank">`
+  })
+}
+
+export interface ArticleHtmlOptions {
+  /** Heading text to drop if it duplicates the <h1> rendered by the template. */
+  dropLeadingHeading?: string
+  /** True for sponsored / press-release articles. */
+  sponsored?: boolean
+}
+
+/** Final preparation of CMS article HTML before it is rendered. */
+export function finalizeArticleHtml(html: string, options: ArticleHtmlOptions = {}): string {
+  const out = withParagraphs(html || "", options.dropLeadingHeading)
+  return options.sponsored ? withSponsoredLinks(out) : out
+}
+
 export function withParagraphs(html: string, dropLeadingHeading?: string): string {
   if (!html || !html.trim()) return html || ""
 

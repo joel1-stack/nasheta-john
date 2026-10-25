@@ -8,6 +8,7 @@ import {
   User
 } from "firebase/auth"
 import { getAuthInstance } from "./firebase"
+import { clearInternalCookie, setInternalCookie } from "./analytics"
 
 interface AuthContextType {
   user: User | null
@@ -41,6 +42,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u)
       setLoading(false)
+      // Owner traffic marker: while this cookie exists, every GA4 hit on the
+      // public site carries traffic_type:"internal" (see src/lib/analytics.ts).
+      if (u) setInternalCookie()
     })
     return () => unsub()
   }, [])
@@ -95,6 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signOut = async () => {
     const auth = getAuthInstance()
     if (auth) await firebaseSignOut(auth)
+    clearInternalCookie()
   }
 
   return (

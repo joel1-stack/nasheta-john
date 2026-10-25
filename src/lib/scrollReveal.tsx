@@ -19,9 +19,11 @@ export function useScrollReveal(threshold = 0.1) {
 }
 
 export function useCountUp(target: number, active: boolean, duration = 1500) {
-  const [count, setCount] = useState(0)
+  // Start at the real value so the number is correct in the server-rendered
+  // HTML (crawlers and no-JS readers see the true figure, not zero).
+  const [count, setCount] = useState(target)
   useEffect(() => {
-    if (!active) { setCount(0); return }
+    if (!active) return
     const startTime = performance.now()
     let raf: number
     const animate = (now: number) => {

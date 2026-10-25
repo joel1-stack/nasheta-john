@@ -37,6 +37,19 @@ export const REMOVED_DEMO_SLUG_SET = new Set<string>(REMOVED_DEMO_SLUGS)
 /** Article statuses that are publicly visible. */
 export const PUBLIC_ARTICLE_STATUSES = ["published", "sponsored", "press-release"] as const
 
+/**
+ * "Most Read" sidebar block.
+ *
+ * Off on request: the sidebar previously listed sample articles with invented
+ * view counts. Real view counts are now tracked server-side (see
+ * /api/track-view), so flip this to true once a few articles have genuine
+ * traffic — the block also requires at least 3 articles with real reads.
+ */
+export const SHOW_MOST_READ = false
+
+/** Minimum number of articles with real reads before "Most Read" appears. */
+export const MOST_READ_MIN_ARTICLES = 3
+
 export function isPublicStatus(status?: string | null): boolean {
   return !!status && (PUBLIC_ARTICLE_STATUSES as readonly string[]).includes(status)
 }

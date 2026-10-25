@@ -2,6 +2,7 @@ import AdSlot from "./AdSlot"
 import Newsletter from "./Newsletter"
 import Link from "next/link"
 import Image from "next/image"
+import { MOST_READ_MIN_ARTICLES, SHOW_MOST_READ } from "@/lib/site"
 import type { Article } from "@/types"
 
 interface SidebarProps {
@@ -35,9 +36,11 @@ export default function Sidebar({ popularPosts }: SidebarProps) {
     <aside className="space-y-6 lg:sticky lg:top-24">
       <AdSlot position="sidebar-1" />
 
-      {/* "Most Read" only appears once there are real view counts for at least
-          three articles — no placeholder or sample articles, ever. */}
-      {popularPosts && popularPosts.length >= 3 && (
+      {/* "Most Read" is disabled until there is a real readership: the previous
+          version listed sample articles with invented view counts. When
+          SHOW_MOST_READ is enabled it only appears with real tracked views for
+          at least MOST_READ_MIN_ARTICLES articles. */}
+      {SHOW_MOST_READ && popularPosts && popularPosts.length >= MOST_READ_MIN_ARTICLES && (
         <div className="bg-white rounded-xl border border-gray-200 p-5 animate-fade-up shadow-sm">
           <div className="flex items-center justify-between mb-4 border-l-4 border-[#22C55E] pl-3">
             <h3 className="font-bold text-[#1A1F2B] text-sm uppercase tracking-wide">Most Read</h3>

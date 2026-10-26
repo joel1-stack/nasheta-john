@@ -9,6 +9,7 @@ import {
   hasInternalCookie,
   isCmsPath,
   loadGa4Script,
+  trackEvent,
 } from "@/lib/analytics"
 
 const DISABLE_FLAG = `ga-disable-${GA4_MEASUREMENT_ID}`
@@ -69,6 +70,28 @@ export default function GoogleAnalytics() {
       ...(internal ? { traffic_type: "internal" } : {}),
     })
   }, [pathname])
+
+  // One delegated listener covers every affiliate link (/go/<partner> or an
+  // external rel="sponsored" link), so revenue clicks are measured no matter
+  // which component renders the link.
+  useEffect(() => {
+    if (GA4_OWNER !== "code") return
+    function onClick(e: MouseEvent) {
+      const a = (e.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null
+      if (!a) return
+      const url = new URL(a.href, window.location.href)
+      const isGoLink = url.origin === window.location.origin && url.pathname.startsWith("/go/")
+      const isSponsored = url.origin !== window.location.origin && /\bsponsored\b/.test(a.rel)
+      if (!isGoLink && !isSponsored) return
+      trackEvent("affiliate_click", {
+        partner: isGoLink ? url.pathname.slice(4).split("/")[0] : url.hostname,
+        link_url: url.href,
+        page_path: window.location.pathname,
+      })
+    }
+    document.addEventListener("click", onClick, { capture: true })
+    return () => document.removeEventListener("click", onClick, { capture: true })
+  }, [])
 
   // The GTM container is loaded from the root layout. It must not also contain
   // a GA4 Configuration tag for G-6VTKQHDR04 (see docs/analytics.md).

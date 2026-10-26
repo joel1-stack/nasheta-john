@@ -2,7 +2,7 @@
 import { staticPageMetadata } from "@/lib/pageMeta"
 
 export const metadata: Metadata = staticPageMetadata({
-  title: "About | iGamingUbuntu",
+  title: "About iGamingUbuntu and Our Editorial Team",
   description:
     "Who writes iGamingUbuntu, how we research African betting and casino markets, and the editorial standards behind every article.",
   path: "/about",

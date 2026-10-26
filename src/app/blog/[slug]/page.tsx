@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { getArticleBySlug } from "@/lib/firestoreService"
 import { getPopularArticles, getRelatedArticles } from "@/lib/serverArticles"
 import { absoluteUrl, isSponsoredStatus } from "@/lib/site"
+import { breadcrumbLd, extractFaqs, faqPageLd } from "@/lib/structuredData"
 import ArticleView from "./article-view"
 import type { Article } from "@/types"
 
@@ -125,6 +126,13 @@ export default async function BlogArticlePage({ params }: PageProps) {
     mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
   }
 
+  const faqs = extractFaqs(article.content || "")
+  const crumbs = breadcrumbLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: article.title || article.slug, path: articleUrl },
+  ])
+
   return (
     <>
       <ArticleView
@@ -138,6 +146,16 @@ export default async function BlogArticlePage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ldJson) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }}
+      />
+      {faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageLd(faqs)) }}
+        />
+      )}
     </>
   )
 }

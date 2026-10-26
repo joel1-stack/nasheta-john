@@ -83,7 +83,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     logo: "https://www.igamingubuntu.com/favicon.png",
                     description:
                       "B2B intelligence, regulatory tracking, and fintech updates for the iGaming industry across Africa.",
-                    founder: { "@type": "Person", name: "Nasheta John" },
+                    founder: {
+                      "@type": "Person",
+                      name: "Nasheta John",
+                      sameAs: [
+                        "https://www.linkedin.com/in/nashetajohnigaming/",
+                        "https://x.com/SalvageNasheta",
+                        "https://t.me/nashetajohn",
+                      ],
+                    },
                     sameAs: ["https://x.com/SalvageNasheta", "https://t.me/nashetajohn"],
                   },
                   {

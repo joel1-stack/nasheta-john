@@ -113,6 +113,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
     author: {
       "@type": "Person",
       name: article.authorName || article.author || "Nasheta John",
+      image: article.authorPhoto || absoluteUrl("/images/nasheta-john-author.png"),
       ...(article.authorBio
         ? { description: article.authorBio }
         : { description: "iGaming content specialist covering African markets" }),

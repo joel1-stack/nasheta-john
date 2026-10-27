@@ -86,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     founder: {
                       "@type": "Person",
                       name: "Nasheta John",
+                      image: "https://www.igamingubuntu.com/images/nasheta-john-author.png",
                       sameAs: [
                         "https://www.linkedin.com/in/nashetajohnigaming/",
                         "https://x.com/SalvageNasheta",

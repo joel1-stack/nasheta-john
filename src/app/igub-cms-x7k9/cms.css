@@ -1,0 +1,101 @@
+/*
+ * CMS theme: a light, raised-card look in the brand palette.
+ *
+ * The CMS pages were written for a dark theme with a small set of utility
+ * classes (bg-white/5, text-white, text-gray-400, bg-[#E95420] ...). Instead
+ * of rewriting every page, these rules remap those classes inside `.cms`.
+ * They are deliberately unlayered so they win over Tailwind's utilities.
+ * `.cms-raw` opts a subtree out (e.g. the article preview, which shows the
+ * real site styles).
+ */
+
+.cms {
+  --cms-bg: #f3f7f1;
+  --cms-card: #ffffff;
+  --cms-line: #e1eae0;
+  --cms-line-strong: #cfdccd;
+  --cms-ink: #0f1f16;
+  --cms-text: #33433b;
+  --cms-muted: #5f7068;
+  --cms-faint: #8a9a92;
+  --cms-lime: #a7f432;
+  --cms-teal: #3b8f7b;
+  --cms-teal-dark: #2c6e5e;
+  --cms-shadow: 0 1px 2px rgba(15, 31, 22, 0.05), 0 10px 30px -12px rgba(15, 31, 22, 0.18);
+  --cms-shadow-hover: 0 2px 4px rgba(15, 31, 22, 0.06), 0 18px 40px -14px rgba(15, 31, 22, 0.25);
+  background: var(--cms-bg);
+  color: var(--cms-text);
+}
+
+/* Cards and panels: white, hairline border, soft layered shadow (the "3D" lift). */
+.cms .bg-white\/5:not(.cms-raw, .cms-raw *) {
+  background: var(--cms-card);
+  backdrop-filter: none;
+  box-shadow: var(--cms-shadow);
+}
+.cms .bg-white\/10:not(.cms-raw, .cms-raw *) { background: #eef4ec; }
+.cms .hover\:bg-white\/5:hover:not(.cms-raw, .cms-raw *),
+.cms .hover\:bg-white\/10:hover:not(.cms-raw, .cms-raw *),
+.cms .hover\:bg-white\/20:hover:not(.cms-raw, .cms-raw *) { background: #e6efe4; }
+
+/* Form fields share bg-white/5 with cards: keep them flat and crisp. */
+.cms :is(input, select, textarea).bg-white\/5:not(.cms-raw, .cms-raw *) {
+  background: #fbfdfb;
+  box-shadow: inset 0 1px 2px rgba(15, 31, 22, 0.04);
+  border-color: var(--cms-line-strong);
+  color: var(--cms-ink);
+}
+.cms option { background: #fff; color: var(--cms-ink); }
+
+.cms :is(.border-white\/5, .border-white\/10, .border-white\/15):not(.cms-raw, .cms-raw *) { border-color: var(--cms-line); }
+.cms .divide-white\/10:not(.cms-raw, .cms-raw *) > * + * { border-color: var(--cms-line); }
+
+/* Text */
+.cms .text-white:not(.cms-raw, .cms-raw *) { color: var(--cms-ink); }
+.cms :is(.text-gray-200, .text-gray-300):not(.cms-raw, .cms-raw *) { color: var(--cms-text); }
+.cms .text-gray-400:not(.cms-raw, .cms-raw *) { color: var(--cms-muted); }
+.cms :is(.text-gray-500, .text-gray-600):not(.cms-raw, .cms-raw *) { color: var(--cms-faint); }
+.cms .hover\:text-white:hover:not(.cms-raw, .cms-raw *) { color: var(--cms-ink); }
+.cms .placeholder-gray-500::placeholder { color: #9aa9a1; }
+.cms :is(.text-\[\#E95420\], .text-\[\#f59e0b\]):not(.cms-raw, .cms-raw *) { color: var(--cms-teal-dark); }
+.cms :is(.hover\:text-\[\#E95420\], .hover\:text-\[\#f59e0b\]\/80):hover:not(.cms-raw, .cms-raw *) { color: var(--cms-teal); }
+
+/* Primary buttons: lime on ink text. */
+.cms .bg-\[\#E95420\]:not(.cms-raw, .cms-raw *),
+.cms .bg-\[\#409824\]:not(.cms-raw, .cms-raw *) {
+  background: var(--cms-lime);
+  color: var(--cms-ink);
+  box-shadow: 0 6px 16px -6px rgba(110, 170, 20, 0.6), inset 0 -2px 0 rgba(15, 31, 22, 0.12);
+}
+.cms :is(.hover\:bg-\[\#CC4A1C\], .hover\:bg-\[\#C7421B\]):hover:not(.cms-raw, .cms-raw *) { background: #97e01f; }
+.cms :is(.bg-\[\#E95420\]\/10, .bg-\[\#E95420\]\/15):not(.cms-raw, .cms-raw *) { background: rgba(167, 244, 50, 0.22); }
+.cms :is(.border-\[\#E95420\], .border-\[\#E95420\]\/30, .border-\[\#E95420\]\/40, .border-\[\#E95420\]\/50):not(.cms-raw, .cms-raw *) { border-color: rgba(59, 143, 123, 0.5); }
+.cms .border-t-\[\#E95420\] { border-top-color: var(--cms-teal); }
+.cms :is(.shadow-\[\#E95420\]\/20, .shadow-\[\#E95420\]\/30, .shadow-\[\#E95420\]\/40) { --tw-shadow-color: transparent; }
+.cms .focus\:ring-\[\#E95420\]\/50:focus { --tw-ring-color: rgba(59, 143, 123, 0.35); }
+
+/* Status colours, readable on white. */
+.cms .text-red-400:not(.cms-raw, .cms-raw *), .cms .text-red-300:not(.cms-raw, .cms-raw *) { color: #c2410c; }
+.cms .hover\:text-red-400:hover, .cms .hover\:text-red-300:hover { color: #b91c1c; }
+.cms .text-yellow-400:not(.cms-raw, .cms-raw *) { color: #a16207; }
+.cms :is(.text-green-400, .text-green-300, .text-emerald-400):not(.cms-raw, .cms-raw *) { color: #15803d; }
+.cms :is(.text-blue-400, .text-blue-300):not(.cms-raw, .cms-raw *) { color: #1d4ed8; }
+.cms .bg-green-500\/20, .cms .bg-green-500\/10 { background: #dcfce7; }
+.cms .bg-yellow-500\/20, .cms .bg-yellow-500\/10, .cms .bg-yellow-500\/5 { background: #fef3c7; }
+.cms .bg-red-500\/10, .cms .bg-red-500\/20 { background: #fee2e2; }
+.cms .bg-blue-500\/20, .cms .bg-blue-500\/10 { background: #dbeafe; }
+
+/* Old dark page wrappers become the light canvas. */
+.cms :is(.bg-\[\#0F0A1A\], .bg-\[\#0C0714\]):not(.cms-raw, .cms-raw *) { background: transparent; }
+
+/* Rounded cards get a gentle lift on hover where they are links. */
+.cms a.bg-white\/5:hover:not(.cms-raw, .cms-raw *) { box-shadow: var(--cms-shadow-hover); transform: translateY(-1px); }
+
+/* Headings inside the CMS use the dashboard font's heavier weight. */
+.cms h1 { letter-spacing: -0.02em; }
+
+/* Toolbars and footers that used a translucent dark strip (editor, tables). */
+.cms :is(.bg-\[\#0F0A1A\]\/60, .bg-\[\#0F0A1A\]\/40):not(.cms-raw, .cms-raw *) {
+  background: #eef4ec;
+}
+.cms .bg-white\/10.w-px { background: var(--cms-line-strong); }

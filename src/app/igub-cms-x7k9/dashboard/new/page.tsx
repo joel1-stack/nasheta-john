@@ -10,6 +10,7 @@ import Link from "next/link"
 import ImageUpload from "@/components/ImageUpload"
 import ArticlePreview from "@/components/ArticlePreview"
 import ContentEditor from "@/components/ContentEditor"
+import HyperspeedBackdrop from "@/components/cms/HyperspeedBackdrop"
 
 const defaultCategories = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Guides", "Industry News", "Events", "News"]
 
@@ -141,13 +142,17 @@ export default function NewPostPage() {
   const selectClass = "w-full px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-white">New Article</h1>
-        <Link href="/igub-cms-x7k9/dashboard" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Dashboard</Link>
+    <div className="relative max-w-4xl mx-auto px-4 py-8">
+      <HyperspeedBackdrop />
+      <div className="cms-raw relative z-10 flex items-center justify-between mb-6">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A7F432]">Write</p>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">New Article</h1>
+        </div>
+        <Link href="/igub-cms-x7k9/dashboard" className="text-sm text-white/80 hover:text-[#A7F432] font-medium">&larr; Back to Dashboard</Link>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 space-y-6">
+      <form onSubmit={handleSubmit} className="relative z-10 bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-1.5">Title</label>
           <input value={form.title} onChange={(e) => autoSlug(e.target.value)} className={inputClass} required />

@@ -1,8 +1,15 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/lib/auth-context"
+import { IgubFullLogo } from "@/components/IgubLogo"
+
+const field =
+  "w-full px-4 py-3.5 rounded-xl bg-white/15 border border-white/20 text-white placeholder-white/60 text-center text-base backdrop-blur-md focus:outline-none focus:bg-white/20 focus:border-[#A7F432]/70 transition"
+const outlineButton =
+  "w-full py-3 rounded-xl border-2 border-white/85 text-white font-semibold tracking-wide hover:bg-white hover:text-[#0F1F16] transition disabled:opacity-50 cursor-pointer"
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("")
@@ -40,73 +47,90 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-[#0F0A1A]">
-      <div className="bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-8 w-full max-w-sm">
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#E95420] to-[#FFD700] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#E95420]/30">
-            <span className="text-white font-bold text-xl">IG</span>
-          </div>
-          <h1 className="text-2xl font-bold text-white">Admin Login</h1>
-          <p className="text-sm text-gray-400 mt-1">iGamingUbuntu Dashboard</p>
-        </div>
+    <div className="cms-raw relative min-h-screen overflow-hidden bg-[#0F1F16] text-white flex flex-col">
+      {/* Forest-light backdrop: deep green, soft beams falling from the top. */}
+      <div className="absolute inset-0" aria-hidden="true">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,#2C6E5E_0%,#173D33_35%,#0F1F16_75%)]" />
+        <div className="absolute -top-20 left-[38%] w-40 h-[140%] rotate-[18deg] bg-gradient-to-b from-[#EAF3E7]/25 via-[#A7F432]/10 to-transparent blur-2xl" />
+        <div className="absolute -top-20 left-[48%] w-24 h-[140%] rotate-[14deg] bg-gradient-to-b from-[#EAF3E7]/20 via-[#EAF3E7]/5 to-transparent blur-xl" />
+        <div className="absolute -top-20 left-[56%] w-56 h-[140%] rotate-[22deg] bg-gradient-to-b from-[#A7F432]/15 via-[#3B8F7B]/10 to-transparent blur-3xl" />
+        <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[70%] h-[40%] rounded-full bg-[#3B8F7B]/20 blur-3xl" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_55%,rgba(15,31,22,0.85))]" />
+      </div>
 
-        {error && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-4">{error}</div>
-        )}
+      <header className="relative z-10 flex items-center justify-between px-6 sm:px-10 py-6">
+        <Link href="/" aria-label="iGamingUbuntu home">
+          <IgubFullLogo />
+        </Link>
+        <Link href="/" className="text-sm font-medium text-white/85 hover:text-[#A7F432] transition">
+          Back to site
+        </Link>
+      </header>
 
-        {step === "email" ? (
-          <form onSubmit={handleSendOTP} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1.5">Admin Email</label>
+      <main className="relative z-10 flex-1 flex items-center justify-center px-4">
+        <div className="w-full max-w-sm text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#A7F432]">Editor access</p>
+          <h1 className="text-3xl font-light mt-3">Welcome back</h1>
+          <p className="text-sm text-white/65 mt-2">
+            {step === "email" ? "We will email you a one-time code." : (
+              <>A 6-digit code was sent to <span className="text-white font-medium">{email}</span>.</>
+            )}
+          </p>
+
+          {error && (
+            <div className="mt-6 bg-[#7F1D1D]/50 border border-red-300/30 text-red-100 text-sm px-4 py-3 rounded-xl backdrop-blur">{error}</div>
+          )}
+
+          {step === "email" ? (
+            <form onSubmit={handleSendOTP} className="mt-8 space-y-4">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
-                placeholder="admin@igamingubuntu.com"
+                autoComplete="email"
+                aria-label="Admin email"
+                className={field}
+                placeholder="admin email"
               />
-            </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-[#E95420] text-white py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20"
-            >
-              {loading ? "Sending OTP..." : "Send OTP"}
-            </button>
-          </form>
-        ) : (
-          <form onSubmit={handleVerifyOTP} className="space-y-4">
-            <p className="text-sm text-gray-400 text-center">A 6-digit code was sent to <strong>{email}</strong>. Check that inbox.</p>
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1.5">Enter OTP</label>
+              <button type="submit" disabled={loading} className={outlineButton}>
+                {loading ? "Sending code..." : "Send OTP"}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleVerifyOTP} className="mt-8 space-y-4">
               <input
                 type="text"
+                inputMode="numeric"
+                autoComplete="one-time-code"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 required
                 maxLength={6}
-                className="w-full px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-gray-500 text-sm text-center tracking-widest focus:outline-none focus:ring-2 focus:ring-[#E95420]/50 focus:border-[#E95420]/50 transition"
-                placeholder="123456"
+                aria-label="One-time code"
+                className={`${field} tracking-[0.5em] font-semibold`}
+                placeholder="••••••"
               />
-            </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-[#E95420] text-white py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20"
-            >
-              {loading ? "Verifying..." : "Verify & Login"}
-            </button>
-            <button
-              type="button"
-              onClick={() => setStep("email")}
-              className="w-full text-sm text-gray-400 hover:text-white transition"
-            >
-              &larr; Back
-            </button>
-          </form>
-        )}
-      </div>
+              <button type="submit" disabled={loading} className={outlineButton}>
+                {loading ? "Verifying..." : "Verify code"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setStep("email")}
+                className="text-sm text-white/60 hover:text-white transition"
+              >
+                &larr; Use a different email
+              </button>
+            </form>
+          )}
+        </div>
+      </main>
+
+      <footer className="relative z-10 flex items-center justify-center gap-6 py-6 text-sm text-white/75">
+        <Link href="/about" className="hover:text-white transition">About</Link>
+        <Link href="/contact" className="hover:text-white transition">Help</Link>
+        <Link href="/privacy" className="hover:text-white transition">Privacy &amp; Terms</Link>
+      </footer>
     </div>
   )
 }

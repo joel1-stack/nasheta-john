@@ -26,12 +26,12 @@ export default function ArticlePreview({
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
+    <div className="cms-raw fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div
         className="bg-[#FAFAF8] rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 bg-[#0F0A1A] text-white px-5 py-3 flex items-center justify-between z-10">
+        <div className="sticky top-0 bg-[#0F1F16] text-white px-5 py-3 flex items-center justify-between z-10">
           <div className="flex items-center gap-3">
             <span className="text-sm font-semibold">Preview</span>
             {status && (

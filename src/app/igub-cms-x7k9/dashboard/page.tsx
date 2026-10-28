@@ -11,6 +11,7 @@ import {
   getContactMessages,
 } from "@/lib/firestoreService"
 import StatCard from "@/components/cms/StatCard"
+import { BarChart, BarLabels, ChartCard, Donut } from "@/components/cms/charts"
 import type { Article, Operator, AffiliateLink, ClickEvent, ContactMessage } from "@/types"
 
 export default function OverviewPage() {
@@ -21,6 +22,8 @@ export default function OverviewPage() {
   const [links, setLinks] = useState<AffiliateLink[]>([])
   const [clicks, setClicks] = useState<ClickEvent[]>([])
   const [messages, setMessages] = useState<ContactMessage[]>([])
+  // Read the clock once per visit, not on every render.
+  const [now] = useState(() => Date.now())
 
   useEffect(() => {
     if (!user) return
@@ -59,7 +62,7 @@ export default function OverviewPage() {
   const unreadMessages = messages.filter((m) => !m.read)
   const activeOperators = operators.filter((o) => o.status === "active")
 
-  const ninetyDaysAgo = Date.now() - 90 * 24 * 60 * 60 * 1000
+  const ninetyDaysAgo = now - 90 * 24 * 60 * 60 * 1000
   const staleArticles = articles.filter((a) => {
     const t = Date.parse(a.updatedAt || a.createdAt || "")
     return a.status === "published" && t && t < ninetyDaysAgo
@@ -72,6 +75,42 @@ export default function OverviewPage() {
   const hour = new Date().getHours()
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening"
   const name = user?.email?.split("@")[0] || "Admin"
+
+  // Published per week, last 12 weeks (Monday-start weeks).
+  const weekStart = (d: Date) => {
+    const x = new Date(d)
+    x.setHours(0, 0, 0, 0)
+    x.setDate(x.getDate() - ((x.getDay() + 6) % 7))
+    return x
+  }
+  const thisWeek = weekStart(new Date())
+  const weeks = Array.from({ length: 12 }, (_, i) => {
+    const start = new Date(thisWeek)
+    start.setDate(start.getDate() - (11 - i) * 7)
+    return start
+  })
+  const perWeek = weeks.map((start) => {
+    const end = new Date(start)
+    end.setDate(end.getDate() + 7)
+    const value = published.filter((a) => {
+      const t = Date.parse(a.createdAt || "")
+      return t >= start.getTime() && t < end.getTime()
+    }).length
+    return { label: start.toLocaleDateString("en-GB", { day: "numeric", month: "short" }), value }
+  })
+  const publishedThisWeek = perWeek[perWeek.length - 1]?.value || 0
+
+  // Articles by category: top 5 plus "Other".
+  const catCounts = new Map<string, number>()
+  published.forEach((a) => {
+    const c = (a.category || "Uncategorised").replace(/s$/, "")
+    catCounts.set(c, (catCounts.get(c) || 0) + 1)
+  })
+  const catSorted = [...catCounts.entries()].sort((a, b) => b[1] - a[1])
+  const byCategory = [
+    ...catSorted.slice(0, 5).map(([label, value]) => ({ label, value })),
+    ...(catSorted.length > 5 ? [{ label: "Other", value: catSorted.slice(5).reduce((s, [, n]) => s + n, 0) }] : []),
+  ]
 
   const outboundCtr =
     totalViews > 0 ? ((totalLinkClicks / totalViews) * 100).toFixed(1) : "0.0"
@@ -108,6 +147,25 @@ export default function OverviewPage() {
         <StatCard title="Operators" value={operators.length} color="#409824" hint={`${activeOperators.length} active`} />
         <StatCard title="Affiliate Clicks" value={totalLinkClicks.toLocaleString()} color="#FFD700" hint={`${links.length} links`} />
         <StatCard title="Total Views" value={totalViews.toLocaleString()} color="#772953" />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <ChartCard
+          className="lg:col-span-2"
+          title="Articles published"
+          subtitle="Per week, last 12 weeks"
+          action={
+            <span className="text-xs font-semibold bg-[#A7F432]/25 text-[#173D33] px-2.5 py-1 rounded-full">
+              {publishedThisWeek} this week
+            </span>
+          }
+        >
+          <BarChart data={perWeek} height={190} />
+          <BarLabels labels={perWeek.map((w, i) => (i % 2 === 1 || i === perWeek.length - 1 ? w.label : ""))} />
+        </ChartCard>
+        <ChartCard title="By category" subtitle="Published articles">
+          <Donut data={byCategory} centerLabel="published" />
+        </ChartCard>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -9,6 +9,10 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/igub-cms-x7k9/", "/api/"],
       },
     ],
-    sitemap: ["https://www.igamingubuntu.com/sitemap.xml", "https://www.igamingubuntu.com/blog-sitemap.xml"],
+    sitemap: [
+      "https://www.igamingubuntu.com/sitemap.xml",
+      "https://www.igamingubuntu.com/blog-sitemap.xml",
+      "https://www.igamingubuntu.com/news-sitemap.xml",
+    ],
   }
 }

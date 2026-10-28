@@ -1,0 +1,56 @@
+# Checks igamingubuntu.com every 15 minutes. A failed run means the site
+# (or a key part of it) is down or very slow; GitHub then emails whoever
+# last changed this schedule. Each check retries before failing, so a
+# single slow response does not raise a false alarm.
+name: Uptime
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check key pages
+        shell: bash
+        run: |
+          set -u
+          SITE="https://www.igamingubuntu.com"
+          # Page path, and text that must appear in the response.
+          checks=(
+            "/|Latest African iGaming News"
+            "/sitemap.xml|<urlset"
+            "/news/regulation|Regulation"
+            "/about|Who We Are"
+            "/igub-cms-x7k9|Editor access"
+            "/api/search?q=kenya|results"
+            "/llms.txt|iGamingUbuntu"
+          )
+          # One live article, taken from the sitemap, must open too.
+          article=$(curl -s --max-time 20 "$SITE/sitemap.xml" | grep -oE "$SITE/(news|casinos|sports|guides|events)/[^<]+" | grep -vE "/(industry|regulation|new|best|mobile|payments|market|live|predictions|leagues|basics|upcoming|recaps|webinars)$" | head -1)
+          [ -n "$article" ] && checks+=("${article#$SITE}|</article>")
+
+          failed=0
+          for entry in "${checks[@]}"; do
+            path="${entry%%|*}"; must="${entry#*|}"; ok=0
+            for attempt in 1 2 3; do
+              body=$(curl -s -L --max-time 15 -w $'\n%{http_code} %{time_total}' "$SITE$path")
+              status=$(tail -n1 <<<"$body" | cut -d' ' -f1)
+              secs=$(tail -n1 <<<"$body" | cut -d' ' -f2)
+              if [ "$status" = "200" ] && grep -qF "$must" <<<"$body"; then ok=1; break; fi
+              sleep 20
+            done
+            if [ $ok = 1 ]; then
+              echo "OK    $path  (${secs}s)"
+            else
+              echo "FAIL  $path  status=$status"
+              failed=1
+            fi
+          done
+          exit $failed

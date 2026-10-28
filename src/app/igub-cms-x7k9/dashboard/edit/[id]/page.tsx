@@ -5,6 +5,7 @@ import { onAuthStateChanged, type User } from "firebase/auth"
 import { getAuthInstance } from "@/lib/firebase"
 import { getArticleById, updateArticle, getAffiliateLinks, createAffiliateLink, updateAffiliateLink, deleteAffiliateLink, getCategories } from "@/lib/firestoreService"
 import { submitToIndexNow } from "@/lib/indexnow"
+import { refreshSite } from "@/lib/siteRefresh"
 import { useRouter, useParams } from "next/navigation"
 import Link from "next/link"
 import ImageUpload from "@/components/ImageUpload"
@@ -194,9 +195,9 @@ export default function EditPostPage() {
         }
       }
 
-      if (status === "published" && !form.noindex && form.slug) {
-        submitToIndexNow([`https://www.igamingubuntu.com${articlePath(form)}`])
-      }
+      // Refresh the old and new addresses (slug or category may have changed)
+      // and notify search engines.
+      await refreshSite([...(loaded ? [loaded] : []), { ...form, status }])
 
       guards.clearLocal()
       router.push("/igub-cms-x7k9/dashboard")

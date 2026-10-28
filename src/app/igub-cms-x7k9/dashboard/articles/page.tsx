@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { useAuth } from "@/lib/auth-context"
 import { getArticles, deleteArticle, getAllAffiliateLinks, updateArticle, createArticle } from "@/lib/firestoreService"
 import { submitToIndexNow } from "@/lib/indexnow"
+import { refreshSite } from "@/lib/siteRefresh"
 import { auditArticle } from "@/lib/seoAudit"
 import type { Article } from "@/types"
 import { articlePath } from "@/lib/navigation"
@@ -58,7 +59,9 @@ export default function ArticlesPage() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this article permanently?")) return
+    const gone = articles.find((a) => a.id === id)
     await deleteArticle(id)
+    if (gone) await refreshSite([{ ...gone, status: "deleted" }])
     setArticles((prev) => prev.filter((a) => a.id !== id))
     setDeleteId(null)
   }
@@ -78,7 +81,7 @@ export default function ArticlesPage() {
     setBusy(true)
     await Promise.all(chosen.map((a) => updateArticle(a.id, { status })))
     setArticles((prev) => prev.map((a) => (selected.has(a.id) ? { ...a, status } : a)))
-    if (status === "published") submitToIndexNow(chosen.filter((a) => a.slug && !a.noindex).map((a) => articlePath(a)))
+    await refreshSite(chosen.map((a) => ({ ...a, status })))
     setNotice(`${chosen.length} article${chosen.length === 1 ? "" : "s"} set to ${status}.`)
     setSelected(new Set())
     setBusy(false)
@@ -95,6 +98,7 @@ export default function ArticlesPage() {
     if (!confirm(`Delete ${chosen.length} article${chosen.length === 1 ? "" : "s"} permanently?`)) return
     setBusy(true)
     await Promise.all(chosen.map((a) => deleteArticle(a.id)))
+    await refreshSite(chosen.map((a) => ({ ...a, status: "deleted" })))
     setArticles((prev) => prev.filter((a) => !selected.has(a.id)))
     setNotice(`${chosen.length} article${chosen.length === 1 ? "" : "s"} deleted.`)
     setSelected(new Set())

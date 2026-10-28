@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { onAuthStateChanged, type User } from "firebase/auth"
 import { getAuthInstance } from "@/lib/firebase"
 import { createArticle, createAffiliateLink, getCategories } from "@/lib/firestoreService"
-import { submitToIndexNow } from "@/lib/indexnow"
+import { refreshSite } from "@/lib/siteRefresh"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import ImageUpload from "@/components/ImageUpload"
@@ -136,9 +136,8 @@ export default function NewPostPage() {
         }
       }
 
-      if (status === "published" && !form.noindex && form.slug) {
-        submitToIndexNow([`https://www.igamingubuntu.com${articlePath(form)}`])
-      }
+      // Refresh the cached public pages and notify search engines.
+      await refreshSite([{ ...form, status }])
 
       guards.clearLocal()
       router.push("/igub-cms-x7k9/dashboard")

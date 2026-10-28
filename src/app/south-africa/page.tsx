@@ -35,7 +35,7 @@ export default async function SouthAfricaPage() {
       <div className="flex flex-wrap gap-3 mb-8">
         <Link href="#guides" className="bg-ubuntu-orange text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">SA Guides</Link>
         <Link href="#laws" className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">SA Gambling Laws</Link>
-        <Link href="/blog" className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">All Articles</Link>
+        <Link href="/" className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">All Articles</Link>
       </div>
 
       <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />

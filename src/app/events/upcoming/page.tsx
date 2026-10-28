@@ -19,7 +19,7 @@ export default function UpcomingEventsPage() {
       <SectionHeader
         title="Upcoming Events"
         description="Conferences, summits and industry meetups across Africa."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Events", href: "/events" }, { label: "Upcoming Events" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Events", href: "/events" }, { label: "Upcoming Events" }]}
       />
 
       <nav className="flex flex-wrap gap-2 mb-8">

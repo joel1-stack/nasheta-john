@@ -17,7 +17,7 @@ export default function TheDeskPage() {
       <SectionHeader
         title="The Desk"
         description="Behind the scenes at iGamingUbuntu — how we research, write, and optimize iGaming content."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "The Desk" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "The Desk" }]}
       />
 
       <AdSlot position="leaderboard-top" className="mb-8" />

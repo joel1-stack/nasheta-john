@@ -51,7 +51,7 @@ export default function ReviewsPage() {
       <SectionHeader
         title="Casino & Betting Site Reviews"
         description="Honest, expert reviews of the best betting sites and online casinos in Africa. We only recommend licensed, trusted operators."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Casino Reviews" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Casino Reviews" }]}
       />
 
       <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />

@@ -17,7 +17,7 @@ export default function WebinarsPage() {
       <SectionHeader
         title="Webinars & Panels"
         description="Expert discussions and panels on demand."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Events", href: "/events" }, { label: "Webinars & Panels" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Events", href: "/events" }, { label: "Webinars & Panels" }]}
       />
       <nav className="flex flex-wrap gap-2 mb-8">
         <Link href="/events" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Events</Link>

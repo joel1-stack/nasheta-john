@@ -2,8 +2,6 @@ import { queryArticles } from "@/lib/serverArticles"
 import { SITE_URL, STATIC_PAGE_LASTMOD } from "@/lib/site"
 
 const blogHubPaths = [
-  "/blog",
-  "/news",
   "/news/industry",
   "/news/regulation",
   "/sports",

@@ -17,7 +17,7 @@ export default function PredictionsPage() {
       <SectionHeader
         title="Predictions & Tips"
         description="Expert match predictions and betting tips across African and international leagues."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Sports Betting", href: "/sports" }, { label: "Predictions & Tips" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Sports Betting", href: "/sports" }, { label: "Predictions & Tips" }]}
       />
 
       <nav className="flex flex-wrap gap-2 mb-8">

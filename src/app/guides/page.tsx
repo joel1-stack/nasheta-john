@@ -38,7 +38,7 @@ export default async function GuidesPage() {
       <SectionHeader
         title="Betting Guides & Tips"
         description="Learn how to bet smarter. Beginner-friendly guides, expert tips, and winning strategies for African punters."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Guides" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Guides" }]}
       />
 
       <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />
@@ -56,7 +56,7 @@ export default async function GuidesPage() {
       />
 
       <div className="mt-8 text-center">
-        <Link href="/blog" className="text-sm font-medium text-[#f59e0b] hover:underline">
+        <Link href="/" className="text-sm font-medium text-[#f59e0b] hover:underline">
           Browse every article →
         </Link>
       </div>

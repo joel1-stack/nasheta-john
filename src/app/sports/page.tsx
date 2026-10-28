@@ -24,7 +24,7 @@ export default function SportsBettingPage() {
       <SectionHeader
         title="Sports Betting"
         description="Sports betting guides, tips, and market coverage."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Sports Betting" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Sports Betting" }]}
       />
 
       <AdSlot position="leaderboard-top" className="mb-8" />

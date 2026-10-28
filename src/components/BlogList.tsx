@@ -11,13 +11,6 @@ export interface BlogListProps {
   total: number
   page: number
   totalPages: number
-  category: string
-  search: string
-  categories: string[]
-  /** Base path used for pagination links ("/blog"). */
-  basePath?: string
-  /** Front-page mode: news heading, no breadcrumb. */
-  frontPage?: boolean
 }
 
 const exploreItems = [
@@ -31,36 +24,16 @@ const exploreItems = [
   { name: "Tips & Guides", slug: "guides", isCountry: false },
 ]
 
-const DEFAULT_CATEGORIES = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Industry News", "Events"]
-
-/** Filter chips: "All", the default categories, then any category used in the CMS. */
-export function newsCategories(all: Article[]): string[] {
-  return ["All", ...new Set<string>([...DEFAULT_CATEGORIES, ...all.map((a) => a.category).filter(Boolean)])]
-}
-
 function getFlagEmoji(slug: string): string {
   const map: Record<string, string> = { kenya: "KE", nigeria: "NG", "south-africa": "ZA", ghana: "GH", tanzania: "TZ" }
   return map[slug] || ""
 }
 
-/** Builds a crawlable /blog URL that keeps the active filter and page. */
-export function blogHref({
-  basePath = "/blog",
-  page,
-  category,
-  search,
-}: {
-  basePath?: string
-  page?: number
-  category?: string
-  search?: string
-}): string {
-  const params = new URLSearchParams()
-  if (page && page > 1) params.set("page", String(page))
-  if (category && category !== "All") params.set("category", category)
-  if (search) params.set("search", search)
-  const qs = params.toString()
-  return qs ? `${basePath}?${qs}` : basePath
+export const NEWS_PER_PAGE = 12
+
+/** Front page is page 1; older stories live at /page/2, /page/3 ... */
+export function pageHref(page: number): string {
+  return page > 1 ? `/page/${page}` : "/"
 }
 
 function pageNumbers(page: number, totalPages: number): number[] {
@@ -71,18 +44,7 @@ function pageNumbers(page: number, totalPages: number): number[] {
   return Array.from({ length: max }, (_, i) => page - 3 + i)
 }
 
-export default function BlogList({
-  articles,
-  popular,
-  total,
-  page,
-  totalPages,
-  category,
-  search,
-  categories,
-  basePath = "/blog",
-  frontPage = false,
-}: BlogListProps) {
+export default function BlogList({ articles, popular, total, page, totalPages }: BlogListProps) {
   const featured = articles[0]
   const rest = articles.slice(1)
 
@@ -90,17 +52,10 @@ export default function BlogList({
     <div className="min-h-screen bg-white">
       <div className="border-b border-gray-200/60 bg-white">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-5 pt-6 pb-5">
-          {!frontPage && (
-            <nav className="text-[13px] text-[#6B7280] mb-3 flex items-center gap-2 flex-wrap" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-[#1A1F2B] transition">Home</Link>
-              <span className="text-gray-300" aria-hidden="true">&rsaquo;</span>
-              <span className="text-[#1A1F2B] font-medium">All News</span>
-            </nav>
-          )}
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div className="min-w-0">
               <h1 className="text-[22px] sm:text-[28px] font-bold text-[#111827] tracking-tight">
-                {frontPage ? "Latest African iGaming News" : "All News"}
+                {page > 1 ? `Latest African iGaming News, Page ${page}` : "Latest African iGaming News"}
               </h1>
               <p className="text-sm text-gray-500 mt-1">
                 Independent news on betting, casino, regulation and payments across Africa.
@@ -114,33 +69,6 @@ export default function BlogList({
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 pb-16">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 pt-6 md:pt-8">
           <div className="flex-1 min-w-0">
-            {/* Filters are real links so every filter and page is crawlable.
-                The front page skips them: topics live in the iGaming Directory menu. */}
-            {!frontPage && (
-            <div className="flex flex-wrap gap-2 mb-6">
-              {categories.map((cat) => (
-                <Link
-                  key={cat}
-                  href={blogHref({ basePath, category: cat, search })}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    category === cat
-                      ? "bg-[#f59e0b] text-white shadow-md shadow-[#f59e0b]/20"
-                      : "bg-white text-gray-500 hover:text-[#111827] hover:bg-gray-100 border border-gray-200 shadow-sm"
-                  }`}
-                >
-                  {cat}
-                </Link>
-              ))}
-            </div>
-            )}
-
-            {search && (
-              <div className="mb-6 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg px-4 py-3 shadow-sm">
-                Showing results for &ldquo;<span className="font-medium text-[#111827]">{search}</span>&rdquo;
-                <Link href={blogHref({ basePath, category })} className="ml-2 text-[#f59e0b] hover:underline font-medium">Clear</Link>
-              </div>
-            )}
-
             {totalPages > 1 && (
               <div className="mb-4 text-xs text-gray-400">
                 Page {page} of {totalPages} ({total} articles)
@@ -156,7 +84,7 @@ export default function BlogList({
                   <div className="grid md:grid-cols-[1.4fr_1fr]">
                     <div className="relative h-52 md:h-full min-h-[200px] overflow-hidden bg-gray-50">
                       {featured.featuredImage ? (
-                        <img src={featured.featuredImage} alt={featured.featuredImageAlt || featured.title} width={1200} height={675} loading="eager" fetchPriority="high"className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
+                        <img src={featured.featuredImage} alt={featured.featuredImageAlt || featured.title} width={1200} height={675} loading="eager" fetchPriority="high" className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/full backgound.png')" }}>
                           <span className="text-white text-sm font-semibold bg-black/40 px-3 py-1 rounded-full">iGamingUbuntu</span>
@@ -232,10 +160,10 @@ export default function BlogList({
 
                 {/* Pagination: real <a href> links, no JavaScript required. */}
                 {totalPages > 1 && (
-                  <nav aria-label="Blog pagination" className="flex items-center justify-center gap-2 mt-10 flex-wrap">
+                  <nav aria-label="News pagination" className="flex items-center justify-center gap-2 mt-10 flex-wrap">
                     {page > 1 ? (
                       <Link
-                        href={blogHref({ basePath, page: page - 1, category, search })}
+                        href={pageHref(page - 1)}
                         rel="prev"
                         className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 shadow-sm"
                       >
@@ -250,7 +178,7 @@ export default function BlogList({
                     {pageNumbers(page, totalPages).map((pageNum) => (
                       <Link
                         key={pageNum}
-                        href={blogHref({ basePath, page: pageNum, category, search })}
+                        href={pageHref(pageNum)}
                         aria-current={page === pageNum ? "page" : undefined}
                         className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium border shadow-sm transition-all ${
                           page === pageNum
@@ -264,7 +192,7 @@ export default function BlogList({
 
                     {page < totalPages ? (
                       <Link
-                        href={blogHref({ basePath, page: page + 1, category, search })}
+                        href={pageHref(page + 1)}
                         rel="next"
                         className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 shadow-sm"
                       >
@@ -283,9 +211,6 @@ export default function BlogList({
             {!featured && (
               <div className="text-center py-20 bg-white border border-gray-200 rounded-xl shadow-sm">
                 <p className="text-gray-500 font-medium">No articles found.</p>
-                {(search || category !== "All") && (
-                  <Link href={basePath} className="mt-2 inline-block text-[#f59e0b] hover:underline text-sm">Clear filters</Link>
-                )}
               </div>
             )}
           </div>
@@ -297,7 +222,7 @@ export default function BlogList({
               <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
                 <div className="flex items-center justify-between mb-4 border-l-4 border-[#22C55E] pl-3">
                   <h3 className="font-bold text-[#1A1F2B] text-sm uppercase tracking-wide">Most Read</h3>
-                  <Link href={basePath} className="text-xs text-[#22C55E] font-medium hover:underline">
+                  <Link href="/" className="text-xs text-[#22C55E] font-medium hover:underline">
                     View All →
                   </Link>
                 </div>

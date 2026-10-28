@@ -24,7 +24,7 @@ const categories = [
   { name: "Ghana", slug: "ghana" },
   { name: "Tanzania", slug: "tanzania" },
   { name: "Casino Reviews", slug: "reviews" },
-  { name: "Sports Betting", slug: "blog" },
+  { name: "Sports Betting", slug: "sports" },
   { name: "Tips & Guides", slug: "guides" },
 ]
 
@@ -44,7 +44,7 @@ export default function Sidebar({ popularPosts }: SidebarProps) {
         <div className="bg-white rounded-xl border border-gray-200 p-5 animate-fade-up shadow-sm">
           <div className="flex items-center justify-between mb-4 border-l-4 border-[#22C55E] pl-3">
             <h3 className="font-bold text-[#1A1F2B] text-sm uppercase tracking-wide">Most Read</h3>
-            <Link href="/blog" className="text-xs text-[#22C55E] font-medium hover:underline">
+            <Link href="/" className="text-xs text-[#22C55E] font-medium hover:underline">
               View All →
             </Link>
           </div>

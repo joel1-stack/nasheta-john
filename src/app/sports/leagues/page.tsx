@@ -17,7 +17,7 @@ export default function LeagueGuidesPage() {
       <SectionHeader
         title="League Guides"
         description="Premier League, La Liga, EPL, NPFL, GPL and more — betting guides for every league."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Sports Betting", href: "/sports" }, { label: "League Guides" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Sports Betting", href: "/sports" }, { label: "League Guides" }]}
       />
       <nav className="flex flex-wrap gap-2 mb-8">
         <Link href="/sports" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Sports Betting</Link>

@@ -7,6 +7,7 @@ import AdSlot from "@/components/AdSlot"
 import Sidebar from "@/components/Sidebar"
 import { finalizeArticleHtml } from "@/lib/contentHtml"
 import { isSponsoredStatus } from "@/lib/site"
+import { categoryHub } from "@/lib/navigation"
 import type { Article } from "@/types"
 
 interface ArticleViewProps {
@@ -42,6 +43,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
 
   const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
   const shareUrl = canonicalUrl || `https://www.igamingubuntu.com/blog/${article.slug}`
+  const hub = categoryHub(article.category)
 
   return (
     <div className="min-h-screen bg-white">
@@ -51,8 +53,12 @@ export default function ArticleView({ initialArticle, related = [], popular = []
             <nav aria-label="Breadcrumb" className="text-[13px] text-[#6B7280] mb-5 flex items-center gap-2 flex-wrap">
               <Link href="/" className="hover:text-[#1A1F2B] transition">Home</Link>
               <span className="text-gray-300" aria-hidden="true">&rsaquo;</span>
-              <Link href="/blog" className="hover:text-[#1A1F2B] transition">All News</Link>
-              <span className="text-gray-300" aria-hidden="true">&rsaquo;</span>
+              {hub && (
+                <>
+                  <Link href={hub.href} className="hover:text-[#1A1F2B] transition">{hub.label}</Link>
+                  <span className="text-gray-300" aria-hidden="true">&rsaquo;</span>
+                </>
+              )}
               <span className="text-[#1A1F2B]">{article.title}</span>
             </nav>
 
@@ -120,22 +126,22 @@ export default function ArticleView({ initialArticle, related = [], popular = []
                     {article.category}
                   </span>
                   {(article.tags || []).map((tag) => (
-                    <Link
-                      key={tag}
-                      href={`/blog?search=${encodeURIComponent(tag)}`}
-                      className="bg-[#F3F4F6] text-[#1A1F2B] px-4 py-1.5 rounded-full text-[13px] font-medium hover:bg-gray-200 transition"
-                    >
+                    <span key={tag} className="bg-[#F3F4F6] text-[#1A1F2B] px-4 py-1.5 rounded-full text-[13px] font-medium">
                       {tag}
-                    </Link>
+                    </span>
                   ))}
                 </>
-              ) : (
+              ) : hub ? (
                 <Link
-                  href={`/blog?search=${encodeURIComponent(article.category || "")}`}
+                  href={hub.href}
                   className="bg-[#F3F4F6] text-[#1A1F2B] px-4 py-1.5 rounded-full text-[13px] font-medium hover:bg-gray-200 transition"
                 >
                   {article.category}
                 </Link>
+              ) : (
+                <span className="bg-[#F3F4F6] text-[#1A1F2B] px-4 py-1.5 rounded-full text-[13px] font-medium">
+                  {article.category}
+                </span>
               )}
             </div>
 

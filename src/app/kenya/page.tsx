@@ -35,8 +35,8 @@ export default async function KenyaPage() {
       <div className="flex flex-wrap gap-3 mb-8">
         <Link href="#guides" className="bg-ubuntu-orange text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">Kenya Guides</Link>
         <Link href="#laws" className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">Kenya Gambling Laws</Link>
-        <Link href="/blog?search=MPesa" className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">M-Pesa Guides</Link>
-        <Link href="/blog" className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">All Articles</Link>
+        <Link href="/casinos/payments"className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">M-Pesa Guides</Link>
+        <Link href="/" className="bg-card text-text-secondary px-4 py-2 rounded-lg text-sm font-medium hover:text-ubuntu-orange transition">All Articles</Link>
       </div>
 
       <AdSlot position="leaderboard-top" className="mb-8" />

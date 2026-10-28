@@ -4,6 +4,7 @@ import { getArticleBySlug } from "@/lib/firestoreService"
 import { getPopularArticles, getRelatedArticles } from "@/lib/serverArticles"
 import { absoluteUrl, isSponsoredStatus } from "@/lib/site"
 import { breadcrumbLd, extractFaqs, faqPageLd } from "@/lib/structuredData"
+import { categoryHub } from "@/lib/navigation"
 import ArticleView from "./article-view"
 import type { Article } from "@/types"
 
@@ -128,9 +129,10 @@ export default async function BlogArticlePage({ params }: PageProps) {
   }
 
   const faqs = extractFaqs(article.content || "")
+  const hub = categoryHub(article.category)
   const crumbs = breadcrumbLd([
     { name: "Home", path: "/" },
-    { name: "All News", path: "/blog" },
+    ...(hub ? [{ name: hub.label, path: hub.href }] : []),
     { name: article.title || article.slug, path: articleUrl },
   ])
 

@@ -21,7 +21,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
     return (
       <div className="bg-white rounded-xl p-8 text-center border border-gray-200">
         <p className="text-gray-500">No articles yet. Check back soon for new content.</p>
-        <Link href="/blog" className="mt-3 inline-block text-sm font-medium text-[#f59e0b] hover:underline">
+        <Link href="/" className="mt-3 inline-block text-sm font-medium text-[#f59e0b] hover:underline">
           Browse all articles →
         </Link>
       </div>
@@ -129,7 +129,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
 
       <div className="text-center mt-8">
         <Link
-          href="/blog"
+          href="/"
           className="px-6 py-2.5 bg-white border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 shadow-sm transition inline-block"
         >
           View all articles

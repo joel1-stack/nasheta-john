@@ -25,7 +25,7 @@ export default function CasinoDirectoryPage() {
       <SectionHeader
         title="Casino Directory"
         description="Expert reviews of online casinos available to African players."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Casinos" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Casinos" }]}
       />
 
       <AdSlot position="leaderboard-top" className="mb-8" />

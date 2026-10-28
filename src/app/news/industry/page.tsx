@@ -17,11 +17,11 @@ export default function IndustryNewsPage() {
       <SectionHeader
         title="Industry News"
         description="Latest industry developments and market analysis across Africa."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "News", href: "/news" }, { label: "Industry News" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Industry News" }]}
       />
 
       <nav className="flex flex-wrap gap-2 mb-8">
-        <Link href="/news" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to News</Link>
+        <Link href="/" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Home</Link>
         <span className="text-sm text-gray-400 mx-1">|</span>
         <Link href="/news/regulation" className="text-sm text-gray-500 hover:text-[#f59e0b]">Regulation Watch</Link>
       </nav>

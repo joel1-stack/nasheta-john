@@ -19,7 +19,7 @@ export default function EventRecapsPage() {
       <SectionHeader
         title="Event Recaps"
         description="Highlights and key takeaways from past industry events."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Events", href: "/events" }, { label: "Event Recaps" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Events", href: "/events" }, { label: "Event Recaps" }]}
       />
 
       <nav className="flex flex-wrap gap-2 mb-8">

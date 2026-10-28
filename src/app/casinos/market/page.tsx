@@ -18,7 +18,7 @@ export default function ByMarketPage() {
       <SectionHeader
         title="Casinos by Market"
         description="Filter online casinos by your country — Kenya, Nigeria, South Africa, Ghana, and more."
-        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Casinos", href: "/casinos" }, { label: "By Market" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Casinos", href: "/casinos" }, { label: "By Market" }]}
       />
       <nav className="flex flex-wrap gap-2 mb-8">
         <Link href="/casinos" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Casino Directory</Link>

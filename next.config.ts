@@ -48,6 +48,16 @@ const nextConfig: NextConfig = {
         destination: "/about",
         statusCode: 301,
       })),
+      // The /blog and /news listing pages were merged into the front page.
+      // Article URLs (/blog/<slug>) are unchanged.
+      {
+        source: "/blog",
+        has: [{ type: "query" as const, key: "page", value: "(?<p>[2-9]|[1-9]\\d+)" }],
+        destination: "/page/:p",
+        statusCode: 301,
+      },
+      { source: "/blog", destination: "/", statusCode: 301 },
+      { source: "/news", destination: "/", statusCode: 301 },
       { source: "/admin", destination: "/igub-cms-x7k9", permanent: true },
       { source: "/admin/:path*", destination: "/igub-cms-x7k9/:path*", permanent: true },
     ]

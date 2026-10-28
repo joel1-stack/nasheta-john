@@ -12,7 +12,7 @@ export default function LatestPosts({ articles }: LatestPostsProps) {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-[#111827]">Latest iGaming Insights</h2>
-          <Link href="/blog" className="text-sm text-[#f59e0b] font-medium hover:underline">
+          <Link href="/" className="text-sm text-[#f59e0b] font-medium hover:underline">
             View All →
           </Link>
         </div>

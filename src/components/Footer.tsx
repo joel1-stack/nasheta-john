@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { IgubFullLogo } from "./IgubLogo"
-import { DIRECTORY_LINKS } from "@/lib/navigation"
 
 const EMAIL = "info@igamingubuntu.com"
 const TELEGRAM = "https://t.me/nashetajohn"
@@ -23,8 +22,17 @@ const socialLinks = [
   },
 ]
 
+const directoryLinks = [
+  { label: "Sports Betting", href: "/sports" },
+  { label: "Casino Reviews", href: "/reviews" },
+  { label: "Best Casinos", href: "/casinos/best" },
+  { label: "Payment Methods", href: "/casinos/payments" },
+  { label: "Betting Guides", href: "/guides" },
+]
+
 const links = [
-  { label: "News", href: "/news" },
+  { label: "Industry News", href: "/news/industry" },
+  { label: "Regulation Watch", href: "/news/regulation" },
   { label: "Events", href: "/events" },
   { label: "Who We Are", href: "/about" },
   { label: "Contact Us", href: "/contact" },
@@ -107,7 +115,7 @@ export default function Footer({ light = false }: FooterProps) {
           <div className="min-w-0">
             <h4 className={`font-bold mb-4 ${t.heading}`}>iGaming Directory</h4>
             <ul className="space-y-2.5">
-              {DIRECTORY_LINKS.map((l) => (
+              {directoryLinks.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className={`text-sm transition-colors ${t.text} ${t.hover}`}>{l.label}</Link>
                 </li>

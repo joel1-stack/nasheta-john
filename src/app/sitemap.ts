@@ -8,8 +8,6 @@ const STATIC_PAGES = [
   "",
   "/about",
   "/contact",
-  "/blog",
-  "/news",
   "/news/industry",
   "/news/regulation",
   "/sports",

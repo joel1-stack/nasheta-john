@@ -23,7 +23,7 @@ export default function ArticleGrid({ articles, emptyMessage, limit, columns = 2
         <p className="text-gray-500 text-sm">
           {emptyMessage || "No articles published for this section yet. Check back soon."}
         </p>
-        <Link href="/blog" className="mt-3 inline-block text-sm font-medium text-[#f59e0b] hover:underline">
+        <Link href="/" className="mt-3 inline-block text-sm font-medium text-[#f59e0b] hover:underline">
           Browse all articles →
         </Link>
       </div>

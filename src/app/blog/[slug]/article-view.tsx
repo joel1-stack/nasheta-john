@@ -1,13 +1,13 @@
 "use client"
 
-import { useEffect } from "react"
+import { Fragment, useEffect } from "react"
 import Link from "next/link"
 import { FaEnvelope, FaFacebookF, FaLinkedinIn, FaWhatsapp, FaXTwitter } from "react-icons/fa6"
 import { formatDate } from "@/lib/utils"
 import AdSlot from "@/components/AdSlot"
 import Newsletter from "@/components/Newsletter"
 import Sidebar from "@/components/Sidebar"
-import { finalizeArticleHtml } from "@/lib/contentHtml"
+import { finalizeArticleHtml, splitForAds } from "@/lib/contentHtml"
 import { isSponsoredStatus } from "@/lib/site"
 import { categoryHub } from "@/lib/navigation"
 import type { Article } from "@/types"
@@ -41,7 +41,7 @@ function shareLinks(title: string, url: string) {
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <h2 className="inline-block bg-[#111827] text-white text-sm font-semibold px-3 py-1.5 mb-5">{children}</h2>
+  return <h2 className="inline-block bg-brand-ink text-white text-sm font-semibold px-3 py-1.5 mb-5">{children}</h2>
 }
 
 export default function ArticleView({ initialArticle, related = [], popular = [], recent = [], canonicalUrl }: ArticleViewProps) {
@@ -62,6 +62,9 @@ export default function ArticleView({ initialArticle, related = [], popular = []
   const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
   const shareUrl = canonicalUrl || `https://www.igamingubuntu.com/blog/${article.slug}`
   const shares = shareLinks(article.title, shareUrl)
+  const bodyParts = splitForAds(
+    finalizeArticleHtml(article.content || "", { dropLeadingHeading: article.title, sponsored })
+  )
   const hub = categoryHub(article.category)
   const authorName = article.authorName || article.author || DEFAULT_AUTHOR
   const authorPhoto = article.authorPhoto || DEFAULT_AUTHOR_PHOTO
@@ -73,16 +76,14 @@ export default function ArticleView({ initialArticle, related = [], popular = []
   return (
     <div className="bg-white">
       <div className="max-w-6xl mx-auto px-4 py-8 md:py-10">
-        <AdSlot position="leaderboard-top" className="mb-8" />
-
         <div className="grid lg:grid-cols-[minmax(0,1fr)_320px] gap-10">
           <article className="min-w-0">
             <nav aria-label="Breadcrumb" className="text-[13px] text-gray-500 mb-4 flex items-center gap-1.5 flex-wrap">
-              <Link href="/" className="hover:text-[#16A34A] transition">Home</Link>
+              <Link href="/" className="hover:text-brand-teal transition">Home</Link>
               {hub && (
                 <>
                   <span aria-hidden="true">/</span>
-                  <Link href={hub.href} className="hover:text-[#16A34A] transition">{hub.label}</Link>
+                  <Link href={hub.href} className="hover:text-brand-teal transition">{hub.label}</Link>
                 </>
               )}
               <span aria-hidden="true">/</span>
@@ -92,33 +93,33 @@ export default function ArticleView({ initialArticle, related = [], popular = []
             {/* Topic labels */}
             <div className="flex flex-wrap gap-1.5 mb-4">
               {sponsored && (
-                <span className="bg-[#111827] text-white text-xs font-semibold px-2.5 py-1">
+                <span className="bg-brand-ink text-white text-xs font-semibold px-2.5 py-1">
                   {article.status === "press-release" ? "Press release" : "Sponsored"}
                 </span>
               )}
               {article.category &&
                 (hub ? (
-                  <Link href={hub.href} className="bg-[#16A34A] text-white text-xs font-semibold px-2.5 py-1 hover:bg-[#15803D] transition">
+                  <Link href={hub.href} className="bg-brand-teal text-white text-xs font-semibold px-2.5 py-1 hover:bg-brand-deep transition">
                     {article.category}
                   </Link>
                 ) : (
-                  <span className="bg-[#16A34A] text-white text-xs font-semibold px-2.5 py-1">{article.category}</span>
+                  <span className="bg-brand-teal text-white text-xs font-semibold px-2.5 py-1">{article.category}</span>
                 ))}
               {countries.map((c) => {
                 const slug = c.toLowerCase().replace(/[\s_]+/g, "-")
                 // The CMS stores some countries as slugs ("south-africa").
                 const label = slug.replace(/-/g, " ").replace(/\b\w/g, (ch) => ch.toUpperCase())
                 return COUNTRY_PAGES.has(slug) ? (
-                  <Link key={c} href={`/${slug}`} className="bg-[#16A34A] text-white text-xs font-semibold px-2.5 py-1 hover:bg-[#15803D] transition">
+                  <Link key={c} href={`/${slug}`} className="bg-brand-teal text-white text-xs font-semibold px-2.5 py-1 hover:bg-brand-deep transition">
                     {label}
                   </Link>
                 ) : (
-                  <span key={c} className="bg-[#16A34A] text-white text-xs font-semibold px-2.5 py-1">{label}</span>
+                  <span key={c} className="bg-brand-teal text-white text-xs font-semibold px-2.5 py-1">{label}</span>
                 )
               })}
             </div>
 
-            <h1 className="text-[28px] sm:text-[34px] md:text-[40px] font-semibold text-[#1A1F2B] leading-[1.2] break-words">
+            <h1 className="text-[28px] sm:text-[34px] md:text-[40px] font-semibold text-brand-deep leading-[1.2] break-words">
               {article.title}
             </h1>
 
@@ -126,7 +127,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
             <div className="flex items-center justify-between gap-4 flex-wrap mt-5 text-[13px] text-gray-500">
               <div className="flex items-center gap-2.5 flex-wrap">
                 <img src={authorPhoto} alt={authorName} width={32} height={32} className="w-8 h-8 rounded-full object-cover" />
-                <Link href="/about" className="font-medium text-[#1A1F2B] hover:text-[#16A34A] transition">{authorName}</Link>
+                <Link href="/about" className="font-medium text-brand-deep hover:text-brand-teal transition">{authorName}</Link>
                 <span aria-hidden="true">·</span>
                 <span>{formatDate(article.createdAt)}</span>
                 {wasUpdated && (
@@ -174,22 +175,21 @@ export default function ArticleView({ initialArticle, related = [], popular = []
               <p className="mt-6 text-[17px] italic text-gray-700 leading-relaxed">{article.excerpt}</p>
             )}
 
-            <div
-              className="article-body mt-6 prose prose-lg max-w-none text-[#2B2F36] text-[17px] leading-[1.85] prose-p:my-5 prose-headings:text-[#1A1F2B] prose-headings:font-semibold prose-h2:text-[26px] prose-h2:mt-10 prose-h3:text-[21px] prose-strong:text-[#1A1F2B] prose-a:text-[#16A34A] prose-a:font-medium prose-a:no-underline hover:prose-a:underline prose-img:w-full prose-li:my-1 prose-blockquote:border-l-[#16A34A] prose-blockquote:text-gray-700 [&_img.float-left]:float-left [&_img.float-left]:w-[45%] [&_img.float-left]:mr-6 [&_img.float-left]:mb-4 [&_img.float-right]:float-right [&_img.float-right]:w-[45%] [&_img.float-right]:ml-6 [&_img.float-right]:mb-4"
-              dangerouslySetInnerHTML={{
-                __html: finalizeArticleHtml(article.content || "", {
-                  dropLeadingHeading: article.title,
-                  sponsored,
-                }),
-              }}
-            />
+            <AdSlot position="leaderboard-top" className="mt-8" />
 
-            <AdSlot position="in-content-1" className="my-10" />
+            <div className="article-body mt-6 prose prose-lg max-w-none text-[#2B2F36] text-[17px] leading-[1.85] prose-p:my-5 prose-headings:text-brand-deep prose-headings:font-semibold prose-h2:text-[26px] prose-h2:mt-10 prose-h3:text-[21px] prose-strong:text-brand-deep prose-a:text-brand-teal-dark prose-a:font-medium prose-a:no-underline hover:prose-a:underline prose-img:w-full prose-li:my-1 [&_img.float-left]:float-left [&_img.float-left]:w-[45%] [&_img.float-left]:mr-6 [&_img.float-left]:mb-4 [&_img.float-right]:float-right [&_img.float-right]:w-[45%] [&_img.float-right]:ml-6 [&_img.float-right]:mb-4">
+              {bodyParts.map((part, i) => (
+                <Fragment key={i}>
+                  <div dangerouslySetInnerHTML={{ __html: part.html }} />
+                  {part.adAfter && <AdSlot position={part.adAfter} className="not-prose my-10" />}
+                </Fragment>
+              ))}
+            </div>
 
             {(article.tags || []).length > 0 && (
               <div className="flex flex-wrap justify-center gap-2 mt-10">
                 {article.tags.map((tag) => (
-                  <span key={tag} className="border border-gray-200 bg-gray-50 text-[#16A34A] text-sm font-semibold px-3 py-1.5">
+                  <span key={tag} className="border border-gray-200 bg-gray-50 text-brand-teal-dark text-sm font-semibold px-3 py-1.5">
                     #{tag}
                   </span>
                 ))}
@@ -198,7 +198,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
 
             {/* Share box */}
             <div className="mt-8 border border-gray-200 p-4 flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-semibold text-[#1A1F2B] mr-2">Share</span>
+              <span className="text-sm font-semibold text-brand-deep mr-2">Share</span>
               {shares.map(({ label, icon: Icon, bg, href }) => (
                 <a
                   key={label}
@@ -217,7 +217,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
               <img src={authorPhoto} alt={authorName} width={80} height={80} loading="lazy" className="w-20 h-20 rounded-full object-cover shrink-0" />
               <div>
                 <p className="text-xs uppercase tracking-wider text-gray-500">Written by</p>
-                <Link href="/about" className="text-lg font-semibold text-[#1A1F2B] hover:text-[#16A34A] transition">{authorName}</Link>
+                <Link href="/about" className="text-lg font-semibold text-brand-deep hover:text-brand-teal transition">{authorName}</Link>
                 <p className="text-sm text-gray-600 mt-1 leading-relaxed">{article.authorBio || DEFAULT_AUTHOR_BIO}</p>
               </div>
             </div>
@@ -241,7 +241,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
                         <div className="w-28 h-[72px] shrink-0 bg-gray-200" />
                       )}
                       <div className="min-w-0">
-                        <p className="text-[15px] font-semibold text-[#16A34A] group-hover:underline leading-snug line-clamp-3">{r.title}</p>
+                        <p className="text-[15px] font-semibold text-brand-teal-dark group-hover:underline leading-snug line-clamp-3">{r.title}</p>
                         <p className="text-xs text-gray-500 mt-1">{formatDate(r.createdAt)}</p>
                       </div>
                     </Link>

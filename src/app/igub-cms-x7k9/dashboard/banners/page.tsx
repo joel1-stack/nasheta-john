@@ -132,7 +132,7 @@ export default function BannersPage() {
               <label className={labelClass}>Where it shows</label>
               <select className={inputClass} value={editing.zone} onChange={(e) => set("zone", e.target.value as BannerZone)}>
                 {ZONES.map((z) => (
-                  <option key={z.value} value={z.value} className="bg-[#110B18]">
+                  <option key={z.value} value={z.value} className="bg-[#0F1F16]">
                     {z.label} ({z.size})
                   </option>
                 ))}

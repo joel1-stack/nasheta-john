@@ -3,6 +3,7 @@ import { FiArrowRight, FiBriefcase, FiFileText, FiGlobe, FiShield } from "react-
 import AdSlot from "@/components/AdSlot"
 import Newsletter from "@/components/Newsletter"
 import { formatDate } from "@/lib/utils"
+import { HOME_STORY_COUNT } from "@/lib/navigation"
 import type { Article } from "@/types"
 
 /**
@@ -32,9 +33,9 @@ function Thumb({ article, className, eager = false }: { article: Article; classN
 function SectionTitle({ children, href }: { children: React.ReactNode; href?: string }) {
   return (
     <div className="flex items-center justify-between mb-5 border-b border-gray-200">
-      <h2 className="inline-block bg-[#16A34A] text-white text-sm md:text-base font-semibold px-3 py-1.5">{children}</h2>
+      <h2 className="inline-block bg-brand-teal text-white text-sm md:text-base font-semibold px-3 py-1.5">{children}</h2>
       {href && (
-        <Link href={href} className="text-sm font-medium text-[#16A34A] hover:underline inline-flex items-center gap-1">
+        <Link href={href} className="text-sm font-medium text-brand-teal-dark hover:underline inline-flex items-center gap-1">
           More <FiArrowRight size={13} />
         </Link>
       )}
@@ -45,7 +46,7 @@ function SectionTitle({ children, href }: { children: React.ReactNode; href?: st
 function Meta({ article, light = false }: { article: Article; light?: boolean }) {
   return (
     <p className={`text-xs ${light ? "text-white/80" : "text-gray-500"}`}>
-      {article.category && <span className={`font-semibold ${light ? "text-[#86EFAC]" : "text-[#16A34A]"}`}>{article.category}</span>}
+      {article.category && <span className={`font-semibold ${light ? "text-brand-lime" : "text-brand-teal-dark"}`}>{article.category}</span>}
       {article.category && " · "}
       {formatDate(article.createdAt)}
     </p>
@@ -76,7 +77,7 @@ function ListItem({ article }: { article: Article }) {
       <Thumb article={article} className="w-32 h-24 sm:w-48 sm:h-32 shrink-0 rounded" />
       <div className="min-w-0">
         <Meta article={article} />
-        <h3 className="font-bold text-[#111827] text-base sm:text-lg leading-snug mt-1 group-hover:text-[#16A34A] transition-colors line-clamp-3">
+        <h3 className="font-bold text-brand-deep text-base sm:text-lg leading-snug mt-1 group-hover:text-brand-teal transition-colors line-clamp-3">
           {article.title}
         </h3>
         {article.excerpt && <p className="hidden sm:block text-sm text-gray-600 mt-2 line-clamp-2 leading-relaxed">{article.excerpt}</p>}
@@ -94,7 +95,7 @@ function GridCard({ article }: { article: Article }) {
       </div>
       <div className="mt-3">
         <Meta article={article} />
-        <h3 className="font-bold text-[#111827] leading-snug mt-1 group-hover:text-[#16A34A] transition-colors line-clamp-3">{article.title}</h3>
+        <h3 className="font-bold text-brand-deep leading-snug mt-1 group-hover:text-brand-teal transition-colors line-clamp-3">{article.title}</h3>
       </div>
     </Link>
   )
@@ -126,8 +127,8 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
 
   const ticker = articles.slice(0, 8)
   const [lead, ...side] = take(articles, 3)
-  // 3 top stories + 9 latest = the 12 newest, so /page/2 continues from story 13.
-  const latest = take(articles, 9)
+  // 3 top stories + 5 latest = HOME_STORY_COUNT; /page/2 continues from the next story.
+  const latest = take(articles, HOME_STORY_COUNT - 3)
   const regulationList = regulation.filter((a) => !used.has(a.slug)).slice(0, 5)
   const industryBlock = take(industry, 4)
   const guidesBlock = take(guides, 4)
@@ -137,8 +138,8 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
       {/* Ticker */}
       {ticker.length > 0 && (
         <div className="max-w-6xl mx-auto px-4 pt-5">
-          <div className="flex items-stretch overflow-hidden bg-[#16A34A] text-white text-sm">
-            <span className="shrink-0 bg-[#DC2626] px-4 py-2.5 font-semibold">Latest</span>
+          <div className="flex items-stretch overflow-hidden bg-brand-teal text-white text-sm">
+            <span className="shrink-0 bg-brand-lime text-brand-ink px-4 py-2.5 font-bold">Latest</span>
             <div className="overflow-hidden flex-1">
               <div className="flex w-max animate-marquee">
                 {[0, 1].map((copy) => (
@@ -187,7 +188,7 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
                 <ListItem key={a.slug} article={a} />
               ))}
             </div>
-            <Link href="/page/2" className="mt-6 inline-flex items-center gap-2 border border-gray-300 text-[#111827] px-5 py-2.5 rounded text-sm font-semibold hover:border-[#16A34A] hover:text-[#16A34A] transition">
+            <Link href="/page/2" className="mt-6 inline-flex items-center gap-2 border border-gray-300 text-brand-deep px-5 py-2.5 rounded text-sm font-semibold hover:border-brand-teal hover:text-brand-teal transition">
               More news <FiArrowRight size={14} />
             </Link>
           </div>
@@ -199,9 +200,9 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
                 <ol className="space-y-4">
                   {regulationList.map((a, i) => (
                     <li key={a.slug} className="flex gap-3">
-                      <span className="text-2xl font-extrabold text-[#16A34A]/30 leading-none w-7 shrink-0">{i + 1}</span>
+                      <span className="text-2xl font-extrabold text-brand-teal/30 leading-none w-7 shrink-0">{i + 1}</span>
                       <Link href={`/blog/${a.slug}`} className="group">
-                        <span className="block font-semibold text-[#111827] text-sm leading-snug group-hover:text-[#16A34A] transition-colors">{a.title}</span>
+                        <span className="block font-semibold text-brand-deep text-sm leading-snug group-hover:text-brand-teal transition-colors">{a.title}</span>
                         <span className="block text-xs text-gray-500 mt-1">{formatDate(a.createdAt)}</span>
                       </Link>
                     </li>
@@ -214,6 +215,8 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
             <AdSlot position="sidebar-1" />
           </aside>
         </section>
+
+        <AdSlot position="footer-banner" className="pt-12" />
 
         {/* Section blocks */}
         {industryBlock.length >= 2 && (
@@ -240,13 +243,13 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
       </div>
 
       {/* What we do */}
-      <section className="bg-[#0B1F14] text-white">
+      <section className="bg-brand-ink text-white">
         <div className="max-w-6xl mx-auto px-4 py-14">
-          <h2 className="inline-block border-l-4 border-[#22C55E] pl-3 text-xl md:text-2xl font-bold">What we do</h2>
+          <h2 className="inline-block border-l-4 border-brand-lime pl-3 text-xl md:text-2xl font-bold">What we do</h2>
           <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8 mt-8">
             {OFFERS.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex gap-4">
-                <span className="w-11 h-11 shrink-0 rounded-full bg-[#22C55E]/15 text-[#22C55E] flex items-center justify-center">
+                <span className="w-11 h-11 shrink-0 rounded-full bg-brand-lime/15 text-brand-lime flex items-center justify-center">
                   <Icon size={18} />
                 </span>
                 <div>
@@ -256,7 +259,7 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
               </div>
             ))}
           </div>
-          <Link href="/advertise" className="mt-10 inline-flex items-center gap-2 bg-[#22C55E] text-[#052e16] px-6 py-3 rounded font-bold text-sm hover:brightness-110 transition">
+          <Link href="/advertise" className="mt-10 inline-flex items-center gap-2 bg-brand-lime text-brand-ink px-6 py-3 rounded font-bold text-sm hover:brightness-110 transition">
             Work with iGamingUbuntu <FiArrowRight size={14} />
           </Link>
         </div>

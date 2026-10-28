@@ -1,3 +1,6 @@
+/** Stories on the homepage (3 top + 5 latest); /page/2 starts after them. */
+export const HOME_STORY_COUNT = 8
+
 /**
  * The site menu, shared by the navbar and the footer.
  * Items with `children` open a sub-menu on hover.

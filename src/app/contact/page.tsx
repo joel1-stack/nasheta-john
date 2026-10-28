@@ -48,13 +48,13 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#110B18] relative overflow-hidden">
+    <div className="min-h-screen bg-[#0F1F16] relative overflow-hidden">
 
       {/* Background */}
       <div className="fixed inset-0 z-0">
         <Image src="/images/Green Data Network (ABSTRACT + TECH).png" alt="Abstract green digital network background" width={800} height={449} loading="lazy" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-[#110B18]/70" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#110B18]/40 via-transparent to-[#110B18]/60" />
+        <div className="absolute inset-0 bg-[#0F1F16]/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F1F16]/40 via-transparent to-[#0F1F16]/60" />
       </div>
 
       {/* Orbs */}
@@ -127,13 +127,13 @@ export default function ContactPage() {
                   <div>
                     <label className="block text-sm font-medium text-[#B5ABB3] mb-1.5">Project Type</label>
                     <select name="projectType" required className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-[#FCFBFB] text-sm focus:outline-none focus:border-[#409824]/50 focus:ring-1 focus:ring-[#409824]/30 transition-all">
-                      <option value="" className="bg-[#110B18] text-[#56525E]">Select a service...</option>
-                      <option value="match" className="bg-[#110B18]">Match Result Articles</option>
-                      <option value="reviews" className="bg-[#110B18]">Casino & Betting Reviews</option>
-                      <option value="guides" className="bg-[#110B18]">Betting Guides & Tutorials</option>
-                      <option value="news" className="bg-[#110B18]">Industry News & Press Releases</option>
-                      <option value="strategy" className="bg-[#110B18]">Content Strategy & Consulting</option>
-                      <option value="other" className="bg-[#110B18]">Something else</option>
+                      <option value="" className="bg-[#0F1F16] text-[#56525E]">Select a service...</option>
+                      <option value="match" className="bg-[#0F1F16]">Match Result Articles</option>
+                      <option value="reviews" className="bg-[#0F1F16]">Casino & Betting Reviews</option>
+                      <option value="guides" className="bg-[#0F1F16]">Betting Guides & Tutorials</option>
+                      <option value="news" className="bg-[#0F1F16]">Industry News & Press Releases</option>
+                      <option value="strategy" className="bg-[#0F1F16]">Content Strategy & Consulting</option>
+                      <option value="other" className="bg-[#0F1F16]">Something else</option>
                     </select>
                   </div>
 

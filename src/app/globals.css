@@ -23,6 +23,15 @@
   --color-deep-purple: #1a0a2e;
   --color-deep-purple-light: #2d1b4e;
 
+  /* Brand palette */
+  --color-brand-lime: #A7F432;
+  --color-brand-ink: #0F1F16;
+  --color-brand-mint: #EAF3E7;
+  --color-brand-teal: #3B8F7B;
+  /* Darker teal for small text on white (AA contrast), and headline colour. */
+  --color-brand-teal-dark: #2C6E5E;
+  --color-brand-deep: #173D33;
+
   --font-sans: var(--font-raleway), "Raleway", ui-sans-serif, system-ui, sans-serif;
 
   --animate-fade-in: fade-in 0.6s ease-out forwards;
@@ -52,7 +61,7 @@
 }
 
 body {
-  background: #110B18;
+  background: #0F1F16;
   color: #FCFBFB;
   font-family: var(--font-raleway), "Raleway", ui-sans-serif, system-ui, sans-serif;
   /* Raleway's default numbers dip below the line; news is full of figures. */
@@ -344,3 +353,48 @@ html {
 .ad-cta-pulse { animation: ad-cta-pulse 2s ease-in-out infinite; }
 .ad-ticker { animation: ad-ticker 18s linear infinite; }
 .ad-ticker:hover { animation-play-state: paused; }
+
+/* Quotes in articles: dark box, lime quote mark, speaker on the last line. */
+.article-body blockquote {
+  position: relative;
+  background: #0F1F16;
+  color: #ffffff;
+  border: 0;
+  border-radius: 4px;
+  padding: 3.25rem 2rem 1.75rem;
+  margin: 2.25rem 0;
+  font-style: normal;
+  quotes: none;
+}
+.article-body blockquote::before {
+  content: "\201C";
+  position: absolute;
+  top: 0.4rem;
+  left: 1.75rem;
+  font-size: 4rem;
+  line-height: 1;
+  font-family: Georgia, serif;
+  color: #A7F432;
+}
+.article-body blockquote p {
+  color: #ffffff;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
+.article-body blockquote p::before,
+.article-body blockquote p::after {
+  content: none;
+}
+.article-body blockquote p:last-child { margin-bottom: 0; }
+/* A last line naming the speaker ("LSRC President Baba Malephane"). */
+.article-body blockquote p:not(:only-child):last-child,
+.article-body blockquote cite,
+.article-body blockquote footer {
+  display: block;
+  font-weight: 700;
+  font-style: italic;
+  color: #A7F432;
+  font-size: 1rem;
+  margin-top: 1rem;
+}

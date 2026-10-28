@@ -38,7 +38,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
         <div className="max-w-[1280px] mx-auto px-4 sm:px-5 pt-6 pb-5">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div className="min-w-0">
-              <h1 className="text-[22px] sm:text-[28px] font-bold text-[#111827] tracking-tight">
+              <h1 className="text-[22px] sm:text-[28px] font-bold text-brand-deep tracking-tight">
                 {page > 1 ? `Latest African iGaming News, Page ${page}` : "Latest African iGaming News"}
               </h1>
               <p className="text-sm text-gray-500 mt-1">
@@ -63,7 +63,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
               <>
                 <Link
                   href={`/blog/${featured.slug}`}
-                  className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-[#f59e0b]/30 transition-all duration-300 mb-6"
+                  className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-brand-teal/30 transition-all duration-300 mb-6"
                 >
                   <div className="grid md:grid-cols-[1.4fr_1fr]">
                     <div className="relative h-52 md:h-full min-h-[200px] overflow-hidden bg-gray-50">
@@ -75,13 +75,13 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                         </div>
                       )}
                       {featured.category && (
-                        <span className="absolute top-3 left-3 bg-[#f59e0b] text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                        <span className="absolute top-3 left-3 bg-brand-teal text-white text-xs font-semibold px-2.5 py-1 rounded-full">
                           {featured.category}
                         </span>
                       )}
                     </div>
                     <div className="p-5 md:p-6 flex flex-col justify-center">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#f59e0b] mb-2">Featured</span>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-brand-teal-dark mb-2">Featured</span>
                       <div className="flex items-center gap-2 mb-2 text-xs text-gray-400">
                         <FiCalendar size={11} />
                         {formatDate(featured.createdAt)}
@@ -89,11 +89,11 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                         <FiClock size={11} />
                         {featured.readTime || 3} min read
                       </div>
-                      <h2 className="font-bold text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors text-lg md:text-xl leading-snug mb-2">
+                      <h2 className="font-bold text-brand-deep group-hover:text-brand-teal transition-colors text-lg md:text-xl leading-snug mb-2">
                         {featured.title}
                       </h2>
                       <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed">{featured.excerpt}</p>
-                      <span className="mt-4 text-sm font-semibold text-[#f59e0b] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                      <span className="mt-4 text-sm font-semibold text-brand-teal-dark group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
                         Read article <FiArrowRight size={12} />
                       </span>
                     </div>
@@ -106,7 +106,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                       <Link
                         key={article.slug}
                         href={`/blog/${article.slug}`}
-                        className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-[#f59e0b]/30 hover:-translate-y-0.5 transition-all duration-300"
+                        className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-brand-teal/30 hover:-translate-y-0.5 transition-all duration-300"
                       >
                         <div className="aspect-[16/9] overflow-hidden bg-gray-50 relative">
                           {article.featuredImage ? (
@@ -125,14 +125,14 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                               {formatDate(article.createdAt)}
                             </span>
                           </div>
-                          <h3 className="font-bold text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors line-clamp-2 mb-2 text-base leading-snug">{article.title}</h3>
+                          <h3 className="font-bold text-brand-deep group-hover:text-brand-teal transition-colors line-clamp-2 mb-2 text-base leading-snug">{article.title}</h3>
                           <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">{article.excerpt}</p>
                           <div className="flex items-center justify-between text-xs pt-3 border-t border-gray-100">
                             <span className="text-gray-400 flex items-center gap-1">
                               <FiClock size={12} />
                               {article.readTime || 3} min read
                             </span>
-                            <span className="text-[#f59e0b] font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                            <span className="text-brand-teal-dark font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
                               Read <FiArrowRight size={12} />
                             </span>
                           </div>
@@ -166,7 +166,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                         aria-current={page === pageNum ? "page" : undefined}
                         className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium border shadow-sm transition-all ${
                           page === pageNum
-                            ? "bg-[#f59e0b] text-white border-[#f59e0b]"
+                            ? "bg-brand-teal text-white border-brand-teal"
                             : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
                         }`}
                       >
@@ -204,9 +204,9 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                 Read" list was sample content with invented numbers. */}
             {SHOW_MOST_READ && popular.length >= MOST_READ_MIN_ARTICLES && (
               <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
-                <div className="flex items-center justify-between mb-4 border-l-4 border-[#22C55E] pl-3">
-                  <h3 className="font-bold text-[#1A1F2B] text-sm uppercase tracking-wide">Most Read</h3>
-                  <Link href="/" className="text-xs text-[#22C55E] font-medium hover:underline">
+                <div className="flex items-center justify-between mb-4 border-l-4 border-brand-lime pl-3">
+                  <h3 className="font-bold text-brand-deep text-sm uppercase tracking-wide">Most Read</h3>
+                  <Link href="/" className="text-xs text-brand-lime font-medium hover:underline">
                     View All →
                   </Link>
                 </div>
@@ -222,7 +222,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                         <div className="w-20 h-[60px] rounded-md shrink-0 bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/images/full backgound.png')" }} />
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-[15px] font-bold text-[#1A1F2B] group-hover:text-[#22C55E] transition-colors line-clamp-2 leading-snug">
+                        <p className="text-[15px] font-bold text-brand-deep group-hover:text-brand-teal transition-colors line-clamp-2 leading-snug">
                           {post.title}
                         </p>
                         <div className="flex items-center gap-2 text-xs text-[#6B7280] mt-1.5">
@@ -238,11 +238,11 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
             <Newsletter />
 
             <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
-              <h3 className="font-bold text-[#111827] mb-2">Advertise with us</h3>
+              <h3 className="font-bold text-brand-deep mb-2">Advertise with us</h3>
               <p className="text-sm text-gray-500 leading-relaxed mb-3">
                 Reach operators, affiliates and regulators across Africa with sponsored articles, press releases and banners.
               </p>
-              <Link href="/advertise" className="inline-flex items-center gap-1 text-sm font-semibold text-[#f59e0b] hover:underline">
+              <Link href="/advertise" className="inline-flex items-center gap-1 text-sm font-semibold text-brand-teal-dark hover:underline">
                 See options <FiArrowRight size={12} />
               </Link>
             </div>

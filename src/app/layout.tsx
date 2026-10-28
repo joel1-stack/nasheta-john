@@ -105,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           />
         </head>
-        <body className={`${raleway.className} min-h-full flex flex-col bg-[#110B18] text-text-primary antialiased`}>
+        <body className={`${raleway.className} min-h-full flex flex-col bg-[#0F1F16] text-text-primary antialiased`}>
         <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TB8Q2LLT" height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe>
         </noscript>
@@ -116,7 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to main content
         </a>
         <NavbarWrapper />
-         <main id="main-content" className="flex-1 bg-[#110B18]">
+         <main id="main-content" className="flex-1 bg-[#0F1F16]">
           {children}
         </main>
         <FooterWrapper />

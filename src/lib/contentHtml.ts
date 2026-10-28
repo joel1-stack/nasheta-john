@@ -106,3 +106,70 @@ export function withParagraphs(html: string, dropLeadingHeading?: string): strin
   }
   return demoteH1(out)
 }
+
+/** A piece of article HTML, optionally followed by a banner slot. */
+export interface BodyPart {
+  html: string
+  adAfter?: "in-content-1" | "in-content-2" | "in-content-3"
+}
+
+const CONTAINER_TAG = /<(\/?)(p|blockquote|ul|ol|table|figure|div)\b[^>]*>/gi
+const END_MATTER_HEADING = /<h[2-4][^>]*>\s*(?:related reading|sources?|read also)\b[^<]*<\/h[2-4]>/i
+const RELATED_HEADING = /<h[2-4][^>]*>\s*related reading\b[^<]*<\/h[2-4]>/i
+
+/**
+ * Splits article HTML at top-level block boundaries so banners can sit
+ * between paragraphs: after the 2nd paragraph, before the story's last
+ * paragraph, and after the "Related reading" list (or at the end).
+ * Short stories get fewer slots so ads never crowd the text.
+ */
+export function splitForAds(html: string): BodyPart[] {
+  // Top-level paragraphs: [start, end) offsets, ignoring <p> inside quotes, lists, tables.
+  const paragraphs: [number, number][] = []
+  let depth = 0
+  let openP = -1
+  CONTAINER_TAG.lastIndex = 0
+  for (let m = CONTAINER_TAG.exec(html); m; m = CONTAINER_TAG.exec(html)) {
+    const closing = m[1] === "/"
+    const tag = m[2].toLowerCase()
+    if (tag === "p") {
+      if (!closing && depth === 0) openP = m.index
+      if (closing && depth === 0 && openP >= 0) {
+        paragraphs.push([openP, m.index + m[0].length])
+        openP = -1
+      }
+    } else {
+      depth += closing ? -1 : 1
+      if (depth < 0) depth = 0
+    }
+  }
+
+  const endMatter = html.search(END_MATTER_HEADING)
+  const storyEnd = endMatter >= 0 ? endMatter : html.length
+  const story = paragraphs.filter(([, end]) => end <= storyEnd)
+
+  const cuts: { at: number; slot: NonNullable<BodyPart["adAfter"]> }[] = []
+  if (story.length >= 4) cuts.push({ at: story[1][1], slot: "in-content-1" })
+  if (story.length >= 7) cuts.push({ at: story[story.length - 1][0], slot: "in-content-2" })
+
+  const related = html.search(RELATED_HEADING)
+  if (related >= 0) {
+    const listEnd = html.slice(related).search(/<\/(ul|ol)>/i)
+    if (listEnd >= 0) {
+      const at = related + listEnd + html.slice(related + listEnd).indexOf(">") + 1
+      cuts.push({ at, slot: "in-content-3" })
+    }
+  }
+  if (!cuts.some((c) => c.slot === "in-content-3")) cuts.push({ at: html.length, slot: "in-content-3" })
+
+  cuts.sort((a, b) => a.at - b.at)
+  const parts: BodyPart[] = []
+  let from = 0
+  for (const cut of cuts) {
+    if (cut.at < from) continue
+    parts.push({ html: html.slice(from, cut.at), adAfter: cut.slot })
+    from = cut.at
+  }
+  parts.push({ html: html.slice(from) })
+  return parts.filter((p) => p.html.trim() || p.adAfter)
+}

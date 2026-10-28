@@ -12,7 +12,7 @@ interface SidebarProps {
 function SideTitle({ children }: { children: React.ReactNode }) {
   return (
     <div className="border-b border-gray-200 mb-4">
-      <h3 className="inline-block bg-[#16A34A] text-white text-sm font-semibold px-3 py-1.5">{children}</h3>
+      <h3 className="inline-block bg-brand-teal text-white text-sm font-semibold px-3 py-1.5">{children}</h3>
     </div>
   )
 }
@@ -42,7 +42,7 @@ export default function Sidebar({ recent = [], popularPosts = [] }: SidebarProps
                   <div className="w-24 h-16 shrink-0 bg-gray-200" />
                 )}
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-[#1A1F2B] group-hover:text-[#16A34A] transition-colors line-clamp-3 leading-snug">
+                  <p className="text-sm font-semibold text-brand-deep group-hover:text-brand-teal transition-colors line-clamp-3 leading-snug">
                     {post.title}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">{formatDate(post.createdAt)}</p>
@@ -63,7 +63,7 @@ export default function Sidebar({ recent = [], popularPosts = [] }: SidebarProps
               <li key={post.slug} className="relative pl-4">
                 <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-gray-300" aria-hidden="true" />
                 <p className="text-[11px] text-gray-500">{formatDate(post.createdAt)}</p>
-                <Link href={`/blog/${post.slug}`} className="text-sm font-semibold text-[#1A1F2B] hover:text-[#16A34A] transition-colors leading-snug">
+                <Link href={`/blog/${post.slug}`} className="text-sm font-semibold text-brand-deep hover:text-brand-teal transition-colors leading-snug">
                   {post.title}
                 </Link>
               </li>

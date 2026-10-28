@@ -55,8 +55,8 @@ interface FooterProps {
 
 export default function Footer({ light = false }: FooterProps) {
   const t = light
-    ? { bg: "bg-white border-t border-gray-200", heading: "text-[#111827]", text: "text-[#6B7280]", hover: "hover:text-[#111827]", line: "border-gray-200", pill: "bg-[#22C55E]/10 text-[#16A34A] hover:bg-[#22C55E]/20" }
-    : { bg: "bg-[#0A0D14]", heading: "text-white", text: "text-[#9CA3AF]", hover: "hover:text-white", line: "border-white/10", pill: "bg-[#22C55E]/10 text-[#22C55E] hover:bg-[#22C55E]/20" }
+    ? { bg: "bg-white border-t border-gray-200", heading: "text-brand-deep", text: "text-[#6B7280]", hover: "hover:text-brand-deep", line: "border-gray-200", pill: "bg-brand-teal/10 text-brand-teal-dark hover:bg-brand-teal/20" }
+    : { bg: "bg-brand-ink", heading: "text-white", text: "text-white/60", hover: "hover:text-white", line: "border-white/10", pill: "bg-brand-lime/10 text-brand-lime hover:bg-brand-lime/20" }
 
   return (
     <footer className={`relative z-10 w-full ${t.bg}`}>
@@ -93,7 +93,7 @@ export default function Footer({ light = false }: FooterProps) {
                   rel="noopener noreferrer"
                   title={s.label}
                   aria-label={s.label}
-                  className="text-[#22C55E] hover:opacity-80 transition"
+                  className="text-brand-lime hover:opacity-80 transition"
                 >
                   {s.svg}
                 </a>

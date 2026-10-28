@@ -61,7 +61,7 @@ export default function Navbar() {
 
   const linkClass = (active: boolean) => {
     const base = "px-3 py-2 rounded-lg text-sm font-medium transition cursor-pointer inline-flex items-center"
-    if (active) return `${base} text-ubuntu-orange bg-ubuntu-orange/10`
+    if (active) return `${base} text-brand-lime bg-brand-lime/10`
     return `${base} text-[#B5ABB3] hover:text-[#FCFBFB] hover:bg-white/5`
   }
   const itemClass = "block px-3 py-2.5 rounded-lg hover:bg-white/5 transition group"
@@ -69,7 +69,7 @@ export default function Navbar() {
 
   return (
     <nav className={`sticky top-0 z-50 transition-all duration-300 ${
-      scrolled ? "bg-[#110B18]/95 border-b border-white/10 shadow-lg shadow-black/20" : "bg-[#110B18] border-b border-white/5"
+      scrolled ? "bg-[#0F1F16]/95 border-b border-white/10 shadow-lg shadow-black/20" : "bg-[#0F1F16] border-b border-white/5"
     }`}>
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 shrink-0">
@@ -95,7 +95,7 @@ export default function Navbar() {
               </button>
 
               {open === menu.key && (
-                <div className="absolute top-full left-0 mt-1 w-72 bg-[#1B1426] border border-white/10 shadow-xl shadow-black/40 rounded-xl p-2 z-50">
+                <div className="absolute top-full left-0 mt-1 w-72 bg-[#16291F] border border-white/10 shadow-xl shadow-black/40 rounded-xl p-2 z-50">
                   {menu.items.map((item) => (
                     <div
                       key={item.href}
@@ -103,7 +103,7 @@ export default function Navbar() {
                       onMouseEnter={() => setSubOpen(item.children ? item.href : null)}
                     >
                       <Link href={item.href} onClick={closeAll} className={itemClass}>
-                        <span className="flex items-center justify-between font-medium text-sm text-[#FCFBFB] group-hover:text-ubuntu-orange transition-colors">
+                        <span className="flex items-center justify-between font-medium text-sm text-[#FCFBFB] group-hover:text-brand-lime transition-colors">
                           {item.label}
                           {item.children && <FiChevronRight className="w-3.5 h-3.5" />}
                         </span>
@@ -111,10 +111,10 @@ export default function Navbar() {
                       </Link>
 
                       {item.children && subOpen === item.href && (
-                        <div className="absolute top-0 left-full ml-1 w-72 bg-[#1B1426] border border-white/10 shadow-xl shadow-black/40 rounded-xl p-2">
+                        <div className="absolute top-0 left-full ml-1 w-72 bg-[#16291F] border border-white/10 shadow-xl shadow-black/40 rounded-xl p-2">
                           {item.children.map((child) => (
                             <Link key={child.href} href={child.href} onClick={closeAll} className={itemClass}>
-                              <span className="block font-medium text-sm text-[#FCFBFB] group-hover:text-ubuntu-orange transition-colors">{child.label}</span>
+                              <span className="block font-medium text-sm text-[#FCFBFB] group-hover:text-brand-lime transition-colors">{child.label}</span>
                               {child.desc && <span className="block text-xs text-[#8A8494] mt-0.5">{child.desc}</span>}
                             </Link>
                           ))}
@@ -133,7 +133,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-3">
           <Link
             href="/advertise"
-            className="bg-[#409824] text-white px-5 py-2.5 rounded-lg text-sm font-bold transition hover:bg-[#409824]/90 shadow-lg shadow-[#409824]/20 hover:shadow-lg"
+            className="bg-brand-lime text-brand-ink px-5 py-2.5 rounded-lg text-sm font-bold transition hover:brightness-110"
           >
             Advertise
           </Link>
@@ -146,7 +146,7 @@ export default function Navbar() {
 
       {/* Mobile Nav */}
       {menuOpen && (
-        <div className="lg:hidden bg-[#110B18] border-t border-white/10 max-h-[calc(100vh-4rem)] overflow-y-auto">
+        <div className="lg:hidden bg-[#0F1F16] border-t border-white/10 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-4 py-3 space-y-1">
             <Link href="/" onClick={closeAll} className={mobileLink}>Home</Link>
 
@@ -160,7 +160,7 @@ export default function Navbar() {
                   <FiChevronDown className={`w-4 h-4 transition-transform ${mobileOpen === menu.key ? "rotate-180" : ""}`} />
                 </button>
                 {mobileOpen === menu.key && (
-                  <div className="ml-3 mt-1 space-y-1 pb-2 border-l-2 border-ubuntu-orange/20 pl-3">
+                  <div className="ml-3 mt-1 space-y-1 pb-2 border-l-2 border-brand-lime/30 pl-3">
                     {menu.items.map((item) => (
                       <div key={item.href}>
                         <Link href={item.href} onClick={closeAll} className="block px-3 py-2 rounded-lg text-sm text-[#FCFBFB] hover:bg-white/5">
@@ -180,7 +180,7 @@ export default function Navbar() {
 
             <Link href="/about" onClick={closeAll} className={mobileLink}>Who We Are</Link>
             <div className="border-t border-white/10 pt-3 mt-3">
-              <Link href="/advertise" onClick={closeAll} className="block text-center bg-[#409824] text-white px-4 py-3 rounded-lg text-sm font-bold">
+              <Link href="/advertise" onClick={closeAll} className="block text-center bg-brand-lime text-brand-ink px-4 py-3 rounded-lg text-sm font-bold">
                 Advertise
               </Link>
             </div>

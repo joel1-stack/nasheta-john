@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { onAuthStateChanged, type User } from "firebase/auth"
 import { getAuthInstance } from "@/lib/firebase"
 import { createArticle, createAffiliateLink, getCategories } from "@/lib/firestoreService"
@@ -11,6 +11,7 @@ import ImageUpload from "@/components/ImageUpload"
 import ArticlePreview from "@/components/ArticlePreview"
 import ContentEditor from "@/components/ContentEditor"
 import HyperspeedBackdrop from "@/components/cms/HyperspeedBackdrop"
+import { RestoreBanner, SaveHint, SeoCoach, useEditorGuards } from "@/components/cms/EditorAssist"
 
 const defaultCategories = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Guides", "Industry News", "Events", "News"]
 
@@ -41,6 +42,16 @@ export default function NewPostPage() {
   ])
   const [previewOpen, setPreviewOpen] = useState(false)
   const [categoryOptions, setCategoryOptions] = useState<string[]>(defaultCategories)
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const dirty = !!(form.title || form.content || form.excerpt)
+  const guards = useEditorGuards({
+    storageKey: "cms-draft-new",
+    data: { form, affiliates },
+    dirty,
+    onSave: () => formRef.current?.requestSubmit(),
+    ready: !loading,
+  })
 
   useEffect(() => {
     getCategories().then((cats) => {
@@ -126,6 +137,7 @@ export default function NewPostPage() {
         submitToIndexNow([`https://www.igamingubuntu.com/blog/${form.slug}`])
       }
 
+      guards.clearLocal()
       router.push("/igub-cms-x7k9/dashboard")
     } catch (err) {
       alert("Failed to save. Check console for error.")
@@ -152,7 +164,20 @@ export default function NewPostPage() {
         <Link href="/igub-cms-x7k9/dashboard" className="text-sm text-white/80 hover:text-[#A7F432] font-medium">&larr; Back to Dashboard</Link>
       </div>
 
-      <form onSubmit={handleSubmit} className="relative z-10 bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 space-y-6">
+      {guards.restorable && (
+        <RestoreBanner
+          savedAt={guards.restorable.savedAt}
+          onRestore={() => {
+            const saved = guards.restorable!.data
+            setForm(saved.form)
+            setAffiliates(saved.affiliates)
+            guards.dismissRestore()
+          }}
+          onDiscard={guards.dismissRestore}
+        />
+      )}
+
+      <form ref={formRef} onSubmit={handleSubmit} className="relative z-10 bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-1.5">Title</label>
           <input value={form.title} onChange={(e) => autoSlug(e.target.value)} className={inputClass} required />
@@ -348,6 +373,10 @@ export default function NewPostPage() {
             </div>
           </div>
         </div>
+
+        <SeoCoach fields={form} />
+
+        <SaveHint dirty={dirty} lastLocalSave={guards.lastLocalSave} />
 
         <div className="flex flex-wrap gap-3 pt-4 border-t border-white/10">
           <button type="submit" disabled={saving} className="bg-[#E95420] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20">

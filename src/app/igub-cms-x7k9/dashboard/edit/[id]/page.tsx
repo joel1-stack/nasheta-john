@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { onAuthStateChanged, type User } from "firebase/auth"
 import { getAuthInstance } from "@/lib/firebase"
 import { getArticleById, updateArticle, getAffiliateLinks, createAffiliateLink, updateAffiliateLink, deleteAffiliateLink, getCategories } from "@/lib/firestoreService"
@@ -10,7 +10,9 @@ import Link from "next/link"
 import ImageUpload from "@/components/ImageUpload"
 import ArticlePreview from "@/components/ArticlePreview"
 import ContentEditor from "@/components/ContentEditor"
-import type { AffiliateLink } from "@/types"
+import { RestoreBanner, RevisionHistory, SaveHint, SeoCoach, useEditorGuards } from "@/components/cms/EditorAssist"
+import { saveRevision } from "@/lib/revisions"
+import type { AffiliateLink, Article } from "@/types"
 
 const defaultCategories = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Guides", "Industry News", "Events", "News"]
 
@@ -44,6 +46,21 @@ export default function EditPostPage() {
   const [previewOpen, setPreviewOpen] = useState(false)
   const [categoryOptions, setCategoryOptions] = useState<string[]>(defaultCategories)
   const [updatedAt, setUpdatedAt] = useState("")
+  const [loaded, setLoaded] = useState<Article | null>(null)
+  const [original, setOriginal] = useState("")
+  const [historyOpen, setHistoryOpen] = useState(false)
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const dirty = !!original && JSON.stringify(form) !== original
+  const guards = useEditorGuards({
+    storageKey: `cms-draft-edit-${id}`,
+    data: { form },
+    dirty,
+    onSave: () => formRef.current?.requestSubmit(),
+    ready: !!original,
+  })
+  // A local backup that matches what is already saved is not worth offering.
+  const offerRestore = guards.restorable && JSON.stringify(guards.restorable.data.form) !== original
 
   useEffect(() => {
     getCategories().then((cats) => {
@@ -61,7 +78,8 @@ export default function EditPostPage() {
         const article = await getArticleById(id)
         if (article) {
           setUpdatedAt(article.updatedAt || article.createdAt || "")
-          setForm({
+          setLoaded(article)
+          const loadedForm = {
             title: article.title,
             slug: article.slug,
             excerpt: article.excerpt,
@@ -85,7 +103,9 @@ export default function EditPostPage() {
             sponsorName: article.sponsorName || "",
             isPressRelease: article.status === "press-release",
             pressReleaseSource: article.pressReleaseSource || "",
-          })
+          }
+          setForm(loadedForm)
+          setOriginal(JSON.stringify(loadedForm))
         }
         const links = await getAffiliateLinks(id)
         if (links.length > 0) {
@@ -125,6 +145,8 @@ export default function EditPostPage() {
     try {
       const tags = form.tags?.split(",").map((t) => t.trim()).filter(Boolean) || []
       const status = form.isSponsored ? "sponsored" : form.isPressRelease ? "press-release" : (form.status as "published" | "draft" | "review" | "scheduled")
+      // Keep the version being replaced, so it can be restored later.
+      if (loaded) await saveRevision(id, loaded as unknown as Record<string, unknown>)
       await updateArticle(id, {
         ...form,
         tags,
@@ -171,6 +193,7 @@ export default function EditPostPage() {
         submitToIndexNow([`https://www.igamingubuntu.com/blog/${form.slug}`])
       }
 
+      guards.clearLocal()
       router.push("/igub-cms-x7k9/dashboard")
     } catch (err) {
       alert("Failed to save. Check console.")
@@ -193,7 +216,18 @@ export default function EditPostPage() {
         <Link href="/igub-cms-x7k9/dashboard" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Dashboard</Link>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 space-y-6">
+      {offerRestore && guards.restorable && (
+        <RestoreBanner
+          savedAt={guards.restorable.savedAt}
+          onRestore={() => {
+            setForm(guards.restorable!.data.form)
+            guards.dismissRestore()
+          }}
+          onDiscard={guards.dismissRestore}
+        />
+      )}
+
+      <form ref={formRef} onSubmit={handleSubmit} className="bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-1.5">Title</label>
           <input value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} className={inputClass} required />
@@ -412,6 +446,10 @@ export default function EditPostPage() {
           </div>
         </div>
 
+        <SeoCoach fields={form} />
+
+        <SaveHint dirty={dirty} lastLocalSave={guards.lastLocalSave} />
+
         <div className="flex flex-wrap gap-3 pt-4 border-t border-white/10">
           <button type="submit" disabled={saving} className="bg-[#E95420] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#CC4A1C] transition disabled:opacity-50 cursor-pointer shadow-lg shadow-[#E95420]/20">
             {saving ? "Saving..." : form.status === "published" ? "Update & Publish" : "Save Draft"}
@@ -423,11 +461,32 @@ export default function EditPostPage() {
           >
             Preview
           </button>
+          <button
+            type="button"
+            onClick={() => setHistoryOpen(true)}
+            className="bg-white/10 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/20 transition cursor-pointer"
+          >
+            History
+          </button>
           <Link href="/igub-cms-x7k9/dashboard" className="bg-white/10 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/20 transition">
             Cancel
           </Link>
         </div>
       </form>
+
+      <RevisionHistory
+        articleId={id}
+        open={historyOpen}
+        onClose={() => setHistoryOpen(false)}
+        onRestore={(rev) => {
+          setForm((f) => ({
+            ...f,
+            ...Object.fromEntries(Object.entries(rev).filter(([k]) => k in f && k !== "tags")),
+            tags: Array.isArray(rev.tags) ? (rev.tags as string[]).join(", ") : f.tags,
+          }))
+          setHistoryOpen(false)
+        }}
+      />
 
       <ArticlePreview
         open={previewOpen}

@@ -194,18 +194,18 @@ export default function ContactPage() {
                 </div>
                 <h3 className="font-medium text-[#FCFBFB] mb-1 text-sm">Response Time</h3>
                 <p className="text-sm text-[#B5ABB3] leading-relaxed">
-                  I typically reply within <span className="text-[#409824] font-medium">24 hours</span> on weekdays. For urgent projects, mention &quot;URGENT&quot; in your subject line.
+                  I typically reply within <span className="text-[#409824] font-medium">24 hours</span> on weekdays. For breaking news tips or corrections, mention &quot;URGENT&quot; in your subject line.
                 </p>
               </div>
             </ScrollReveal>
 
             <ScrollReveal delay={250}>
               <div className="glass-card rounded-2xl p-6 border border-white/5 border-l-2 border-l-[#409824] hover:border-l-[#409824]/80 transition-all duration-300">
-                <h3 className="font-medium text-[#FCFBFB] mb-1 text-sm">Prefer a faster option?</h3>
-                <Link href="/work-with-me" className="inline-flex items-center gap-1 text-[#409824] font-medium text-sm hover:underline mt-1">
-                  Submit a quote request &rarr;
+                <h3 className="font-medium text-[#FCFBFB] mb-1 text-sm">Want to advertise?</h3>
+                <Link href="/advertise" className="inline-flex items-center gap-1 text-[#409824] font-medium text-sm hover:underline mt-1">
+                  See advertising options &rarr;
                 </Link>
-                <p className="text-xs text-[#56525E] mt-1">The quote form includes project details so I can respond with a tailored price.</p>
+                <p className="text-xs text-[#56525E] mt-1">Sponsored articles, press releases and banner placements.</p>
               </div>
             </ScrollReveal>
           </div>

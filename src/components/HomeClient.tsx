@@ -116,8 +116,8 @@ export default function HomeClient({
                   Read Latest Tips
                   <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
                 </Link>
-                <Link href="/work-with-me" className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 hover:border-[#B5ABB3]/60 transition-all duration-200">
-                  Work With Me
+                <Link href="/guides" className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 hover:border-[#B5ABB3]/60 transition-all duration-200">
+                  Country Guides
                 </Link>
               </div>
 
@@ -139,110 +139,25 @@ export default function HomeClient({
               <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-3 mb-6 tracking-tight">What is iGamingUbuntu?</h2>
               <div className="space-y-4 text-[#56525E] leading-relaxed max-w-3xl">
                 <p><span className="text-[#B5ABB3]">iGaming</span>, short for internet gaming, is the business of online betting, casino gaming, and sports wagering. It is a multi-billion dollar industry growing faster in Africa than anywhere else in the world.</p>
-                <p><span className="text-[#B5ABB3]">iGamingUbuntu</span> exists to help betting operators, affiliate site owners, and content agencies capture that growth through expert-written content. Every article is researched for the specific African market it targets, from M-Pesa deposit guides in Kenya to Bet9ja comparisons in Nigeria.</p>
-                <p className="text-[#B5ABB3]">We do not write generic gambling content. We write content that ranks in Google, converts readers into depositing players, and builds trust with African betting audiences.</p>
+                <p><span className="text-[#B5ABB3]">iGamingUbuntu</span> is an independent publication covering that industry. We report on regulation, tax changes, licensing, operators and payments, market by market, from Kenya and Nigeria to South Africa and Ghana.</p>
+                <p className="text-[#B5ABB3]">Our readers are operators, affiliates, regulators and investors who need clear, sourced news on African betting, written by people who follow these markets every day.</p>
               </div>
               <div className="flex flex-wrap gap-3 mt-6">
-                {["Kenya", "Nigeria", "South Africa", "Ghana", "Tanzania", "UK / US / Canada"].map((m) => (
+                {["Kenya", "Nigeria", "South Africa", "Ghana", "Tanzania", "Uganda"].map((m) => (
                   <span key={m} className="text-xs font-medium text-[#56525E] bg-white/5 border border-white/10 px-3 py-1.5 rounded-full hover:bg-[#409824] hover:text-white hover:scale-105 transition-all duration-300 cursor-default">{m}</span>
                 ))}
               </div>
               <div className="flex items-center gap-4 mt-8 pt-6 border-t border-white/5">
                 <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 relative">
-                  <Image src="/images/nasheta.png" alt="Nasheta" width={48} height={48} className="h-full w-full object-cover" />
+                  <Image src="/images/nasheta-john-author.png" alt="Nasheta John" width={48} height={48} className="h-full w-full object-cover" />
                 </div>
                 <div>
-                  <p className="text-sm text-[#FCFBFB] font-medium">Nasheta - iGaming Content Specialist</p>
-                  <Link href="/about" className="text-xs text-[#409824] hover:underline inline-flex items-center gap-1">Read my full story &rarr;</Link>
+                  <p className="text-sm text-[#FCFBFB] font-medium">Nasheta John, Founder and Editor</p>
+                  <Link href="/about" className="text-xs text-[#409824] hover:underline inline-flex items-center gap-1">About iGamingUbuntu &rarr;</Link>
                 </div>
               </div>
             </div>
           </ScrollReveal>
-        </div>
-      </section>
-
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute -top-40 right-0 w-[400px] h-[400px] rounded-full bg-[#0E1358]/10 blur-[100px] animate-orb-drift" />
-        <div className="max-w-6xl mx-auto px-4">
-          <ScrollReveal className="text-center mb-12">
-            <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">What I Write</span>
-            <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-3 tracking-tight">Services & Content Types</h2>
-            <p className="text-[#56525E] max-w-lg mx-auto mt-3">Content types that drive traffic, engagement, and affiliate revenue across every African iGaming market.</p>
-          </ScrollReveal>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { title: "Match Result Articles", desc: "SEO-optimised match reports with integrated betting odds and affiliate CTAs.", img: "/images/sports betting analytics.png" },
-              { title: "Casino & Betting Reviews", desc: "In-depth operator reviews with comparison tables and bonus breakdowns.", img: "/images/Green Data Network (ABSTRACT + TECH).png" },
-              { title: "Betting Guides & Tutorials", desc: "Beginner-friendly how-to content that converts readers into depositing players.", img: "/images/sports betting analytics.png" },
-              { title: "Industry News & Press Releases", desc: "Timely coverage of regulatory changes, market launches, and operator announcements.", img: "/images/Green Data Network (ABSTRACT + TECH).png" },
-            ].map((s, i) => (
-              <ScrollReveal key={s.title} delay={i * 80}>
-                <Link href="/services" className="group block glass-card rounded-2xl p-6 hover:border-[#409824]/40 hover:-translate-y-1 transition-all duration-300">
-                  <div className="w-10 h-10 rounded-lg overflow-hidden mb-4 border border-white/5 relative">
-                    <Image src={s.img} alt={s.title} width={40} height={40} className="h-full w-full object-cover" />
-                  </div>
-                  <h3 className="text-lg font-medium text-[#FCFBFB] group-hover:text-[#409824] transition-colors mb-2">{s.title}</h3>
-                  <p className="text-sm text-[#56525E] leading-relaxed">{s.desc}</p>
-                  <span className="text-xs text-[#409824] font-medium mt-3 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">Learn more &rarr;</span>
-                </Link>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0E1358]/30 to-transparent" />
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <ScrollReveal>
-                <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">Why Choose Me</span>
-                <h2 className="text-3xl md:text-4xl font-light text-[#FCFBFB] mt-3 tracking-tight mb-10">Why Work With Me</h2>
-              </ScrollReveal>
-              <div className="space-y-8">
-                {[
-                  { num: "01", title: "Speed Without Sacrifice", desc: "Need 50 articles this week? I deliver high-quality, researched content at scale. No plagiarism, no shortcuts, no missed deadlines." },
-                  { num: "02", title: "Deep Market Knowledge", desc: "I understand African betting audiences. M-Pesa, local leagues, regulatory nuances, and what makes a Kenyan bettor different from a Nigerian one." },
-                  { num: "03", title: "Native + Global Perspective", desc: "I write for African readers with global standards. Articles are localised, compliant with international regulations, and built for global affiliate programmes." },
-                ].map((item, i) => (
-                  <ScrollReveal key={item.num} delay={i * 100}>
-                    <div className="flex gap-5">
-                      <span className="text-3xl font-light text-[#409824] shrink-0 w-12">{item.num}</span>
-                      <div>
-                        <div className="h-px bg-white/10 mb-4" />
-                        <h3 className="text-lg font-medium text-[#FCFBFB] mb-2">{item.title}</h3>
-                        <p className="text-sm text-[#56525E] leading-relaxed">{item.desc}</p>
-                      </div>
-                    </div>
-                  </ScrollReveal>
-                ))}
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <ScrollReveal delay={200}>
-                <div className="glass-card rounded-3xl p-8">
-                  <span className="text-xs font-semibold text-[#B5ABB3] uppercase tracking-[0.15em]">How It Works</span>
-                  <div className="mt-6 space-y-6">
-                    {[
-                      { step: "01", title: "Brief", desc: "You share the topic, target market, and affiliate links" },
-                      { step: "02", title: "Research", desc: "I research odds, regulations, and competitor content" },
-                      { step: "03", title: "Write & Optimise", desc: "I write with SEO, readability, and conversion baked in" },
-                      { step: "04", title: "Deliver", desc: "Finished article ready to publish or CMS-deployed" },
-                    ].map((p) => (
-                      <div key={p.step} className="flex items-start gap-4">
-                        <span className="text-xs font-bold text-[#409824] bg-[#409824]/10 px-2 py-1 rounded">{p.step}</span>
-                        <div>
-                          <p className="text-sm font-medium text-[#FCFBFB]">{p.title}</p>
-                          <p className="text-xs text-[#56525E]">{p.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -342,11 +257,11 @@ export default function HomeClient({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(64,152,36,0.08)_0%,_transparent_70%)]" />
         <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
           <ScrollReveal>
-            <h2 className="text-4xl md:text-5xl font-light text-[#FCFBFB] tracking-tight leading-tight">Ready to Scale Your<br />iGaming Content?</h2>
-            <p className="text-[#56525E] text-lg mt-4 mb-8 max-w-md mx-auto">Let&apos;s talk about your content needs. I will send you a tailored proposal within 24 hours.</p>
+            <h2 className="text-4xl md:text-5xl font-light text-[#FCFBFB] tracking-tight leading-tight">Reach Africa&apos;s<br />iGaming Industry</h2>
+            <p className="text-[#56525E] text-lg mt-4 mb-8 max-w-md mx-auto">Sponsored articles, press releases and banner placements in front of operators, affiliates and regulators.</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/work-with-me" className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg animate-btn-glow">Work With Me <span>&rarr;</span></Link>
-              <Link href="/blog" className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 transition-all duration-200">View Sample Work</Link>
+              <Link href="/advertise" className="inline-flex items-center gap-2 bg-[#409824] text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-[#409824]/90 transition-all duration-200 shadow-lg animate-btn-glow">Advertise With Us <span>&rarr;</span></Link>
+              <Link href="/news" className="inline-flex items-center gap-2 border border-[#B5ABB3]/40 text-[#FCFBFB] px-8 py-3.5 rounded-xl font-semibold hover:bg-white/5 transition-all duration-200">Read the Latest News</Link>
             </div>
           </ScrollReveal>
           <ScrollReveal delay={200}>

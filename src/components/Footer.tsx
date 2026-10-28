@@ -32,7 +32,7 @@ const socialLinks = [
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
-  { label: "Services", href: "/services" },
+  { label: "News", href: "/news" },
   { label: "Blogs", href: "/blog" },
   { label: "Contact Us", href: "/contact" },
 ]
@@ -51,8 +51,8 @@ const marketHref = (name: string) =>
 const existingMarketPages = new Set(["/ghana", "/kenya", "/nigeria", "/south-africa", "/tanzania"])
 
 const companyLinks = [
-  { label: "Work With Me", href: "/work-with-me" },
   { label: "Advertise", href: "/advertise" },
+  { label: "Press", href: "/press" },
   { label: "Editorial Team", href: "/editorial-team" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
@@ -387,8 +387,8 @@ export default function Footer({ hideNav, light = false }: FooterProps) {
               Africa&apos;s iGaming Publication
             </p>
             <p className="text-sm text-[#9CA3AF] leading-relaxed mb-5">
-              Africa&apos;s iGaming content authority — expert writing that ranks and
-              converts.
+              Independent news and analysis on betting, casino and regulation
+              across Africa.
             </p>
             <a
               href="mailto:info@igamingubuntu.com"

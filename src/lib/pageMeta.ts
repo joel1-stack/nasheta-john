@@ -5,7 +5,7 @@ interface StaticPageMetaArgs {
   /** Full <title> exactly as it should appear in Google. */
   title: string
   description: string
-  /** Route path, e.g. "/services". Used for the self-referencing canonical. */
+  /** Route path, e.g. "/about". Used for the self-referencing canonical. */
   path: string
   noindex?: boolean
 }

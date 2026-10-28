@@ -37,6 +37,17 @@ const nextConfig: NextConfig = {
         destination: "https://www.igamingubuntu.com/:path*",
         statusCode: 301,
       },
+      // Former writing-services pages: the site is a media publication only now.
+      ...["/work-with-me", "/link-building-services", "/services"].map((source) => ({
+        source,
+        destination: "/advertise",
+        statusCode: 301,
+      })),
+      ...["/seo-content-writing", "/editing-services", "/translation-services", "/global"].map((source) => ({
+        source,
+        destination: "/about",
+        statusCode: 301,
+      })),
       { source: "/admin", destination: "/igub-cms-x7k9", permanent: true },
       { source: "/admin/:path*", destination: "/igub-cms-x7k9/:path*", permanent: true },
     ]

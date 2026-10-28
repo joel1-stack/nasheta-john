@@ -7,7 +7,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "The Desk: Inside iGamingUbuntu's Content",
   description:
-    "Go behind the scenes at iGamingUbuntu to see how we research, write and optimise iGaming content that ranks and converts across African markets.",
+    "Go behind the scenes at iGamingUbuntu to see how we research, source and report news on betting, casino and regulation across African markets.",
   alternates: { canonical: "/the-desk" },
 }
 
@@ -26,20 +26,19 @@ export default function TheDeskPage() {
         <h2 className="text-2xl font-bold text-[#111827] mb-4">Welcome to The Desk</h2>
         <div className="text-gray-500 space-y-4 leading-relaxed">
           <p>
-            iGamingUbuntu is Africa&apos;s iGaming content authority. From our desk, we produce expert-written casino reviews,
-            betting guides, industry news, and affiliate content that ranks and converts across Kenyan, Nigerian, South African,
-            Ghanaian, and Tanzanian markets.
+            iGamingUbuntu is an independent publication on Africa&apos;s iGaming industry. From our desk, we report industry news,
+            regulation, casino reviews and betting guides across Kenyan, Nigerian, South African, Ghanaian, and Tanzanian markets.
           </p>
           <p>
-            Every article starts with market research — monitoring Google trends, operator promotions, regulatory announcements,
-            and bettor behavior. Our writers average 7+ years of industry experience and specialize in SEO-optimized content.
+            Every article starts with research: regulator announcements, court rulings, tax changes, operator results and what
+            bettors are actually doing. We name our sources and correct mistakes openly.
           </p>
           <p>
             We cover sports betting markets including the NPFL, Ghana Premier League, English Premier League, La Liga, World Cup,
             and African competitions. Our casino reviews focus on M-Pesa-compatible operators, bonus transparency, and game selection.
           </p>
           <p>
-            Want content like this for your brand? Visit our <Link href="/work-with-me" className="text-[#f59e0b] font-medium hover:underline">Work With Me</Link> page.
+            Want to reach our readers? See our <Link href="/advertise" className="text-[#f59e0b] font-medium hover:underline">advertising options</Link>.
           </p>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { FiPause, FiPlay } from "react-icons/fi"
 
 // three.js only loads on pages that use this backdrop (New Article).
@@ -16,13 +16,14 @@ const STORAGE_KEY = "cms-hyperspeed"
  * it, and the choice is remembered in this browser.
  */
 export default function HyperspeedBackdrop() {
-  const [on, setOn] = useState(true)
-
-  useEffect(() => {
+  // Remembered choice, read once (the component never renders on the server).
+  const [on, setOn] = useState(() => {
     try {
-      if (localStorage.getItem(STORAGE_KEY) === "off") setOn(false)
-    } catch {}
-  }, [])
+      return localStorage.getItem(STORAGE_KEY) !== "off"
+    } catch {
+      return true
+    }
+  })
 
   const toggle = () => {
     setOn((v) => {

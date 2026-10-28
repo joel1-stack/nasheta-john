@@ -40,6 +40,7 @@ export default function EditPostPage() {
     seoTitle: "", metaDescription: "", canonicalUrl: "", noindex: false, ogImage: "",
     authorName: "", authorBio: "", authorPhoto: "",
     isSponsored: false, sponsorName: "", isPressRelease: false, pressReleaseSource: "",
+    scheduledAt: "",
   })
 
   const [affiliates, setAffiliates] = useState<AffiliateField[]>([])
@@ -49,6 +50,7 @@ export default function EditPostPage() {
   const [loaded, setLoaded] = useState<Article | null>(null)
   const [original, setOriginal] = useState("")
   const [historyOpen, setHistoryOpen] = useState(false)
+  const [pinged, setPinged] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
 
   const dirty = !!original && JSON.stringify(form) !== original
@@ -103,6 +105,7 @@ export default function EditPostPage() {
             sponsorName: article.sponsorName || "",
             isPressRelease: article.status === "press-release",
             pressReleaseSource: article.pressReleaseSource || "",
+            scheduledAt: article.scheduledAt || "",
           }
           setForm(loadedForm)
           setOriginal(JSON.stringify(loadedForm))
@@ -162,6 +165,7 @@ export default function EditPostPage() {
         authorPhoto: form.authorPhoto,
         sponsorName: form.isSponsored ? form.sponsorName : "",
         pressReleaseSource: form.isPressRelease ? form.pressReleaseSource : "",
+        scheduledAt: status === "scheduled" ? form.scheduledAt : "",
       })
 
       for (const aff of affiliates) {
@@ -398,6 +402,18 @@ export default function EditPostPage() {
             <option value="scheduled" className="bg-[#0F0A1A]">Scheduled</option>
             <option value="published" className="bg-[#0F0A1A]">Published</option>
           </select>
+          {form.status === "scheduled" && (
+            <label className="flex items-center gap-2 text-sm text-gray-300">
+              Publish at
+              <input
+                type="datetime-local"
+                required
+                value={form.scheduledAt ? new Date(Date.parse(form.scheduledAt) - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16) : ""}
+                onChange={(e) => setForm((f) => ({ ...f, scheduledAt: e.target.value ? new Date(e.target.value).toISOString() : "" }))}
+                className={`${selectClass} w-auto`}
+              />
+            </label>
+          )}
         </div>
 
         {/* Article Type Section */}
@@ -468,6 +484,19 @@ export default function EditPostPage() {
           >
             History
           </button>
+          {form.status === "published" && !form.noindex && form.slug && (
+            <button
+              type="button"
+              onClick={() => {
+                submitToIndexNow([`https://www.igamingubuntu.com/blog/${form.slug}`])
+                setPinged(true)
+              }}
+              className="bg-white/10 text-white px-6 py-3 rounded-lg font-medium hover:bg-white/20 transition cursor-pointer"
+              title="Ask Bing, Yandex and other IndexNow search engines to re-crawl this article now"
+            >
+              {pinged ? "Search engines notified ✓" : "Tell Google now"}
+            </button>
+          )}
           <Link href="/igub-cms-x7k9/dashboard" className="bg-white/10 text-white px-8 py-3 rounded-lg font-medium hover:bg-white/20 transition">
             Cancel
           </Link>

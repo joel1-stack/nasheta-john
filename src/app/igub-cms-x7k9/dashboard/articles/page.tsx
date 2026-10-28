@@ -2,8 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useAuth } from "@/lib/auth-context"
-import { getArticles, deleteArticle, getAllAffiliateLinks } from "@/lib/firestoreService"
+import { getArticles, deleteArticle, getAllAffiliateLinks, updateArticle, createArticle } from "@/lib/firestoreService"
+import { submitToIndexNow } from "@/lib/indexnow"
+import { auditArticle } from "@/lib/seoAudit"
 import type { Article } from "@/types"
 
 type StatusFilter = "all" | "published" | "draft" | "review" | "scheduled" | "sponsored" | "press-release"
@@ -18,6 +21,10 @@ export default function ArticlesPage() {
   const [category, setCategory] = useState("all")
   const [country, setCountry] = useState("all")
   const [search, setSearch] = useState("")
+  const [selected, setSelected] = useState<Set<string>>(new Set())
+  const [busy, setBusy] = useState(false)
+  const [notice, setNotice] = useState("")
+  const router = useRouter()
 
   useEffect(() => {
     if (!user) return
@@ -55,8 +62,59 @@ export default function ArticlesPage() {
     setDeleteId(null)
   }
 
-  const seoOk = (a: Article) =>
-    !!a.metaDescription && (a.seoTitle || a.title) && !a.noindex && !!a.featuredImage
+  const toggle = (id: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  const allShownSelected = filtered.length > 0 && filtered.every((a) => selected.has(a.id))
+  const toggleAll = () => setSelected(allShownSelected ? new Set() : new Set(filtered.map((a) => a.id)))
+  const chosen = articles.filter((a) => selected.has(a.id))
+
+  const setStatus = async (status: "draft" | "published") => {
+    setBusy(true)
+    await Promise.all(chosen.map((a) => updateArticle(a.id, { status })))
+    setArticles((prev) => prev.map((a) => (selected.has(a.id) ? { ...a, status } : a)))
+    if (status === "published") submitToIndexNow(chosen.filter((a) => a.slug && !a.noindex).map((a) => `/blog/${a.slug}`))
+    setNotice(`${chosen.length} article${chosen.length === 1 ? "" : "s"} set to ${status}.`)
+    setSelected(new Set())
+    setBusy(false)
+  }
+
+  const notifyGoogle = () => {
+    const urls = chosen.filter((a) => a.slug && !a.noindex && a.status === "published").map((a) => `/blog/${a.slug}`)
+    submitToIndexNow(urls)
+    setNotice(`Search engines notified about ${urls.length} published article${urls.length === 1 ? "" : "s"}.`)
+    setSelected(new Set())
+  }
+
+  const deleteChosen = async () => {
+    if (!confirm(`Delete ${chosen.length} article${chosen.length === 1 ? "" : "s"} permanently?`)) return
+    setBusy(true)
+    await Promise.all(chosen.map((a) => deleteArticle(a.id)))
+    setArticles((prev) => prev.filter((a) => !selected.has(a.id)))
+    setNotice(`${chosen.length} article${chosen.length === 1 ? "" : "s"} deleted.`)
+    setSelected(new Set())
+    setBusy(false)
+  }
+
+  /** Copy an article as a new draft and open it. */
+  const duplicate = async (a: Article) => {
+    setBusy(true)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, createdAt, updatedAt, ...rest } = a
+    const newId = await createArticle({
+      ...rest,
+      title: `Copy of ${a.title}`,
+      slug: `${a.slug}-copy-${Date.now().toString(36)}`,
+      status: "draft",
+      views: 0,
+    })
+    setBusy(false)
+    if (newId) router.push(`/igub-cms-x7k9/dashboard/edit/${newId}`)
+  }
 
   if (authLoading || loading)
     return (
@@ -154,10 +212,31 @@ export default function ArticlesPage() {
           </div>
         </div>
 
+        {notice && (
+          <p className="mb-4 text-sm bg-[#EEF4EC] text-[#173D33] rounded-xl px-4 py-3 flex justify-between gap-3">
+            {notice}
+            <button onClick={() => setNotice("")} className="text-xs font-semibold cursor-pointer">Dismiss</button>
+          </p>
+        )}
+
+        {selected.size > 0 && (
+          <div className="cms-raw sticky top-20 z-20 mb-4 flex flex-wrap items-center gap-2 rounded-2xl bg-[#0F1F16] text-white px-4 py-3 shadow-xl">
+            <span className="text-sm font-semibold mr-2">{selected.size} selected</span>
+            <button disabled={busy} onClick={() => setStatus("published")} className="text-xs font-semibold bg-[#A7F432] text-[#0F1F16] px-3 py-1.5 rounded-lg cursor-pointer disabled:opacity-50">Publish</button>
+            <button disabled={busy} onClick={() => setStatus("draft")} className="text-xs font-semibold bg-white/10 px-3 py-1.5 rounded-lg hover:bg-white/20 cursor-pointer disabled:opacity-50">Move to draft</button>
+            <button disabled={busy} onClick={notifyGoogle} className="text-xs font-semibold bg-white/10 px-3 py-1.5 rounded-lg hover:bg-white/20 cursor-pointer disabled:opacity-50">Tell Google now</button>
+            <button disabled={busy} onClick={deleteChosen} className="text-xs font-semibold bg-[#7F1D1D] px-3 py-1.5 rounded-lg hover:bg-[#991B1B] cursor-pointer disabled:opacity-50">Delete</button>
+            <button onClick={() => setSelected(new Set())} className="ml-auto text-xs text-white/70 hover:text-white cursor-pointer">Clear</button>
+          </div>
+        )}
+
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-white/5 border-b border-white/10">
+                <th className="p-4 w-10">
+                  <input type="checkbox" checked={allShownSelected} onChange={toggleAll} aria-label="Select all shown articles" className="w-4 h-4 accent-[#3B8F7B] cursor-pointer" />
+                </th>
                 <th className="p-4 text-left text-sm font-semibold text-white">Article</th>
                 <th className="p-4 text-left text-sm font-semibold text-white hidden md:table-cell">Category</th>
                 <th className="p-4 text-left text-sm font-semibold text-white hidden lg:table-cell">Country</th>
@@ -172,7 +251,7 @@ export default function ArticlesPage() {
             <tbody>
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="p-12 text-center">
+                  <td colSpan={10} className="p-12 text-center">
                     <p className="font-medium text-white mb-1">No articles found</p>
                     <p className="text-sm text-gray-400 mb-4">Create your first article to get started.</p>
                     <Link
@@ -185,7 +264,10 @@ export default function ArticlesPage() {
                 </tr>
               ) : (
                 filtered.map((a) => (
-                  <tr key={a.id} className="border-b border-white/5 hover:bg-white/5 transition">
+                  <tr key={a.id} className={`border-b border-white/5 hover:bg-white/5 transition ${selected.has(a.id) ? "bg-[#A7F432]/10" : ""}`}>
+                    <td className="p-4">
+                      <input type="checkbox" checked={selected.has(a.id)} onChange={() => toggle(a.id)} aria-label={`Select ${a.title}`} className="w-4 h-4 accent-[#3B8F7B] cursor-pointer" />
+                    </td>
                     <td className="p-4">
                       <Link
                         href={`/igub-cms-x7k9/dashboard/edit/${a.id}`}
@@ -209,12 +291,15 @@ export default function ArticlesPage() {
                       </span>
                     </td>
                     <td className="p-4 hidden md:table-cell">
-                      <span
-                        title={seoOk(a) ? "SEO fields complete" : "Missing SEO fields"}
-                        className={`text-lg ${seoOk(a) ? "" : "grayscale-0"}`}
-                      >
-                        {seoOk(a) ? "🟢" : "🟡"}
-                      </span>
+                      {(() => {
+                        const r = auditArticle(a)
+                        const tone = r.score >= 90 ? "bg-[#A7F432]/30 text-[#173D33]" : r.score >= 75 ? "bg-[#3B8F7B]/15 text-[#2C6E5E]" : r.score >= 60 ? "bg-[#FEF3C7] text-[#92400E]" : "bg-[#FEE2E2] text-[#B91C1C]"
+                        return (
+                          <span title={r.failed.map((c) => c.problem).join(", ") || "All checks pass"} className={`text-xs font-bold px-2 py-1 rounded-md ${tone}`}>
+                            {r.score}
+                          </span>
+                        )
+                      })()}
                     </td>
                     <td className="p-4 hidden md:table-cell">
                       <span className="text-lg" title={linkArticleIds.has(a.id) ? "Has affiliate links" : "No affiliate links"}>
@@ -238,6 +323,13 @@ export default function ArticlesPage() {
                         >
                           View
                         </Link>
+                        <button
+                          onClick={() => duplicate(a)}
+                          disabled={busy}
+                          className="text-sm text-gray-400 hover:text-white transition cursor-pointer disabled:opacity-50"
+                        >
+                          Duplicate
+                        </button>
                         {deleteId === a.id ? (
                           <div className="flex gap-2">
                             <button

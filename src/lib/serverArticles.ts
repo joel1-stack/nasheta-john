@@ -1,7 +1,7 @@
 import { getDb } from "@/lib/firebase"
 import { collection, getDocs, type DocumentSnapshot } from "firebase/firestore"
 import type { Article } from "@/types"
-import { isPublicStatus, REMOVED_DEMO_SLUG_SET } from "@/lib/site"
+import { asLiveArticle, REMOVED_DEMO_SLUG_SET } from "@/lib/site"
 
 function serializeDoc(d: DocumentSnapshot): Article {
   const data = d.data() || {}
@@ -62,7 +62,8 @@ export async function getAllPublicArticles(): Promise<Article[]> {
     const snap = await getDocs(collection(fb, "articles"))
     return snap.docs
       .map(serializeDoc)
-      .filter((a) => a.slug && isPublicStatus(a.status))
+      .map((a) => asLiveArticle(a))
+      .filter((a): a is Article => !!a && !!a.slug)
       // A demo slug that still exists in Firestore must never be listed again.
       .filter((a) => !REMOVED_DEMO_SLUG_SET.has(a.slug))
       .sort((a, b) => dateValue(b).localeCompare(dateValue(a)))

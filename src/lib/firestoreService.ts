@@ -19,7 +19,7 @@ import {
   DocumentData,
 } from "firebase/firestore"
 import type { Article, AffiliateLink, Banner, ContactMessage, Operator, Category, SiteSettings, ClickEvent } from "@/types"
-import { isPublicStatus, REMOVED_DEMO_SLUG_SET, PUBLIC_ARTICLE_STATUSES } from "@/lib/site"
+import { asLiveArticle, REMOVED_DEMO_SLUG_SET, PUBLIC_ARTICLE_STATUSES } from "@/lib/site"
 
 const ARTICLES = "articles"
 const AFFILIATE_LINKS = "affiliateLinks"
@@ -172,7 +172,8 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     const snap = await getDocs(q)
     const match = snap.docs
       .map(toArticle)
-      .filter((a) => isPublicStatus(a.status))
+      .map((a) => asLiveArticle(a))
+      .filter((a): a is Article => !!a)
       .sort((a, b) => (b.updatedAt || "").localeCompare(a.updatedAt || ""))[0]
     return match || null
   } catch {

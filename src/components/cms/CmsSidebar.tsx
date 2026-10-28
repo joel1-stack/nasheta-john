@@ -25,7 +25,7 @@ import {
 } from "react-icons/fi"
 import { IgubFullLogo } from "@/components/IgubLogo"
 
-const groups: { label: string; items: { href: string; label: string; icon: IconType }[] }[] = [
+export const CMS_NAV: { label: string; items: { href: string; label: string; icon: IconType }[] }[] = [
   {
     label: "Overview",
     items: [{ href: "/igub-cms-x7k9/dashboard", label: "Dashboard", icon: FiGrid }],
@@ -101,7 +101,7 @@ export default function CmsSidebar() {
         </div>
 
         <nav className="flex-1 overflow-y-auto py-3 px-3 space-y-5">
-          {groups.map((group) => (
+          {CMS_NAV.map((group) => (
             <div key={group.label}>
               <p className="px-3 mb-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">{group.label}</p>
               <div className="space-y-0.5">

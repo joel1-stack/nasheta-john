@@ -54,6 +54,25 @@ export function isPublicStatus(status?: string | null): boolean {
   return !!status && (PUBLIC_ARTICLE_STATUSES as readonly string[]).includes(status)
 }
 
+/**
+ * Scheduled articles go live by themselves: once scheduledAt has passed they
+ * are treated as published (no timer job needed). Returns the article as
+ * readers should see it, dated to its publish time, or null if not public.
+ */
+export function asLiveArticle<T extends { status?: string | null; scheduledAt?: string; createdAt?: string }>(
+  article: T,
+  now = Date.now(),
+): T | null {
+  if (isPublicStatus(article.status)) return article
+  if (article.status === "scheduled" && article.scheduledAt) {
+    const at = Date.parse(article.scheduledAt)
+    if (!Number.isNaN(at) && at <= now) {
+      return { ...article, status: "published", createdAt: article.scheduledAt.slice(0, 10) }
+    }
+  }
+  return null
+}
+
 export function isSponsoredStatus(status?: string | null): boolean {
   return status === "sponsored" || status === "press-release"
 }

@@ -35,6 +35,7 @@ export default function NewPostPage() {
     seoTitle: "", metaDescription: "", canonicalUrl: "", noindex: false, ogImage: "",
     authorName: "Nasheta John", authorBio: "", authorPhoto: "",
     isSponsored: false, sponsorName: "", isPressRelease: false, pressReleaseSource: "",
+    scheduledAt: "",
   })
 
   const [affiliates, setAffiliates] = useState<AffiliateField[]>([
@@ -114,6 +115,7 @@ export default function NewPostPage() {
         authorPhoto: form.authorPhoto,
         sponsorName: form.isSponsored ? form.sponsorName : "",
         pressReleaseSource: form.isPressRelease ? form.pressReleaseSource : "",
+        scheduledAt: status === "scheduled" ? form.scheduledAt : "",
       })
 
       if (id) {
@@ -326,6 +328,18 @@ export default function NewPostPage() {
             <option value="scheduled" className="bg-[#0F0A1A]">Scheduled</option>
             <option value="published" className="bg-[#0F0A1A]">Published</option>
           </select>
+          {form.status === "scheduled" && (
+            <label className="flex items-center gap-2 text-sm text-gray-300">
+              Publish at
+              <input
+                type="datetime-local"
+                required
+                value={form.scheduledAt ? new Date(Date.parse(form.scheduledAt) - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16) : ""}
+                onChange={(e) => setForm((f) => ({ ...f, scheduledAt: e.target.value ? new Date(e.target.value).toISOString() : "" }))}
+                className={`${selectClass} w-auto`}
+              />
+            </label>
+          )}
         </div>
 
         {/* Article Type Section */}

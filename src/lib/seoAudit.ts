@@ -43,7 +43,7 @@ export function auditArticle(a: Article): SeoResult {
     { id: "excerpt", label: "Summary of 80+ characters", problem: "Summary under 80 characters", weight: 10, pass: (a.excerpt || "").length >= 80 },
     { id: "length", label: "300–700 words", problem: "Not 300–700 words", weight: 10, pass: words >= 300 && words <= 700 },
     { id: "headings", label: "Uses H2 subheadings", problem: "No H2 subheadings", weight: 5, pass: /<h2[\s>]/i.test(html) },
-    { id: "internal-link", label: "Links to another iGUB article", problem: "No link to another iGUB article", weight: 10, pass: /href=["'](?:https?:\/\/(?:www\.)?igamingubuntu\.com)?\/blog\//i.test(html) },
+    { id: "internal-link", label: "Links to another iGUB article", problem: "No link to another iGUB article", weight: 10, pass: /href=["'](?:https?:\/\/(?:www\.)?igamingubuntu\.com)?\/(?:blog|news)\//i.test(html) },
     { id: "source-link", label: "Links to an outside source", problem: "No outside source link", weight: 5, pass: /href=["']https?:\/\/(?!(?:www\.)?igamingubuntu\.com)/i.test(html) },
     { id: "tags", label: "Has tags", problem: "No tags", weight: 5, pass: (a.tags || []).length > 0 },
   ]

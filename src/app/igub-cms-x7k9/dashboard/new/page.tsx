@@ -136,7 +136,7 @@ export default function NewPostPage() {
       }
 
       if (status === "published" && !form.noindex && form.slug) {
-        submitToIndexNow([`https://www.igamingubuntu.com/blog/${form.slug}`])
+        submitToIndexNow([`https://www.igamingubuntu.com/news/${form.slug}`])
       }
 
       guards.clearLocal()

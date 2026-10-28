@@ -62,7 +62,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
             {featured && (
               <>
                 <Link
-                  href={`/blog/${featured.slug}`}
+                  href={`/news/${featured.slug}`}
                   className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-brand-teal/30 transition-all duration-300 mb-6"
                 >
                   <div className="grid md:grid-cols-[1.4fr_1fr]">
@@ -105,7 +105,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                     {rest.map((article) => (
                       <Link
                         key={article.slug}
-                        href={`/blog/${article.slug}`}
+                        href={`/news/${article.slug}`}
                         className="group block rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm hover:shadow-md hover:border-brand-teal/30 hover:-translate-y-0.5 transition-all duration-300"
                       >
                         <div className="aspect-[16/9] overflow-hidden bg-gray-50 relative">
@@ -212,7 +212,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                 </div>
                 <div className="space-y-4">
                   {popular.map((post, i) => (
-                    <Link key={post.slug} href={`/blog/${post.slug}`} className="flex gap-3 group items-start">
+                    <Link key={post.slug} href={`/news/${post.slug}`} className="flex gap-3 group items-start">
                       <span className="text-[#F59E0B] font-extrabold text-xl w-8 shrink-0 leading-none pt-0.5">
                         {String(i + 1).padStart(2, "0")}
                       </span>

@@ -35,7 +35,7 @@ export function SeoCoach({ fields }: { fields: EditorFields }) {
   const result = useMemo(() => auditArticle(toArticle(fields)), [fields])
   const title = (fields.seoTitle || fields.title || "Your article title").trim()
   const meta = (fields.metaDescription || fields.excerpt || "Add a meta description so Google shows a clear summary.").trim()
-  const url = `${SITE}/blog/${fields.slug || "your-article"}`
+  const url = `${SITE}/news/${fields.slug || "your-article"}`
 
   return (
     <section className="rounded-2xl border border-[#E1EAE0] bg-[#F7FAF6] p-5 space-y-5">

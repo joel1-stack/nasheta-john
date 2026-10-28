@@ -55,14 +55,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${SITE_URL}${path}`,
     lastModified: STATIC_PAGE_LASTMOD,
     changeFrequency: path === "" ? "daily" : "weekly",
-    priority: path === "" ? 1 : path.startsWith("/blog") ? 0.8 : 0.7,
+    priority: path === "" ? 1 : path.startsWith("/news") ? 0.8 : 0.7,
   }))
 
   const { articles } = await queryArticles({ page: 1, perPage: 5000 })
   const articleEntries: MetadataRoute.Sitemap = articles
     .filter((a) => a.slug)
     .map((a) => ({
-      url: `${SITE_URL}/blog/${a.slug}`,
+      url: `${SITE_URL}/news/${a.slug}`,
       // Real update date from the CMS, never the build time.
       lastModified: isoDay(a.updatedAt) || isoDay(a.createdAt) || STATIC_PAGE_LASTMOD,
       changeFrequency: "weekly" as const,

@@ -33,7 +33,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
   return (
     <div className="space-y-6">
       <Link
-        href={`/blog/${featured.slug}`}
+        href={`/news/${featured.slug}`}
         className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
       >
         <div className="grid md:grid-cols-[1.4fr_1fr]">
@@ -84,7 +84,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
           {rest.map((article) => (
             <Link
               key={article.id}
-              href={`/blog/${article.slug}`}
+              href={`/news/${article.slug}`}
               className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
             >
               <div className="relative h-48 overflow-hidden bg-gray-100">

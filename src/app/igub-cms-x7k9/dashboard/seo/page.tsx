@@ -168,7 +168,7 @@ export default function SeoPage() {
                   </Link>
                   {article.slug && (
                     <a
-                      href={`/blog/${article.slug}`}
+                      href={`/news/${article.slug}`}
                       target="_blank"
                       rel="noopener"
                       className="text-xs font-semibold text-[#2C6E5E] px-2 py-1.5 rounded-lg hover:bg-[#EEF4EC] transition inline-flex items-center gap-1"

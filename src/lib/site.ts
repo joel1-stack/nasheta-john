@@ -16,7 +16,7 @@ export const STATIC_PAGE_LASTMOD = "2026-10-23"
 
 /**
  * Demo / seed blog posts that used to be hardcoded in the codebase.
- * They are deleted from code and 301-redirected to /blog.
+ * They are deleted from code and 301-redirected to the homepage.
  * Kept here so the redirect list and the sitemap filters stay in sync.
  */
 export const REMOVED_DEMO_SLUGS = [

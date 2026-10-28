@@ -77,14 +77,14 @@ export default function ArticlesPage() {
     setBusy(true)
     await Promise.all(chosen.map((a) => updateArticle(a.id, { status })))
     setArticles((prev) => prev.map((a) => (selected.has(a.id) ? { ...a, status } : a)))
-    if (status === "published") submitToIndexNow(chosen.filter((a) => a.slug && !a.noindex).map((a) => `/blog/${a.slug}`))
+    if (status === "published") submitToIndexNow(chosen.filter((a) => a.slug && !a.noindex).map((a) => `/news/${a.slug}`))
     setNotice(`${chosen.length} article${chosen.length === 1 ? "" : "s"} set to ${status}.`)
     setSelected(new Set())
     setBusy(false)
   }
 
   const notifyGoogle = () => {
-    const urls = chosen.filter((a) => a.slug && !a.noindex && a.status === "published").map((a) => `/blog/${a.slug}`)
+    const urls = chosen.filter((a) => a.slug && !a.noindex && a.status === "published").map((a) => `/news/${a.slug}`)
     submitToIndexNow(urls)
     setNotice(`Search engines notified about ${urls.length} published article${urls.length === 1 ? "" : "s"}.`)
     setSelected(new Set())
@@ -317,7 +317,7 @@ export default function ArticlesPage() {
                           Edit
                         </Link>
                         <Link
-                          href={`/blog/${a.slug}`}
+                          href={`/news/${a.slug}`}
                           target="_blank"
                           className="text-sm text-gray-400 hover:text-white transition"
                         >

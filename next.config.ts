@@ -24,10 +24,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // 10 hardcoded demo/seed articles: deleted from the code, 301 to /blog.
+      // 10 hardcoded demo/seed articles: deleted from the code, 301 home.
       ...REMOVED_DEMO_SLUGS.map((slug) => ({
         source: `/blog/${slug}`,
-        destination: "/blog",
+        destination: "/",
         statusCode: 301,
       })),
       // Apex domain straight to www in one hop (see also vercel.json).
@@ -48,8 +48,8 @@ const nextConfig: NextConfig = {
         destination: "/about",
         statusCode: 301,
       })),
-      // The /blog and /news listing pages were merged into the front page.
-      // Article URLs (/blog/<slug>) are unchanged.
+      // The /blog and /news listing pages were merged into the front page,
+      // and articles moved from /blog/<slug> to /news/<slug>.
       {
         source: "/blog",
         has: [{ type: "query" as const, key: "page", value: "(?<p>[2-9]|[1-9]\\d+)" }],
@@ -57,6 +57,7 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
       { source: "/blog", destination: "/", statusCode: 301 },
+      { source: "/blog/:slug", destination: "/news/:slug", statusCode: 301 },
       { source: "/news", destination: "/", statusCode: 301 },
       { source: "/admin", destination: "/igub-cms-x7k9", permanent: true },
       { source: "/admin/:path*", destination: "/igub-cms-x7k9/:path*", permanent: true },

@@ -65,8 +65,13 @@ export interface ArticleHtmlOptions {
 }
 
 /** Final preparation of CMS article HTML before it is rendered. */
+/** Articles moved from /blog/<slug> to /news/<slug>; point old in-text links straight there. */
+export function withNewsLinks(html: string): string {
+  return html.replace(/href=(["'])(https?:\/\/(?:www\.)?igamingubuntu\.com)?\/blog\//gi, "href=$1$2/news/")
+}
+
 export function finalizeArticleHtml(html: string, options: ArticleHtmlOptions = {}): string {
-  const out = withParagraphs(html || "", options.dropLeadingHeading)
+  const out = withNewsLinks(withParagraphs(html || "", options.dropLeadingHeading))
   return options.sponsored ? withSponsoredLinks(out) : out
 }
 

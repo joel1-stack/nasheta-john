@@ -28,7 +28,7 @@ export default function Sidebar({ recent = [], popularPosts = [] }: SidebarProps
           <SideTitle>Recent Stories</SideTitle>
           <div className="space-y-4">
             {recent.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="flex gap-3 group items-start">
+              <Link key={post.slug} href={`/news/${post.slug}`} className="flex gap-3 group items-start">
                 {post.featuredImage ? (
                   <img
                     src={post.featuredImage}
@@ -63,7 +63,7 @@ export default function Sidebar({ recent = [], popularPosts = [] }: SidebarProps
               <li key={post.slug} className="relative pl-4">
                 <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-gray-300" aria-hidden="true" />
                 <p className="text-[11px] text-gray-500">{formatDate(post.createdAt)}</p>
-                <Link href={`/blog/${post.slug}`} className="text-sm font-semibold text-brand-deep hover:text-brand-teal transition-colors leading-snug">
+                <Link href={`/news/${post.slug}`} className="text-sm font-semibold text-brand-deep hover:text-brand-teal transition-colors leading-snug">
                   {post.title}
                 </Link>
               </li>

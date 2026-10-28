@@ -45,7 +45,7 @@ export async function GET() {
       .filter((a) => a.slug && !a.noindex)
       .map((a) => {
         const desc = oneLine(a.metaDescription || a.excerpt)
-        return `- [${oneLine(a.title)}](${SITE_URL}/blog/${a.slug})${desc ? `: ${desc}` : ""}`
+        return `- [${oneLine(a.title)}](${SITE_URL}/news/${a.slug})${desc ? `: ${desc}` : ""}`
       }),
     "",
   ]

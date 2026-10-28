@@ -398,3 +398,16 @@ html {
   font-size: 1rem;
   margin-top: 1rem;
 }
+
+/* Public pages: no text selection (see CopyGuard). Fields stay usable. */
+.protect-copy {
+  -webkit-user-select: none;
+  user-select: none;
+}
+.protect-copy :is(input, textarea, select, [contenteditable="true"]) {
+  -webkit-user-select: text;
+  user-select: text;
+}
+.protect-copy img {
+  -webkit-user-drag: none;
+}

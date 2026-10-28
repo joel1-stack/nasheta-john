@@ -28,18 +28,23 @@ function fitSearchTitle(base: string): string | { absolute: string } {
 function isValidCanonical(value: string): boolean {
   if (!value || value.trim() === "") return false
   const trimmed = value.trim()
-  const pathRegex = /^\/blog\/[a-z0-9-]+$/
-  const urlRegex = /^https:\/\/www\.igamingubuntu\.com\/blog\/[a-z0-9-]+$/
+  const pathRegex = /^\/(?:blog|news)\/[a-z0-9-]+$/
+  const urlRegex = /^https:\/\/www\.igamingubuntu\.com\/(?:blog|news)\/[a-z0-9-]+$/
   return pathRegex.test(trimmed) || urlRegex.test(trimmed)
 }
 
-/** Empty canonical field falls back to the article's own URL. */
+/**
+ * Empty canonical field falls back to the article's own URL. Articles moved
+ * from /blog/ to /news/, so an old /blog/ canonical saved in the CMS is
+ * rewritten to /news/.
+ */
 function resolveCanonical(article: Article): string {
   const raw = (article.canonicalUrl || "").trim()
   if (isValidCanonical(raw)) {
-    return raw.startsWith("http") ? raw : `https://www.igamingubuntu.com${raw}`
+    const url = raw.startsWith("http") ? raw : `https://www.igamingubuntu.com${raw}`
+    return url.replace("igamingubuntu.com/blog/", "igamingubuntu.com/news/")
   }
-  return `https://www.igamingubuntu.com/blog/${article.slug}`
+  return `https://www.igamingubuntu.com/news/${article.slug}`
 }
 
 function buildArticleMetadata(article: Article): Metadata {

@@ -15,7 +15,7 @@ import { REMOVED_DEMO_SLUGS } from "@/lib/site"
  *
  * The seeding payloads have been deleted from the codebase. This endpoint only
  * exists to purge any copies that are still sitting in Firestore, so the live
- * site stops serving them. They are also 301-redirected to /blog in
+ * site stops serving them. They are also 301-redirected to the homepage in
  * next.config.ts and filtered out of every query and sitemap.
  *
  *   DELETE /api/seed   -> removes every document whose slug is in the list

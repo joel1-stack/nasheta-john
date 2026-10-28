@@ -56,7 +56,7 @@ export async function GET(): Promise<Response> {
     if (!article.slug) continue
     const lastmod = isoDay(article.updatedAt) || isoDay(article.createdAt) || STATIC_PAGE_LASTMOD
     entries.push({
-      loc: `${SITE_URL}/blog/${article.slug}`,
+      loc: `${SITE_URL}/news/${article.slug}`,
       lastmod,
     })
   }

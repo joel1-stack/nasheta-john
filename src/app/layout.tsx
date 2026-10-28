@@ -4,6 +4,7 @@ import "./globals.css"
 import NavbarWrapper from "@/components/NavbarWrapper"
 import FooterWrapper from "@/components/FooterWrapper"
 import GoogleAnalytics from "@/components/GoogleAnalytics"
+import CopyGuard from "@/components/CopyGuard"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Script from "next/script"
@@ -131,6 +132,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             entirely on /igub-cms-x7k9 and adds traffic_type:"internal" for the
             owner's browser (see src/lib/analytics.ts). */}
         <GoogleAnalytics />
+        <CopyGuard />
       </body>
     </html>
   )

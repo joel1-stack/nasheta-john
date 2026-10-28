@@ -60,7 +60,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
   }, [article?.id])
 
   const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
-  const shareUrl = canonicalUrl || `https://www.igamingubuntu.com/blog/${article.slug}`
+  const shareUrl = canonicalUrl || `https://www.igamingubuntu.com/news/${article.slug}`
   const shares = shareLinks(article.title, shareUrl)
   const bodyParts = splitForAds(
     finalizeArticleHtml(article.content || "", { dropLeadingHeading: article.title, sponsored })
@@ -234,7 +234,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
                 </SectionLabel>
                 <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6">
                   {related.slice(0, 4).map((r) => (
-                    <Link key={r.slug} href={`/blog/${r.slug}`} className="flex gap-4 group items-start">
+                    <Link key={r.slug} href={`/news/${r.slug}`} className="flex gap-4 group items-start">
                       {r.featuredImage ? (
                         <img src={r.featuredImage} alt={r.featuredImageAlt || r.title} width={112} height={72} loading="lazy" className="w-28 h-[72px] object-cover shrink-0" />
                       ) : (

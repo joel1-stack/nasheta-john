@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { trackLead } from "@/lib/analytics"
 
-export default function Newsletter() {
+/** "card" sits in a sidebar; "band" is the full-width strip above the footer. */
+export default function Newsletter({ variant = "card" }: { variant?: "card" | "band" }) {
   const [email, setEmail] = useState("")
   const [subscribed, setSubscribed] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -30,6 +31,38 @@ export default function Newsletter() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (variant === "band") {
+    return (
+      <section className="bg-[#0E3B1E]">
+        <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+          <div className="md:flex-1">
+            <h2 className="text-xl md:text-2xl font-bold text-white">Get African iGaming news in your inbox</h2>
+            <p className="text-sm text-white/70 mt-1">Regulation, tax and market moves, once a week. No spam.</p>
+          </div>
+          {subscribed ? (
+            <p className="text-[#86EFAC] font-medium">Thanks for subscribing!</p>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex gap-2 w-full md:w-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                required
+                aria-label="Email address"
+                className="flex-1 md:w-72 px-4 py-3 rounded-lg bg-white text-[#111827] placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#22C55E]"
+              />
+              <button type="submit" disabled={loading} className="bg-[#22C55E] text-[#052e16] px-5 py-3 rounded-lg text-sm font-bold hover:brightness-110 transition cursor-pointer disabled:opacity-50">
+                {loading ? "..." : "Subscribe"}
+              </button>
+            </form>
+          )}
+          {error && <p className="text-red-300 text-xs">{error}</p>}
+        </div>
+      </section>
+    )
   }
 
   return (

@@ -13,22 +13,6 @@ export interface BlogListProps {
   totalPages: number
 }
 
-const exploreItems = [
-  { name: "Kenya", slug: "kenya", isCountry: true },
-  { name: "Nigeria", slug: "nigeria", isCountry: true },
-  { name: "South Africa", slug: "south-africa", isCountry: true },
-  { name: "Ghana", slug: "ghana", isCountry: true },
-  { name: "Tanzania", slug: "tanzania", isCountry: true },
-  { name: "Casino Reviews", slug: "reviews", isCountry: false },
-  { name: "Sports Betting", slug: "sports", isCountry: false },
-  { name: "Tips & Guides", slug: "guides", isCountry: false },
-]
-
-function getFlagEmoji(slug: string): string {
-  const map: Record<string, string> = { kenya: "KE", nigeria: "NG", "south-africa": "ZA", ghana: "GH", tanzania: "TZ" }
-  return map[slug] || ""
-}
-
 export const NEWS_PER_PAGE = 12
 
 /** Front page is page 1; older stories live at /page/2, /page/3 ... */
@@ -251,22 +235,6 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                 </div>
               </div>
             )}
-
-            <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
-              <h3 className="font-bold text-[#111827] mb-4 pb-3 border-b border-gray-100">Explore</h3>
-              <div className="space-y-1">
-                {exploreItems.map((item) => (
-                  <Link key={item.slug} href={`/${item.slug}`} className="flex items-center gap-3 text-sm text-gray-500 hover:text-[#111827] hover:bg-gray-50 px-3 py-2 rounded-lg transition-all">
-                    {item.isCountry ? (
-                      <span className="w-6 h-5 flex items-center justify-center text-[10px] font-bold bg-gray-100 text-gray-500 rounded">{getFlagEmoji(item.slug)}</span>
-                    ) : (
-                      <span className="w-5 h-5 flex items-center justify-center text-xs bg-amber-50 text-[#f59e0b] rounded">◆</span>
-                    )}
-                    <span>{item.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
 
             <Newsletter />
 

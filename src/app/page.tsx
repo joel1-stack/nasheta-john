@@ -1,5 +1,5 @@
-import BlogList, { NEWS_PER_PAGE } from "@/components/BlogList"
-import { getPopularArticles, queryArticles } from "@/lib/serverArticles"
+import NewsHome from "@/components/home/NewsHome"
+import { getAllPublicArticles, sameCategory } from "@/lib/serverArticles"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -8,12 +8,17 @@ export const metadata: Metadata = {
 
 export const revalidate = 300
 
-/** The front page is the news itself, newest first (like a newspaper). */
+/** The front page is the news itself, laid out like a newspaper. */
 export default async function HomePage() {
-  const [{ articles, total, totalPages }, popular] = await Promise.all([
-    queryArticles({ page: 1, perPage: NEWS_PER_PAGE }),
-    getPopularArticles(5),
-  ])
+  const articles = await getAllPublicArticles()
+  const inCategory = (...names: string[]) => articles.filter((a) => names.some((n) => sameCategory(a.category, n)))
 
-  return <BlogList articles={articles} popular={popular} total={total} page={1} totalPages={totalPages} />
+  return (
+    <NewsHome
+      articles={articles}
+      regulation={inCategory("Regulation")}
+      industry={inCategory("Industry News")}
+      guides={inCategory("Guides", "Payments")}
+    />
+  )
 }

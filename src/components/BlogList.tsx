@@ -114,7 +114,9 @@ export default function BlogList({
       <div className="max-w-[1280px] mx-auto px-4 sm:px-5 pb-16">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 pt-6 md:pt-8">
           <div className="flex-1 min-w-0">
-            {/* Filters are real links so every filter and page is crawlable. */}
+            {/* Filters are real links so every filter and page is crawlable.
+                The front page skips them: topics live in the iGaming Directory menu. */}
+            {!frontPage && (
             <div className="flex flex-wrap gap-2 mb-6">
               {categories.map((cat) => (
                 <Link
@@ -130,6 +132,7 @@ export default function BlogList({
                 </Link>
               ))}
             </div>
+            )}
 
             {search && (
               <div className="mb-6 text-sm text-gray-500 bg-white border border-gray-200 rounded-lg px-4 py-3 shadow-sm">

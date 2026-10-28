@@ -226,7 +226,6 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                           {post.title}
                         </p>
                         <div className="flex items-center gap-2 text-xs text-[#6B7280] mt-1.5">
-                          <span>{post.views.toLocaleString()} views</span>
                           <span>· {post.readTime || 3} min</span>
                         </div>
                       </div>

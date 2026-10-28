@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Raleway } from "next/font/google"
 import "./globals.css"
 import NavbarWrapper from "@/components/NavbarWrapper"
 import FooterWrapper from "@/components/FooterWrapper"
@@ -7,7 +7,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Script from "next/script"
-const inter = Inter({ subsets: ["latin"] })
+const raleway = Raleway({ subsets: ["latin"], display: "swap", variable: "--font-raleway" })
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.igamingubuntu.com"),
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className={`h-full ${raleway.variable}`}>
         <head>
           <script
             dangerouslySetInnerHTML={{
@@ -105,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           />
         </head>
-        <body className={`${inter.className} min-h-full flex flex-col bg-[#110B18] text-text-primary antialiased`}>
+        <body className={`${raleway.className} min-h-full flex flex-col bg-[#110B18] text-text-primary antialiased`}>
         <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TB8Q2LLT" height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe>
         </noscript>

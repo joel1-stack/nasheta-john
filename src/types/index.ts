@@ -122,14 +122,21 @@ export interface Country {
   articleCount: number
 }
 
-export interface AdSlot {
+/** Where a paid banner shows. Sizes are what advertisers should supply. */
+export type BannerZone = "header" | "sidebar" | "in-article"
+
+/** A paid banner, managed in the CMS (Banners page). */
+export interface Banner {
   id: string
-  name: string
-  size: string
-  type: "adsense" | "direct" | "placeholder"
-  code: string
+  advertiser: string
+  zone: BannerZone
+  imageUrl: string
+  linkUrl: string
+  alt?: string
+  /** YYYY-MM-DD; empty means no limit. */
+  startDate?: string
+  endDate?: string
   active: boolean
-  position: "leaderboard-top" | "sidebar-1" | "sidebar-2" | "in-content-1" | "in-content-2" | "footer-banner"
 }
 
 export interface Subscriber {

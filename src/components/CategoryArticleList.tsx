@@ -66,7 +66,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
             <div className="flex items-center gap-3 text-xs text-gray-400 mb-2">
               <span>{formatDate(featured.createdAt)}</span>
               <span>{featured.readTime || 3} min read</span>
-              {(featured.views || 0) > 0 && <span>{featured.views.toLocaleString()} views</span>}
+              
             </div>
             <h2 className="font-bold text-[#111827] group-hover:text-[#f59e0b] transition-colors text-lg md:text-xl leading-snug mb-2">
               {featured.title}
@@ -115,7 +115,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
                 <div className="flex items-center gap-3 text-xs text-gray-400 mb-2">
                   <span>{formatDate(article.createdAt)}</span>
                   <span>{article.readTime || 3} min read</span>
-                  {(article.views || 0) > 0 && <span>{article.views.toLocaleString()} views</span>}
+                  
                 </div>
                 <h3 className="font-semibold text-[#111827] group-hover:text-[#f59e0b] transition-colors line-clamp-2 mb-2">
                   {article.title}

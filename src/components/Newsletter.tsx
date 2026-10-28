@@ -3,8 +3,11 @@
 import { useState } from "react"
 import { trackLead } from "@/lib/analytics"
 
-/** "card" sits in a sidebar; "band" is the full-width strip above the footer. */
-export default function Newsletter({ variant = "card" }: { variant?: "card" | "band" }) {
+/**
+ * "card" sits in a sidebar; "band" is the full-width strip above the footer;
+ * "box" is the sign-up box at the end of an article.
+ */
+export default function Newsletter({ variant = "card" }: { variant?: "card" | "band" | "box" }) {
   const [email, setEmail] = useState("")
   const [subscribed, setSubscribed] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -31,6 +34,34 @@ export default function Newsletter({ variant = "card" }: { variant?: "card" | "b
     } finally {
       setLoading(false)
     }
+  }
+
+  if (variant === "box") {
+    return (
+      <div className="bg-gray-50 border border-gray-200 rounded p-6 md:p-8 text-center">
+        <h3 className="text-xl md:text-2xl font-semibold text-[#111827]">Get our stories in your inbox</h3>
+        <p className="text-sm text-gray-500 mt-2">Regulation, tax and market news from across Africa, once a week.</p>
+        {subscribed ? (
+          <p className="text-[#16A34A] font-medium mt-5">Thanks for subscribing!</p>
+        ) : (
+          <form onSubmit={handleSubmit} className="mt-5 max-w-lg mx-auto space-y-3">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email address"
+              required
+              aria-label="Email address"
+              className="w-full px-4 py-3 rounded border border-gray-300 bg-white text-[#111827] placeholder-gray-400 text-sm text-center focus:outline-none focus:ring-2 focus:ring-[#16A34A]/40"
+            />
+            <button type="submit" disabled={loading} className="w-full bg-[#16A34A] text-white py-3 rounded text-sm font-semibold hover:bg-[#15803D] transition cursor-pointer disabled:opacity-50">
+              {loading ? "..." : "Subscribe"}
+            </button>
+          </form>
+        )}
+        {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
+      </div>
+    )
   }
 
   if (variant === "band") {

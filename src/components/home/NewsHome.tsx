@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { FiArrowRight, FiBriefcase, FiFileText, FiGlobe, FiShield } from "react-icons/fi"
+import AdSlot from "@/components/AdSlot"
 import Newsletter from "@/components/Newsletter"
 import { formatDate } from "@/lib/utils"
 import type { Article } from "@/types"
@@ -175,6 +176,8 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
           </section>
         )}
 
+        <AdSlot position="leaderboard-top" className="pt-10" />
+
         {/* Latest news + sidebar */}
         <section className="pt-12 grid lg:grid-cols-[1fr_320px] gap-10">
           <div>
@@ -207,14 +210,8 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
               </div>
             )}
 
-            <div className="bg-[#F0FDF4] border border-[#BBF7D0] rounded p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#16A34A]">Advertise with us</p>
-              <p className="font-bold text-[#111827] mt-2 leading-snug">Reach operators, affiliates and regulators across Africa.</p>
-              <p className="text-sm text-gray-600 mt-2">Sponsored articles, press releases and banner placements.</p>
-              <Link href="/advertise" className="mt-4 inline-flex items-center gap-1 bg-[#16A34A] text-white px-4 py-2 rounded text-sm font-semibold hover:bg-[#15803D] transition">
-                See options <FiArrowRight size={13} />
-              </Link>
-            </div>
+            {/* A paid banner, or an "Advertise here" box when the slot is empty. */}
+            <AdSlot position="sidebar-1" />
           </aside>
         </section>
 

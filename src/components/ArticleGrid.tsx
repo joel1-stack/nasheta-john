@@ -65,7 +65,7 @@ export default function ArticleGrid({ articles, emptyMessage, limit, columns = 2
             <p className="text-sm text-gray-500 line-clamp-2">{a.excerpt}</p>
             <p className="text-xs text-gray-400 mt-2">
               {a.readTime || 3} min read
-              {(a.views || 0) > 0 ? ` · ${a.views.toLocaleString()} views` : ""}
+              
             </p>
           </div>
         </Link>

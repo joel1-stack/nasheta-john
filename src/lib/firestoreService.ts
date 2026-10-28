@@ -18,7 +18,7 @@ import {
   QueryConstraint,
   DocumentData,
 } from "firebase/firestore"
-import type { Article, AffiliateLink, ContactMessage, Operator, Category, SiteSettings, ClickEvent } from "@/types"
+import type { Article, AffiliateLink, Banner, ContactMessage, Operator, Category, SiteSettings, ClickEvent } from "@/types"
 import { isPublicStatus, REMOVED_DEMO_SLUG_SET, PUBLIC_ARTICLE_STATUSES } from "@/lib/site"
 
 const ARTICLES = "articles"
@@ -507,6 +507,38 @@ export async function saveSiteSettings(data: Omit<SiteSettings, "id">): Promise<
   if (!fb) return
   const { setDoc } = await import("firebase/firestore")
   await setDoc(doc(fb, SETTINGS, SETTINGS_DOC), { ...data, updatedAt: serverTimestamp() }, { merge: true })
+}
+
+// --- Paid banners ---
+// Stored as one document in "settings" (already public-read, admin-write),
+// so no new Firestore rules are needed.
+
+const BANNERS_DOC = "banners"
+
+export async function getBanners(): Promise<Banner[]> {
+  const fb = getDb()
+  if (!fb) return []
+  try {
+    const snap = await getDoc(doc(fb, SETTINGS, BANNERS_DOC))
+    return snap.exists() ? ((snap.data().items as Banner[]) || []) : []
+  } catch {
+    return []
+  }
+}
+
+export async function saveBanners(items: Banner[]): Promise<void> {
+  const fb = getDb()
+  if (!fb) return
+  const { setDoc } = await import("firebase/firestore")
+  await setDoc(doc(fb, SETTINGS, BANNERS_DOC), { items, updatedAt: serverTimestamp() })
+}
+
+/** Active and inside its start/end dates today. */
+export function isBannerLive(b: Banner, today = new Date().toISOString().slice(0, 10)): boolean {
+  if (!b.active || !b.imageUrl || !b.linkUrl) return false
+  if (b.startDate && today < b.startDate) return false
+  if (b.endDate && today > b.endDate) return false
+  return true
 }
 
 // --- Clicks ---

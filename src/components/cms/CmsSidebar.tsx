@@ -23,6 +23,7 @@ const groups: { label: string; items: { href: string; label: string }[] }[] = [
     items: [
       { href: "/igub-cms-x7k9/dashboard/operators", label: "Operators" },
       { href: "/igub-cms-x7k9/dashboard/affiliate-links", label: "Affiliate Links" },
+      { href: "/igub-cms-x7k9/dashboard/banners", label: "Banners" },
     ],
   },
   {

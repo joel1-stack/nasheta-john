@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getArticleBySlug } from "@/lib/firestoreService"
-import { getPopularArticles, getRelatedArticles } from "@/lib/serverArticles"
+import { getLatestArticles, getPopularArticles, getRelatedArticles } from "@/lib/serverArticles"
 import { absoluteUrl, isSponsoredStatus } from "@/lib/site"
 import { breadcrumbLd, extractFaqs, faqPageLd } from "@/lib/structuredData"
 import { categoryHub } from "@/lib/navigation"
@@ -88,9 +88,14 @@ export default async function BlogArticlePage({ params }: PageProps) {
     notFound()
   }
 
-  // Related articles and the "Most Read" list are computed on the server so
+  // Related, recent and "Most Read" lists are computed on the server so
   // their links are in the HTML that Google receives.
-  const [related, popular] = await Promise.all([getRelatedArticles(article, 4), getPopularArticles(5)])
+  const [related, popular, latest] = await Promise.all([
+    getRelatedArticles(article, 4),
+    getPopularArticles(5),
+    getLatestArticles(7),
+  ])
+  const recent = latest.filter((a) => a.slug !== article.slug).slice(0, 6)
 
   const articleUrl = resolveCanonical(article)
   const rawImage = article.ogImage || article.featuredImage || ""
@@ -143,6 +148,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
         initialArticle={article}
         related={related}
         popular={popular}
+        recent={recent}
         canonicalUrl={articleUrl}
       />
       <script

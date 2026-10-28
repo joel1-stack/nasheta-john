@@ -12,6 +12,7 @@ import ArticlePreview from "@/components/ArticlePreview"
 import ContentEditor from "@/components/ContentEditor"
 import HyperspeedBackdrop from "@/components/cms/HyperspeedBackdrop"
 import { RestoreBanner, SaveHint, SeoCoach, useEditorGuards } from "@/components/cms/EditorAssist"
+import { articlePath } from "@/lib/navigation"
 
 const defaultCategories = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Guides", "Industry News", "Events", "News"]
 
@@ -136,7 +137,7 @@ export default function NewPostPage() {
       }
 
       if (status === "published" && !form.noindex && form.slug) {
-        submitToIndexNow([`https://www.igamingubuntu.com/news/${form.slug}`])
+        submitToIndexNow([`https://www.igamingubuntu.com${articlePath(form)}`])
       }
 
       guards.clearLocal()

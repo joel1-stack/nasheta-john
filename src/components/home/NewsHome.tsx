@@ -3,7 +3,7 @@ import { FiArrowRight, FiBriefcase, FiFileText, FiGlobe, FiShield } from "react-
 import AdSlot from "@/components/AdSlot"
 import Newsletter from "@/components/Newsletter"
 import { formatDate } from "@/lib/utils"
-import { HOME_STORY_COUNT } from "@/lib/navigation"
+import { HOME_STORY_COUNT, articlePath } from "@/lib/navigation"
 import type { Article } from "@/types"
 
 /**
@@ -56,7 +56,7 @@ function Meta({ article, light = false }: { article: Article; light?: boolean })
 /** Image card with the headline laid over a dark gradient (Top Stories). */
 function OverlayCard({ article, big = false }: { article: Article; big?: boolean }) {
   return (
-    <Link href={`/news/${article.slug}`} className="group relative block overflow-hidden bg-gray-900 h-full">
+    <Link href={articlePath(article)} className="group relative block overflow-hidden bg-gray-900 h-full">
       <Thumb article={article} eager={big} className="absolute inset-0 w-full h-full group-hover:scale-[1.03] transition duration-500" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
       <div className={`absolute bottom-0 left-0 right-0 ${big ? "p-5 md:p-7" : "p-4 md:p-5"}`}>
@@ -73,7 +73,7 @@ function OverlayCard({ article, big = false }: { article: Article; big?: boolean
 /** Thumbnail on the left, text on the right (Latest News list). */
 function ListItem({ article }: { article: Article }) {
   return (
-    <Link href={`/news/${article.slug}`} className="group flex gap-4 py-5 border-b border-gray-100 last:border-0">
+    <Link href={articlePath(article)} className="group flex gap-4 py-5 border-b border-gray-100 last:border-0">
       <Thumb article={article} className="w-32 h-24 sm:w-48 sm:h-32 shrink-0 rounded" />
       <div className="min-w-0">
         <Meta article={article} />
@@ -89,7 +89,7 @@ function ListItem({ article }: { article: Article }) {
 /** Image on top, headline below (section blocks). */
 function GridCard({ article }: { article: Article }) {
   return (
-    <Link href={`/news/${article.slug}`} className="group block">
+    <Link href={articlePath(article)} className="group block">
       <div className="aspect-[16/10] overflow-hidden rounded bg-gray-100">
         <Thumb article={article} className="w-full h-full group-hover:scale-[1.03] transition duration-500" />
       </div>
@@ -145,7 +145,7 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
                 {[0, 1].map((copy) => (
                   <div key={copy} className="flex" aria-hidden={copy === 1}>
                     {ticker.map((a) => (
-                      <Link key={`${copy}-${a.slug}`} href={`/news/${a.slug}`} tabIndex={copy === 1 ? -1 : undefined} className="px-6 py-2.5 whitespace-nowrap hover:underline">
+                      <Link key={`${copy}-${a.slug}`} href={articlePath(a)} tabIndex={copy === 1 ? -1 : undefined} className="px-6 py-2.5 whitespace-nowrap hover:underline">
                         {a.title}
                       </Link>
                     ))}
@@ -201,7 +201,7 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
                   {regulationList.map((a, i) => (
                     <li key={a.slug} className="flex gap-3">
                       <span className="text-2xl font-extrabold text-brand-teal/30 leading-none w-7 shrink-0">{i + 1}</span>
-                      <Link href={`/news/${a.slug}`} className="group">
+                      <Link href={articlePath(a)} className="group">
                         <span className="block font-semibold text-brand-deep text-sm leading-snug group-hover:text-brand-teal transition-colors">{a.title}</span>
                         <span className="block text-xs text-gray-500 mt-1">{formatDate(a.createdAt)}</span>
                       </Link>

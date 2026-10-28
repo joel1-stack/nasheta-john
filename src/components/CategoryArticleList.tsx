@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { formatDate } from "@/lib/utils"
 import { queryArticles } from "@/lib/serverArticles"
+import { articlePath } from "@/lib/navigation"
 
 interface Props {
   category?: string
@@ -33,7 +34,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
   return (
     <div className="space-y-6">
       <Link
-        href={`/news/${featured.slug}`}
+        href={articlePath(featured)}
         className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
       >
         <div className="grid md:grid-cols-[1.4fr_1fr]">
@@ -84,7 +85,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
           {rest.map((article) => (
             <Link
               key={article.id}
-              href={`/news/${article.slug}`}
+              href={articlePath(article)}
               className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
             >
               <div className="relative h-48 overflow-hidden bg-gray-100">

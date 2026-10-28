@@ -2,14 +2,14 @@
 
 import { Fragment, useEffect } from "react"
 import Link from "next/link"
-import { FaEnvelope, FaFacebookF, FaLinkedinIn, FaWhatsapp, FaXTwitter } from "react-icons/fa6"
 import { formatDate } from "@/lib/utils"
 import AdSlot from "@/components/AdSlot"
+import ShareButtons from "./ShareButtons"
 import Newsletter from "@/components/Newsletter"
 import Sidebar from "@/components/Sidebar"
 import { finalizeArticleHtml, splitForAds } from "@/lib/contentHtml"
 import { isSponsoredStatus } from "@/lib/site"
-import { categoryHub } from "@/lib/navigation"
+import { categoryHub, articlePath } from "@/lib/navigation"
 import type { Article } from "@/types"
 
 interface ArticleViewProps {
@@ -28,17 +28,6 @@ const DEFAULT_AUTHOR_PHOTO = "/images/nasheta-john-author.png"
 const DEFAULT_AUTHOR_BIO =
   "Founder and editor of iGamingUbuntu. Has written about African betting markets since 2016."
 
-function shareLinks(title: string, url: string) {
-  const t = encodeURIComponent(title)
-  const u = encodeURIComponent(url)
-  return [
-    { label: "Facebook", icon: FaFacebookF, bg: "bg-[#1877F2]", href: `https://www.facebook.com/sharer/sharer.php?u=${u}` },
-    { label: "X", icon: FaXTwitter, bg: "bg-black", href: `https://x.com/intent/tweet?text=${t}&url=${u}` },
-    { label: "LinkedIn", icon: FaLinkedinIn, bg: "bg-[#0A66C2]", href: `https://www.linkedin.com/sharing/share-offsite/?url=${u}` },
-    { label: "WhatsApp", icon: FaWhatsapp, bg: "bg-[#25D366]", href: `https://wa.me/?text=${encodeURIComponent(`${title} ${url}`)}` },
-    { label: "Email", icon: FaEnvelope, bg: "bg-[#374151]", href: `mailto:?subject=${t}&body=${u}` },
-  ]
-}
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return <h2 className="inline-block bg-brand-ink text-white text-sm font-semibold px-3 py-1.5 mb-5">{children}</h2>
@@ -60,8 +49,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
   }, [article?.id])
 
   const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
-  const shareUrl = canonicalUrl || `https://www.igamingubuntu.com/news/${article.slug}`
-  const shares = shareLinks(article.title, shareUrl)
+  const shareUrl = canonicalUrl || `https://www.igamingubuntu.com${articlePath(article)}`
   const bodyParts = splitForAds(
     finalizeArticleHtml(article.content || "", { dropLeadingHeading: article.title, sponsored })
   )
@@ -141,19 +129,8 @@ export default function ArticleView({ initialArticle, related = [], popular = []
             </div>
 
             {/* Share */}
-            <div className="flex gap-1.5 mt-5">
-              {shares.map(({ label, icon: Icon, bg, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label={`Share on ${label}`}
-                  className={`${bg} text-white w-9 h-9 flex items-center justify-center hover:opacity-85 transition`}
-                >
-                  <Icon size={15} />
-                </a>
-              ))}
+            <div className="mt-5">
+              <ShareButtons title={article.title} url={shareUrl} />
             </div>
 
             <figure className="mt-6">
@@ -197,19 +174,8 @@ export default function ArticleView({ initialArticle, related = [], popular = []
             )}
 
             {/* Share box */}
-            <div className="mt-8 border border-gray-200 p-4 flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-semibold text-brand-deep mr-2">Share</span>
-              {shares.map(({ label, icon: Icon, bg, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener"
-                  className={`${bg} text-white text-xs font-medium px-3 py-2 inline-flex items-center gap-1.5 hover:opacity-85 transition`}
-                >
-                  <Icon size={12} /> {label}
-                </a>
-              ))}
+            <div className="mt-8">
+              <ShareButtons title={article.title} url={shareUrl} variant="card" />
             </div>
 
             {/* Author */}
@@ -234,7 +200,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
                 </SectionLabel>
                 <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6">
                   {related.slice(0, 4).map((r) => (
-                    <Link key={r.slug} href={`/news/${r.slug}`} className="flex gap-4 group items-start">
+                    <Link key={r.slug} href={articlePath(r)} className="flex gap-4 group items-start">
                       {r.featuredImage ? (
                         <img src={r.featuredImage} alt={r.featuredImageAlt || r.title} width={112} height={72} loading="lazy" className="w-28 h-[72px] object-cover shrink-0" />
                       ) : (

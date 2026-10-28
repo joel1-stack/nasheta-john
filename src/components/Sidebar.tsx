@@ -3,6 +3,7 @@ import AdSlot from "./AdSlot"
 import { formatDate } from "@/lib/utils"
 import { MOST_READ_MIN_ARTICLES, SHOW_MOST_READ } from "@/lib/site"
 import type { Article } from "@/types"
+import { articlePath } from "@/lib/navigation"
 
 interface SidebarProps {
   recent?: Article[]
@@ -28,7 +29,7 @@ export default function Sidebar({ recent = [], popularPosts = [] }: SidebarProps
           <SideTitle>Recent Stories</SideTitle>
           <div className="space-y-4">
             {recent.map((post) => (
-              <Link key={post.slug} href={`/news/${post.slug}`} className="flex gap-3 group items-start">
+              <Link key={post.slug} href={articlePath(post)} className="flex gap-3 group items-start">
                 {post.featuredImage ? (
                   <img
                     src={post.featuredImage}
@@ -63,7 +64,7 @@ export default function Sidebar({ recent = [], popularPosts = [] }: SidebarProps
               <li key={post.slug} className="relative pl-4">
                 <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-gray-300" aria-hidden="true" />
                 <p className="text-[11px] text-gray-500">{formatDate(post.createdAt)}</p>
-                <Link href={`/news/${post.slug}`} className="text-sm font-semibold text-brand-deep hover:text-brand-teal transition-colors leading-snug">
+                <Link href={articlePath(post)} className="text-sm font-semibold text-brand-deep hover:text-brand-teal transition-colors leading-snug">
                   {post.title}
                 </Link>
               </li>

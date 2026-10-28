@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { FiMenu, FiX, FiChevronDown, FiChevronRight } from "react-icons/fi"
 
 import { IgubFullLogo } from "./IgubLogo"
+import SiteSearch from "./SiteSearch"
 import { DIRECTORY_LINKS, EVENTS_LINKS, NEWS_LINKS, type NavLink } from "@/lib/navigation"
 
 type MenuKey = "news" | "directory" | "events"
@@ -130,7 +131,8 @@ export default function Navbar() {
           <Link href="/about" className={linkClass(isActive(["/about"]))}>Who We Are</Link>
         </div>
 
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2">
+          <SiteSearch />
           <Link
             href="/advertise"
             className="bg-brand-lime text-brand-ink px-5 py-2.5 rounded-lg text-sm font-bold transition hover:brightness-110"
@@ -139,9 +141,12 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <button className="lg:hidden cursor-pointer p-2 text-[#FCFBFB]" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
-          {menuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
-        </button>
+        <div className="lg:hidden flex items-center gap-1">
+          <SiteSearch />
+          <button className="cursor-pointer p-2 text-[#FCFBFB]" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+            {menuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Nav */}

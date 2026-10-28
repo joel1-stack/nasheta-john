@@ -1,4 +1,5 @@
 import { queryArticles } from "@/lib/serverArticles"
+import { articlePath } from "@/lib/navigation"
 import { SITE_URL } from "@/lib/site"
 
 export const revalidate = 3600
@@ -45,7 +46,7 @@ export async function GET() {
       .filter((a) => a.slug && !a.noindex)
       .map((a) => {
         const desc = oneLine(a.metaDescription || a.excerpt)
-        return `- [${oneLine(a.title)}](${SITE_URL}/news/${a.slug})${desc ? `: ${desc}` : ""}`
+        return `- [${oneLine(a.title)}](${SITE_URL}${articlePath(a)})${desc ? `: ${desc}` : ""}`
       }),
     "",
   ]

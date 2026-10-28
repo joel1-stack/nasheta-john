@@ -8,6 +8,7 @@ import { getArticles } from "@/lib/firestoreService"
 import { auditArticle, type SeoResult } from "@/lib/seoAudit"
 import { BarChart, BarLabels, ChartCard, Gauge, HBars } from "@/components/cms/charts"
 import type { Article } from "@/types"
+import { articlePath } from "@/lib/navigation"
 
 type Row = { article: Article; result: SeoResult }
 type Filter = "fix" | "all"
@@ -168,7 +169,7 @@ export default function SeoPage() {
                   </Link>
                   {article.slug && (
                     <a
-                      href={`/news/${article.slug}`}
+                      href={articlePath(article)}
                       target="_blank"
                       rel="noopener"
                       className="text-xs font-semibold text-[#2C6E5E] px-2 py-1.5 rounded-lg hover:bg-[#EEF4EC] transition inline-flex items-center gap-1"

@@ -5,6 +5,7 @@ import { FiCheck, FiClock, FiRotateCcw, FiX } from "react-icons/fi"
 import { auditArticle } from "@/lib/seoAudit"
 import { getRevisions, type Revision } from "@/lib/revisions"
 import { Gauge } from "@/components/cms/charts"
+import { articlePath } from "@/lib/navigation"
 import type { Article } from "@/types"
 
 /** The editor form fields the helpers below need (both New and Edit pages). */
@@ -19,6 +20,7 @@ export interface EditorFields {
   seoTitle: string
   metaDescription: string
   noindex: boolean
+  category?: string
 }
 
 const SITE = "https://www.igamingubuntu.com"
@@ -35,7 +37,7 @@ export function SeoCoach({ fields }: { fields: EditorFields }) {
   const result = useMemo(() => auditArticle(toArticle(fields)), [fields])
   const title = (fields.seoTitle || fields.title || "Your article title").trim()
   const meta = (fields.metaDescription || fields.excerpt || "Add a meta description so Google shows a clear summary.").trim()
-  const url = `${SITE}/news/${fields.slug || "your-article"}`
+  const url = `${SITE}${articlePath({ category: fields.category, slug: fields.slug || "your-article" })}`
 
   return (
     <section className="rounded-2xl border border-[#E1EAE0] bg-[#F7FAF6] p-5 space-y-5">

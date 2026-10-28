@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { formatDate } from "@/lib/utils"
 import type { Article } from "@/types"
+import { articlePath } from "@/lib/navigation"
 
 interface ArticleGridProps {
   articles: Article[]
@@ -35,7 +36,7 @@ export default function ArticleGrid({ articles, emptyMessage, limit, columns = 2
       {list.map((a) => (
         <Link
           key={a.slug}
-          href={`/news/${a.slug}`}
+          href={articlePath(a)}
           className="group bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all hover:-translate-y-0.5"
         >
           <div className="aspect-[16/9] overflow-hidden bg-gray-50">

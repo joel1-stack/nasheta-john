@@ -57,9 +57,33 @@ export function categoryHub(category?: string): NavLink | null {
   if (c === "industry news") return { label: "Industry News", href: "/news/industry" }
   if (c === "regulation" || c === "regulations") return { label: "Regulation Watch", href: "/news/regulation" }
   if (c === "sports betting" || c === "betting tips") return { label: "Sports Betting", href: "/sports" }
-  if (c === "casino reviews" || c === "bonuses") return { label: "Casino Reviews", href: "/reviews" }
+  if (c === "casino reviews" || c === "bonuses") return { label: "Casino Reviews", href: "/casinos" }
   if (c === "payments") return { label: "Payment Methods", href: "/casinos/payments" }
   if (c === "guides") return { label: "Betting Guides", href: "/guides" }
   if (c === "events") return { label: "Events", href: "/events" }
   return null
+}
+
+/**
+ * Where an article lives: inside its section, so the address matches the
+ * breadcrumb (e.g. a casino review at /casinos/<slug>, regulation news at
+ * /news/regulation/<slug>). Uncategorised stories live under /news.
+ */
+export const ARTICLE_SECTIONS = [
+  "/news",
+  "/news/industry",
+  "/news/regulation",
+  "/casinos",
+  "/casinos/payments",
+  "/sports",
+  "/guides",
+  "/events",
+] as const
+
+export function articleSection(category?: string): string {
+  return categoryHub(category)?.href || "/news"
+}
+
+export function articlePath(article: { category?: string; slug: string }): string {
+  return `${articleSection(article.category)}/${article.slug}`
 }

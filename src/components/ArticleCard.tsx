@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { formatDate } from "@/lib/utils"
 import type { Article } from "@/types"
+import { articlePath } from "@/lib/navigation"
 
 interface ArticleCardProps {
   article: Article
@@ -8,7 +9,7 @@ interface ArticleCardProps {
 
 export default function ArticleCard({ article }: ArticleCardProps) {
   return (
-    <Link href={`/news/${article.slug}`} className="group block bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up">
+    <Link href={articlePath(article)} className="group block bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-up">
       <div className="aspect-[16/9] bg-gradient-to-br from-amber-50 to-emerald-50 flex items-center justify-center overflow-hidden">
         {article.featuredImage ? (
           <img src={article.featuredImage} alt={article.featuredImageAlt || article.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />

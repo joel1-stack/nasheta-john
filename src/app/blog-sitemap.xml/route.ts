@@ -1,5 +1,6 @@
 import { queryArticles } from "@/lib/serverArticles"
 import { SITE_URL, STATIC_PAGE_LASTMOD } from "@/lib/site"
+import { articlePath } from "@/lib/navigation"
 
 const blogHubPaths = [
   "/news/industry",
@@ -56,7 +57,7 @@ export async function GET(): Promise<Response> {
     if (!article.slug) continue
     const lastmod = isoDay(article.updatedAt) || isoDay(article.createdAt) || STATIC_PAGE_LASTMOD
     entries.push({
-      loc: `${SITE_URL}/news/${article.slug}`,
+      loc: `${SITE_URL}${articlePath(article)}`,
       lastmod,
     })
   }

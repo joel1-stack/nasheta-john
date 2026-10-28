@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth-context"
 import { getArticles, getAllAffiliateLinks, getClickEvents } from "@/lib/firestoreService"
 import StatCard from "@/components/cms/StatCard"
 import type { Article, AffiliateLink, ClickEvent } from "@/types"
+import { articlePath } from "@/lib/navigation"
 
 export default function AnalyticsPage() {
   const { user, loading: authLoading } = useAuth()
@@ -112,7 +113,7 @@ export default function AnalyticsPage() {
                 {contentPerformance.map(({ article, clicks: c, articleCtr }) => (
                   <tr key={article.id} className="border-b border-white/5">
                     <td className="p-3">
-                      <Link href={`/news/${article.slug}`} target="_blank" className="text-sm text-white hover:text-[#E95420]">
+                      <Link href={articlePath(article)} target="_blank" className="text-sm text-white hover:text-[#E95420]">
                         {article.title}
                       </Link>
                     </td>
@@ -140,7 +141,7 @@ export default function AnalyticsPage() {
               <div key={a.id} className="flex items-center gap-3 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition">
                 <span className="text-2xl font-bold text-gray-600 w-10 text-right">{i + 1}</span>
                 <div className="flex-1 min-w-0">
-                  <Link href={`/news/${a.slug}`} target="_blank" className="font-medium text-white hover:text-[#E95420] truncate block">
+                  <Link href={articlePath(a)} target="_blank" className="font-medium text-white hover:text-[#E95420] truncate block">
                     {a.title}
                   </Link>
                   <p className="text-xs text-gray-400">

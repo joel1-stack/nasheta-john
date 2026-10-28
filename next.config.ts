@@ -48,8 +48,9 @@ const nextConfig: NextConfig = {
         destination: "/about",
         statusCode: 301,
       })),
-      // The /blog and /news listing pages were merged into the front page,
-      // and articles moved from /blog/<slug> to /news/<slug>.
+      // The /blog and /news listing pages were merged into the front page.
+      // Old /blog/<slug> article links are redirected by src/app/blog/[slug],
+      // straight to the article's section address.
       {
         source: "/blog",
         has: [{ type: "query" as const, key: "page", value: "(?<p>[2-9]|[1-9]\\d+)" }],
@@ -57,7 +58,6 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
       { source: "/blog", destination: "/", statusCode: 301 },
-      { source: "/blog/:slug", destination: "/news/:slug", statusCode: 301 },
       { source: "/news", destination: "/", statusCode: 301 },
       { source: "/admin", destination: "/igub-cms-x7k9", permanent: true },
       { source: "/admin/:path*", destination: "/igub-cms-x7k9/:path*", permanent: true },

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
 import { queryArticles } from "@/lib/serverArticles"
 import { SITE_URL, STATIC_PAGE_LASTMOD } from "@/lib/site"
+import { articlePath } from "@/lib/navigation"
 
 export const revalidate = 3600
 
@@ -62,7 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articleEntries: MetadataRoute.Sitemap = articles
     .filter((a) => a.slug)
     .map((a) => ({
-      url: `${SITE_URL}/news/${a.slug}`,
+      url: `${SITE_URL}${articlePath(a)}`,
       // Real update date from the CMS, never the build time.
       lastModified: isoDay(a.updatedAt) || isoDay(a.createdAt) || STATIC_PAGE_LASTMOD,
       changeFrequency: "weekly" as const,

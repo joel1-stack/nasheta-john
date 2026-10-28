@@ -13,6 +13,7 @@ import ContentEditor from "@/components/ContentEditor"
 import { RestoreBanner, RevisionHistory, SaveHint, SeoCoach, useEditorGuards } from "@/components/cms/EditorAssist"
 import { saveRevision } from "@/lib/revisions"
 import type { AffiliateLink, Article } from "@/types"
+import { articlePath } from "@/lib/navigation"
 
 const defaultCategories = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Guides", "Industry News", "Events", "News"]
 
@@ -194,7 +195,7 @@ export default function EditPostPage() {
       }
 
       if (status === "published" && !form.noindex && form.slug) {
-        submitToIndexNow([`https://www.igamingubuntu.com/news/${form.slug}`])
+        submitToIndexNow([`https://www.igamingubuntu.com${articlePath(form)}`])
       }
 
       guards.clearLocal()
@@ -330,7 +331,7 @@ export default function EditPostPage() {
               <label htmlFor="noindex" className="text-sm text-gray-300">Hide from search engines</label>
             </div>
             {form.slug && (() => {
-              const previewUrl = form.canonicalUrl || `https://www.igamingubuntu.com/news/${form.slug}`
+              const previewUrl = form.canonicalUrl || `https://www.igamingubuntu.com${articlePath(form)}`
               const richResultUrl = `https://search.google.com/test/rich-results?url=${encodeURIComponent(previewUrl)}`
               const schemaUrl = `https://validator.schema.org/?url=${encodeURIComponent(previewUrl)}`
               return (
@@ -488,7 +489,7 @@ export default function EditPostPage() {
             <button
               type="button"
               onClick={() => {
-                submitToIndexNow([`https://www.igamingubuntu.com/news/${form.slug}`])
+                submitToIndexNow([`https://www.igamingubuntu.com${articlePath(form)}`])
                 setPinged(true)
               }}
               className="bg-white/10 text-white px-6 py-3 rounded-lg font-medium hover:bg-white/20 transition cursor-pointer"

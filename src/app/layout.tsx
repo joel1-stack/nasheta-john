@@ -94,7 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         "https://t.me/nashetajohn",
                       ],
                     },
-                    sameAs: ["https://x.com/SalvageNasheta", "https://t.me/nashetajohn"],
+                    sameAs: ["https://www.linkedin.com/company/igamingubuntu/", "https://x.com/SalvageNasheta", "https://t.me/nashetajohn"],
                   },
                   {
                     "@type": "WebSite",

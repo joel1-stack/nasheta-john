@@ -17,7 +17,7 @@ export default function LiveEventsPage() {
       <SectionHeader
         title="Live Events"
         description="Real-time odds, in-play betting and match coverage."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Sports Betting", href: "/sports" }, { label: "Live Events" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Sports Betting", href: "/sports" }, { label: "Live Events" }]}
       />
 
       <nav className="flex flex-wrap gap-2 mb-8">

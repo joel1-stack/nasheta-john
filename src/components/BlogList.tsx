@@ -16,6 +16,8 @@ export interface BlogListProps {
   categories: string[]
   /** Base path used for pagination links ("/blog"). */
   basePath?: string
+  /** Front-page mode: news heading, no breadcrumb. */
+  frontPage?: boolean
 }
 
 const exploreItems = [
@@ -28,6 +30,13 @@ const exploreItems = [
   { name: "Sports Betting", slug: "sports", isCountry: false },
   { name: "Tips & Guides", slug: "guides", isCountry: false },
 ]
+
+const DEFAULT_CATEGORIES = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Industry News", "Events"]
+
+/** Filter chips: "All", the default categories, then any category used in the CMS. */
+export function newsCategories(all: Article[]): string[] {
+  return ["All", ...new Set<string>([...DEFAULT_CATEGORIES, ...all.map((a) => a.category).filter(Boolean)])]
+}
 
 function getFlagEmoji(slug: string): string {
   const map: Record<string, string> = { kenya: "KE", nigeria: "NG", "south-africa": "ZA", ghana: "GH", tanzania: "TZ" }
@@ -72,6 +81,7 @@ export default function BlogList({
   search,
   categories,
   basePath = "/blog",
+  frontPage = false,
 }: BlogListProps) {
   const featured = articles[0]
   const rest = articles.slice(1)
@@ -80,16 +90,20 @@ export default function BlogList({
     <div className="min-h-screen bg-white">
       <div className="border-b border-gray-200/60 bg-white">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-5 pt-6 pb-5">
-          <nav className="text-[13px] text-[#6B7280] mb-3 flex items-center gap-2 flex-wrap" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-[#1A1F2B] transition">Home</Link>
-            <span className="text-gray-300" aria-hidden="true">&rsaquo;</span>
-            <span className="text-[#1A1F2B] font-medium">Blog</span>
-          </nav>
+          {!frontPage && (
+            <nav className="text-[13px] text-[#6B7280] mb-3 flex items-center gap-2 flex-wrap" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-[#1A1F2B] transition">Home</Link>
+              <span className="text-gray-300" aria-hidden="true">&rsaquo;</span>
+              <span className="text-[#1A1F2B] font-medium">All News</span>
+            </nav>
+          )}
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div className="min-w-0">
-              <h1 className="text-[22px] sm:text-[28px] font-bold text-[#111827] tracking-tight">Blog</h1>
+              <h1 className="text-[22px] sm:text-[28px] font-bold text-[#111827] tracking-tight">
+                {frontPage ? "Latest African iGaming News" : "All News"}
+              </h1>
               <p className="text-sm text-gray-500 mt-1">
-                Expert insights, betting tips, casino reviews, and iGaming news across Africa.
+                Independent news on betting, casino, regulation and payments across Africa.
               </p>
             </div>
             {total > 0 && <p className="text-xs text-gray-400 shrink-0">{total} articles</p>}
@@ -139,7 +153,7 @@ export default function BlogList({
                   <div className="grid md:grid-cols-[1.4fr_1fr]">
                     <div className="relative h-52 md:h-full min-h-[200px] overflow-hidden bg-gray-50">
                       {featured.featuredImage ? (
-                        <img src={featured.featuredImage} alt={featured.featuredImageAlt || featured.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
+                        <img src={featured.featuredImage} alt={featured.featuredImageAlt || featured.title} width={1200} height={675} loading="eager" fetchPriority="high"className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/full backgound.png')" }}>
                           <span className="text-white text-sm font-semibold bg-black/40 px-3 py-1 rounded-full">iGamingUbuntu</span>
@@ -327,6 +341,16 @@ export default function BlogList({
             </div>
 
             <Newsletter />
+
+            <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
+              <h3 className="font-bold text-[#111827] mb-2">Advertise with us</h3>
+              <p className="text-sm text-gray-500 leading-relaxed mb-3">
+                Reach operators, affiliates and regulators across Africa with sponsored articles, press releases and banners.
+              </p>
+              <Link href="/advertise" className="inline-flex items-center gap-1 text-sm font-semibold text-[#f59e0b] hover:underline">
+                See options <FiArrowRight size={12} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

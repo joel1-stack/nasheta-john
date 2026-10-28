@@ -17,7 +17,7 @@ export default function NewsPage() {
       <SectionHeader
         title="iGaming News"
         description="Latest developments, regulatory updates, and industry news across African iGaming markets."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "News" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "News" }]}
       />
 
       <AdSlot position="leaderboard-top" className="mb-8" />

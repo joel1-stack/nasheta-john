@@ -51,7 +51,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
             <nav aria-label="Breadcrumb" className="text-[13px] text-[#6B7280] mb-5 flex items-center gap-2 flex-wrap">
               <Link href="/" className="hover:text-[#1A1F2B] transition">Home</Link>
               <span className="text-gray-300" aria-hidden="true">&rsaquo;</span>
-              <Link href="/blog" className="hover:text-[#1A1F2B] transition">Blog</Link>
+              <Link href="/blog" className="hover:text-[#1A1F2B] transition">All News</Link>
               <span className="text-gray-300" aria-hidden="true">&rsaquo;</span>
               <span className="text-[#1A1F2B]">{article.title}</span>
             </nav>

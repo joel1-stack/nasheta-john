@@ -17,7 +17,7 @@ export default function BestCasinosPage() {
       <SectionHeader
         title="Best Casinos"
         description="Top-rated online casinos reviewed by our expert team."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Casinos", href: "/casinos" }, { label: "Best Casinos" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Casinos", href: "/casinos" }, { label: "Best Casinos" }]}
       />
       <nav className="flex flex-wrap gap-2 mb-8">
         <Link href="/casinos" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Casino Directory</Link>

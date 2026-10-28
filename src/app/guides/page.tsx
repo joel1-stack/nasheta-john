@@ -38,7 +38,7 @@ export default async function GuidesPage() {
       <SectionHeader
         title="Betting Guides & Tips"
         description="Learn how to bet smarter. Beginner-friendly guides, expert tips, and winning strategies for African punters."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Guides" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Guides" }]}
       />
 
       <AdSlot position="leaderboard-top" className="mb-8 rounded-xl overflow-hidden" />

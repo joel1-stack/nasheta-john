@@ -19,7 +19,7 @@ export default function RegulationWatchPage() {
       <SectionHeader
         title="Regulation Watch"
         description="Regulatory changes and compliance updates across African markets."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "News", href: "/news" }, { label: "Regulation Watch" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "News", href: "/news" }, { label: "Regulation Watch" }]}
       />
 
       <nav className="flex flex-wrap gap-2 mb-8">

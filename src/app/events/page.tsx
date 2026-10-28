@@ -23,7 +23,7 @@ export default function EventsPage() {
       <SectionHeader
         title="Events"
         description="iGaming conferences, summits, webinars, and industry meetups across Africa."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Events" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Events" }]}
       />
 
       <AdSlot position="leaderboard-top" className="mb-8" />

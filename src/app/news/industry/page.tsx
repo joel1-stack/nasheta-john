@@ -17,7 +17,7 @@ export default function IndustryNewsPage() {
       <SectionHeader
         title="Industry News"
         description="Latest industry developments and market analysis across Africa."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "News", href: "/news" }, { label: "Industry News" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "News", href: "/news" }, { label: "Industry News" }]}
       />
 
       <nav className="flex flex-wrap gap-2 mb-8">

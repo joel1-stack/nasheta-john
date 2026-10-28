@@ -1,13 +1,11 @@
 import type { Metadata } from "next"
 import { redirect } from "next/navigation"
-import BlogList from "@/components/BlogList"
+import BlogList, { newsCategories } from "@/components/BlogList"
 import { getAllPublicArticles, getPopularArticles, queryArticles } from "@/lib/serverArticles"
 
 export const dynamic = "force-dynamic"
 
 const PER_PAGE = 12
-
-const DEFAULT_CATEGORIES = ["Sports Betting", "Casino Reviews", "Bonuses", "Betting Tips", "Industry News", "Events"]
 
 interface PageProps {
   searchParams: Promise<{ page?: string; category?: string; search?: string }>
@@ -30,16 +28,17 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   if (category !== "All") params.set("category", category)
   if (search) params.set("search", search)
   const qs = params.toString()
-  const canonical = qs ? `/blog?${qs}` : "/blog"
+  // Unfiltered page 1 is the same list as the front page.
+  const canonical = qs ? `/blog?${qs}` : "/"
 
   const title =
     page > 1
-      ? `Betting Tips, News and Casino Guides Blog – Page ${page}`
+      ? `All African iGaming News and Analysis – Page ${page}`
       : category !== "All"
-        ? `${category} – Betting Tips, News and Casino Guides Blog`
-        : "Betting Tips, News and Casino Guides Blog"
+        ? `${category} – African iGaming News`
+        : "All African iGaming News and Analysis"
   const description =
-    "Read the latest betting tips, sports predictions, casino reviews and iGaming industry news from iGamingUbuntu's expert editorial team across Africa."
+    "Every iGamingUbuntu story on African betting, casino, regulation and payments, newest first, with filters by topic."
 
   return {
     title,
@@ -76,10 +75,6 @@ export default async function BlogPage({ searchParams }: PageProps) {
 
   const [all, popular] = await Promise.all([getAllPublicArticles(), getPopularArticles(5)])
 
-  const categories = Array.from(
-    new Set<string>([...DEFAULT_CATEGORIES, ...all.map((a) => a.category).filter(Boolean)])
-  )
-
   return (
     <BlogList
       articles={articles}
@@ -89,7 +84,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
       totalPages={totalPages}
       category={category}
       search={search}
-      categories={["All", ...categories]}
+      categories={newsCategories(all)}
     />
   )
 }

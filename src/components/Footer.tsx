@@ -30,11 +30,11 @@ const socialLinks = [
 ]
 
 const quickLinks = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "News", href: "/news" },
-  { label: "Blogs", href: "/blog" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Latest News", href: "/" },
+  { label: "All News", href: "/blog" },
+  { label: "Regulation", href: "/news/regulation" },
+  { label: "Who We Are", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ]
 
 const marketRegions = [

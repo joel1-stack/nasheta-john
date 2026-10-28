@@ -130,7 +130,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
   const faqs = extractFaqs(article.content || "")
   const crumbs = breadcrumbLd([
     { name: "Home", path: "/" },
-    { name: "Blog", path: "/blog" },
+    { name: "All News", path: "/blog" },
     { name: article.title || article.slug, path: articleUrl },
   ])
 

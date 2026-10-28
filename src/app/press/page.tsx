@@ -16,7 +16,7 @@ export default function PressReleasesPage() {
       <SectionHeader
         title="Press Releases"
         description="Official press releases submitted by operators and industry stakeholders."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Press Releases" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Press Releases" }]}
       />
 
       <AdSlot position="leaderboard-top" className="mb-8" />

@@ -17,7 +17,7 @@ export default function MobileCasinosPage() {
       <SectionHeader
         title="Mobile Casinos"
         description="Online casinos optimised for mobile betting on the go."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Casinos", href: "/casinos" }, { label: "Mobile Casinos" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Casinos", href: "/casinos" }, { label: "Mobile Casinos" }]}
       />
       <nav className="flex flex-wrap gap-2 mb-8">
         <Link href="/casinos" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Casino Directory</Link>

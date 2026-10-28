@@ -8,12 +8,12 @@ import { FiMenu, FiX } from "react-icons/fi"
 import { IgubFullLogo } from "./IgubLogo"
 
 const navItems = [
-  { label: "Home", href: "/" },
-  { label: "News", href: "/news" },
-  { label: "Guides", href: "/guides" },
-  { label: "Blogs", href: "/blog" },
-  { label: "About Us", href: "/about" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Latest News", href: "/" },
+  { label: "Regulation", href: "/news/regulation" },
+  { label: "Markets", href: "/guides" },
+  { label: "Events", href: "/events" },
+  { label: "Who We Are", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ]
 
 export default function Navbar() {

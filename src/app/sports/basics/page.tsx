@@ -17,7 +17,7 @@ export default function BettingExplainedPage() {
       <SectionHeader
         title="Betting Explained"
         description="Beginner-friendly guides to betting fundamentals, odds, markets, and strategies."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: "Sports Betting", href: "/sports" }, { label: "Betting Explained" }]}
+        crumbs={[{ label: "Home", href: "/" }, { label: "All News", href: "/blog" }, { label: "Sports Betting", href: "/sports" }, { label: "Betting Explained" }]}
       />
       <nav className="flex flex-wrap gap-2 mb-8">
         <Link href="/sports" className="text-sm text-[#f59e0b] hover:underline font-medium">&larr; Back to Sports Betting</Link>

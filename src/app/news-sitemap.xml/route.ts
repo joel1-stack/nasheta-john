@@ -14,10 +14,16 @@ function escapeXml(value: string): string {
  */
 export async function GET() {
   const cutoff = Date.now() - 48 * 60 * 60 * 1000
-  const recent = (await getAllPublicArticles()).filter((a) => {
-    const t = Date.parse(a.createdAt || "")
-    return !a.noindex && !Number.isNaN(t) && t >= cutoff
-  })
+  const publishable = (await getAllPublicArticles()).filter(
+    (a) => !a.noindex && !Number.isNaN(Date.parse(a.createdAt || "")),
+  )
+  const fresh = publishable.filter((a) => Date.parse(a.createdAt) >= cutoff)
+
+  // Search Console reports an empty <urlset> as an error, and the file is
+  // empty whenever nothing has been published for two days. Fall back to the
+  // newest story so the sitemap is always valid; Google News ignores entries
+  // outside its own 48-hour window, so nothing stale can be picked up.
+  const recent = fresh.length > 0 ? fresh : publishable.slice(0, 1)
 
   const items = recent
     .map(

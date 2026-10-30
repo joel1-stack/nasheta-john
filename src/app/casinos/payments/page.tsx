@@ -29,7 +29,7 @@ export default function PaymentsPage() {
         <Link href="/casinos/mobile" className="text-sm text-gray-500 hover:text-[#f59e0b]">Mobile Casinos</Link>
       </nav>
       <AdSlot position="leaderboard-top" className="mb-8" />
-      <CategoryArticleList category="Casino Reviews" />
+      <CategoryArticleList category="Payments" />
     </div>
   )
 }

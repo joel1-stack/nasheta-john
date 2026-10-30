@@ -34,6 +34,7 @@ const links = [
   { label: "Industry News", href: "/news/industry" },
   { label: "Regulation Watch", href: "/news/regulation" },
   { label: "Events", href: "/events" },
+  { label: "The Desk", href: "/the-desk" },
   { label: "Who We Are", href: "/about" },
   { label: "Contact Us", href: "/contact" },
   { label: "Press", href: "/press" },

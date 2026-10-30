@@ -9,14 +9,24 @@ interface Props {
   limit?: number
 }
 
+/** Cards shown with an image; everything past this is listed as plain links. */
+const CARD_COUNT = 12
+
 /**
  * Server-rendered article list for category hubs (news, sports, casinos,
  * events). Everything is in the initial HTML: no client-side refetch, and
  * only real CMS view counts are shown.
+ *
+ * The hub links to EVERY article in its section, not just the first screenful:
+ * the newest are cards, the rest are a plain link archive underneath. A section
+ * with more articles than cards used to leave the remainder with no inbound
+ * link anywhere on the site, so Google never crawled them.
  */
 export default async function CategoryArticleList({ category, country, limit }: Props) {
-  const { articles } = await queryArticles({ category, country, page: 1, perPage: 12 })
-  const list = limit ? articles.slice(0, limit) : articles
+  const { articles } = await queryArticles({ category, country, page: 1, perPage: 5000 })
+  const all = limit ? articles.slice(0, limit) : articles
+  const list = all.slice(0, CARD_COUNT)
+  const archive = all.slice(CARD_COUNT)
 
   if (!list.length) {
     return (
@@ -125,6 +135,31 @@ export default async function CategoryArticleList({ category, country, limit }: 
               </div>
             </Link>
           ))}
+        </div>
+      )}
+
+      {archive.length > 0 && (
+        <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-6 mt-8">
+          <h2 className="text-lg font-bold text-[#111827] mb-4">
+            More in this section
+          </h2>
+          <ul className="grid md:grid-cols-2 gap-x-8 gap-y-1">
+            {archive.map((article) => (
+              <li key={article.id} className="border-b border-gray-100 last:border-0">
+                <Link
+                  href={articlePath(article)}
+                  className="group flex items-baseline justify-between gap-4 py-2.5"
+                >
+                  <span className="text-sm text-[#374151] group-hover:text-[#f59e0b] transition-colors">
+                    {article.title}
+                  </span>
+                  <span className="shrink-0 text-xs text-gray-400">
+                    {formatDate(article.createdAt)}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

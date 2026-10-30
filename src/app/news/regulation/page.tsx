@@ -29,7 +29,7 @@ export default function RegulationWatchPage() {
       </nav>
       <AdSlot position="leaderboard-top" className="mb-8" />
 
-      <CategoryArticleList category="Industry News" />
+      <CategoryArticleList category="Regulation" />
     </div>
   )
 }

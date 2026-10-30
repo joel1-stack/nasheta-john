@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next"
 import { queryArticles } from "@/lib/serverArticles"
 import { SITE_URL, STATIC_PAGE_LASTMOD } from "@/lib/site"
-import { articlePath } from "@/lib/navigation"
+import { articlePath, HOME_STORY_COUNT } from "@/lib/navigation"
+import { NEWS_PER_PAGE } from "@/components/BlogList"
 
 export const revalidate = 3600
 
@@ -70,5 +71,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     }))
 
-  return [...staticEntries, ...articleEntries]
+  // The /page/2, /page/3 ... archive. Google reaches older stories through
+  // this chain, so the pages belong in the sitemap rather than being left for
+  // the crawler to walk link by link from the homepage.
+  const olderCount = Math.max(0, articles.length - HOME_STORY_COUNT)
+  const archivePages = Math.ceil(olderCount / NEWS_PER_PAGE)
+  const archiveEntries: MetadataRoute.Sitemap = Array.from(
+    { length: archivePages },
+    (_, i) => ({
+      url: `${SITE_URL}/page/${i + 2}`,
+      lastModified: STATIC_PAGE_LASTMOD,
+      changeFrequency: "daily" as const,
+      priority: 0.5,
+    }),
+  )
+
+  return [...staticEntries, ...archiveEntries, ...articleEntries]
 }

@@ -6,7 +6,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/igub-cms-x7k9/", "/api/"],
+        // /go/ holds affiliate redirects: they carry no content, and letting
+        // them be crawled spends budget and exposes paid links as pages.
+        disallow: ["/igub-cms-x7k9/", "/api/", "/go/"],
       },
     ],
     sitemap: [

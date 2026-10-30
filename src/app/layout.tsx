@@ -12,6 +12,10 @@ const raleway = Raleway({ subsets: ["latin"], display: "swap", variable: "--font
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.igamingubuntu.com"),
+  // Lets feed readers, aggregators and Google News discover /feed from any page.
+  alternates: {
+    types: { "application/rss+xml": "https://www.igamingubuntu.com/feed" },
+  },
   title: {
     default: "iGamingUbuntu — The Pulse of African iGaming Business",
     template: "%s | iGamingUbuntu",

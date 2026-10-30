@@ -31,6 +31,7 @@ const mediaPartners: Partner[] = [
     href: "https://www.sportsbettingevents.com/sbwa",
     blurb:
       "West Africa's sports betting and iGaming summit, bringing operators, regulators, suppliers and affiliates to Dakar. We carry the build-up, the announcements and daily recaps from the floor.",
+    logo: "/images/partners/sbwa-plus-2027.png",
   },
 ]
 
@@ -102,14 +103,19 @@ export default function PartnersPage() {
                   className="group block rounded-lg border border-brand-teal/20 border-t-4 border-t-brand-teal bg-white p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="grid md:grid-cols-[150px_1fr] gap-6 items-start">
-                    <div className="flex items-center justify-center h-24 rounded-lg bg-brand-mint border border-brand-teal/15">
+                    {/* Event marks are drawn for dark backgrounds, so the tile is dark. */}
+                    <div
+                      className={`flex items-center justify-center h-28 rounded-lg overflow-hidden border ${
+                        p.logo ? "bg-brand-ink border-brand-ink" : "bg-brand-mint border-brand-teal/15"
+                      }`}
+                    >
                       {p.logo ? (
                         <img
                           src={p.logo}
                           alt={`${p.name} logo`}
-                          width={150}
-                          height={96}
-                          className="max-h-16 w-auto object-contain"
+                          width={344}
+                          height={320}
+                          className="max-h-24 w-auto object-contain"
                         />
                       ) : (
                         <span className="text-2xl font-semibold tracking-tight text-brand-teal-dark">

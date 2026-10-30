@@ -36,6 +36,7 @@ const STATIC_PAGES = [
   "/guides",
   "/press",
   "/the-desk",
+  "/partners",
   "/advertise",
   "/privacy",
   "/terms",

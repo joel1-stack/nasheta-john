@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Beginner-friendly guides to betting fundamentals, explaining odds, markets and strategies so new punters can bet with confidence from the very start.",
   alternates: { canonical: "/sports/basics" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 export default function BettingExplainedPage() {

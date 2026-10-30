@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Follow live sports events with real-time odds, in-play betting insights and match coverage across football, rugby and other sports popular in Africa.",
   alternates: { canonical: "/sports/live" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 export default function LiveEventsPage() {

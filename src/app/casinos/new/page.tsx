@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Explore newly launched online casinos reviewed and ranked. See welcome bonuses, game selections, payment methods and safety checks before you sign up.",
   alternates: { canonical: "/casinos/new" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 export default function NewCasinosPage() {

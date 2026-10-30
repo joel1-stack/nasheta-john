@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Play at the best mobile casinos optimised for betting on the go. Compare apps, mobile bonuses, fast withdrawals and payment options for African players.",
   alternates: { canonical: "/casinos/mobile" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 export default function MobileCasinosPage() {

@@ -6,6 +6,12 @@ import { NEWS_PER_PAGE } from "@/components/BlogList"
 
 export const revalidate = 3600
 
+/**
+ * Only pages we want indexed. The /sports/*, /events/* and /casinos/* sub-hubs
+ * are deliberately absent: they render their parent's article list until the
+ * CMS has categories of their own, so they are marked noindex and submitting
+ * them here would contradict that.
+ */
 const STATIC_PAGES = [
   "",
   "/about",
@@ -13,21 +19,10 @@ const STATIC_PAGES = [
   "/news/industry",
   "/news/regulation",
   "/sports",
-  "/sports/live",
-  "/sports/predictions",
-  "/sports/leagues",
-  "/sports/basics",
   "/reviews",
   "/casinos",
-  "/casinos/new",
-  "/casinos/best",
-  "/casinos/mobile",
   "/casinos/payments",
-  "/casinos/market",
   "/events",
-  "/events/upcoming",
-  "/events/recaps",
-  "/events/webinars",
   "/kenya",
   "/nigeria",
   "/south-africa",

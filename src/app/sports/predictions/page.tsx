@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Expert match predictions and betting tips across African and international leagues, with form analysis, value picks and recommended odds for each fixture.",
   alternates: { canonical: "/sports/predictions" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 export default function PredictionsPage() {

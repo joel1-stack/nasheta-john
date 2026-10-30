@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Discover the best online casinos for 2026, ranked by our expert team. Compare bonuses, licences, payment methods and games from trusted operators.",
   alternates: { canonical: "/casinos/best" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 export default function BestCasinosPage() {

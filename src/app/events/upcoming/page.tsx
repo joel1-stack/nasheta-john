@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Plan ahead with our calendar of upcoming iGaming conferences, summits and industry meetups across Africa, with dates, venues and registration details.",
   alternates: { canonical: "/events/upcoming" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 

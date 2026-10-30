@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description:
     "Filter online casinos by your country: Kenya, Nigeria, South Africa, Ghana, Tanzania and global markets. Find licensed operators that accept local payments.",
   alternates: { canonical: "/casinos/market" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 export default function ByMarketPage() {

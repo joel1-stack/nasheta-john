@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Watch expert discussions and panels on demand. Our webinar library covers regulation, affiliate strategy, payments and market trends across iGaming.",
   alternates: { canonical: "/events/webinars" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 export default function WebinarsPage() {

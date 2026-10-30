@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Betting guides for the Premier League, La Liga, NPFL, Ghana Premier League and more, with form analysis, odds previews and tips for every league.",
   alternates: { canonical: "/sports/leagues" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 export default function LeagueGuidesPage() {

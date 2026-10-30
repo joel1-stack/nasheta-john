@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "Read highlights and key takeaways from past iGaming industry events, conferences and webinars. Catch up on what was said without attending in person.",
   alternates: { canonical: "/events/recaps" },
+  // Duplicate of the parent hub until it has its own CMS category.
+  robots: { index: false, follow: true },
 }
 
 

@@ -242,7 +242,18 @@ export default function EditPostPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1.5">Slug</label>
-            <input value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} className={inputClass} required />
+            {/* Sanitised on entry: a slug with spaces or capitals breaks the URL. */}
+            <input
+              value={form.slug}
+              onChange={(e) =>
+                setForm((f) => ({
+                  ...f,
+                  slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+/, ""),
+                }))
+              }
+              className={inputClass}
+              required
+            />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1.5">Read Time</label>

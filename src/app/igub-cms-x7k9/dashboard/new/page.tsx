@@ -28,6 +28,8 @@ export default function NewPostPage() {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  /** Once the slug is edited by hand the title stops rewriting it. */
+  const [slugTouched, setSlugTouched] = useState(false)
   const router = useRouter()
 
   const [form, setForm] = useState({
@@ -71,8 +73,21 @@ export default function NewPostPage() {
     return () => unsub()
   }, [router])
 
+  const slugify = (value: string) =>
+    value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
+
+  /**
+   * The title drives the slug only until someone edits the slug themselves.
+   * It used to overwrite on every keystroke, so typing a title after setting a
+   * slug, or clicking into the middle of the slug, produced a mangled URL.
+   */
   const autoSlug = (title: string) => {
-    setForm((f) => ({ ...f, title, slug: title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") }))
+    setForm((f) => ({ ...f, title, slug: slugTouched ? f.slug : slugify(title) }))
+  }
+
+  const editSlug = (value: string) => {
+    setSlugTouched(true)
+    setForm((f) => ({ ...f, slug: slugify(value) }))
   }
 
   const addAffiliate = () => {
@@ -188,7 +203,7 @@ export default function NewPostPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1.5">Slug</label>
-            <input value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} className={inputClass} required />
+            <input value={form.slug} onChange={(e) => editSlug(e.target.value)} className={inputClass} required />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1.5">Read Time (min)</label>

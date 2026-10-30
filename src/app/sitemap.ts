@@ -15,6 +15,7 @@ export const revalidate = 3600
 const STATIC_PAGES = [
   "",
   "/about",
+  "/editorial-team",
   "/contact",
   "/news/industry",
   "/news/regulation",

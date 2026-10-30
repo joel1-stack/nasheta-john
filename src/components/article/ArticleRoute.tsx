@@ -5,6 +5,7 @@ import { getLatestArticles, getPopularArticles, getRelatedArticles } from "@/lib
 import { absoluteUrl, isSponsoredStatus } from "@/lib/site"
 import { breadcrumbLd, extractFaqs, faqPageLd } from "@/lib/structuredData"
 import { articlePath, articleSection, categoryHub } from "@/lib/navigation"
+import { findTeamMember, DEFAULT_MEMBER } from "@/lib/team"
 import ArticleView from "./ArticleView"
 import type { Article } from "@/types"
 
@@ -112,6 +113,8 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
     : absoluteUrl("/images/nasheta.png")
   const description = article.metaDescription || article.excerpt || ""
   const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
+  const bylineName = article.authorName || article.author || DEFAULT_MEMBER.name
+  const bylineMember = findTeamMember(bylineName)
 
   const ldJson = {
     "@context": "https://schema.org",
@@ -124,11 +127,13 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
     ...(wasUpdated ? { dateModified: article.updatedAt } : {}),
     author: {
       "@type": "Person",
-      name: article.authorName || article.author || "Nasheta John",
-      image: article.authorPhoto || absoluteUrl("/images/nasheta-john-author.png"),
-      ...(article.authorBio
-        ? { description: article.authorBio }
-        : { description: "iGaming content specialist covering African markets" }),
+      name: bylineName,
+      // Resolved from the team registry: the founder's photo used to be
+      // asserted as the author image for every byline, including other writers'.
+      image: article.authorPhoto || absoluteUrl(bylineMember?.photo || DEFAULT_MEMBER.photo),
+      description:
+        article.authorBio || bylineMember?.shortBio || DEFAULT_MEMBER.shortBio,
+      url: absoluteUrl("/editorial-team"),
     },
     publisher: {
       "@type": "Organization",

@@ -10,6 +10,7 @@ import Sidebar from "@/components/Sidebar"
 import { finalizeArticleHtml, splitForAds } from "@/lib/contentHtml"
 import { isSponsoredStatus } from "@/lib/site"
 import { categoryHub, articlePath } from "@/lib/navigation"
+import { findTeamMember, DEFAULT_MEMBER } from "@/lib/team"
 import type { Article } from "@/types"
 
 interface ArticleViewProps {
@@ -23,10 +24,7 @@ interface ArticleViewProps {
 }
 
 const COUNTRY_PAGES = new Set(["kenya", "nigeria", "south-africa", "ghana", "tanzania"])
-const DEFAULT_AUTHOR = "Nasheta John"
-const DEFAULT_AUTHOR_PHOTO = "/images/nasheta-john-author.png"
-const DEFAULT_AUTHOR_BIO =
-  "Founder and editor of iGamingUbuntu. Has written about African betting markets since 2016."
+const DEFAULT_AUTHOR = DEFAULT_MEMBER.name
 
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -55,7 +53,12 @@ export default function ArticleView({ initialArticle, related = [], popular = []
   )
   const hub = categoryHub(article.category)
   const authorName = article.authorName || article.author || DEFAULT_AUTHOR
-  const authorPhoto = article.authorPhoto || DEFAULT_AUTHOR_PHOTO
+  // Resolve the byline to a real person, so a second writer never inherits the
+  // founder's face. Anything set on the article itself still wins.
+  const member = findTeamMember(authorName)
+  const authorPhoto = article.authorPhoto || member?.photo || DEFAULT_MEMBER.photo
+  const authorBio = article.authorBio || member?.shortBio || DEFAULT_MEMBER.shortBio
+  const authorHref = member ? "/editorial-team" : "/about"
   const countries = (article.country || "")
     .split(",")
     .map((c) => c.trim())
@@ -115,7 +118,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
             <div className="flex items-center justify-between gap-4 flex-wrap mt-5 text-[13px] text-gray-500">
               <div className="flex items-center gap-2.5 flex-wrap">
                 <img src={authorPhoto} alt={authorName} width={32} height={32} className="w-8 h-8 rounded-full object-cover" />
-                <Link href="/about" className="font-medium text-brand-deep hover:text-brand-teal transition">{authorName}</Link>
+                <Link href={authorHref} className="font-medium text-brand-deep hover:text-brand-teal transition">{authorName}</Link>
                 <span aria-hidden="true">·</span>
                 <span>{formatDate(article.createdAt)}</span>
                 {wasUpdated && (
@@ -183,8 +186,8 @@ export default function ArticleView({ initialArticle, related = [], popular = []
               <img src={authorPhoto} alt={authorName} width={80} height={80} loading="lazy" className="w-20 h-20 rounded-full object-cover shrink-0" />
               <div>
                 <p className="text-xs uppercase tracking-wider text-gray-500">Written by</p>
-                <Link href="/about" className="text-lg font-semibold text-brand-deep hover:text-brand-teal transition">{authorName}</Link>
-                <p className="text-sm text-gray-600 mt-1 leading-relaxed">{article.authorBio || DEFAULT_AUTHOR_BIO}</p>
+                <Link href={authorHref} className="text-lg font-semibold text-brand-deep hover:text-brand-teal transition">{authorName}</Link>
+                <p className="text-sm text-gray-600 mt-1 leading-relaxed">{authorBio}</p>
               </div>
             </div>
 

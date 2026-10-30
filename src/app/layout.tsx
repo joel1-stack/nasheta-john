@@ -12,10 +12,6 @@ const raleway = Raleway({ subsets: ["latin"], display: "swap", variable: "--font
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.igamingubuntu.com"),
-  // Lets feed readers, aggregators and Google News discover /feed from any page.
-  alternates: {
-    types: { "application/rss+xml": "https://www.igamingubuntu.com/feed" },
-  },
   title: {
     default: "iGamingUbuntu — The Pulse of African iGaming Business",
     template: "%s | iGamingUbuntu",
@@ -66,6 +62,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`h-full ${raleway.variable}`}>
         <head>
+          {/*
+            Declared here rather than through metadata.alternates: a page that
+            sets its own `alternates` (every hub does, for the canonical)
+            replaces the layout's wholesale and the feed link disappears.
+          */}
+          <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="iGamingUbuntu"
+            href="https://www.igamingubuntu.com/feed"
+          />
           <script
             dangerouslySetInnerHTML={{
               __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TB8Q2LLT');`,

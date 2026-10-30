@@ -19,7 +19,6 @@ const STATIC_PAGES = [
   "/news/industry",
   "/news/regulation",
   "/sports",
-  "/reviews",
   "/casinos",
   "/casinos/payments",
   "/events",

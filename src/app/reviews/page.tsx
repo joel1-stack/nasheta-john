@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   description:
     "Honest expert reviews of the best betting sites and online casinos in Africa. We test bonuses, payments and licences, and only recommend trusted operators.",
   alternates: { canonical: "/reviews" },
+  // The operator cards below are developer placeholders: the ratings, bonuses
+  // and licence lines were never verified by anyone. Publishing them as tested
+  // expert reviews would contradict our editorial policy and is the kind of
+  // fabricated review content Google acts on, so the page stays out of search
+  // until the reviews are real. Remove this once they are.
+  robots: { index: false, follow: true },
 }
 
 const casinoReviews = [

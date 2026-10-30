@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { FiArrowRight, FiBriefcase, FiFileText, FiGlobe, FiShield } from "react-icons/fi"
+import { FiArrowRight } from "react-icons/fi"
 import AdSlot from "@/components/AdSlot"
 import Newsletter from "@/components/Newsletter"
 import { formatDate } from "@/lib/utils"
@@ -102,10 +102,10 @@ function GridCard({ article }: { article: Article }) {
 }
 
 const OFFERS = [
-  { icon: FiFileText, title: "Daily industry news", desc: "Same-day reporting on operators, launches, deals and results across Africa." },
-  { icon: FiShield, title: "Regulation tracking", desc: "New laws, licence rules and tax changes, explained in plain English." },
-  { icon: FiGlobe, title: "Country guides", desc: "How betting works in Kenya, Nigeria, South Africa, Ghana, Uganda and more." },
-  { icon: FiBriefcase, title: "Advertising and press releases", desc: "Sponsored articles, banners and press release publishing for brands entering Africa." },
+  { img: "/images/icons/news.png", title: "Daily industry news", desc: "Same-day reporting on operators, launches, deals and results across Africa." },
+  { img: "/images/icons/regulation.png", title: "Regulation tracking", desc: "New laws, licence rules and tax changes, explained in plain English." },
+  { img: "/images/icons/guides.png", title: "Country guides", desc: "How betting works in Kenya, Nigeria, South Africa, Ghana, Uganda and more." },
+  { img: "/images/icons/advertise.png", title: "Advertising and press releases", desc: "Sponsored articles, banners and press release publishing for brands entering Africa." },
 ]
 
 export interface NewsHomeProps {
@@ -247,10 +247,17 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
         <div className="max-w-6xl mx-auto px-4 py-14">
           <h2 className="inline-block border-l-4 border-brand-lime pl-3 text-xl md:text-2xl font-bold">What we do</h2>
           <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8 mt-8">
-            {OFFERS.map(({ icon: Icon, title, desc }) => (
+            {OFFERS.map(({ img, title, desc }) => (
               <div key={title} className="flex gap-4">
-                <span className="w-11 h-11 shrink-0 rounded-full bg-brand-lime/15 text-brand-lime flex items-center justify-center">
-                  <Icon size={18} />
+                <span className="w-14 h-14 shrink-0 rounded-full bg-brand-lime/15 flex items-center justify-center">
+                  <img
+                    src={img}
+                    alt=""
+                    aria-hidden="true"
+                    width={160}
+                    height={160}
+                    className="w-8 h-8 object-contain"
+                  />
                 </span>
                 <div>
                   <h3 className="font-semibold">{title}</h3>

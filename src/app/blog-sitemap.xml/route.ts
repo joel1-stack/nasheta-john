@@ -2,30 +2,15 @@ import { queryArticles } from "@/lib/serverArticles"
 import { SITE_URL, STATIC_PAGE_LASTMOD } from "@/lib/site"
 import { articlePath } from "@/lib/navigation"
 
-const blogHubPaths = [
-  "/news/industry",
-  "/news/regulation",
-  "/sports",
-  "/sports/live",
-  "/sports/predictions",
-  "/sports/leagues",
-  "/sports/basics",
-  "/casinos",
-  "/casinos/new",
-  "/casinos/best",
-  "/casinos/mobile",
-  "/casinos/payments",
-  "/casinos/market",
-  "/events",
-  "/events/upcoming",
-  "/events/recaps",
-  "/events/webinars",
-  "/guides",
-  "/reviews",
-  "/press",
-  "/the-desk",
-]
-
+/**
+ * Articles only.
+ *
+ * This file used to carry its own hardcoded list of hub pages as well. That
+ * duplicated every URL in sitemap.xml, and the list went stale: it kept
+ * submitting the eleven sub-hubs after they were marked noindex, which is the
+ * "Submitted URL marked noindex" error in Search Console. Hub and static pages
+ * belong to sitemap.ts, which is now the only place they are listed.
+ */
 function escapeXml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -47,11 +32,7 @@ export const dynamic = "force-dynamic"
 export async function GET(): Promise<Response> {
   const { articles } = await queryArticles({ page: 1, perPage: 10000 })
 
-  const entries: { loc: string; lastmod: string }[] = blogHubPaths.map((path) => ({
-    loc: `${SITE_URL}${path}`,
-    // Fixed date for hub pages, not the build time.
-    lastmod: STATIC_PAGE_LASTMOD,
-  }))
+  const entries: { loc: string; lastmod: string }[] = []
 
   for (const article of articles) {
     if (!article.slug) continue

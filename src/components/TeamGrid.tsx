@@ -6,11 +6,13 @@ import { TEAM } from "@/lib/team"
  */
 export default function TeamGrid() {
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-20 pt-16">
+    // Centred and wrapping rather than a fixed grid, so two people sit in the
+    // middle of the page and a third or fourth joins the row without a gap.
+    <div className="flex flex-wrap justify-center gap-x-6 gap-y-20 pt-16">
       {TEAM.map((member) => (
         <article
           key={member.slug}
-          className="relative rounded-2xl rounded-br-[64px] bg-brand-ink text-white px-6 pb-8 pt-20 shadow-xl shadow-brand-deep/20"
+          className="relative w-full sm:w-[320px] rounded-2xl rounded-br-[64px] bg-brand-ink text-white px-6 pb-8 pt-20 shadow-xl shadow-brand-deep/20"
         >
           <div className="absolute -top-14 left-1/2 -translate-x-1/2">
             <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-brand-lime bg-brand-deep shadow-lg">
@@ -20,7 +22,9 @@ export default function TeamGrid() {
                 width={224}
                 height={224}
                 loading="lazy"
-                className="w-full h-full object-cover"
+                // Greyscale by default so portraits taken in different places
+                // read as one set; colour returns on hover.
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-500"
               />
             </div>
           </div>

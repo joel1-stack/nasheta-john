@@ -110,9 +110,16 @@ export default function ArticleView({ initialArticle, related = [], popular = []
               })}
             </div>
 
-            <h1 className="text-[28px] sm:text-[34px] md:text-[40px] font-semibold text-brand-deep leading-[1.2] break-words">
+            {/* speakable-* classes are referenced by the article's speakable schema. */}
+            <h1 className="speakable-headline text-[28px] sm:text-[34px] md:text-[40px] font-semibold text-brand-deep leading-[1.2] break-words">
               {article.title}
             </h1>
+
+            {article.excerpt && (
+              <p className="speakable-summary text-[17px] sm:text-lg text-gray-600 leading-relaxed mt-4">
+                {article.excerpt}
+              </p>
+            )}
 
             {/* Byline */}
             <div className="flex items-center justify-between gap-4 flex-wrap mt-5 text-[13px] text-gray-500">

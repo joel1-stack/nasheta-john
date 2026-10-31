@@ -47,6 +47,51 @@ export function faqPageLd(faqs: FaqItem[]) {
   }
 }
 
+/**
+ * The newsroom as Person entities.
+ *
+ * Gambling regulation is money-and-law territory, where Google weighs who is
+ * doing the writing. Naming the people, their role and their profiles gives
+ * the bylines on every article something to resolve to.
+ */
+export function teamProfileLd(
+  members: { name: string; role: string; photo: string; shortBio: string; links?: { href: string }[] }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": `${SITE_URL}/editorial-team`,
+    url: `${SITE_URL}/editorial-team`,
+    name: "Meet our team",
+    about: {
+      "@type": "Organization",
+      name: "iGamingUbuntu",
+      url: SITE_URL,
+      employee: members.map((m) => ({
+        "@type": "Person",
+        name: m.name,
+        jobTitle: m.role,
+        image: `${SITE_URL}${m.photo}`,
+        description: m.shortBio,
+        worksFor: { "@type": "Organization", name: "iGamingUbuntu", url: SITE_URL },
+        ...(m.links && m.links.length
+          ? { sameAs: m.links.map((l) => l.href) }
+          : {}),
+      })),
+    },
+  }
+}
+
+/**
+ * Marks the headline and standfirst as the part worth reading aloud, for voice
+ * results and assistant answers. The selectors below must stay on those
+ * elements in ArticleView.
+ */
+export const speakableSpec = {
+  "@type": "SpeakableSpecification",
+  cssSelector: [".speakable-headline", ".speakable-summary"],
+}
+
 export function breadcrumbLd(items: { name: string; path: string }[]) {
   return {
     "@context": "https://schema.org",

@@ -3,7 +3,7 @@ import { notFound, permanentRedirect } from "next/navigation"
 import { getArticleBySlug } from "@/lib/firestoreService"
 import { getLatestArticles, getPopularArticles, getRelatedArticles } from "@/lib/serverArticles"
 import { absoluteUrl, isSponsoredStatus } from "@/lib/site"
-import { breadcrumbLd, extractFaqs, faqPageLd } from "@/lib/structuredData"
+import { breadcrumbLd, extractFaqs, faqPageLd, speakableSpec } from "@/lib/structuredData"
 import { articlePath, articleSection, categoryHub } from "@/lib/navigation"
 import { findTeamMember, DEFAULT_MEMBER } from "@/lib/team"
 import ArticleView from "./ArticleView"
@@ -122,6 +122,7 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
     headline: article.title || article.slug,
     ...(description ? { description } : {}),
     image: absoluteImage,
+    speakable: speakableSpec,
     ...(article.createdAt ? { datePublished: article.createdAt } : {}),
     // dateModified only when the article was actually edited after publishing.
     ...(wasUpdated ? { dateModified: article.updatedAt } : {}),

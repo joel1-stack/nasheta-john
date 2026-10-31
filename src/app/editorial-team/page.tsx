@@ -2,6 +2,8 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import TeamGrid from "@/components/TeamGrid"
 import { ScrollReveal } from "@/lib/scrollReveal"
+import { TEAM } from "@/lib/team"
+import { teamProfileLd } from "@/lib/structuredData"
 
 export const metadata: Metadata = {
   title: "Meet Our Team",
@@ -13,6 +15,11 @@ export const metadata: Metadata = {
 export default function EditorialTeamPage() {
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(teamProfileLd(TEAM)) }}
+      />
+
       {/* Intro */}
       <section className="bg-brand-ink relative overflow-hidden">
         <span className="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-brand-teal/20" aria-hidden="true" />

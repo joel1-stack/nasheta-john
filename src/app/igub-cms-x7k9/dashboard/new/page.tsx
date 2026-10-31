@@ -86,10 +86,21 @@ export default function NewPostPage() {
     setForm((f) => ({ ...f, title, slug: slugTouched ? f.slug : slugify(title) }))
   }
 
+  /**
+   * Typing-safe: keeps hyphens as they are entered. slugify() trims a trailing
+   * hyphen, which while typing removes the separator before the next letter
+   * arrives, so "a-b-c" came out as "abc". Trailing hyphens are trimmed on
+   * blur instead.
+   */
   const editSlug = (value: string) => {
     setSlugTouched(true)
-    setForm((f) => ({ ...f, slug: slugify(value) }))
+    setForm((f) => ({
+      ...f,
+      slug: value.toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+/, ""),
+    }))
   }
+
+  const tidySlug = () => setForm((f) => ({ ...f, slug: slugify(f.slug) }))
 
   const addAffiliate = () => {
     setAffiliates((prev) => [...prev, { operatorName: "", url: "", bonusText: "", imageUrl: "", ctaLabel: "" }])
@@ -204,7 +215,7 @@ export default function NewPostPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1.5">Slug</label>
-            <input value={form.slug} onChange={(e) => editSlug(e.target.value)} className={inputClass} required />
+            <input value={form.slug} onChange={(e) => editSlug(e.target.value)} onBlur={tidySlug} className={inputClass} required />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1.5">Read Time (min)</label>

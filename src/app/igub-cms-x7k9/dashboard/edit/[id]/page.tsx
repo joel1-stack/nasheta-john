@@ -9,6 +9,7 @@ import { refreshSite } from "@/lib/siteRefresh"
 import { useRouter, useParams } from "next/navigation"
 import Link from "next/link"
 import ImageUpload from "@/components/ImageUpload"
+import { TEAM } from "@/lib/team"
 import ArticlePreview from "@/components/ArticlePreview"
 import ContentEditor from "@/components/ContentEditor"
 import { RestoreBanner, RevisionHistory, SaveHint, SeoCoach, useEditorGuards } from "@/components/cms/EditorAssist"
@@ -462,7 +463,20 @@ export default function EditPostPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1.5">Author Name</label>
-              <input value={form.authorName} onChange={(e) => setForm((f) => ({ ...f, authorName: e.target.value }))} className={inputClass} placeholder="Author name" />
+              {/* Pick from the team so the byline matches a registry entry and
+                  the right photo and bio load. Free text still works for guests. */}
+              <input
+                value={form.authorName}
+                onChange={(e) => setForm((f) => ({ ...f, authorName: e.target.value }))}
+                className={inputClass}
+                placeholder="Author name"
+                list="team-authors"
+              />
+              <datalist id="team-authors">
+                {TEAM.map((m) => (
+                  <option key={m.slug} value={m.name}>{m.role}</option>
+                ))}
+              </datalist>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1.5">Author Bio</label>

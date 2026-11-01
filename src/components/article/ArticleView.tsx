@@ -12,6 +12,7 @@ import { isSponsoredStatus } from "@/lib/site"
 import { categoryHub, articlePath } from "@/lib/navigation"
 import { findTeamMember, DEFAULT_MEMBER } from "@/lib/team"
 import type { Article } from "@/types"
+import { optimizedImage } from "@/lib/img"
 
 interface ArticleViewProps {
   initialArticle: Article
@@ -146,7 +147,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
             <figure className="mt-6">
               {article.featuredImage ? (
                 <img
-                  src={article.featuredImage}
+                  src={optimizedImage(article.featuredImage, 1200)}
                   alt={article.featuredImageAlt || article.title}
                   width={1200}
                   height={675}
@@ -212,7 +213,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
                   {related.slice(0, 4).map((r) => (
                     <Link key={r.slug} href={articlePath(r)} className="flex gap-4 group items-start">
                       {r.featuredImage ? (
-                        <img src={r.featuredImage} alt={r.featuredImageAlt || r.title} width={112} height={72} loading="lazy" className="w-28 h-[72px] object-cover shrink-0" />
+                        <img src={optimizedImage(r.featuredImage, 240)} alt={r.featuredImageAlt || r.title} width={112} height={72} loading="lazy" className="w-28 h-[72px] object-cover shrink-0" />
                       ) : (
                         <div className="w-28 h-[72px] shrink-0 bg-gray-200" />
                       )}

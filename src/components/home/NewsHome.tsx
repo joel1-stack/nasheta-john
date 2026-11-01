@@ -5,6 +5,7 @@ import Newsletter from "@/components/Newsletter"
 import { formatDate } from "@/lib/utils"
 import { HOME_STORY_COUNT, articlePath } from "@/lib/navigation"
 import type { Article } from "@/types"
+import { optimizedImage } from "@/lib/img"
 
 /**
  * Newspaper-style front page: ticker, top stories, latest list with a slim
@@ -19,7 +20,7 @@ function Thumb({ article, className, eager = false }: { article: Article; classN
   }
   return (
     <img
-      src={article.featuredImage}
+      src={optimizedImage(article.featuredImage, eager ? 1200 : 800)}
       alt={article.featuredImageAlt || article.title}
       width={1200}
       height={675}

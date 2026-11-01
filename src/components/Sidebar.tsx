@@ -4,6 +4,7 @@ import { formatDate } from "@/lib/utils"
 import { MOST_READ_MIN_ARTICLES, SHOW_MOST_READ } from "@/lib/site"
 import type { Article } from "@/types"
 import { articlePath } from "@/lib/navigation"
+import { optimizedImage } from "@/lib/img"
 
 interface SidebarProps {
   recent?: Article[]
@@ -32,7 +33,7 @@ export default function Sidebar({ recent = [], popularPosts = [] }: SidebarProps
               <Link key={post.slug} href={articlePath(post)} className="flex gap-3 group items-start">
                 {post.featuredImage ? (
                   <img
-                    src={post.featuredImage}
+                    src={optimizedImage(post.featuredImage, 192)}
                     alt={post.featuredImageAlt || post.title}
                     width={96}
                     height={64}

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { formatDate } from "@/lib/utils"
 import { queryArticles } from "@/lib/serverArticles"
 import { articlePath } from "@/lib/navigation"
+import { optimizedImage } from "@/lib/img"
 
 interface Props {
   category?: string
@@ -51,7 +52,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
           <div className="relative h-52 md:h-full min-h-[200px] overflow-hidden bg-gray-100">
             {featured.featuredImage ? (
               <img
-                src={featured.featuredImage}
+                src={optimizedImage(featured.featuredImage, 1200)}
                 alt={featured.featuredImageAlt || featured.title}
                 width={1200}
                 height={675}
@@ -101,7 +102,7 @@ export default async function CategoryArticleList({ category, country, limit }: 
               <div className="relative h-48 overflow-hidden bg-gray-100">
                 {article.featuredImage ? (
                   <img
-                    src={article.featuredImage}
+                    src={optimizedImage(article.featuredImage, 800)}
                     alt={article.featuredImageAlt || article.title}
                     width={1200}
                     height={675}

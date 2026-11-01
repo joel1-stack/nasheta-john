@@ -5,6 +5,7 @@ import { MOST_READ_MIN_ARTICLES, SHOW_MOST_READ } from "@/lib/site"
 import Newsletter from "@/components/Newsletter"
 import type { Article } from "@/types"
 import { articlePath } from "@/lib/navigation"
+import { optimizedImage } from "@/lib/img"
 
 export interface BlogListProps {
   articles: Article[]
@@ -69,7 +70,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                   <div className="grid md:grid-cols-[1.4fr_1fr]">
                     <div className="relative h-52 md:h-full min-h-[200px] overflow-hidden bg-gray-50">
                       {featured.featuredImage ? (
-                        <img src={featured.featuredImage} alt={featured.featuredImageAlt || featured.title} width={1200} height={675} loading="eager" fetchPriority="high" className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
+                        <img src={optimizedImage(featured.featuredImage, 1200)} alt={featured.featuredImageAlt || featured.title} width={1200} height={675} loading="eager" fetchPriority="high" className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/full backgound.png')" }}>
                           <span className="text-white text-sm font-semibold bg-black/40 px-3 py-1 rounded-full">iGamingUbuntu</span>
@@ -111,7 +112,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                       >
                         <div className="aspect-[16/9] overflow-hidden bg-gray-50 relative">
                           {article.featuredImage ? (
-                            <img src={article.featuredImage} alt={article.featuredImageAlt || article.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
+                            <img src={optimizedImage(article.featuredImage, 800)} alt={article.featuredImageAlt || article.title} width={1200} height={675} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-500" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/full backgound.png')" }}>
                               <span className="text-white text-sm font-semibold bg-black/40 px-3 py-1 rounded-full">iGamingUbuntu</span>
@@ -218,7 +219,7 @@ export default function BlogList({ articles, popular, total, page, totalPages }:
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       {post.featuredImage ? (
-                        <img src={post.featuredImage} alt={post.featuredImageAlt || post.title} width={80} height={60} loading="lazy" className="w-20 h-[60px] rounded-md object-cover shrink-0" />
+                        <img src={optimizedImage(post.featuredImage, 160)} alt={post.featuredImageAlt || post.title} width={80} height={60} loading="lazy" className="w-20 h-[60px] rounded-md object-cover shrink-0" />
                       ) : (
                         <div className="w-20 h-[60px] rounded-md shrink-0 bg-cover bg-center flex items-center justify-center" style={{ backgroundImage: "url('/images/full backgound.png')" }} />
                       )}

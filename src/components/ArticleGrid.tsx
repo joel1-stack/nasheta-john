@@ -2,6 +2,7 @@ import Link from "next/link"
 import { formatDate } from "@/lib/utils"
 import type { Article } from "@/types"
 import { articlePath } from "@/lib/navigation"
+import { optimizedImage } from "@/lib/img"
 
 interface ArticleGridProps {
   articles: Article[]
@@ -42,7 +43,7 @@ export default function ArticleGrid({ articles, emptyMessage, limit, columns = 2
           <div className="aspect-[16/9] overflow-hidden bg-gray-50">
             {a.featuredImage ? (
               <img
-                src={a.featuredImage}
+                src={optimizedImage(a.featuredImage, 800)}
                 alt={a.featuredImageAlt || a.title}
                 width={1200}
                 height={675}

@@ -5,6 +5,7 @@ import Link from "next/link"
 import { getBanners, isBannerLive } from "@/lib/firestoreService"
 import { trackEvent } from "@/lib/analytics"
 import type { Banner, BannerZone } from "@/types"
+import { HouseBoxAd, HouseLeaderboardAd } from "@/components/HouseAds"
 
 type Position =
   | "leaderboard-top"
@@ -73,34 +74,23 @@ function loadBanners(): Promise<Banner[]> {
 }
 
 function HouseLeaderboard({ promo, className }: { promo: NonNullable<(typeof HOUSE)[Position]>; className: string }) {
+  // The advertise promo is the animated 3D banner. The other house promos stay as text cards.
+  if (promo.href === "/advertise" && promo.title.startsWith("Put your brand")) {
+    return <HouseLeaderboardAd className={className} />
+  }
   const external = promo.href.startsWith("http")
-  // The advertise promo is an image banner (728x90, 320x100 on phones). The
-  // other house promos stay as text cards.
-  const inner =
-    promo.href === "/advertise" && promo.title.startsWith("Put your brand") ? (
-      <picture>
-        <source media="(min-width: 640px)" srcSet="/images/promo/promo-wide.jpg" />
-        <img
-          src="/images/promo/promo-wide-mobile.jpg"
-          alt="Advertise to Africa's iGaming industry: banners, sponsored articles and press releases"
-          width={728}
-          height={90}
-          loading="lazy"
-          className="mx-auto w-full max-w-[728px] h-auto rounded"
-        />
-      </picture>
-    ) : (
-      <div className="max-w-[728px] min-h-[90px] mx-auto bg-brand-ink rounded flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 sm:py-3 overflow-hidden relative">
-        <span className="absolute -right-6 -top-10 w-32 h-32 rounded-full bg-brand-lime/10" aria-hidden="true" />
-        <div className="relative">
-          <p className="text-white font-semibold leading-snug">{promo.title}</p>
-          <p className="text-brand-lime/80 text-sm mt-0.5">{promo.text}</p>
-        </div>
-        <span className="relative shrink-0 self-start sm:self-center bg-brand-lime text-brand-ink text-sm font-bold px-4 py-2 rounded">
-          {promo.cta} &rarr;
-        </span>
+  const inner = (
+    <div className="max-w-[728px] min-h-[90px] mx-auto bg-brand-ink rounded flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 sm:py-3 overflow-hidden relative">
+      <span className="absolute -right-6 -top-10 w-32 h-32 rounded-full bg-brand-lime/10" aria-hidden="true" />
+      <div className="relative">
+        <p className="text-white font-semibold leading-snug">{promo.title}</p>
+        <p className="text-brand-lime/80 text-sm mt-0.5">{promo.text}</p>
       </div>
-    )
+      <span className="relative shrink-0 self-start sm:self-center bg-brand-lime text-brand-ink text-sm font-bold px-4 py-2 rounded">
+        {promo.cta} &rarr;
+      </span>
+    </div>
+  )
   return (
     <div className={className}>
       {external ? (
@@ -155,22 +145,7 @@ export default function AdSlot({ position, className = "" }: AdSlotProps) {
   }
 
   // While loading (undefined) the house promo is already shown, so nothing jumps.
-  if (position === "sidebar-1") {
-    return (
-      <div className={className}>
-        <Link href="/advertise" className="block hover:opacity-95 transition">
-          <img
-            src="/images/promo/promo-box.jpg"
-            alt="Reach operators, affiliates and regulators across Africa: book a placement"
-            width={300}
-            height={250}
-            loading="lazy"
-            className="mx-auto w-[300px] max-w-full h-auto rounded"
-          />
-        </Link>
-      </div>
-    )
-  }
+  if (position === "sidebar-1") return <HouseBoxAd className={className} />
 
   const promo = HOUSE[position]
   return promo ? <HouseLeaderboard promo={promo} className={className} /> : null

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { getBanners, isBannerLive } from "@/lib/firestoreService"
 import { trackEvent } from "@/lib/analytics"
 import type { Banner } from "@/types"
+import { HouseSideAd } from "@/components/HouseAds"
 
 /**
  * Tall banners down both edges of the page, like the side skins on other trade
@@ -14,11 +15,6 @@ import type { Banner } from "@/types"
  * nothing overlaps the content. A booked "skin" banner from the CMS replaces the
  * house ad on its side: first one left, second one right.
  */
-const HOUSE = [
-  { src: "/images/promo/promo-side-left.jpg", alt: "Advertise on iGamingUbuntu: book this spot", href: "/advertise" },
-  { src: "/images/promo/promo-side-right.jpg", alt: "Publish your African iGaming press release on iGamingUbuntu", href: "/advertise" },
-]
-
 let skinsPromise: Promise<Banner[]> | null = null
 function loadSkins(): Promise<Banner[]> {
   if (!skinsPromise) {
@@ -28,29 +24,38 @@ function loadSkins(): Promise<Banner[]> {
 }
 
 function Skin({ side, banner }: { side: 0 | 1; banner?: Banner }) {
-  const house = HOUSE[side]
-  const href = banner?.linkUrl || house.href
+  const position = side === 0 ? "left-[calc(50%-576px-176px)]" : "left-[calc(50%+576px+16px)]"
+  const wrap = `hidden 2xl:block fixed top-24 z-10 ${position}`
+  if (!banner) {
+    return (
+      <div className={wrap}>
+        <p className="text-[10px] uppercase tracking-wider text-gray-400 text-center mb-1">Advertisement</p>
+        <HouseSideAd side={side} />
+      </div>
+    )
+  }
+  const href = banner.linkUrl
   const external = href.startsWith("http")
   const img = (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={banner?.imageUrl || house.src}
-      alt={banner?.alt || banner?.advertiser || house.alt}
+      src={banner.imageUrl}
+      alt={banner.alt || banner.advertiser}
       width={160}
       height={600}
       loading="lazy"
       className="block w-[160px] h-[600px] object-cover hover:opacity-95 transition"
     />
   )
-  const position = side === 0 ? "left-[calc(50%-576px-176px)]" : "left-[calc(50%+576px+16px)]"
   return (
-    <div className={`hidden 2xl:block fixed top-28 z-10 ${position}`}>
+    <div className={wrap}>
       <p className="text-[10px] uppercase tracking-wider text-gray-400 text-center mb-1">Advertisement</p>
       {external ? (
         <a
           href={href}
           target="_blank"
           rel="sponsored noopener"
-          onClick={() => trackEvent("ad_click", { ad_position: `skin-${side ? "right" : "left"}`, advertiser: banner?.advertiser, link_url: href })}
+          onClick={() => trackEvent("ad_click", { ad_position: `skin-${side ? "right" : "left"}`, advertiser: banner.advertiser, link_url: href })}
         >
           {img}
         </a>

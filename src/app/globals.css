@@ -411,3 +411,35 @@ html {
 .protect-copy img {
   -webkit-user-drag: none;
 }
+
+/* ---- House banner ads: premium, classic, modern 3D (animated, CSS only) ---- */
+.hb{position:relative;overflow:hidden;isolation:isolate;border-radius:6px;color:#F8F8F8;
+  background:radial-gradient(130% 150% at 12% 0%,var(--hb-b) 0%,var(--hb-a) 72%);
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 14px 30px -14px rgba(0,0,0,.6)}
+.hb-forest{--hb-a:#042509;--hb-b:#165F39;--hb-c1:#094217;--hb-c2:#165F39;--hb-c3:#518F5C;--hb-c4:#BCD5AC;--hb-acc:#BCD5AC;--hb-btn:#BCD5AC;--hb-btn-glow:188,213,172}
+.hb-noir{--hb-a:#0F0F0F;--hb-b:#262626;--hb-c1:#202020;--hb-c2:#337418;--hb-c3:#5DD62C;--hb-c4:#F8F8F8;--hb-acc:#5DD62C;--hb-btn:#5DD62C;--hb-btn-glow:93,214,44}
+.hb-serif{font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:.2px;line-height:1.15}
+.hb-kicker{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hb-acc);font-weight:700}
+.hb-sub{color:var(--hb-acc);opacity:.9}
+.hb-shine{position:absolute;top:-20%;bottom:-20%;left:-45%;width:34%;transform:skewX(-20deg);pointer-events:none;z-index:4;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);animation:hb-sweep 6.5s ease-in-out infinite}
+@keyframes hb-sweep{0%,52%{left:-45%}100%{left:135%}}
+.hb-stage{position:absolute;perspective:620px;pointer-events:none;z-index:1}
+.hb-stack{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateX(58deg) rotateZ(-38deg);animation:hb-turn 9s ease-in-out infinite alternate}
+@keyframes hb-turn{from{transform:rotateX(58deg) rotateZ(-46deg)}to{transform:rotateX(58deg) rotateZ(-26deg)}}
+.hb-plate{position:absolute;inset:0;border-radius:14%;border:1px solid rgba(255,255,255,.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 10px 16px rgba(0,0,0,.5);animation:hb-bob 4.6s ease-in-out infinite}
+.hb-plate:nth-child(1){--z:0px;background:linear-gradient(135deg,var(--hb-c1),var(--hb-c2));animation-delay:0s}
+.hb-plate:nth-child(2){--z:16px;background:linear-gradient(135deg,var(--hb-c2),var(--hb-c3));animation-delay:.35s}
+.hb-plate:nth-child(3){--z:32px;background:linear-gradient(135deg,var(--hb-c3),var(--hb-c4));animation-delay:.7s}
+.hb-plate:nth-child(4){--z:48px;background:linear-gradient(135deg,var(--hb-c4),#fff);animation-delay:1.05s}
+@keyframes hb-bob{0%,100%{transform:translateZ(var(--z))}50%{transform:translateZ(calc(var(--z) + 9px))}}
+.hb-msgs{position:relative}
+.hb-msg{position:absolute;left:0;right:0;top:0;opacity:0;animation:hb-msg 10s ease-in-out infinite}
+.hb-msg.b{animation-delay:5s}
+@keyframes hb-msg{0%{opacity:0;transform:translateY(8px)}8%,42%{opacity:1;transform:none}50%,100%{opacity:0;transform:translateY(-8px)}}
+.hb-btn{display:inline-block;background:var(--hb-btn);color:#0F1F16;font-weight:700;border-radius:6px;white-space:nowrap;
+  box-shadow:0 3px 0 rgba(0,0,0,.35),0 0 0 0 rgba(var(--hb-btn-glow),.55);animation:hb-pulse 2.8s ease-out infinite}
+@keyframes hb-pulse{0%{box-shadow:0 3px 0 rgba(0,0,0,.35),0 0 0 0 rgba(var(--hb-btn-glow),.55)}70%,100%{box-shadow:0 3px 0 rgba(0,0,0,.35),0 0 0 12px rgba(var(--hb-btn-glow),0)}}
+@media (prefers-reduced-motion:reduce){.hb *,.hb-shine{animation:none!important}.hb-msg.b{display:none}.hb-msg.a{opacity:1}}

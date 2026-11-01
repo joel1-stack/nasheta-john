@@ -35,8 +35,8 @@ export function HouseLeaderboardAd({ className = "" }: { className?: string }) {
       >
         <span className="hb-shine" aria-hidden="true" />
         <Stage className="hidden sm:block right-[150px] top-[8px] w-[74px] h-[74px]" />
-        <Logo className="absolute left-3 top-3 h-6 w-auto z-[2]" />
-        <div className="absolute left-3 right-3 sm:right-[245px] top-[40px] sm:top-[16px] z-[2]">
+        <Logo className="absolute left-3 top-3 sm:top-[33px] h-6 w-auto z-[2]" />
+        <div className="absolute left-3 sm:left-[92px] right-3 sm:right-[245px] top-[40px] sm:top-[16px] z-[2]">
           <div className="hb-msgs h-[52px]">
             <div className="hb-msg a">
               <p className="hb-serif text-[15px] sm:text-[17px]">Advertise to Africa&apos;s iGaming industry</p>

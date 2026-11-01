@@ -22,7 +22,7 @@ function Stage({ className, plates = 4 }: { className: string; plates?: number }
 
 function Logo({ className }: { className: string }) {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src="/images/igub-logo.png" alt="iGamingUbuntu" className={className} width={500} height={206} />
+  return <img src="/images/igub-logo-transparent.png" alt="iGamingUbuntu" className={className} width={500} height={206} />
 }
 
 export function HouseLeaderboardAd({ className = "" }: { className?: string }) {
@@ -65,9 +65,9 @@ export function HouseBoxAd({ className = "" }: { className?: string }) {
         className="hb hb-noir block w-[300px] max-w-full h-[250px] mx-auto"
       >
         <span className="hb-shine" aria-hidden="true" />
-        <Stage className="right-[8px] top-[26px] w-[132px] h-[132px]" />
+        <Stage className="right-[14px] top-[12px] w-[92px] h-[92px]" />
         <Logo className="absolute left-4 top-4 h-7 w-auto z-[2]" />
-        <div className="absolute left-4 right-4 bottom-[58px] z-[2]">
+        <div className="absolute left-4 right-4 top-[104px] z-[2]">
           <p className="hb-kicker mb-1.5">Advertise</p>
           <p className="hb-serif text-[21px]">Reach operators, affiliates and regulators across Africa</p>
         </div>

@@ -79,9 +79,9 @@ function HouseLeaderboard({ promo, className }: { promo: NonNullable<(typeof HOU
   const inner =
     promo.href === "/advertise" && promo.title.startsWith("Put your brand") ? (
       <picture>
-        <source media="(min-width: 640px)" srcSet="/images/ads/house-leaderboard-728x90.jpg" />
+        <source media="(min-width: 640px)" srcSet="/images/promo/promo-wide-728x90.jpg" />
         <img
-          src="/images/ads/house-leaderboard-mobile-320x100.jpg"
+          src="/images/promo/promo-wide-mobile-320x100.jpg"
           alt="Advertise to Africa's iGaming industry: banners, sponsored articles and press releases"
           width={728}
           height={90}
@@ -160,7 +160,7 @@ export default function AdSlot({ position, className = "" }: AdSlotProps) {
       <div className={className}>
         <Link href="/advertise" className="block hover:opacity-95 transition">
           <img
-            src="/images/ads/house-mpu-300x250.jpg"
+            src="/images/promo/promo-box-300x250.jpg"
             alt="Reach operators, affiliates and regulators across Africa: book a placement"
             width={300}
             height={250}

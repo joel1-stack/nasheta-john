@@ -32,7 +32,7 @@ export const DIRECTORY_LINKS: NavLink[] = [
   },
   {
     label: "Casino Reviews",
-    href: "/reviews",
+    href: "/casinos",
     desc: "Reviews of betting sites and online casinos",
     children: [
       { label: "New Casinos", href: "/casinos/new", desc: "Recently launched operators reviewed" },

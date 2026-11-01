@@ -61,6 +61,9 @@ const nextConfig: NextConfig = {
       // The article sitemap used to be called blog-sitemap.xml; keep old submissions working.
       { source: "/blog-sitemap.xml", destination: "/articles-sitemap.xml", statusCode: 301 },
       { source: "/news", destination: "/", statusCode: 301 },
+      // The old /reviews page held placeholder ratings that nobody had verified.
+      // Real reviews live in the casino hub and are added one tested operator at a time.
+      { source: "/reviews", destination: "/casinos", statusCode: 301 },
       { source: "/admin", destination: "/igub-cms-x7k9", permanent: true },
       { source: "/admin/:path*", destination: "/igub-cms-x7k9/:path*", permanent: true },
     ]

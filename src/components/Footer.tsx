@@ -24,7 +24,7 @@ const socialLinks = [
 
 const directoryLinks = [
   { label: "Sports Betting", href: "/sports" },
-  { label: "Casino Reviews", href: "/reviews" },
+  { label: "Casino Reviews", href: "/casinos" },
   { label: "Best Casinos", href: "/casinos/best" },
   { label: "Payment Methods", href: "/casinos/payments" },
   { label: "Betting Guides", href: "/guides" },

@@ -74,18 +74,33 @@ function loadBanners(): Promise<Banner[]> {
 
 function HouseLeaderboard({ promo, className }: { promo: NonNullable<(typeof HOUSE)[Position]>; className: string }) {
   const external = promo.href.startsWith("http")
-  const inner = (
-    <div className="max-w-[728px] min-h-[90px] mx-auto bg-brand-ink rounded flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 sm:py-3 overflow-hidden relative">
-      <span className="absolute -right-6 -top-10 w-32 h-32 rounded-full bg-brand-lime/10" aria-hidden="true" />
-      <div className="relative">
-        <p className="text-white font-semibold leading-snug">{promo.title}</p>
-        <p className="text-brand-lime/80 text-sm mt-0.5">{promo.text}</p>
+  // The advertise promo is an image banner (728x90, 320x100 on phones). The
+  // other house promos stay as text cards.
+  const inner =
+    promo.href === "/advertise" && promo.title.startsWith("Put your brand") ? (
+      <picture>
+        <source media="(min-width: 640px)" srcSet="/images/ads/house-leaderboard-728x90.jpg" />
+        <img
+          src="/images/ads/house-leaderboard-mobile-320x100.jpg"
+          alt="Advertise to Africa's iGaming industry: banners, sponsored articles and press releases"
+          width={728}
+          height={90}
+          loading="lazy"
+          className="mx-auto w-full max-w-[728px] h-auto rounded"
+        />
+      </picture>
+    ) : (
+      <div className="max-w-[728px] min-h-[90px] mx-auto bg-brand-ink rounded flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 sm:py-3 overflow-hidden relative">
+        <span className="absolute -right-6 -top-10 w-32 h-32 rounded-full bg-brand-lime/10" aria-hidden="true" />
+        <div className="relative">
+          <p className="text-white font-semibold leading-snug">{promo.title}</p>
+          <p className="text-brand-lime/80 text-sm mt-0.5">{promo.text}</p>
+        </div>
+        <span className="relative shrink-0 self-start sm:self-center bg-brand-lime text-brand-ink text-sm font-bold px-4 py-2 rounded">
+          {promo.cta} &rarr;
+        </span>
       </div>
-      <span className="relative shrink-0 self-start sm:self-center bg-brand-lime text-brand-ink text-sm font-bold px-4 py-2 rounded">
-        {promo.cta} &rarr;
-      </span>
-    </div>
-  )
+    )
   return (
     <div className={className}>
       {external ? (
@@ -142,12 +157,16 @@ export default function AdSlot({ position, className = "" }: AdSlotProps) {
   // While loading (undefined) the house promo is already shown, so nothing jumps.
   if (position === "sidebar-1") {
     return (
-      <div className={`bg-brand-mint border border-brand-teal/20 rounded p-5 ${className}`}>
-        <p className="text-[11px] uppercase tracking-wider text-brand-teal-dark font-semibold">Advertise with us</p>
-        <p className="font-semibold text-brand-deep mt-2 leading-snug">Reach operators, affiliates and regulators across Africa.</p>
-        <p className="text-sm text-gray-600 mt-2">Banners, sponsored articles and press releases.</p>
-        <Link href="/advertise" className="mt-4 inline-block bg-brand-teal text-white text-sm font-semibold px-4 py-2 rounded hover:bg-brand-deep transition">
-          See options &rarr;
+      <div className={className}>
+        <Link href="/advertise" className="block hover:opacity-95 transition">
+          <img
+            src="/images/ads/house-mpu-300x250.jpg"
+            alt="Reach operators, affiliates and regulators across Africa: book a placement"
+            width={300}
+            height={250}
+            loading="lazy"
+            className="mx-auto w-[300px] max-w-full h-auto rounded"
+          />
         </Link>
       </div>
     )

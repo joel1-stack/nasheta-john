@@ -14,7 +14,7 @@ const bookings = [
   },
   {
     title: "Banner placement",
-    desc: "Sidebar or in-article banners across our news and guides.",
+    desc: "Header, sidebar, in-article or side banners across our news and guides.",
   },
   {
     title: "Newsletter slot",

@@ -14,6 +14,7 @@ const ZONES: { value: BannerZone; label: string; size: string; where: string }[]
   { value: "header", label: "Header", size: "728 × 90", where: "Top of section pages" },
   { value: "sidebar", label: "Sidebar", size: "300 × 250", where: "Article and section sidebars" },
   { value: "in-article", label: "In article", size: "728 × 90", where: "Below the article text" },
+  { value: "skin", label: "Side banners", size: "160 × 600", where: "Down both edges of every page on wide screens (first banner left, second right)" },
 ]
 
 const emptyBanner = (): Banner => ({

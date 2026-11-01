@@ -123,7 +123,7 @@ export interface Country {
 }
 
 /** Where a paid banner shows. Sizes are what advertisers should supply. */
-export type BannerZone = "header" | "sidebar" | "in-article"
+export type BannerZone = "header" | "sidebar" | "in-article" | "skin"
 
 /** A paid banner, managed in the CMS (Banners page). */
 export interface Banner {

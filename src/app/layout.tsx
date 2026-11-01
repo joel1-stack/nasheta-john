@@ -3,6 +3,7 @@ import { Raleway } from "next/font/google"
 import "./globals.css"
 import NavbarWrapper from "@/components/NavbarWrapper"
 import FooterWrapper from "@/components/FooterWrapper"
+import SideSkins from "@/components/SideSkins"
 import GoogleAnalytics from "@/components/GoogleAnalytics"
 import CopyGuard from "@/components/CopyGuard"
 import { Analytics } from "@vercel/analytics/react"
@@ -132,6 +133,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <FooterWrapper />
+        <SideSkins />
         <Analytics />
         <SpeedInsights />
         <Script

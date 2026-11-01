@@ -15,8 +15,8 @@ import type { Banner } from "@/types"
  * house ad on its side: first one left, second one right.
  */
 const HOUSE = [
-  { src: "/images/promo/promo-tall-left-160x600.jpg", alt: "Advertise on iGamingUbuntu: book this spot", href: "/advertise" },
-  { src: "/images/promo/promo-tall-right-160x600.jpg", alt: "Publish your African iGaming press release on iGamingUbuntu", href: "/advertise" },
+  { src: "/images/promo/promo-side-left.jpg", alt: "Advertise on iGamingUbuntu: book this spot", href: "/advertise" },
+  { src: "/images/promo/promo-side-right.jpg", alt: "Publish your African iGaming press release on iGamingUbuntu", href: "/advertise" },
 ]
 
 let skinsPromise: Promise<Banner[]> | null = null

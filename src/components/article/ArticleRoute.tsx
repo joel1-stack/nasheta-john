@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import { notFound, permanentRedirect } from "next/navigation"
 import { getArticleBySlug } from "@/lib/firestoreService"
-import { getLatestArticles, getPopularArticles, getRelatedArticles } from "@/lib/serverArticles"
+import { getAllPublicArticles, getLatestArticles, getPopularArticles, getRelatedArticles } from "@/lib/serverArticles"
+import { withArticlePaths } from "@/lib/contentHtml"
 import { absoluteUrl, isSponsoredStatus } from "@/lib/site"
 import { breadcrumbLd, extractFaqs, faqPageLd, speakableSpec } from "@/lib/structuredData"
 import { articlePath, articleSection, categoryHub } from "@/lib/navigation"
@@ -104,6 +105,10 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
   ])
   const recent = latest.filter((a) => a.slug !== article.slug).slice(0, 6)
 
+  // In-text links to other articles go straight to their real address.
+  const pathBySlug = new Map((await getAllPublicArticles()).map((a) => [a.slug.toLowerCase(), articlePath(a)]))
+  const viewArticle = { ...article, content: withArticlePaths(article.content || "", pathBySlug) }
+
   const articleUrl = resolveCanonical(article)
   const rawImage = article.ogImage || article.featuredImage || ""
   const absoluteImage = rawImage
@@ -157,7 +162,7 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
     <>
       <ArticleView
         key={slug}
-        initialArticle={article}
+        initialArticle={viewArticle}
         related={related}
         popular={popular}
         recent={recent}

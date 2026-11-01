@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
     ],
     sitemap: [
       "https://www.igamingubuntu.com/sitemap.xml",
-      "https://www.igamingubuntu.com/blog-sitemap.xml",
+      "https://www.igamingubuntu.com/articles-sitemap.xml",
       "https://www.igamingubuntu.com/news-sitemap.xml",
     ],
   }

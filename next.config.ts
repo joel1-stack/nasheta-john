@@ -58,6 +58,8 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
       { source: "/blog", destination: "/", statusCode: 301 },
+      // The article sitemap used to be called blog-sitemap.xml; keep old submissions working.
+      { source: "/blog-sitemap.xml", destination: "/articles-sitemap.xml", statusCode: 301 },
       { source: "/news", destination: "/", statusCode: 301 },
       { source: "/admin", destination: "/igub-cms-x7k9", permanent: true },
       { source: "/admin/:path*", destination: "/igub-cms-x7k9/:path*", permanent: true },

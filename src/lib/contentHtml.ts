@@ -70,6 +70,21 @@ export function withNewsLinks(html: string): string {
   return html.replace(/href=(["'])(https?:\/\/(?:www\.)?igamingubuntu\.com)?\/blog\//gi, "href=$1$2/news/")
 }
 
+/**
+ * Point in-text links straight at an article's real address, so readers and
+ * crawlers never take a redirect hop. Handles old /blog/<slug> and
+ * /news/<slug> links; anything not in the map is left alone.
+ */
+export function withArticlePaths(html: string, pathBySlug: Map<string, string>): string {
+  return html.replace(
+    /href=(["'])(https?:\/\/(?:www\.)?igamingubuntu\.com)?\/(?:blog|news)\/([a-z0-9-]+)(?=["'#?])/gi,
+    (match, quote: string, origin: string | undefined, slug: string) => {
+      const path = pathBySlug.get(slug.toLowerCase())
+      return path ? `href=${quote}${origin || ""}${path}` : match
+    }
+  )
+}
+
 export function finalizeArticleHtml(html: string, options: ArticleHtmlOptions = {}): string {
   const out = withNewsLinks(withParagraphs(html || "", options.dropLeadingHeading))
   return options.sponsored ? withSponsoredLinks(out) : out

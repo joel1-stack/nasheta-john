@@ -5,7 +5,7 @@ import { requireAdmin } from "@/lib/adminServer"
 export const runtime = "nodejs"
 
 /** Pages that list articles, refreshed on every content change. */
-const ALWAYS = ["/", "/sitemap.xml", "/blog-sitemap.xml", "/news-sitemap.xml", "/llms.txt"]
+const ALWAYS = ["/", "/sitemap.xml", "/articles-sitemap.xml", "/news-sitemap.xml", "/llms.txt"]
 
 /**
  * Called by the CMS after it saves, publishes or deletes articles, so the

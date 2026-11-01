@@ -67,9 +67,9 @@ export function HouseBoxAd({ className = "" }: { className?: string }) {
         <span className="hb-shine" aria-hidden="true" />
         <Stage className="right-[14px] top-[12px] w-[92px] h-[92px]" />
         <Logo className="absolute left-4 top-4 h-7 w-auto z-[2]" />
-        <div className="absolute left-4 right-4 top-[104px] z-[2]">
+        <div className="absolute left-4 right-4 top-[100px] z-[2]">
           <p className="hb-kicker mb-1.5">Advertise</p>
-          <p className="hb-serif text-[21px]">Reach operators, affiliates and regulators across Africa</p>
+          <p className="hb-serif text-[19px]">Reach operators, affiliates and regulators across Africa</p>
         </div>
         <span className="hb-btn absolute left-4 bottom-4 text-sm px-4 py-2 z-[2]">Book a placement</span>
       </Link>

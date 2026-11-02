@@ -20,8 +20,11 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   experimental: {
-    optimizePackageImports: ["react-icons"],
+    optimizePackageImports: ["react-icons", "firebase", "firebase/firestore", "date-fns"],
   },
+  // Next 16 builds with Turbopack, which does not take a webpack splitChunks
+  // config. Chunk count is therefore reduced by shipping less client code,
+  // not by re-bundling. See reports/crawl-budget-2026-11-02.md.
   async redirects() {
     return [
       // 10 hardcoded demo/seed articles: deleted from the code, 301 home.

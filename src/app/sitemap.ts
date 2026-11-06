@@ -30,6 +30,7 @@ const STATIC_PAGES = [
   "/tanzania",
   "/guides",
   "/press",
+  "/write-for-us",
   "/the-desk",
   "/partners",
   "/advertise",

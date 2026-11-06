@@ -1,6 +1,9 @@
 import type { Metadata } from "next"
 import { SITE_NAME, SITE_URL } from "@/lib/site"
 
+/** Same default share image the root layout uses, so static pages never share without a picture. */
+const DEFAULT_SOCIAL_IMAGE = { url: "/images/nasheta.png", width: 800, height: 600, alt: SITE_NAME }
+
 interface StaticPageMetaArgs {
   /** Full <title> exactly as it should appear in Google. */
   title: string
@@ -28,11 +31,13 @@ export function staticPageMetadata({ title, description, path, noindex }: Static
       title,
       description,
       url: canonical,
+      images: [DEFAULT_SOCIAL_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [DEFAULT_SOCIAL_IMAGE.url],
     },
   }
 }

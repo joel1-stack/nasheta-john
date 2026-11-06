@@ -39,6 +39,13 @@ export default function CasinoDirectoryPage() {
         ))}
       </div>
 
+      <p className="max-w-3xl text-gray-600 mb-8">
+        This section covers casino and betting products for African players through the lens we use everywhere on the site:
+        who is licensed, which payment methods work, and what the rules say. For payment methods, mobile money and
+        licence-linked compliance, see <Link href="/casinos/payments" className="text-[#409824] hover:underline">Payments</Link>;
+        for the regulators behind each market, see <Link href="/news/regulation" className="text-[#409824] hover:underline">Regulation news</Link>.
+        How we assess operators is set out in our <Link href="/how-we-review" className="text-[#409824] hover:underline">review method</Link>.
+      </p>
       <h2 className="text-2xl font-bold text-[#111827] mb-6">Latest Casino Reviews</h2>
       <CategoryArticleList category="Casino Reviews" />
     </div>

@@ -37,6 +37,12 @@ export default function EventsPage() {
         ))}
       </div>
 
+      <p className="max-w-3xl text-gray-600 mb-8">
+        Conferences, summits and industry meetups that shape African gaming, with dates and venues in our{" "}
+        <Link href="/events/african-igaming-events-calendar-2027" className="text-[#409824] hover:underline">2027 events calendar</Link>.
+        Our event media partnerships are listed on the <Link href="/partners" className="text-[#409824] hover:underline">partners page</Link>;
+        a partnership does not change what we report.
+      </p>
       <h2 className="text-2xl font-bold text-[#111827] mb-6">Event Coverage</h2>
       <CategoryArticleList category="Events" />
     </div>

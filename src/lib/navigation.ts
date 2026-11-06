@@ -45,6 +45,22 @@ export const DIRECTORY_LINKS: NavLink[] = [
   { label: "Betting Guides", href: "/guides", desc: "Country guides to licences, taxes and payments" },
 ]
 
+export const MARKET_LINKS: NavLink[] = [
+  { label: "Kenya", href: "/kenya", desc: "GRA, licensing, tax and M-Pesa coverage" },
+  { label: "Nigeria", href: "/nigeria", desc: "Federal and state regulation and payments" },
+  { label: "South Africa", href: "/south-africa", desc: "National and provincial boards, online betting and tax" },
+  { label: "Ghana", href: "/ghana", desc: "Legality, VAT and mobile-money coverage" },
+  { label: "Tanzania", href: "/tanzania", desc: "Gaming Board, tax and machine revenue" },
+  { label: "Uganda", href: "/topics/uganda", desc: "NLGRB, licence renewals and enforcement" },
+]
+
+export const RESEARCH_LINKS: NavLink[] = [
+  { label: "Regulators Directory", href: "/regulators", desc: "Official websites of African gambling regulators" },
+  { label: "Prediction Markets", href: "/topics/prediction-markets", desc: "Are they gambling, and where are they legal" },
+  { label: "National Lotteries", href: "/topics/national-lotteries", desc: "Launches, governance and player protection" },
+  { label: "Write for Us", href: "/write-for-us", desc: "Contributor guidelines" },
+]
+
 export const EVENTS_LINKS: NavLink[] = [
   { label: "Upcoming Events", href: "/events/upcoming", desc: "Conferences, summits and industry meetups" },
   { label: "Event Recaps", href: "/events/recaps", desc: "Highlights and key takeaways from past events" },

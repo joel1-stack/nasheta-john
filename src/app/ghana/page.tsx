@@ -6,9 +6,9 @@ import { queryArticles } from "@/lib/serverArticles"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Ghana Betting Guide: Sites, Bonuses and MoMo",
+  title: "Ghana Gambling Regulation and Betting Coverage",
   description:
-    "Your complete guide to betting in Ghana. Compare the best betting sites, claim bonuses, and learn how to deposit and withdraw with MTN Mobile Money.",
+    "Our coverage of Ghana's betting and gambling market: legality, VAT and tax changes, mobile-money payments and the regulators.",
   alternates: { canonical: "/ghana" },
 }
 
@@ -27,7 +27,7 @@ export default async function GhanaPage() {
           <Image src="https://flagcdn.com/48x36/gh.png" alt="Ghana" width={48} height={36} loading="lazy" className="w-12 h-9 rounded shadow-lg" />
           <div className="text-white">
             <h1 className="text-3xl md:text-4xl font-bold">Ghana iGaming Guide</h1>
-            <p className="text-white/80 mt-1 max-w-xl">Your guide to betting in Ghana. Best sites, bonuses, and MTN MoMo betting tips.</p>
+            <p className="text-white/80 mt-1 max-w-xl">Regulation, tax and mobile-money coverage for Ghana.</p>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@ export default async function GhanaPage() {
         <h2 className="text-2xl font-bold text-text-primary mb-6">Latest Ghana iGaming Articles</h2>
         <ArticleGrid
           articles={articles}
-          emptyMessage="No Ghana articles have been published yet. New market guides and operator reviews are added every week."
+          emptyMessage="No Ghana articles have been published yet. Check back soon."
         />
       </div>
 
@@ -53,11 +53,13 @@ export default async function GhanaPage() {
       <div id="laws" className="bg-card rounded-xl p-8 mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">Ghana Gambling Laws</h2>
         <p className="text-text-secondary leading-relaxed mb-4">
-          Ghana&apos;s gambling is regulated by the Gaming Commission of Ghana. Sports betting and lottery are legal and licensed.
-          Mobile money (MTN MoMo, Vodafone Cash) is widely accepted for deposits and withdrawals.
+          We do not summarise Ghana&apos;s gambling law on this page. Our explainers cover legality, tax and payments with sources, and the National Lottery Authority is listed in the
+          <Link href="/regulators" className="text-[#409824] underline">regulators directory</Link>.
         </p>
         <p className="text-text-secondary leading-relaxed">
-          The legal betting age in Ghana is 18. Always verify that a betting site holds a valid Ghana Gaming Commission license before playing.
+          Start with <Link href="/news/regulation/is-online-betting-legal-ghana-2026" className="text-[#409824] underline">is online betting legal in Ghana</Link>,{" "}
+          <Link href="/news/regulation/ghana-real-time-vat-betting-2026" className="text-[#409824] underline">real-time VAT and betting</Link> and{" "}
+          <Link href="/casinos/payments/mobile-money-licence-fees-and-compliance-rules-for-ghana-betting" className="text-[#409824] underline">mobile-money rules for betting</Link>.
         </p>
       </div>
     </div>

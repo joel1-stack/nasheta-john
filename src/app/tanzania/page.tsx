@@ -6,9 +6,9 @@ import { queryArticles } from "@/lib/serverArticles"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Tanzania Betting Guide: Sites and Bonuses",
+  title: "Tanzania Gambling Regulation and Betting Coverage",
   description:
-    "Your complete guide to betting in Tanzania. Compare top betting sites, welcome bonuses, mobile money deposits and expert tips for Tanzanian players.",
+    "Our coverage of Tanzania's gambling regulation: the Gaming Board of Tanzania, gaming tax, machine revenue and mobile-money payments.",
   alternates: { canonical: "/tanzania" },
 }
 
@@ -27,7 +27,7 @@ export default async function TanzaniaPage() {
           <Image src="https://flagcdn.com/48x36/tz.png" alt="Tanzania" width={48} height={36} loading="lazy" className="w-12 h-9 rounded shadow-lg" />
           <div className="text-white">
             <h1 className="text-3xl md:text-4xl font-bold">Tanzania iGaming Guide</h1>
-            <p className="text-white/80 mt-1 max-w-xl">Your guide to betting in Tanzania. Best sites, bonuses, and Tigo-Pesa betting tips.</p>
+            <p className="text-white/80 mt-1 max-w-xl">Regulation, tax and licensing coverage for Tanzania.</p>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@ export default async function TanzaniaPage() {
         <h2 className="text-2xl font-bold text-text-primary mb-6">Latest Tanzania iGaming Articles</h2>
         <ArticleGrid
           articles={articles}
-          emptyMessage="No Tanzania articles have been published yet. New market guides and operator reviews are added every week."
+          emptyMessage="No Tanzania articles have been published yet. Check back soon."
         />
       </div>
 
@@ -53,11 +53,13 @@ export default async function TanzaniaPage() {
       <div id="laws" className="bg-card rounded-xl p-8 mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">Tanzania Gambling Laws</h2>
         <p className="text-text-secondary leading-relaxed mb-4">
-          Tanzania&apos;s gambling is regulated by the Gaming Board of Tanzania. Sports betting and casino games are legal and licensed.
-          Mobile money (Tigo-Pesa, M-Pesa, Airtel Money) is the most popular payment method for Tanzanian punters.
+          Tanzania&apos;s gambling sector is overseen by the Gaming Board of Tanzania. We do not summarise the law on this page. Our explainers cover tax, revenue and enforcement, with sources.
         </p>
         <p className="text-text-secondary leading-relaxed">
-          The legal betting age in Tanzania is 18. Always verify operators hold a valid Gaming Board license before depositing.
+          See <Link href="/news/industry/tanzania-drops-its-5-stake-tax-what-remains-for-casino-operators" className="text-[#409824] underline">the 5% stake duty change</Link>,{" "}
+          <Link href="/news/regulation/tanzania-gaming-tax-revenue-2025-26" className="text-[#409824] underline">gaming tax revenue 2025-26</Link> and{" "}
+          <Link href="/news/regulation/tanzania-gaming-machine-revenue-sharing-councils" className="text-[#409824] underline">gaming machine revenue sharing</Link>.
+          The regulator is in the <Link href="/regulators" className="text-[#409824] underline">regulators directory</Link>.
         </p>
       </div>
     </div>

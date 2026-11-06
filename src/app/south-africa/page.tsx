@@ -6,9 +6,9 @@ import { queryArticles } from "@/lib/serverArticles"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "South Africa Betting Guide: Sites and Bonuses",
+  title: "South Africa Gambling Regulation and Betting Coverage",
   description:
-    "Your complete guide to betting in South Africa. Compare the best betting sites, welcome bonuses, rand payments and expert local tips for players.",
+    "Our coverage of South Africa's gambling regulation: the National Gambling Board, provincial boards, the online betting debate and tax.",
   alternates: { canonical: "/south-africa" },
 }
 
@@ -27,7 +27,7 @@ export default async function SouthAfricaPage() {
           <Image src="https://flagcdn.com/48x36/za.png" alt="South Africa" width={48} height={36} loading="lazy" className="w-12 h-9 rounded shadow-lg" />
           <div className="text-white">
             <h1 className="text-3xl md:text-4xl font-bold">South Africa iGaming Guide</h1>
-            <p className="text-white/80 mt-1 max-w-xl">Your guide to betting in South Africa. Best sites, bonuses, and local regulations for SA punters.</p>
+            <p className="text-white/80 mt-1 max-w-xl">Regulation, tax and licensing coverage for South Africa.</p>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@ export default async function SouthAfricaPage() {
         <h2 className="text-2xl font-bold text-text-primary mb-6">Latest South Africa iGaming Articles</h2>
         <ArticleGrid
           articles={articles}
-          emptyMessage="No South Africa articles have been published yet. New market guides and operator reviews are added every week."
+          emptyMessage="No South Africa articles have been published yet. Check back soon."
         />
       </div>
 
@@ -53,11 +53,14 @@ export default async function SouthAfricaPage() {
       <div id="laws" className="bg-card rounded-xl p-8 mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">SA Gambling Laws</h2>
         <p className="text-text-secondary leading-relaxed mb-4">
-          South Africa&apos;s gambling is regulated by the National Gambling Board (NGB) and provincial authorities.
-          Online sports betting is legal and licensed. Online casinos operate in a grey area — only licensed land-based casinos may offer online casino games.
+          South Africa regulates gambling through a national board and provincial licensing authorities, and the position on online betting is a recurring legal and policy debate.
+          We do not summarise the law on this page. Our explainers cover it, with sources.
         </p>
         <p className="text-text-secondary leading-relaxed">
-          The legal betting age is 18. Popular payment methods include EFT, Visa, Mastercard, and Ozow. Always check for a valid provincial license before depositing.
+          See <Link href="/news/regulation/is-online-betting-legal-south-africa-2026" className="text-[#409824] underline">is online betting legal in South Africa</Link>,{" "}
+          <Link href="/news/regulation/south-africa-national-gambling-board-what-it-means-for-operators" className="text-[#409824] underline">what the National Gambling Board means for operators</Link> and{" "}
+          <Link href="/news/regulation/south-africa-20-percent-online-gambling-tax-february-2027" className="text-[#409824] underline">the proposed online gambling tax</Link>.
+          Provincial boards are in the <Link href="/regulators" className="text-[#409824] underline">regulators directory</Link>.
         </p>
       </div>
     </div>

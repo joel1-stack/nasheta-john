@@ -21,11 +21,14 @@ interface Body {
 
 /**
  * Each official site below is one that African gaming publishers cite as a
- * primary source (checked 2026-11-06). Names are the bodies' own names.
- * Add a row only for a body you have confirmed; never guess a regulator.
+ * primary source. Names were checked on 2026-11-06 against the body's own
+ * site or, for Kenya, the Gambling Control Act 2025 on Kenya Law. Sites that
+ * blocked automated checks (NLA Ghana, NLA Liberia, Botswana, LONACI, North
+ * West, National Gambling Board) carry their well-known names, unconfirmed by
+ * fetch. Add a row only for a body you have confirmed; never guess a regulator.
  */
 const REGULATORS: Body[] = [
-  { country: "Kenya", name: "Gambling Regulatory Authority (GRA)", site: "https://gra.go.ke", ours: { label: "Kenya hub", href: "/kenya" } },
+  { country: "Kenya", name: "Gambling Regulatory Authority of Kenya (GRA), successor to the BCLB", site: "https://gra.go.ke", ours: { label: "Kenya hub", href: "/kenya" } },
   { country: "Nigeria (Lagos)", name: "Lagos State Lotteries and Gaming Authority (LSLGA)", site: "https://lslga.org", ours: { label: "Nigeria hub", href: "/nigeria" } },
   { country: "South Africa", name: "National Gambling Board", site: "https://ngb.org.za", ours: { label: "South Africa hub", href: "/south-africa" } },
   { country: "South Africa (Limpopo)", name: "Limpopo Gambling Board", site: "https://lgb.org.za", ours: { label: "South Africa hub", href: "/south-africa" } },
@@ -34,6 +37,8 @@ const REGULATORS: Body[] = [
   { country: "Ghana", name: "National Lottery Authority (NLA)", site: "https://www.nla.com.gh", ours: { label: "Ghana hub", href: "/ghana" } },
   { country: "Tanzania", name: "Gaming Board of Tanzania", site: "https://gamingboard.go.tz", ours: { label: "Tanzania hub", href: "/tanzania" } },
   { country: "Uganda", name: "National Lotteries and Gaming Regulatory Board (NLGRB)", site: "https://lgrb.go.ug", ours: { label: "Uganda coverage", href: "/topics/uganda" } },
+  { country: "Namibia", name: "Gambling Board of Namibia", site: "https://www.gbn.com.na" },
+  { country: "Angola", name: "Instituto de Supervisão de Jogos (ISJ)", site: "https://isj.minfin.gov.ao" },
   { country: "Botswana", name: "Botswana Gambling Authority", site: "https://gamblingauthority.co.bw" },
   { country: "Liberia", name: "National Lottery Authority (NLA)", site: "https://nla.gov.lr" },
   { country: "Mauritius", name: "Gambling Regulatory Authority (GRA)", site: "https://gra.govmu.org" },
@@ -65,7 +70,7 @@ export default function RegulatorsPage() {
       />
       <p className="max-w-3xl text-gray-600 mb-6">
         Regulator notices are the primary source for most of what we report. This directory lists the official websites we use
-        and links to our coverage of each market. It is not complete: we add a body only after confirming it, and the list grows as we
+        and links to our coverage of each market. Last checked 6 November 2026. Kenya's regulator is named in the Gambling Control Act, 2025. It is not complete: we add a body only after confirming it, and the list grows as we
         cover more countries. Always check the regulator&apos;s own site for the current licensing position, because rules and
         contact details change.
       </p>

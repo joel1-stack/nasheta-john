@@ -6,9 +6,9 @@ import { queryArticles } from "@/lib/serverArticles"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Nigeria Betting Guide: Sites, Bonuses and Tips",
+  title: "Nigeria Gambling Regulation and Betting Coverage",
   description:
-    "Your complete guide to betting in Nigeria. Compare the best betting sites, welcome bonuses, Naira payments and expert tips for Nigerian players.",
+    "Our coverage of Nigeria's betting and gambling regulation: who licenses operators, state and federal rules, payments and compliance.",
   alternates: { canonical: "/nigeria" },
 }
 
@@ -27,7 +27,7 @@ export default async function NigeriaPage() {
           <Image src="https://flagcdn.com/48x36/ng.png" alt="Nigeria" width={48} height={36} loading="lazy" className="w-12 h-9 rounded shadow-lg" />
           <div className="text-white">
             <h1 className="text-3xl md:text-4xl font-bold">Nigeria iGaming Guide</h1>
-            <p className="text-white/80 mt-1 max-w-xl">Your guide to betting in Nigeria. Best sites, bonuses, odds, and local tips for Naija punters.</p>
+            <p className="text-white/80 mt-1 max-w-xl">Regulation, licensing and payments coverage for Nigeria.</p>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@ export default async function NigeriaPage() {
         <h2 className="text-2xl font-bold text-text-primary mb-6">Latest Nigeria iGaming Articles</h2>
         <ArticleGrid
           articles={articles}
-          emptyMessage="No Nigeria articles have been published yet. New market guides and operator reviews are added every week."
+          emptyMessage="No Nigeria articles have been published yet. Check back soon."
         />
       </div>
 
@@ -53,11 +53,14 @@ export default async function NigeriaPage() {
       <div id="laws" className="bg-card rounded-xl p-8 mb-12">
         <h2 className="text-2xl font-bold text-text-primary mb-4">Nigeria Gambling Laws</h2>
         <p className="text-text-secondary leading-relaxed mb-4">
-          Nigeria&apos;s gambling industry is regulated by the National Lottery Regulatory Commission (NLRC) and state-level bodies such as the Lagos State Lotteries and Gaming Authority.
-          The legal betting age is 18. Online sports betting is legal and widely popular, with Lagos and Abuja being the largest markets.
+          Gambling in Nigeria is regulated at federal and state level, and the rules differ by state. We do not summarise the law on this page.
+          Our explainers cover it in detail, with sources.
         </p>
         <p className="text-text-secondary leading-relaxed">
-          Popular payment methods include bank transfers, cards, and mobile money. Always verify that a betting site holds a valid Nigerian license before depositing.
+          Start with <Link href="/news/regulation/who-regulates-betting-in-nigeria-2026" className="text-[#409824] underline">who regulates betting in Nigeria</Link>,{" "}
+          <Link href="/news/regulation/is-betting-legal-in-nigeria-2026" className="text-[#409824] underline">is betting legal in Nigeria</Link> and{" "}
+          <Link href="/news/regulation/who-can-legally-power-a-sportsbook-in-nigeria-in-2026" className="text-[#409824] underline">who can legally power a sportsbook</Link>.
+          Regulator websites are in the <Link href="/regulators" className="text-[#409824] underline">regulators directory</Link>.
         </p>
       </div>
 

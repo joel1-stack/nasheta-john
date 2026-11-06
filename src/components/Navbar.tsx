@@ -7,15 +7,13 @@ import { FiMenu, FiX, FiChevronDown, FiChevronRight } from "react-icons/fi"
 
 import { IgubFullLogo } from "./IgubLogo"
 import SiteSearch from "./SiteSearch"
-import { DIRECTORY_LINKS, EVENTS_LINKS, MARKET_LINKS, NEWS_LINKS, RESEARCH_LINKS, type NavLink } from "@/lib/navigation"
+import { DIRECTORY_LINKS, EVENTS_LINKS, NEWS_LINKS, type NavLink } from "@/lib/navigation"
 
-type MenuKey = "news" | "markets" | "directory" | "research" | "events"
+type MenuKey = "news" | "directory" | "events"
 
 const MENUS: { key: MenuKey; label: string; items: NavLink[] }[] = [
   { key: "news", label: "News", items: NEWS_LINKS },
-  { key: "markets", label: "Markets", items: MARKET_LINKS },
   { key: "directory", label: "iGaming Directory", items: DIRECTORY_LINKS },
-  { key: "research", label: "Research", items: RESEARCH_LINKS },
   { key: "events", label: "Events", items: EVENTS_LINKS },
 ]
 

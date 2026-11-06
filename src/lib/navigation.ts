@@ -16,16 +16,6 @@ export const NEWS_LINKS: NavLink[] = [
   { label: "Industry News", href: "/news/industry", desc: "Latest developments across African iGaming markets" },
   { label: "Regulation Watch", href: "/news/regulation", desc: "Regulatory changes and compliance updates" },
   { label: "Press Releases", href: "/press", desc: "Submitted releases and partner announcements" },
-  {
-    label: "Topics",
-    href: "/topics/prediction-markets",
-    desc: "Themes we follow across countries",
-    children: [
-      { label: "Prediction Markets", href: "/topics/prediction-markets", desc: "Are they gambling, and where are they legal" },
-      { label: "National Lotteries", href: "/topics/national-lotteries", desc: "Launches, governance and player protection" },
-      { label: "Uganda Coverage", href: "/topics/uganda", desc: "NLGRB, licence renewals and enforcement" },
-    ],
-  },
 ]
 
 export const DIRECTORY_LINKS: NavLink[] = [
@@ -53,19 +43,6 @@ export const DIRECTORY_LINKS: NavLink[] = [
     ],
   },
   { label: "Betting Guides", href: "/guides", desc: "Country guides to licences, taxes and payments" },
-  {
-    label: "Country Hubs",
-    href: "/kenya",
-    desc: "Regulation, tax and payments by country",
-    children: [
-      { label: "Kenya", href: "/kenya", desc: "GRA, licensing, tax and M-Pesa coverage" },
-      { label: "Nigeria", href: "/nigeria", desc: "Federal and state regulation and payments" },
-      { label: "South Africa", href: "/south-africa", desc: "National and provincial boards, online betting and tax" },
-      { label: "Ghana", href: "/ghana", desc: "Legality, VAT and mobile-money coverage" },
-      { label: "Tanzania", href: "/tanzania", desc: "Gaming Board, tax and machine revenue" },
-    ],
-  },
-  { label: "Regulators Directory", href: "/regulators", desc: "Official websites of African gambling regulators" },
 ]
 
 export const EVENTS_LINKS: NavLink[] = [

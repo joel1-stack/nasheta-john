@@ -96,7 +96,7 @@ export default function AdvertisePage() {
           <ul className="space-y-2">
             {howWeWork.map((item) => (
               <li key={item} className="text-sm text-gray-600 leading-relaxed flex gap-2">
-                <span className="text-[#f59e0b] font-bold shrink-0">—</span>
+                <span className="text-[#f59e0b] font-bold shrink-0">-</span>
                 <span>{item}</span>
               </li>
             ))}

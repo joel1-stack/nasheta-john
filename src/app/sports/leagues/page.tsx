@@ -18,7 +18,7 @@ export default function LeagueGuidesPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-5 pb-16 animate-fade-in">
       <SectionHeader
         title="League Guides"
-        description="Premier League, La Liga, EPL, NPFL, GPL and more — betting guides for every league."
+        description="Premier League, La Liga, EPL, NPFL, GPL and more - betting guides for every league."
         crumbs={[{ label: "Home", href: "/" }, { label: "Sports Betting", href: "/sports" }, { label: "League Guides" }]}
       />
       <nav className="flex flex-wrap gap-2 mb-8">

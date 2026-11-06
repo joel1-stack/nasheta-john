@@ -36,7 +36,7 @@ export default function AffiliateBox({ title, offers, placement = "sidebar" }: A
           />
         ))}
       </div>
-      <p className="text-xs text-gray-400 mt-3">18+ Only. Gamble responsibly. Affiliate links — we may earn a commission.</p>
+      <p className="text-xs text-gray-400 mt-3">18+ Only. Gamble responsibly. Affiliate links - we may earn a commission.</p>
     </div>
   )
 }

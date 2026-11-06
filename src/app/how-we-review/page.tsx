@@ -2,11 +2,11 @@
 import Link from "next/link"
 
 const sections = [
-  { title: "Our Review Process", content: "Every operator review follows a structured methodology. Our team tests each platform firsthand — depositing funds, placing bets, testing withdrawals, and evaluating the complete user experience across desktop and mobile." },
+  { title: "Our Review Process", content: "Every operator review follows a structured methodology. Our team tests each platform firsthand - depositing funds, placing bets, testing withdrawals, and evaluating the complete user experience across desktop and mobile." },
   { title: "What We Evaluate", content: "Game selection and variety, bonus terms and wagering requirements, payment methods (especially M-Pesa, mobile money, and local banking), customer support quality and availability, licensing and regulation, mobile experience, payout speed and reliability, and responsible gambling tools." },
   { title: "Rating Criteria", content: "We rate operators on a 1-10 scale across multiple categories. No operator can pay for a higher rating. Our ratings reflect genuine user experience and objective analysis. If an operator pays for a sponsored review, the sponsored status is clearly disclosed." },
   { title: "Affiliate Relationships", content: "We earn commissions when readers sign up through our affiliate links. This never influences our ratings, recommendations, or editorial content. We only recommend operators we genuinely believe provide value to African players." },
-  { title: "Update Frequency", content: "Reviews are updated quarterly or when significant changes occur — new bonuses, payment method changes, regulatory updates, or ownership changes. Each review shows the date of last update." },
+  { title: "Update Frequency", content: "Reviews are updated quarterly or when significant changes occur - new bonuses, payment method changes, regulatory updates, or ownership changes. Each review shows the date of last update." },
 ]
 
 export default function HowWeReviewPage() {

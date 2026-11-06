@@ -19,7 +19,7 @@ export default function ByMarketPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-5 pb-16 animate-fade-in">
       <SectionHeader
         title="Casinos by Market"
-        description="Filter online casinos by your country — Kenya, Nigeria, South Africa, Ghana, and more."
+        description="Filter online casinos by your country - Kenya, Nigeria, South Africa, Ghana, and more."
         crumbs={[{ label: "Home", href: "/" }, { label: "Casinos", href: "/casinos" }, { label: "By Market" }]}
       />
       <nav className="flex flex-wrap gap-2 mb-8">

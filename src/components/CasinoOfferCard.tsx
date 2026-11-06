@@ -66,7 +66,7 @@ export default function CasinoOfferCard({ offer, placement = "directory" }: Casi
         </a>
 
         <p className="text-[10px] text-text-muted text-center mt-3 leading-relaxed">
-          18+ Only. Please gamble responsibly. Affiliate link — we may earn a commission.
+          18+ Only. Please gamble responsibly. Affiliate link - we may earn a commission.
         </p>
       </div>
     </div>

@@ -5,7 +5,7 @@
  */
 export const SITE_URL = "https://www.igamingubuntu.com"
 export const SITE_NAME = "iGamingUbuntu"
-export const SITE_TAGLINE = "iGamingUbuntu — The Pulse of African iGaming Business"
+export const SITE_TAGLINE = "iGamingUbuntu | African Gambling News, Regulation and Payments"
 
 /**
  * Fixed lastmod date for static (non-article) pages.

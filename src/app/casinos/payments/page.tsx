@@ -16,7 +16,7 @@ export default function PaymentsPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-5 pb-16 animate-fade-in">
       <SectionHeader
         title="Payment Methods"
-        description="M-Pesa, Airtel, Bank Transfer and more — payment options for African bettors."
+        description="M-Pesa, Airtel, Bank Transfer and more - payment options for African bettors."
         crumbs={[{ label: "Home", href: "/" }, { label: "Casinos", href: "/casinos" }, { label: "Payment Methods" }]}
       />
       <nav className="flex flex-wrap gap-2 mb-8">

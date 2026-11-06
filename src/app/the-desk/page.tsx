@@ -16,7 +16,7 @@ export default function TheDeskPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-5 pb-16 animate-fade-in">
       <SectionHeader
         title="The Desk"
-        description="Behind the scenes at iGamingUbuntu — how we research, write, and optimize iGaming content."
+        description="Behind the scenes at iGamingUbuntu - how we research, write, and optimize iGaming content."
         crumbs={[{ label: "Home", href: "/" }, { label: "The Desk" }]}
       />
 

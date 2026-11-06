@@ -33,6 +33,10 @@ const directoryLinks = [
 const links = [
   { label: "Industry News", href: "/news/industry" },
   { label: "Regulation Watch", href: "/news/regulation" },
+  { label: "Regulators Directory", href: "/regulators" },
+  { label: "Prediction Markets", href: "/topics/prediction-markets" },
+  { label: "National Lotteries", href: "/topics/national-lotteries" },
+  { label: "Uganda Coverage", href: "/topics/uganda" },
   { label: "Events", href: "/events" },
   { label: "The Desk", href: "/the-desk" },
   { label: "Who We Are", href: "/about" },

@@ -49,6 +49,18 @@ export default async function GuidesPage() {
         </p>
       )}
 
+      <p className="max-w-3xl text-gray-600 mb-8">
+        Our guides explain how betting and casino rules work in African markets: who regulates, what a licence involves,
+        how tax and payments are handled, and where newer products such as prediction markets stand. Looking up a regulator?
+        Use the <Link href="/regulators" className="text-[#409824] hover:underline">regulators directory</Link>. Following a theme?
+        See <Link href="/topics/prediction-markets" className="text-[#409824] hover:underline">prediction markets</Link>,{" "}
+        <Link href="/topics/national-lotteries" className="text-[#409824] hover:underline">national lotteries</Link> or{" "}
+        <Link href="/topics/uganda" className="text-[#409824] hover:underline">Uganda</Link>. Country rules are in our{" "}
+        <Link href="/kenya" className="text-[#409824] hover:underline">Kenya</Link>,{" "}
+        <Link href="/nigeria" className="text-[#409824] hover:underline">Nigeria</Link> and{" "}
+        <Link href="/south-africa" className="text-[#409824] hover:underline">South Africa</Link> hubs.
+      </p>
+
       <ArticleGrid
         articles={articles}
         columns={3}

@@ -41,7 +41,6 @@ const links = [
   { label: "Partners", href: "/partners" },
   { label: "Contact Us", href: "/contact" },
   { label: "Press", href: "/press" },
-  { label: "Write for Us", href: "/write-for-us" },
 ]
 
 const legalLinks = [

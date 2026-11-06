@@ -26,7 +26,6 @@ export const NEWS_LINKS: NavLink[] = [
       { label: "Uganda Coverage", href: "/topics/uganda", desc: "NLGRB, licence renewals and enforcement" },
     ],
   },
-  { label: "Write for Us", href: "/write-for-us", desc: "Contributor guidelines" },
 ]
 
 export const DIRECTORY_LINKS: NavLink[] = [

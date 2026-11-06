@@ -43,6 +43,25 @@ export const DIRECTORY_LINKS: NavLink[] = [
     ],
   },
   { label: "Betting Guides", href: "/guides", desc: "Country guides to licences, taxes and payments" },
+  {
+    label: "Providers",
+    href: "/directory/payment-providers",
+    desc: "Companies serving African iGaming",
+    children: [
+      { label: "Payment Providers", href: "/directory/payment-providers", desc: "Payment infrastructure for African markets" },
+      { label: "Lottery Providers", href: "/directory/lottery-providers", desc: "National lottery operators and bodies" },
+      { label: "Platform Providers", href: "/directory/platform-providers", desc: "Sportsbook and casino platforms" },
+      { label: "Game Providers", href: "/directory/game-providers", desc: "Studios and aggregators" },
+    ],
+  },
+  {
+    label: "Top Games",
+    href: "/directory/crash-games",
+    desc: "Game categories in African lobbies",
+    children: [
+      { label: "Crash Games", href: "/directory/crash-games", desc: "Titles and studios behind them" },
+    ],
+  },
 ]
 
 export const EVENTS_LINKS: NavLink[] = [

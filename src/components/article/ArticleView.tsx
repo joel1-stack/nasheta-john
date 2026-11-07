@@ -32,6 +32,11 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return <h2 className="inline-block bg-brand-ink text-white text-sm font-semibold px-3 py-1.5 mb-5">{children}</h2>
 }
 
+/** Categories where we give opinions, reviews or recommendations rather than report news. */
+function isOpinionContent(category?: string): boolean {
+  return ["casino reviews", "bonuses", "sports betting", "betting tips", "crash games"].includes((category || "").trim().toLowerCase())
+}
+
 export default function ArticleView({ initialArticle, related = [], popular = [], recent = [], canonicalUrl }: ArticleViewProps) {
   const article = initialArticle
   const sponsored = isSponsoredStatus(article.status)
@@ -228,7 +233,11 @@ export default function ArticleView({ initialArticle, related = [], popular = []
             )}
 
             <p className="text-xs text-gray-500 mt-10 leading-relaxed border-t border-gray-100 pt-6">
-              All opinions, reviews and recommendations are our own, based on independent research.
+              {isOpinionContent(article.category)
+                ? "Opinions, reviews and recommendations are our own, based on independent research. "
+                : "This report draws on the sources named in the text. "}
+              See our <Link href="/editorial-policy" className="underline hover:text-gray-700">editorial policy</Link> and{" "}
+              <Link href="/corrections" className="underline hover:text-gray-700">corrections</Link>.
               <span className="text-red-600 font-medium"> Please gamble responsibly. 18+.</span>
             </p>
           </article>

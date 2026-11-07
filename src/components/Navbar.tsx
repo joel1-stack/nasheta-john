@@ -7,14 +7,13 @@ import { FiMenu, FiX, FiChevronDown, FiChevronRight } from "react-icons/fi"
 
 import { IgubFullLogo } from "./IgubLogo"
 import SiteSearch from "./SiteSearch"
-import { DIRECTORY_LINKS, EVENTS_LINKS, NEWS_LINKS, type NavLink } from "@/lib/navigation"
+import { DIRECTORY_LINKS, EVENTS_LINK, NEWS_LINKS, type NavLink } from "@/lib/navigation"
 
-type MenuKey = "news" | "directory" | "events"
+type MenuKey = "news" | "directory"
 
 const MENUS: { key: MenuKey; label: string; items: NavLink[] }[] = [
   { key: "news", label: "News", items: NEWS_LINKS },
   { key: "directory", label: "iGaming Directory", items: DIRECTORY_LINKS },
-  { key: "events", label: "Events", items: EVENTS_LINKS },
 ]
 
 /** Every path a menu covers, including sub-menu pages (for the active state). */
@@ -128,6 +127,7 @@ export default function Navbar() {
             </div>
           ))}
 
+          <Link href={EVENTS_LINK.href} className={linkClass(isActive([EVENTS_LINK.href]))}>{EVENTS_LINK.label}</Link>
           <Link href="/about" className={linkClass(isActive(["/about"]))}>Who We Are</Link>
         </div>
 
@@ -183,6 +183,7 @@ export default function Navbar() {
               </div>
             ))}
 
+            <Link href={EVENTS_LINK.href} onClick={closeAll} className={mobileLink}>{EVENTS_LINK.label}</Link>
             <Link href="/about" onClick={closeAll} className={mobileLink}>Who We Are</Link>
             <div className="border-t border-white/10 pt-3 mt-3">
               <Link href="/advertise" onClick={closeAll} className="block text-center bg-brand-lime text-brand-ink px-4 py-3 rounded-lg text-sm font-bold">

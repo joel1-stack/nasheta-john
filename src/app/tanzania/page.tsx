@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import AdSlot from "@/components/AdSlot"
+import Breadcrumbs from "@/components/Breadcrumbs"
 import ArticleGrid from "@/components/ArticleGrid"
 import { queryArticles } from "@/lib/serverArticles"
 import type { Metadata } from "next"
@@ -19,6 +20,7 @@ export default async function TanzaniaPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in">
+      <Breadcrumbs trail={[{ label: "Home", href: "/" }, { label: "Country Guides", href: "/countries" }]} current="Tanzania" path="/tanzania" />
       <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-ubuntu-green to-ubuntu-orange">
         <div className="absolute inset-0 opacity-20">
           <Image src="/images/full backgound.png" alt="" width={1920} height={1200} loading="lazy" className="w-full h-full object-cover" />

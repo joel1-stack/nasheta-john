@@ -117,7 +117,6 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
       : absoluteUrl(rawImage.startsWith("/") ? rawImage : `/${rawImage}`)
     : absoluteUrl("/images/nasheta.png")
   const description = article.metaDescription || article.excerpt || ""
-  const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
   const bylineName = article.authorName || article.author || DEFAULT_MEMBER.name
   const bylineMember = findTeamMember(bylineName)
 
@@ -129,8 +128,9 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
     image: absoluteImage,
     speakable: speakableSpec,
     ...(article.createdAt ? { datePublished: article.createdAt } : {}),
-    // dateModified only when the article was actually edited after publishing.
-    ...(wasUpdated ? { dateModified: article.updatedAt } : {}),
+    // The CMS edit date. An article that was never edited was last modified
+    // when it was published, so its dateModified equals datePublished.
+    ...(article.updatedAt || article.createdAt ? { dateModified: article.updatedAt || article.createdAt } : {}),
     author: {
       "@type": "Person",
       name: bylineName,
@@ -139,7 +139,8 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
       image: article.authorPhoto || absoluteUrl(bylineMember?.photo || DEFAULT_MEMBER.photo),
       description:
         article.authorBio || bylineMember?.shortBio || DEFAULT_MEMBER.shortBio,
-      url: absoluteUrl("/editorial-team"),
+      // The author's own card on the team page when they are on the team.
+      url: absoluteUrl(bylineMember ? `/editorial-team#${bylineMember.slug}` : "/editorial-team"),
     },
     publisher: {
       "@type": "Organization",

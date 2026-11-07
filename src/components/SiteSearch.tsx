@@ -76,6 +76,15 @@ export default function SiteSearch({ className = "" }: { className?: string }) {
     router.push(r.path)
   }
 
+  /** Full results page, for when four or eight live results are not enough. */
+  const seeAll = () => {
+    const term = q.trim()
+    if (term.length < 2) return
+    setOpen(false)
+    setQ("")
+    router.push(`/search?q=${encodeURIComponent(term)}`)
+  }
+
   return (
     <>
       <button
@@ -107,7 +116,8 @@ export default function SiteSearch({ className = "" }: { className?: string }) {
                       setActive((i) => Math.max(i - 1, 0))
                     } else if (e.key === "Enter") {
                       e.preventDefault()
-                      go(shown[active])
+                      if (shown[active] && !e.shiftKey) go(shown[active])
+                      else seeAll()
                     }
                   }}
                   placeholder="Search news, regulation, markets..."
@@ -159,6 +169,13 @@ export default function SiteSearch({ className = "" }: { className?: string }) {
                     </li>
                   ))}
                 </ul>
+                {q.trim().length >= 2 && (
+                  <div className="sticky bottom-0 bg-white border-t border-[#E1EAE0] px-5 py-3">
+                    <button onClick={seeAll} className="text-sm font-medium text-[#2C6E5E] hover:underline cursor-pointer">
+                      See all results for &ldquo;{q.trim()}&rdquo; &rarr;
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
             <p className="text-center text-xs text-white/70 mt-3">Press / to search from anywhere · Esc to close</p>

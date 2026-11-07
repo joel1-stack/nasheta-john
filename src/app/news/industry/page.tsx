@@ -18,6 +18,7 @@ export default function IndustryNewsPage() {
         title="Industry News"
         description="Latest industry developments and market analysis across Africa."
         crumbs={[{ label: "Home", href: "/" }, { label: "Industry News" }]}
+        path="/news/industry"
       />
 
       <nav className="flex flex-wrap gap-2 mb-8">
@@ -28,7 +29,7 @@ export default function IndustryNewsPage() {
 
       <AdSlot position="leaderboard-top" className="mb-8" />
 
-      <CategoryArticleList category="Industry News" />
+      <CategoryArticleList category={["Industry News", "Partnership", "Integrity"]} />
     </div>
   )
 }

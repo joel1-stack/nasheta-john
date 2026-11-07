@@ -15,7 +15,8 @@ function serializeDoc(d: DocumentSnapshot): Article {
 }
 
 export interface QueryOptions {
-  category?: string
+  /** One CMS category, or several that share a section page. */
+  category?: string | string[]
   country?: string
   search?: string
   page?: number
@@ -79,7 +80,9 @@ export async function queryArticles(opts: QueryOptions = {}): Promise<QueryResul
 
   let articles = await getAllPublicArticles()
 
-  if (category && category !== "All") {
+  if (Array.isArray(category)) {
+    articles = articles.filter((a) => category.some((c) => sameCategory(a.category, c)))
+  } else if (category && category !== "All") {
     articles = articles.filter((a) => sameCategory(a.category, category))
   }
   if (country && country !== "general") {
@@ -167,4 +170,27 @@ export async function getPopularArticles(count = 5): Promise<Article[]> {
 export async function getLatestArticles(count = 12): Promise<Article[]> {
   const all = await getAllPublicArticles()
   return all.slice(0, count)
+}
+
+
+/**
+ * Site search over title, summary, tags, category and country, best matches
+ * first. Shared by the navbar overlay (/api/search) and the /search page.
+ */
+export async function searchArticles(query: string, limit = 8): Promise<{ article: Article; score: number }[]> {
+  const q = (query || "").trim().toLowerCase().slice(0, 80)
+  if (q.length < 2) return []
+  const words = q.split(/\s+/).filter(Boolean)
+  const articles = await getAllPublicArticles()
+  return articles
+    .map((a) => {
+      const title = (a.title || "").toLowerCase()
+      const rest = [a.excerpt, a.category, a.country, ...(a.tags || [])].join(" ").toLowerCase()
+      if (!words.every((w) => title.includes(w) || rest.includes(w))) return null
+      const score = words.reduce((s, w) => s + (title.includes(w) ? 3 : 1), title.includes(q) ? 5 : 0)
+      return { article: a, score }
+    })
+    .filter((x): x is { article: Article; score: number } => !!x)
+    .sort((x, y) => y.score - x.score)
+    .slice(0, limit)
 }

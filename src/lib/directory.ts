@@ -24,6 +24,8 @@ export interface DirectoryPage {
   intro: string
   entryLabel: string
   entries: DirectoryEntry[]
+  /** Our articles on this topic, listed under the directory (CMS categories). */
+  coverage?: { heading: string; categories: string[] }
 }
 
 export const MIN_DIRECTORY_ENTRIES = 4
@@ -31,6 +33,7 @@ export const MIN_DIRECTORY_ENTRIES = 4
 export const DIRECTORY_PAGES: DirectoryPage[] = [
   {
     slug: "payment-providers",
+    coverage: { heading: "Our payments coverage", categories: ["Payments"] },
     title: "Payment Providers for African iGaming",
     seoTitle: "Payment Providers for African iGaming: Company Directory",
     description:
@@ -96,6 +99,7 @@ export const DIRECTORY_PAGES: DirectoryPage[] = [
   },
   {
     slug: "crash-games",
+    coverage: { heading: "Crash game coverage", categories: ["Crash Games"] },
     title: "Crash Games in African iGaming",
     seoTitle: "Crash Games in African iGaming: Titles and Providers",
     description:

@@ -37,6 +37,7 @@ const STATIC_PAGES = [
   "/directory/crash-games",
   "/write-for-us",
   "/regulators",
+  "/countries",
   "/topics/uganda",
   "/topics/prediction-markets",
   "/topics/national-lotteries",

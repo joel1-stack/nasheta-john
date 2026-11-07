@@ -51,6 +51,9 @@ const nextConfig: NextConfig = {
         destination: "/about",
         statusCode: 301,
       })),
+      // /casinos/reviews was linked at some point but never existed; the casino
+      // coverage lives at /casinos.
+      { source: "/casinos/reviews", destination: "/casinos", statusCode: 301 },
       // The /blog and /news listing pages were merged into the front page.
       // Old /blog/<slug> article links are redirected by src/app/blog/[slug],
       // straight to the article's section address.

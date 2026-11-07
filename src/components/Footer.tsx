@@ -24,8 +24,7 @@ const socialLinks = [
 
 const directoryLinks = [
   { label: "Sports Betting", href: "/sports" },
-  { label: "Casino Reviews", href: "/casinos" },
-  { label: "Best Casinos", href: "/casinos/best" },
+  { label: "Casinos", href: "/casinos" },
   { label: "Payment Methods", href: "/casinos/payments" },
   { label: "Betting Guides", href: "/guides" },
 ]
@@ -33,7 +32,9 @@ const directoryLinks = [
 const links = [
   { label: "Industry News", href: "/news/industry" },
   { label: "Regulation Watch", href: "/news/regulation" },
+  { label: "Country Guides", href: "/countries" },
   { label: "Regulators Directory", href: "/regulators" },
+  { label: "Crash Games Directory", href: "/directory/crash-games" },
   { label: "Events", href: "/events" },
   { label: "The Desk", href: "/the-desk" },
   { label: "Who We Are", href: "/about" },

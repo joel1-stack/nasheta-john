@@ -59,6 +59,7 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
         title={topic.title}
         description={topic.description}
         crumbs={[{ label: "Home", href: "/" }, { label: topic.title }]}
+        path={`/topics/${topic.slug}`}
       />
       <p className="max-w-3xl text-gray-600 mb-8">{topic.intro}</p>
       <ArticleGrid articles={articles} columns={2} />

@@ -5,7 +5,7 @@ import { articlePath } from "@/lib/navigation"
 import { optimizedImage } from "@/lib/img"
 
 interface Props {
-  category?: string
+  category?: string | string[]
   country?: string
   limit?: number
 }

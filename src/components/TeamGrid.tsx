@@ -12,6 +12,7 @@ export default function TeamGrid() {
       {TEAM.map((member) => (
         <article
           key={member.slug}
+          id={member.slug}
           className="relative w-full sm:w-[320px] rounded-2xl rounded-br-[64px] bg-brand-ink text-white px-6 pb-8 pt-20 shadow-xl shadow-brand-deep/20"
         >
           <div className="absolute -top-14 left-1/2 -translate-x-1/2">

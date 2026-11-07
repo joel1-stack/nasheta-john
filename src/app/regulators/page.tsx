@@ -67,6 +67,7 @@ export default function RegulatorsPage() {
         title="African Gambling Regulators Directory"
         description="Official websites of gambling regulators and lottery bodies, with our coverage of each market."
         crumbs={[{ label: "Home", href: "/" }, { label: "Regulators" }]}
+        path="/regulators"
       />
       <p className="max-w-3xl text-gray-600 mb-6">
         Regulator notices are the primary source for most of what we report. This directory lists the official websites we use

@@ -1,5 +1,6 @@
 import { getDb } from "@/lib/firebase"
 import { collection, getDocs, type DocumentSnapshot } from "firebase/firestore"
+import { unstable_cache } from "next/cache"
 import type { Article } from "@/types"
 import { asLiveArticle, REMOVED_DEMO_SLUG_SET } from "@/lib/site"
 
@@ -174,6 +175,13 @@ export async function getLatestArticles(count = 12): Promise<Article[]> {
 
 
 /**
+ * The article list used by search, cached for 5 minutes. /search and
+ * /api/search take free-text queries, so without this every distinct query
+ * would read the whole articles collection from Firestore.
+ */
+const cachedSearchPool = unstable_cache(async () => getAllPublicArticles(), ["search-pool"], { revalidate: 300 })
+
+/**
  * Site search over title, summary, tags, category and country, best matches
  * first. Shared by the navbar overlay (/api/search) and the /search page.
  */
@@ -181,7 +189,7 @@ export async function searchArticles(query: string, limit = 8): Promise<{ articl
   const q = (query || "").trim().toLowerCase().slice(0, 80)
   if (q.length < 2) return []
   const words = q.split(/\s+/).filter(Boolean)
-  const articles = await getAllPublicArticles()
+  const articles = await cachedSearchPool()
   return articles
     .map((a) => {
       const title = (a.title || "").toLowerCase()

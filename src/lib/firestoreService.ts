@@ -39,6 +39,8 @@ function toArticle(d: DocumentSnapshot): Article {
     tags: data.tags || [],
     createdAt: data.createdAt?.toDate?.()?.toISOString?.()?.split("T")[0] || data.createdAt || "",
     updatedAt: data.updatedAt?.toDate?.()?.toISOString?.()?.split("T")[0] || data.updatedAt || "",
+    createdAtIso: data.createdAt?.toDate?.()?.toISOString?.() || undefined,
+    updatedAtIso: data.updatedAt?.toDate?.()?.toISOString?.() || undefined,
   } as Article
 }
 

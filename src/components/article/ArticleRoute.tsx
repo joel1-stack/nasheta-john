@@ -28,6 +28,17 @@ function fitSearchTitle(base: string): string | { absolute: string } {
   return { absolute: `${cut || base.slice(0, MAX_TITLE_LENGTH - 1)}…` }
 }
 
+/**
+ * Structured-data datetime: the CMS timestamp as full ISO 8601 with timezone
+ * (Google flags date-only values as invalid datetimes). A date-only value,
+ * which has no real time of day, is written as midnight UTC.
+ */
+function isoDateTime(iso?: string, dateOnly?: string): string | undefined {
+  if (iso) return iso
+  if (dateOnly && /^\d{4}-\d{2}-\d{2}$/.test(dateOnly)) return `${dateOnly}T00:00:00Z`
+  return dateOnly || undefined
+}
+
 function isValidCanonical(value: string): boolean {
   if (!value || value.trim() === "") return false
   const trimmed = value.trim()
@@ -69,8 +80,8 @@ function buildArticleMetadata(article: Article): Metadata {
       url: canonical,
       siteName: "iGamingUbuntu",
       ...(image ? { images: [{ url: image }] } : {}),
-      ...(article.createdAt ? { publishedTime: article.createdAt } : {}),
-      ...(article.updatedAt ? { modifiedTime: article.updatedAt } : {}),
+      ...(article.createdAt ? { publishedTime: isoDateTime(article.createdAtIso, article.createdAt) } : {}),
+      ...(article.updatedAt ? { modifiedTime: isoDateTime(article.updatedAtIso, article.updatedAt) } : {}),
     },
     twitter: {
       card: "summary_large_image",
@@ -127,10 +138,16 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
     ...(description ? { description } : {}),
     image: absoluteImage,
     speakable: speakableSpec,
-    ...(article.createdAt ? { datePublished: article.createdAt } : {}),
+    ...(article.createdAt ? { datePublished: isoDateTime(article.createdAtIso, article.createdAt) } : {}),
     // The CMS edit date. An article that was never edited was last modified
     // when it was published, so its dateModified equals datePublished.
-    ...(article.updatedAt || article.createdAt ? { dateModified: article.updatedAt || article.createdAt } : {}),
+    ...(article.updatedAt || article.createdAt
+      ? {
+          dateModified: article.updatedAt
+            ? isoDateTime(article.updatedAtIso, article.updatedAt)
+            : isoDateTime(article.createdAtIso, article.createdAt),
+        }
+      : {}),
     author: {
       "@type": "Person",
       name: bylineName,

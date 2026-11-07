@@ -23,6 +23,9 @@ export interface Article {
   views: number
   createdAt: string
   updatedAt: string
+  /** Full ISO 8601 timestamps (with timezone) when the CMS stored a real time; used for structured data. */
+  createdAtIso?: string
+  updatedAtIso?: string
   scheduledAt?: string
   // SEO fields
   seoTitle?: string

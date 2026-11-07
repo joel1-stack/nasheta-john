@@ -23,7 +23,7 @@ interface Partner {
 
 const mediaPartners: Partner[] = [
   {
-    name: "Sports Betting West Africa+ 2027",
+    name: "BiG West Africa Summit 2027 (formerly Sports Betting West Africa+)",
     role: "Official Media Partner",
     organiser: "Eventus International",
     dates: "6 – 8 October 2027",

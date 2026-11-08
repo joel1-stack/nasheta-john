@@ -8,10 +8,10 @@ Baseline: Seobility free check of the live homepage on 8 Nov 2026 showed on-page
 
 | Finding | What I did | Local result |
 |---|---|---|
-| Title 607 px | Default title changed from "iGamingUbuntu \| African Gambling News, Regulation and Payments" to "iGamingUbuntu \| African Gambling News and Regulation" (also in Open Graph and Twitter titles). Brand and key terms kept. | Title went from 61 to 52 characters; the pixel width was not re-measured by Seobility (see section 6). |
+| Title 607 px | Default title changed from "iGamingUbuntu \| African Gambling News, Regulation and Payments" to "iGamingUbuntu \| African Gambling News and Regulation" (also in Open Graph and Twitter titles). Brand and key terms kept. | Title went from 61 to 52 characters. Estimated width about 505 px against the 580 px limit (calibrated against Seobility's 607 px reading of the old title; Seobility itself was not re-run). |
 | X-Powered-By exposed | `poweredByHeader: false` in next.config.ts | Local server returns no X-Powered-By header. Live still returns "Next.js" until deployed. |
 | Headings 31 for ~772 words | The four "What we do" blurbs were `h3` headings; they are short marketing labels, so they are now paragraphs. Article headlines and section titles remain headings. | 27 headings (from 31). Further cuts would remove real article headlines, so I stopped. |
-| Long anchor texts | Cards linked the whole block (category, date, headline, excerpt). Now the link is the headline only, and a CSS overlay keeps the whole card clickable. Same for the Regulation Watch list. | Verified in the browser that clicks anywhere on a card still go to the article. |
+| Long anchor texts | Cards linked the whole block (category, date, headline, excerpt). Now the link is the headline only, and a CSS overlay keeps the whole card clickable. Same for the Regulation Watch list. | The first version of this change left the three large Top Stories cards clickable only on the text strip (my earlier statement that every card was clickable was wrong). Fixed in the follow-up commit; after the fix, 6 test points per card (corners, centre, image area) on all 16 article cards and the 5 Regulation Watch items open the correct article at 1536 px and 390 px widths. |
 | Duplicate anchors | The scrolling ticker repeated its eight links a second time for the loop. The repeat is now plain text (it was already hidden from assistive technology). "More" links now read "More Latest News", "More Regulation Watch" etc. for screen readers. | Ticker links are no longer duplicated. A headline still appears once in the ticker and once in the page: same destination, different position, left alone. |
 | 4 images "missing alt" | The only images with empty alt are the four decorative icons in "What we do", each next to its own visible title. An empty alt is the correct markup for decorative images, so I did not invent alt text. | **Seobility will probably still flag these four.** Your instruction was not to change things only to raise the score. Say if you want a descriptive alt anyway. |
 | Empty anchors / trivial anchors | Logo and social icon links already carry an accessible name (image alt or aria-label). Seobility reads link text only, so it may still list them. | No change needed. |
@@ -23,7 +23,7 @@ Baseline: Seobility free check of the live homepage on 8 Nov 2026 showed on-page
 - src/components/home/NewsHome.tsx (card links, ticker copy, More links, offer headings)
 - This report.
 
-Checked locally: canonical unchanged (`https://www.igamingubuntu.com`), 2 JSON-LD blocks still present, layout and card clicks visually checked at desktop width. Mobile width was not checked in a browser.
+Checked locally: canonical unchanged (`https://www.igamingubuntu.com`), 2 JSON-LD blocks still present, layout checked visually at desktop width; card clicks checked at 1536 px and 390 px (390 px via an embedded page frame, not a real phone).
 
 ## 3. Internal links (prepared, not applied)
 Reason: articles live in Firestore and a CMS save publishes immediately, so these are production changes. File: `research/backlinks/Internal_Link_Apply_Set.csv` (20 links, each with source URL, destination URL, anchor and a ready sentence). All 40 source and destination URLs returned HTTP 200 on 8 Nov 2026.

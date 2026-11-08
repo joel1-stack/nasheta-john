@@ -60,7 +60,7 @@ function OverlayCard({ article, big = false }: { article: Article; big?: boolean
     <article className="group relative block overflow-hidden bg-gray-900 h-full">
       <Thumb article={article} eager={big} className="absolute inset-0 w-full h-full group-hover:scale-[1.03] transition duration-500" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-      <div className={`absolute bottom-0 left-0 right-0 ${big ? "p-5 md:p-7" : "p-4 md:p-5"}`}>
+      <div className={`absolute inset-0 flex flex-col justify-end ${big ? "p-5 md:p-7" : "p-4 md:p-5"}`}>
         <Meta article={article} light />
         <h3 className={`text-white font-bold leading-snug mt-2 group-hover:underline decoration-2 underline-offset-4 ${big ? "text-xl md:text-3xl" : "text-base md:text-lg"}`}>
           <Link href={articlePath(article)} className="after:absolute after:inset-0">{article.title}</Link>

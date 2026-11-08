@@ -33,14 +33,16 @@ jobs:
             "/llms.txt|iGamingUbuntu"
           )
           # One live article, taken from the sitemap, must open too.
-          article=$(curl -s --max-time 20 "$SITE/sitemap.xml" | grep -oE "$SITE/(news|casinos|sports|guides|events)/[^<]+" | grep -vE "/(industry|regulation|new|best|mobile|payments|market|live|predictions|leagues|basics|upcoming|recaps|webinars)$" | head -1)
+          # GitHub runs this step with -e and pipefail, so every command that can fail
+          # on a network blip ends with "|| true"; the retry loop below then decides.
+          article=$(curl -s --max-time 20 --retry 3 --retry-delay 5 --retry-all-errors "$SITE/sitemap.xml" | grep -oE "$SITE/(news|casinos|sports|guides|events)/[^<]+" | grep -vE "/(industry|regulation|new|best|mobile|payments|market|live|predictions|leagues|basics|upcoming|recaps|webinars)$" | head -1 || true)
           [ -n "$article" ] && checks+=("${article#$SITE}|</article>")
 
           failed=0
           for entry in "${checks[@]}"; do
             path="${entry%%|*}"; must="${entry#*|}"; ok=0
             for attempt in 1 2 3; do
-              body=$(curl -s -L --max-time 15 -w $'\n%{http_code} %{time_total}' "$SITE$path")
+              body=$(curl -s -L --max-time 15 -w $'\n%{http_code} %{time_total}' "$SITE$path" || true)
               status=$(tail -n1 <<<"$body" | cut -d' ' -f1)
               secs=$(tail -n1 <<<"$body" | cut -d' ' -f2)
               if [ "$status" = "200" ] && grep -qF "$must" <<<"$body"; then ok=1; break; fi

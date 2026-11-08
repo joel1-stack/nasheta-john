@@ -14,7 +14,7 @@ const raleway = Raleway({ subsets: ["latin"], display: "swap", variable: "--font
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.igamingubuntu.com"),
   title: {
-    default: "iGamingUbuntu | African Gambling News, Regulation and Payments",
+    default: "iGamingUbuntu | African Gambling News and Regulation",
     template: "%s | iGamingUbuntu",
   },
   description:
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.igamingubuntu.com",
     siteName: "iGamingUbuntu",
-    title: "iGamingUbuntu | African Gambling News, Regulation and Payments",
+    title: "iGamingUbuntu | African Gambling News and Regulation",
     description: "B2B intelligence, regulatory tracking, and fintech updates driving the future of sports betting and digital casino operations across Africa.",
     images: [
       {
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@SalvageNasheta",
     creator: "@SalvageNasheta",
-    title: "iGamingUbuntu | African Gambling News, Regulation and Payments",
+    title: "iGamingUbuntu | African Gambling News and Regulation",
     description: "B2B intelligence, regulatory tracking, and fintech updates driving the future of sports betting and digital casino operations across Africa.",
     images: ["/images/nasheta.png"],
   },

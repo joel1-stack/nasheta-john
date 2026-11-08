@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 import { REMOVED_DEMO_SLUGS } from "./src/lib/site";
 
 const nextConfig: NextConfig = {
+  // Do not advertise the framework in an X-Powered-By header.
+  poweredByHeader: false,
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },

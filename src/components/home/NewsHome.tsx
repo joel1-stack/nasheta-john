@@ -37,7 +37,7 @@ function SectionTitle({ children, href }: { children: React.ReactNode; href?: st
       <h2 className="inline-block bg-brand-teal text-white text-sm md:text-base font-semibold px-3 py-1.5">{children}</h2>
       {href && (
         <Link href={href} className="text-sm font-medium text-brand-teal-dark hover:underline inline-flex items-center gap-1">
-          More <FiArrowRight size={13} />
+          More<span className="sr-only"> {typeof children === "string" ? children : "stories"}</span> <FiArrowRight size={13} aria-hidden="true" />
         </Link>
       )}
     </div>
@@ -57,48 +57,50 @@ function Meta({ article, light = false }: { article: Article; light?: boolean })
 /** Image card with the headline laid over a dark gradient (Top Stories). */
 function OverlayCard({ article, big = false }: { article: Article; big?: boolean }) {
   return (
-    <Link href={articlePath(article)} className="group relative block overflow-hidden bg-gray-900 h-full">
+    <article className="group relative block overflow-hidden bg-gray-900 h-full">
       <Thumb article={article} eager={big} className="absolute inset-0 w-full h-full group-hover:scale-[1.03] transition duration-500" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
       <div className={`absolute bottom-0 left-0 right-0 ${big ? "p-5 md:p-7" : "p-4 md:p-5"}`}>
         <Meta article={article} light />
         <h3 className={`text-white font-bold leading-snug mt-2 group-hover:underline decoration-2 underline-offset-4 ${big ? "text-xl md:text-3xl" : "text-base md:text-lg"}`}>
-          {article.title}
+          <Link href={articlePath(article)} className="after:absolute after:inset-0">{article.title}</Link>
         </h3>
         {big && article.excerpt && <p className="hidden md:block text-sm text-white/80 mt-3 line-clamp-2 max-w-2xl">{article.excerpt}</p>}
       </div>
-    </Link>
+    </article>
   )
 }
 
 /** Thumbnail on the left, text on the right (Latest News list). */
 function ListItem({ article }: { article: Article }) {
   return (
-    <Link href={articlePath(article)} className="group flex gap-4 py-5 border-b border-gray-100 last:border-0">
+    <article className="group relative flex gap-4 py-5 border-b border-gray-100 last:border-0">
       <Thumb article={article} className="w-32 h-24 sm:w-48 sm:h-32 shrink-0 rounded" />
       <div className="min-w-0">
         <Meta article={article} />
         <h3 className="font-bold text-brand-deep text-base sm:text-lg leading-snug mt-1 group-hover:text-brand-teal transition-colors line-clamp-3">
-          {article.title}
+          <Link href={articlePath(article)} className="after:absolute after:inset-0">{article.title}</Link>
         </h3>
         {article.excerpt && <p className="hidden sm:block text-sm text-gray-600 mt-2 line-clamp-2 leading-relaxed">{article.excerpt}</p>}
       </div>
-    </Link>
+    </article>
   )
 }
 
 /** Image on top, headline below (section blocks). */
 function GridCard({ article }: { article: Article }) {
   return (
-    <Link href={articlePath(article)} className="group block">
+    <article className="group relative block">
       <div className="aspect-[16/10] overflow-hidden rounded bg-gray-100">
         <Thumb article={article} className="w-full h-full group-hover:scale-[1.03] transition duration-500" />
       </div>
       <div className="mt-3">
         <Meta article={article} />
-        <h3 className="font-bold text-brand-deep leading-snug mt-1 group-hover:text-brand-teal transition-colors line-clamp-3">{article.title}</h3>
+        <h3 className="font-bold text-brand-deep leading-snug mt-1 group-hover:text-brand-teal transition-colors line-clamp-3">
+          <Link href={articlePath(article)} className="after:absolute after:inset-0">{article.title}</Link>
+        </h3>
       </div>
-    </Link>
+    </article>
   )
 }
 
@@ -145,11 +147,18 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
               <div className="flex w-max animate-marquee">
                 {[0, 1].map((copy) => (
                   <div key={copy} className="flex" aria-hidden={copy === 1}>
-                    {ticker.map((a) => (
-                      <Link key={`${copy}-${a.slug}`} href={articlePath(a)} tabIndex={copy === 1 ? -1 : undefined} className="px-6 py-2.5 whitespace-nowrap hover:underline">
-                        {a.title}
-                      </Link>
-                    ))}
+                    {ticker.map((a) =>
+                      copy === 0 ? (
+                        <Link key={`${copy}-${a.slug}`} href={articlePath(a)} className="px-6 py-2.5 whitespace-nowrap hover:underline">
+                          {a.title}
+                        </Link>
+                      ) : (
+                        // Second copy only closes the marquee loop; it is hidden from assistive tech and not a link.
+                        <span key={`${copy}-${a.slug}`} className="px-6 py-2.5 whitespace-nowrap">
+                          {a.title}
+                        </span>
+                      ),
+                    )}
                   </div>
                 ))}
               </div>
@@ -200,12 +209,12 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
                 <SectionTitle href="/news/regulation">Regulation Watch</SectionTitle>
                 <ol className="space-y-4">
                   {regulationList.map((a, i) => (
-                    <li key={a.slug} className="flex gap-3">
+                    <li key={a.slug} className="group relative flex gap-3">
                       <span className="text-2xl font-extrabold text-brand-teal/30 leading-none w-7 shrink-0">{i + 1}</span>
-                      <Link href={articlePath(a)} className="group">
-                        <span className="block font-semibold text-brand-deep text-sm leading-snug group-hover:text-brand-teal transition-colors">{a.title}</span>
+                      <div>
+                        <Link href={articlePath(a)} className="block font-semibold text-brand-deep text-sm leading-snug group-hover:text-brand-teal transition-colors after:absolute after:inset-0">{a.title}</Link>
                         <span className="block text-xs text-gray-500 mt-1">{formatDate(a.createdAt)}</span>
-                      </Link>
+                      </div>
                     </li>
                   ))}
                 </ol>
@@ -261,7 +270,7 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
                   />
                 </span>
                 <div>
-                  <h3 className="font-semibold">{title}</h3>
+                  <p className="font-semibold">{title}</p>
                   <p className="text-sm text-white/70 mt-1 leading-relaxed">{desc}</p>
                 </div>
               </div>

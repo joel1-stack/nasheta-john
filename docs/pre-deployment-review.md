@@ -133,3 +133,46 @@ Local commit only. Nothing pushed, merged, deployed, and no CMS change.
 - Keyboard ring tested in Chrome only; mobile width tested via a frame, not a phone.
 - A mouse click on a card does not show the ring (by design); screen reader announcement was not tested with a real screen reader.
 - Still open from section 9: your decision on dropping "Payments" from the title, Seobility re-run after deploy, the 20 internal links (CMS), and your approval to push to main (production deploy).
+
+## 11. Final homepage pass (9 Nov 2026), branch `homepage-final-pass`
+Based on origin/main (ade0f4c, the live production commit). Local only: not pushed, merged or deployed. No CMS changes, internal links applied, emails, DNS changes or backlinks.
+
+### Changes
+1. **"What we do" semantics restored.** The four items are now `<ul>` / `<li>`, each with its title as an `<h3>` (reverting my earlier h3-to-p change) and the description as a paragraph. Icons keep `alt=""` and `aria-hidden`. Layout unchanged (visual check).
+2. **Accessible link names.** Concise `aria-label`s on the four house banners and the Telegram text banner. Each label contains the visible button text (WCAG "label in name"), which the old long labels did not. Visible text and destinations unchanged. Labels: leaderboard "Advertise with us on iGamingUbuntu"; box "Book a placement on iGamingUbuntu"; left skyscraper "Book this spot to advertise on iGamingUbuntu"; right skyscraper "Send us your press release for iGamingUbuntu"; Telegram "Join the channel: iGamingUbuntu on Telegram". Navigation, footer and article headline links untouched.
+3. **Ticker.** Pauses on keyboard focus (`:focus-within`) as well as mouse hover. With `prefers-reduced-motion: reduce` the animation stops, the duplicate loop copy is hidden and the row can be scrolled.
+4. **Sentence-length warning:** investigated, cause not established (below).
+5. **Preserved:** title, meta description, canonical, 2 JSON-LD blocks, descriptive article alt text, empty alt on the four icons. No headings or content added or removed beyond restoring the four h3s (heading count back to 31).
+
+### Files changed
+src/components/home/NewsHome.tsx, src/components/HouseAds.tsx, src/components/AdSlot.tsx, src/app/globals.css, and this document.
+
+### Seobility sentence-length warning (19.6 to 33.2 words)
+- I built the old commit (4cbb1f8) and compared its homepage HTML with the live page. Total text is almost identical: 772 words old, 780 new (Seobility reported 772 and 781). Only four things differ in text structure: the four "What we do" titles (h3 to p), screen-reader-only text added to the four "More" links, the second ticker copy (links to plain text), and card link structure (whole-card link to headline-only link).
+- I computed average words per sentence for old and new HTML under 7 on/off choices (skip headings, skip link text, paragraphs only, skip nav/footer, skip list items, skip spans, split on punctuation or on every text block). No combination gives about 19.6 for the old page and about 33.2 for the new one; most give nearly the same figure for both.
+- Seobility's text-extraction rules are not published, I never saw the Content result of the first run, and I cannot run more checks (daily limit). So the cause cannot be established from the available evidence. I did not rewrite content, add punctuation or alter sentences to move the score. Section 2 above restores the proper structure for its own sake; whether it moves the figure is untested.
+- Only a controlled test would settle it: deploy one variant at a time and run Seobility after each (3 free checks a day).
+
+### Test results (local production build)
+| Check | Result |
+|---|---|
+| `tsc --noEmit` | passed |
+| `npm run build` | compiled successfully |
+| eslint on changed files | 0 errors, 3 existing img warnings |
+| scripts/test-affiliate.mjs, scripts/test-go-route.mjs | passed (10 tests each) |
+| Structure | ul with 4 li, 4 h3, 4 paragraphs, icons alt "" and aria-hidden, 31 headings total |
+| aria-labels | 5 present with the expected text and destinations |
+| Card clicks | 16 article cards, 6 test points each: all correct at 1536 px and a 390 px frame; Regulation Watch 5/5 |
+| Banner clicks | each visible banner opens its link from its centre (two side skyscrapers are hidden at 390 px by design) |
+| Ticker focus | animation pauses on focus, runs again on blur (checked with the animation active) |
+| Reduced motion | this machine has reduced motion switched on, so the real behaviour was seen: no animation, duplicate hidden, row scrollable. The normal-motion path was checked by temporarily removing that rule in the page |
+| Title, canonical, JSON-LD | unchanged (checked) |
+
+### Known limitations
+- The 390 px test uses an embedded frame, not a real phone; I did not test with a screen reader. Keyboard focus rings were verified earlier (section 10) and the card markup is unchanged in this pass.
+- Seobility will still flag the four decorative icons, 31 headings against the amount of text, the repeated nav/footer and ticker/card anchors, and the long banner texts (its checker reads visible text, not aria-labels). Some or all of these are accepted by design.
+- The sentence-length warning may remain.
+- Incident: while cleaning up a temporary build folder I accidentally deleted part of this project's `node_modules` (firebase-admin). I restored it with `npm ci` from the lockfile; no tracked files changed. Type-check, build and tests then passed.
+
+### Ready for one final deployment?
+Yes, as far as I can verify locally: all checks pass and the changes are small and accessibility-only. Deploying means pushing this branch to main (production). It needs your approval. After deploy: check the live HTML for the list structure and labels, re-test card clicks and the ticker, and re-run Seobility when the daily limit resets.

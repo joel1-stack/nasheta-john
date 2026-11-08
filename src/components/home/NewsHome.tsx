@@ -157,10 +157,10 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
         <div className="max-w-6xl mx-auto px-4 pt-5">
           <div className="flex items-stretch overflow-hidden bg-brand-teal text-white text-sm">
             <span className="shrink-0 bg-brand-lime text-brand-ink px-4 py-2.5 font-bold">Latest</span>
-            <div className="overflow-hidden flex-1">
+            <div className="ticker-viewport overflow-hidden flex-1">
               <div className="flex w-max animate-marquee">
                 {[0, 1].map((copy) => (
-                  <div key={copy} className="flex" aria-hidden={copy === 1}>
+                  <div key={copy} className={copy === 1 ? "ticker-copy-2 flex" : "flex"} aria-hidden={copy === 1}>
                     {ticker.map((a) =>
                       copy === 0 ? (
                         <Link key={`${copy}-${a.slug}`} href={articlePath(a)} className="px-6 py-2.5 whitespace-nowrap hover:underline">
@@ -270,9 +270,9 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
       <section className="bg-brand-ink text-white">
         <div className="max-w-6xl mx-auto px-4 py-14">
           <h2 className="inline-block border-l-4 border-brand-lime pl-3 text-xl md:text-2xl font-bold">What we do</h2>
-          <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8 mt-8">
+          <ul className="grid sm:grid-cols-2 gap-x-10 gap-y-8 mt-8">
             {OFFERS.map(({ img, title, desc }) => (
-              <div key={title} className="flex gap-4">
+              <li key={title} className="flex gap-4">
                 <span className="w-14 h-14 shrink-0 rounded-full bg-brand-lime/15 flex items-center justify-center">
                   <img
                     src={img}
@@ -284,12 +284,12 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
                   />
                 </span>
                 <div>
-                  <p className="font-semibold">{title}</p>
+                  <h3 className="font-semibold">{title}</h3>
                   <p className="text-sm text-white/70 mt-1 leading-relaxed">{desc}</p>
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
           <Link href="/advertise" className="mt-10 inline-flex items-center gap-2 bg-brand-lime text-brand-ink px-6 py-3 rounded font-bold text-sm hover:brightness-110 transition">
             Work with iGamingUbuntu <FiArrowRight size={14} />
           </Link>

@@ -94,7 +94,7 @@ function HouseLeaderboard({ promo, className }: { promo: NonNullable<(typeof HOU
   return (
     <div className={className}>
       {external ? (
-        <a href={promo.href} target="_blank" rel="noopener" className="block hover:opacity-95 transition">{inner}</a>
+        <a href={promo.href} target="_blank" rel="noopener" aria-label={promo.href.includes("t.me") ? "Join the channel: iGamingUbuntu on Telegram" : undefined} className="block hover:opacity-95 transition">{inner}</a>
       ) : (
         <Link href={promo.href} className="block hover:opacity-95 transition">{inner}</Link>
       )}

@@ -30,7 +30,7 @@ export function HouseLeaderboardAd({ className = "" }: { className?: string }) {
     <div className={className}>
       <Link
         href="/advertise"
-        aria-label="Advertise on iGamingUbuntu: banners, sponsored articles and press releases"
+        aria-label="Advertise with us on iGamingUbuntu"
         className="hb hb-forest block h-[100px] sm:h-[90px] max-w-[728px] mx-auto"
       >
         <span className="hb-shine" aria-hidden="true" />
@@ -61,7 +61,7 @@ export function HouseBoxAd({ className = "" }: { className?: string }) {
     <div className={className}>
       <Link
         href="/advertise"
-        aria-label="Reach operators, affiliates and regulators across Africa: book a placement"
+        aria-label="Book a placement on iGamingUbuntu"
         className="hb hb-noir block w-[300px] max-w-full h-[250px] mx-auto"
       >
         <span className="hb-shine" aria-hidden="true" />
@@ -82,7 +82,7 @@ export function HouseSideAd({ side, className = "" }: { side: 0 | 1; className?:
   return (
     <Link
       href="/advertise"
-      aria-label={left ? "Advertise on iGamingUbuntu: book this spot" : "Publish your African iGaming press release on iGamingUbuntu"}
+      aria-label={left ? "Book this spot to advertise on iGamingUbuntu" : "Send us your press release for iGamingUbuntu"}
       className={`hb ${left ? "hb-forest" : "hb-noir"} block w-[160px] h-[600px] ${className}`}
     >
       <span className="hb-shine" aria-hidden="true" />

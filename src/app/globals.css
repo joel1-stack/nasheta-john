@@ -208,8 +208,17 @@ html {
   animation: marquee 40s linear infinite;
 }
 
-.animate-marquee:hover {
+.animate-marquee:hover,
+.animate-marquee:focus-within {
   animation-play-state: paused;
+}
+
+/* Reduced motion: no scrolling ticker. The headlines sit still in a row the
+   visitor can scroll, and the duplicate that only closes the loop is dropped. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+  .ticker-viewport { overflow-x: auto; }
+  .ticker-copy-2 { display: none; }
 }
 
 .animate-btn-glow {

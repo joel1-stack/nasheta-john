@@ -14,6 +14,18 @@ import { optimizedImage } from "@/lib/img"
 
 const FALLBACK_BG = "url('/images/full backgound.png')"
 
+/** The headline sits right beside every thumbnail, so repeating it as alt text only makes
+ *  screen readers say it twice. Keep an editor-written description; otherwise the image is decorative. */
+function thumbAlt(article: Article) {
+  const alt = (article.featuredImageAlt || "").trim()
+  return alt && alt.toLowerCase() !== article.title.trim().toLowerCase() ? alt : ""
+}
+
+// Whole-card focus ring, shown only when the headline link is reached by keyboard (not on mouse click).
+// The Top Stories cards draw theirs as a separate top layer (see OverlayCard).
+const RING_LIGHT = "has-[a:focus-visible]:outline-3 has-[a:focus-visible]:outline-brand-teal-dark has-[a:focus-visible]:outline-offset-4"
+const LINK_FOCUS = "focus-visible:outline-none"
+
 function Thumb({ article, className, eager = false }: { article: Article; className: string; eager?: boolean }) {
   if (!article.featuredImage) {
     return <div className={`${className} bg-cover bg-center bg-gray-200`} style={{ backgroundImage: FALLBACK_BG }} />
@@ -21,7 +33,7 @@ function Thumb({ article, className, eager = false }: { article: Article; classN
   return (
     <img
       src={optimizedImage(article.featuredImage, eager ? 1200 : 800)}
-      alt={article.featuredImageAlt || article.title}
+      alt={thumbAlt(article)}
       width={1200}
       height={675}
       loading={eager ? "eager" : "lazy"}
@@ -63,10 +75,12 @@ function OverlayCard({ article, big = false }: { article: Article; big?: boolean
       <div className={`absolute inset-0 flex flex-col justify-end ${big ? "p-5 md:p-7" : "p-4 md:p-5"}`}>
         <Meta article={article} light />
         <h3 className={`text-white font-bold leading-snug mt-2 group-hover:underline decoration-2 underline-offset-4 ${big ? "text-xl md:text-3xl" : "text-base md:text-lg"}`}>
-          <Link href={articlePath(article)} className="after:absolute after:inset-0">{article.title}</Link>
+          <Link href={articlePath(article)} className={`after:absolute after:inset-0 ${LINK_FOCUS}`}>{article.title}</Link>
         </h3>
         {big && article.excerpt && <p className="hidden md:block text-sm text-white/80 mt-3 line-clamp-2 max-w-2xl">{article.excerpt}</p>}
       </div>
+      {/* The image and gradient paint over an outline on the card itself, so the ring is its own top layer. */}
+      <span aria-hidden="true" className="pointer-events-none absolute inset-0 hidden border-[3px] border-brand-lime group-has-[a:focus-visible]:block" />
     </article>
   )
 }
@@ -74,12 +88,12 @@ function OverlayCard({ article, big = false }: { article: Article; big?: boolean
 /** Thumbnail on the left, text on the right (Latest News list). */
 function ListItem({ article }: { article: Article }) {
   return (
-    <article className="group relative flex gap-4 py-5 border-b border-gray-100 last:border-0">
+    <article className={`group relative flex gap-4 py-5 border-b border-gray-100 last:border-0 ${RING_LIGHT}`}>
       <Thumb article={article} className="w-32 h-24 sm:w-48 sm:h-32 shrink-0 rounded" />
       <div className="min-w-0">
         <Meta article={article} />
         <h3 className="font-bold text-brand-deep text-base sm:text-lg leading-snug mt-1 group-hover:text-brand-teal transition-colors line-clamp-3">
-          <Link href={articlePath(article)} className="after:absolute after:inset-0">{article.title}</Link>
+          <Link href={articlePath(article)} className={`after:absolute after:inset-0 ${LINK_FOCUS}`}>{article.title}</Link>
         </h3>
         {article.excerpt && <p className="hidden sm:block text-sm text-gray-600 mt-2 line-clamp-2 leading-relaxed">{article.excerpt}</p>}
       </div>
@@ -90,14 +104,14 @@ function ListItem({ article }: { article: Article }) {
 /** Image on top, headline below (section blocks). */
 function GridCard({ article }: { article: Article }) {
   return (
-    <article className="group relative block">
+    <article className={`group relative block ${RING_LIGHT}`}>
       <div className="aspect-[16/10] overflow-hidden rounded bg-gray-100">
         <Thumb article={article} className="w-full h-full group-hover:scale-[1.03] transition duration-500" />
       </div>
       <div className="mt-3">
         <Meta article={article} />
         <h3 className="font-bold text-brand-deep leading-snug mt-1 group-hover:text-brand-teal transition-colors line-clamp-3">
-          <Link href={articlePath(article)} className="after:absolute after:inset-0">{article.title}</Link>
+          <Link href={articlePath(article)} className={`after:absolute after:inset-0 ${LINK_FOCUS}`}>{article.title}</Link>
         </h3>
       </div>
     </article>
@@ -209,10 +223,10 @@ export default function NewsHome({ articles, regulation, industry, guides }: New
                 <SectionTitle href="/news/regulation">Regulation Watch</SectionTitle>
                 <ol className="space-y-4">
                   {regulationList.map((a, i) => (
-                    <li key={a.slug} className="group relative flex gap-3">
+                    <li key={a.slug} className={`group relative flex gap-3 ${RING_LIGHT}`}>
                       <span className="text-2xl font-extrabold text-brand-teal/30 leading-none w-7 shrink-0">{i + 1}</span>
                       <div>
-                        <Link href={articlePath(a)} className="block font-semibold text-brand-deep text-sm leading-snug group-hover:text-brand-teal transition-colors after:absolute after:inset-0">{a.title}</Link>
+                        <Link href={articlePath(a)} className={`block font-semibold text-brand-deep text-sm leading-snug group-hover:text-brand-teal transition-colors after:absolute after:inset-0 ${LINK_FOCUS}`}>{a.title}</Link>
                         <span className="block text-xs text-gray-500 mt-1">{formatDate(a.createdAt)}</span>
                       </div>
                     </li>

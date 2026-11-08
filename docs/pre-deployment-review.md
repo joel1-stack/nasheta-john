@@ -108,3 +108,28 @@ Authorised fix applied on the branch (local commit only; nothing pushed, merged,
 - Seobility's four "missing alt" items are the decorative icons and will probably remain flagged.
 - Not yet done: your approval to push (production deploy), the 20 internal links (CMS, not applied), and post-deploy checks (section 8, items 6 and 7).
 - I did not re-run the live crawl.
+
+## 10. Final accessibility pass (9 Nov 2026)
+Local commit only. Nothing pushed, merged, deployed, and no CMS change.
+
+**1. Thumbnail alt text.** Thumbnails now use empty alt only when the stored alt is blank or identical to the headline (new `thumbAlt()` helper in NewsHome.tsx). On today's homepage this changes nothing: all 16 thumbnails already carry editor-written descriptions that differ from the headline (for example "Aviatrix crash game official artwork", "Abidjan Plateau skyline on an iGamingUbuntu news card ..."), so they add information and are kept. No new empty alts appear, so Seobility's alt count does not get worse. If an article is saved without an alt, its thumbnail will now be treated as decorative instead of repeating the title.
+
+**2. Keyboard focus ring around the whole card.**
+- List, grid and Regulation Watch cards: a 3 px dark-teal outline on the card, shown with `has-[a:focus-visible]`, so it appears only when the headline link is reached by keyboard, never on a mouse click. The link's own small outline is turned off so there is one ring, not two.
+- Top Stories cards: an outline on the card was painted over by the image and gradient layers (I saw this in the browser), so these use a separate decorative layer on top: a 3 px lime border, hidden unless the link has keyboard focus, `pointer-events-none` and `aria-hidden`.
+- Verified in the browser with a real Tab key press: the ring surrounds the whole Top Stories card and the whole list card, one ring at a time.
+
+**3. Unfocused design.** Ring layers are `display:none` or have no outline until keyboard focus. The unfocused page matches the previous screenshots.
+
+**4. Re-test results (local build, 1536 px and a 390 px frame).**
+- 16 article cards, 6 click points each: all 6/6 open the correct article at both widths.
+- Regulation Watch, 5 items: all open the right article.
+- The ring layer does not block clicks (`pointer-events-none`; click test run with it in place).
+- Each card still contains exactly one interactive element, one Tab stop per card.
+
+**5. Checks.** `tsc --noEmit` passed; `npm run build` compiled successfully; eslint on NewsHome.tsx 0 errors (2 existing img warnings); test-affiliate and test-go-route passed (10 tests).
+
+**Remaining limits.**
+- Keyboard ring tested in Chrome only; mobile width tested via a frame, not a phone.
+- A mouse click on a card does not show the ring (by design); screen reader announcement was not tested with a real screen reader.
+- Still open from section 9: your decision on dropping "Payments" from the title, Seobility re-run after deploy, the 20 internal links (CMS), and your approval to push to main (production deploy).

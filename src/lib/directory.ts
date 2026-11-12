@@ -64,6 +64,7 @@ export const DIRECTORY_PAGES: DirectoryPage[] = [
       { name: "BetConstruct", website: "https://betconstruct.com", summary: "Supplier of betting and gambling software for operators, from sportsbook to casino." },
       { name: "Altenar", website: "https://altenar.com", summary: "Sportsbook software and platform provider for licensed operators.", ours: { label: "Altenar and IBIA on betting integrity in Africa", href: "/news/industry/altenar-ibia-betting-integrity-africa" } },
       { name: "EGT Digital", website: "https://egt-digital.com", summary: "Digital arm of EGT offering an iGaming platform and in-house gaming products.", ours: { label: "EGT Digital's casino games deal with SportPesa", href: "/news/industry/south-africa-slot-suppliers-casino-games-legal-fight" } },
+      { name: "Digitain", summary: "Sportsbook and iGaming platform supplier, with its Centrivo platform, that holds a South African National Manufacturer Licence.", ours: { label: "Digitain's National Manufacturer Licence opens South Africa", href: "/news/regulation/digitain-national-manufacturer-licence-south-africa" } },
     ],
     faq: [
       {

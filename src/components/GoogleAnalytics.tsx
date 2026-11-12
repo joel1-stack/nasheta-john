@@ -73,7 +73,11 @@ export default function GoogleAnalytics() {
 
   // One delegated listener covers every affiliate link (/go/<partner> or an
   // external rel="sponsored" link), so revenue clicks are measured no matter
-  // which component renders the link.
+  // which component renders the link. Fires the GA4 key event "offer_click"
+  // directly: this replaces the old GA4-admin custom event of the same name
+  // (derived from the auto-collected "click" event, matched by a link_domain
+  // regex limited to three operator domains), which is now retired to avoid
+  // counting the same click twice.
   useEffect(() => {
     if (GA4_OWNER !== "code") return
     function onClick(e: MouseEvent) {
@@ -83,7 +87,7 @@ export default function GoogleAnalytics() {
       const isGoLink = url.origin === window.location.origin && url.pathname.startsWith("/go/")
       const isSponsored = url.origin !== window.location.origin && /\bsponsored\b/.test(a.rel)
       if (!isGoLink && !isSponsored) return
-      trackEvent("affiliate_click", {
+      trackEvent("offer_click", {
         partner: isGoLink ? url.pathname.slice(4).split("/")[0] : url.hostname,
         link_url: url.href,
         page_path: window.location.pathname,

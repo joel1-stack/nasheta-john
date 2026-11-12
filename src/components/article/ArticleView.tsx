@@ -22,6 +22,8 @@ interface ArticleViewProps {
   /** Newest stories for the sidebar, excluding this one. */
   recent?: Article[]
   canonicalUrl?: string
+  /** Hostnames of registered affiliate destinations (Affiliate Links manager). */
+  affiliateHosts?: string[]
 }
 
 const COUNTRY_PAGES = new Set(["kenya", "nigeria", "south-africa", "ghana", "tanzania"])
@@ -37,7 +39,7 @@ function isOpinionContent(category?: string): boolean {
   return ["casino reviews", "bonuses", "sports betting", "betting tips", "crash games"].includes((category || "").trim().toLowerCase())
 }
 
-export default function ArticleView({ initialArticle, related = [], popular = [], recent = [], canonicalUrl }: ArticleViewProps) {
+export default function ArticleView({ initialArticle, related = [], popular = [], recent = [], canonicalUrl, affiliateHosts = [] }: ArticleViewProps) {
   const article = initialArticle
   const sponsored = isSponsoredStatus(article.status)
 
@@ -55,7 +57,7 @@ export default function ArticleView({ initialArticle, related = [], popular = []
   const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
   const shareUrl = canonicalUrl || `https://www.igamingubuntu.com${articlePath(article)}`
   const bodyParts = splitForAds(
-    finalizeArticleHtml(article.content || "", { dropLeadingHeading: article.title, sponsored })
+    finalizeArticleHtml(article.content || "", { dropLeadingHeading: article.title, sponsored, affiliateHosts })
   )
   const hub = categoryHub(article.category)
   const authorName = article.authorName || article.author || DEFAULT_AUTHOR

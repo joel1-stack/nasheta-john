@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { notFound, permanentRedirect } from "next/navigation"
-import { getArticleBySlug } from "@/lib/firestoreService"
+import { getArticleBySlug, getAllAffiliateLinks } from "@/lib/firestoreService"
 import { getAllPublicArticles, getLatestArticles, getPopularArticles, getRelatedArticles } from "@/lib/serverArticles"
 import { withArticlePaths } from "@/lib/contentHtml"
 import { absoluteUrl, isSponsoredStatus } from "@/lib/site"
@@ -109,12 +109,30 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
 
   // Related, recent and "Most Read" lists are computed on the server so
   // their links are in the HTML that Google receives.
-  const [related, popular, latest] = await Promise.all([
+  const [related, popular, latest, affiliateLinks] = await Promise.all([
     getRelatedArticles(article, 4),
     getPopularArticles(5),
     getLatestArticles(7),
+    getAllAffiliateLinks(),
   ])
   const recent = latest.filter((a) => a.slug !== article.slug).slice(0, 6)
+
+  // Registered affiliate destinations (Affiliate Links manager), so a genuine
+  // operator link gets rel="sponsored" and click tracking on any article, not
+  // only ones flagged "sponsored".
+  const affiliateHosts = Array.from(
+    new Set(
+      affiliateLinks
+        .map((l) => {
+          try {
+            return new URL(l.url).hostname.replace(/^www\./i, "").toLowerCase()
+          } catch {
+            return ""
+          }
+        })
+        .filter(Boolean)
+    )
+  )
 
   // In-text links to other articles go straight to their real address.
   const pathBySlug = new Map((await getAllPublicArticles()).map((a) => [a.slug.toLowerCase(), articlePath(a)]))
@@ -185,6 +203,7 @@ export default async function ArticleRoute({ slug, section }: { slug: string; se
         popular={popular}
         recent={recent}
         canonicalUrl={articleUrl}
+        affiliateHosts={affiliateHosts}
       />
       <script
         type="application/ld+json"

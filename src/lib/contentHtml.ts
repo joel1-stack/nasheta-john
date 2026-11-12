@@ -37,16 +37,37 @@ function demoteH1(html: string): string {
     .replace(/<\/h1>/gi, "</h2>")
 }
 
+function hostnameOf(href: string): string {
+  try {
+    return new URL(href).hostname.replace(/^www\./i, "").toLowerCase()
+  } catch {
+    return ""
+  }
+}
+
 /**
- * Adds rel="sponsored noopener" (and target="_blank") to every external link.
- * Applied to articles marked "sponsored" or "press-release" so paid links are
- * always disclosed to Google, without the editor having to touch each link.
+ * Adds rel="sponsored noopener" (and target="_blank") to external links.
+ *
+ * Sponsored / press-release articles: every external link, so paid placements
+ * are always disclosed to Google without the editor touching each link.
+ *
+ * Ordinary editorial articles: only links whose host is a registered
+ * affiliate destination (affiliateHosts, from the Affiliate Links manager)
+ * get the same treatment. A plain citation or reference link (a regulator, a
+ * news source) never matches, so it is left exactly as written. This is what
+ * lets the click listener in GoogleAnalytics.tsx tell a genuine affiliate
+ * link from a reference link, on any article, not just ones flagged sponsored.
  */
-export function withSponsoredLinks(html: string): string {
+export function withSponsoredLinks(
+  html: string,
+  sponsored: boolean,
+  affiliateHosts: Set<string> = new Set()
+): string {
   return html.replace(/<a\b([^>]*)>/gi, (full, attrs: string) => {
     const hrefMatch = attrs.match(/\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i)
     const href = hrefMatch ? hrefMatch[1] ?? hrefMatch[2] ?? hrefMatch[3] ?? "" : ""
     if (!/^https?:\/\//i.test(href)) return full
+    if (!sponsored && !affiliateHosts.has(hostnameOf(href))) return full
 
     const cleaned = attrs
       .replace(/\s*\brel\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
@@ -62,6 +83,8 @@ export interface ArticleHtmlOptions {
   dropLeadingHeading?: string
   /** True for sponsored / press-release articles. */
   sponsored?: boolean
+  /** Hostnames (no "www.") of registered affiliate destinations, from the Affiliate Links manager. */
+  affiliateHosts?: string[]
 }
 
 /** Final preparation of CMS article HTML before it is rendered. */
@@ -87,7 +110,9 @@ export function withArticlePaths(html: string, pathBySlug: Map<string, string>):
 
 export function finalizeArticleHtml(html: string, options: ArticleHtmlOptions = {}): string {
   const out = withNewsLinks(withParagraphs(html || "", options.dropLeadingHeading))
-  return options.sponsored ? withSponsoredLinks(out) : out
+  const affiliateHosts = new Set((options.affiliateHosts || []).map((h) => h.replace(/^www\./i, "").toLowerCase()))
+  if (!options.sponsored && affiliateHosts.size === 0) return out
+  return withSponsoredLinks(out, !!options.sponsored, affiliateHosts)
 }
 
 export function withParagraphs(html: string, dropLeadingHeading?: string): string {

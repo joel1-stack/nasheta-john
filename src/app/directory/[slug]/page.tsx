@@ -8,6 +8,7 @@ import { SITE_URL } from "@/lib/site"
 import { queryArticles } from "@/lib/serverArticles"
 import { articlePath } from "@/lib/navigation"
 import { formatDate } from "@/lib/utils"
+import { faqPageLd } from "@/lib/structuredData"
 
 export const revalidate = 300
 
@@ -46,6 +47,9 @@ export default async function DirectoryPageRoute({ params }: { params: Promise<{
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-5 pb-16 animate-fade-in">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {page.faq && page.faq.length > 0 && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageLd(page.faq.map((f) => ({ question: f.question, answer: f.answer })))) }} />
+      )}
       <SectionHeader
         title={page.title}
         description={page.description}
@@ -82,6 +86,19 @@ export default async function DirectoryPageRoute({ params }: { params: Promise<{
               </li>
             ))}
           </ul>
+        </section>
+      )}
+      {page.faq && page.faq.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-xl font-bold text-[#111827] mb-4">Frequently asked questions</h2>
+          <div className="space-y-4">
+            {page.faq.map((f) => (
+              <div key={f.question} className="bg-white rounded-xl border border-gray-200 p-5">
+                <h3 className="font-semibold text-[#111827] mb-1.5">{f.question}</h3>
+                <p className="text-sm text-gray-600">{f.answer}</p>
+              </div>
+            ))}
+          </div>
         </section>
       )}
       <p className="text-xs text-gray-500 max-w-3xl">

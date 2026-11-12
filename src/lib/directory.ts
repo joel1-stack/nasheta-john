@@ -26,6 +26,8 @@ export interface DirectoryPage {
   entries: DirectoryEntry[]
   /** Our articles on this topic, listed under the directory (CMS categories). */
   coverage?: { heading: string; categories: string[] }
+  /** Plain-language answers to common questions about this category. */
+  faq?: { question: string; answer: string }[]
 }
 
 export const MIN_DIRECTORY_ENTRIES = 4
@@ -58,10 +60,32 @@ export const DIRECTORY_PAGES: DirectoryPage[] = [
       "Platform providers supply the sportsbook, casino or back-office technology an operator runs on. The companies below describe themselves as B2B technology suppliers and are active in coverage of African markets. Confirm that a supplier is certified and accepted by the regulator in your market.",
     entryLabel: "Platforms",
     entries: [
-      { name: "SOFTSWISS", website: "https://www.softswiss.com", summary: "iGaming technology provider offering casino and sportsbook software, including a game aggregator." },
+      { name: "SOFTSWISS", website: "https://www.softswiss.com", summary: "iGaming technology provider offering casino and sportsbook software, including a game aggregator.", ours: { label: "Ghana licensing rules for SOFTSWISS-licensed operators", href: "/news/regulation/is-online-betting-legal-ghana-2026" } },
       { name: "BetConstruct", website: "https://betconstruct.com", summary: "Supplier of betting and gambling software for operators, from sportsbook to casino." },
-      { name: "Altenar", website: "https://altenar.com", summary: "Sportsbook software and platform provider for licensed operators." },
-      { name: "EGT Digital", website: "https://egt-digital.com", summary: "Digital arm of EGT offering an iGaming platform and in-house gaming products." },
+      { name: "Altenar", website: "https://altenar.com", summary: "Sportsbook software and platform provider for licensed operators.", ours: { label: "Altenar and IBIA on betting integrity in Africa", href: "/news/industry/altenar-ibia-betting-integrity-africa" } },
+      { name: "EGT Digital", website: "https://egt-digital.com", summary: "Digital arm of EGT offering an iGaming platform and in-house gaming products.", ours: { label: "EGT Digital's casino games deal with SportPesa", href: "/news/industry/south-africa-slot-suppliers-casino-games-legal-fight" } },
+    ],
+    faq: [
+      {
+        question: "What is a sportsbook or casino platform provider?",
+        answer:
+          "A platform provider builds the core software a betting or casino operator runs on: bet-taking and odds engines, casino and payments integrations, player accounts, risk and reporting tools, and often an admin back office. Operators licence this technology instead of building it themselves, then add their own brand, games and local licences on top.",
+      },
+      {
+        question: "What's the difference between a platform provider and a game provider?",
+        answer:
+          "A platform provider supplies the underlying system an operator runs on. A game provider supplies individual titles, such as slots or crash games, that plug into that platform or into an aggregator. Some companies, such as SOFTSWISS, offer both a platform and a game aggregator, while others specialise in one or the other.",
+      },
+      {
+        question: "Does a platform provider need its own licence to serve African operators?",
+        answer:
+          "The licence requirement normally sits with the operator taking bets or accepting deposits in a given country, not with the B2B platform supplying the technology. Some African regulators also require the software supplier itself to hold a manufacturer, supplier or testing certificate before an operator can use it. Confirm the current rule with the regulator in your specific market before integrating.",
+      },
+      {
+        question: "How do operators choose a platform provider in Africa?",
+        answer:
+          "Typical factors include which African markets and payment methods the platform already supports, whether it has existing certification or supply experience with local regulators, its game aggregator and odds coverage for popular sports, and the cost structure. This directory is a starting point for research, not a comparison or ranking.",
+      },
     ],
   },
   {

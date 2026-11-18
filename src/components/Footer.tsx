@@ -27,6 +27,10 @@ const directoryLinks = [
   { label: "Casinos", href: "/casinos" },
   { label: "Payment Methods", href: "/casinos/payments" },
   { label: "Betting Guides", href: "/guides" },
+  { label: "Payment Providers", href: "/directory/payment-providers" },
+  { label: "Platform Providers", href: "/directory/platform-providers" },
+  { label: "Game Providers", href: "/directory/game-providers" },
+  { label: "Lottery Providers", href: "/directory/lottery-providers" },
 ]
 
 const links = [

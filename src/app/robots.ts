@@ -6,9 +6,13 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        // The CMS path is deliberately not listed here: Disallow would only
+        // advertise its exact location in a public file, and it is already
+        // kept out of search results by noindex, nofollow on every CMS page,
+        // and out of real use by Firebase auth plus Firestore rules.
         // /go/ holds affiliate redirects: they carry no content, and letting
         // them be crawled spends budget and exposes paid links as pages.
-        disallow: ["/igub-cms-x7k9/", "/api/", "/go/", "/search"],
+        disallow: ["/api/", "/go/", "/search"],
       },
       // Named explicitly so an AI crawler's own default behaviour (some skip
       // unnamed "*" rules) never blocks it. Same allow/disallow as above.
@@ -33,7 +37,7 @@ export default function robots(): MetadataRoute.Robots {
           "Meta-ExternalAgent",
         ],
         allow: "/",
-        disallow: ["/igub-cms-x7k9/", "/api/", "/go/", "/search"],
+        disallow: ["/api/", "/go/", "/search"],
       },
     ],
     sitemap: [

@@ -45,7 +45,8 @@ export const DIRECTORY_LINKS: NavLink[] = [
     href: "/casinos",
     desc: "Casino and betting-site coverage, payments and operators",
     children: [
-      { label: "Ace Lucky Casino review", href: "/casinos/ace-lucky-casino-review", desc: "Our published operator review" },
+      { label: "Best Casinos", href: "/casinos/best", desc: "Our top-ranked picks, by market" },
+      { label: "Casino Reviews", href: "/casinos", desc: "All our operator reviews" },
       { label: "Payment Methods", href: "/casinos/payments", desc: "M-Pesa, Airtel, bank transfer and more" },
     ],
   },

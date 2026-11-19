@@ -7,7 +7,7 @@ import AdSlot from "@/components/AdSlot"
 import ShareButtons from "./ShareButtons"
 import Newsletter from "@/components/Newsletter"
 import Sidebar from "@/components/Sidebar"
-import { finalizeArticleHtml, splitForAds } from "@/lib/contentHtml"
+import { finalizeArticleHtml, splitForAds, splitLeadParagraph } from "@/lib/contentHtml"
 import { isSponsoredStatus } from "@/lib/site"
 import { categoryHub, articlePath } from "@/lib/navigation"
 import { findTeamMember, DEFAULT_MEMBER } from "@/lib/team"
@@ -56,9 +56,9 @@ export default function ArticleView({ initialArticle, related = [], popular = []
 
   const wasUpdated = !!article.updatedAt && article.updatedAt !== article.createdAt
   const shareUrl = canonicalUrl || `https://www.igamingubuntu.com${articlePath(article)}`
-  const bodyParts = splitForAds(
-    finalizeArticleHtml(article.content || "", { dropLeadingHeading: article.title, sponsored, affiliateHosts })
-  )
+  const finalizedHtml = finalizeArticleHtml(article.content || "", { dropLeadingHeading: article.title, sponsored, affiliateHosts })
+  const { lead: introHtml, rest: restHtml } = splitLeadParagraph(finalizedHtml)
+  const bodyParts = splitForAds(restHtml)
   const hub = categoryHub(article.category)
   const authorName = article.authorName || article.author || DEFAULT_AUTHOR
   // Resolve the byline to a real person, so a second writer never inherits the
@@ -123,10 +123,17 @@ export default function ArticleView({ initialArticle, related = [], popular = []
               {article.title}
             </h1>
 
-            {article.excerpt && (
-              <p className="speakable-summary text-[17px] sm:text-lg text-gray-600 leading-relaxed mt-4">
-                {article.excerpt}
-              </p>
+            {introHtml ? (
+              <p
+                className="speakable-summary text-[17px] sm:text-lg text-gray-600 leading-relaxed mt-4"
+                dangerouslySetInnerHTML={{ __html: introHtml }}
+              />
+            ) : (
+              article.excerpt && (
+                <p className="speakable-summary text-[17px] sm:text-lg text-gray-600 leading-relaxed mt-4">
+                  {article.excerpt}
+                </p>
+              )
             )}
 
             {/* Byline */}

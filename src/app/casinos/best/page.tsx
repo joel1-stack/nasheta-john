@@ -31,6 +31,20 @@ export default function BestCasinosPage() {
         <Link href="/casinos/payments" className="text-sm text-gray-500 hover:text-[#f59e0b]">Payment Methods</Link>
       </nav>
       <AdSlot position="leaderboard-top" className="mb-8" />
+
+      <h2 className="text-2xl font-bold text-[#111827] mb-4">Best Casinos by Country</h2>
+      <div className="grid sm:grid-cols-2 gap-4 mb-12">
+        <Link
+          href="/casinos/best/nigeria"
+          className="block bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 p-5"
+        >
+          <p className="text-xs text-[#f59e0b] uppercase tracking-wide font-semibold mb-1">Nigeria</p>
+          <p className="text-[#111827] font-bold">Best Casinos in Nigeria</p>
+          <p className="text-gray-500 text-sm mt-1">A ranked comparison of Nigeria&apos;s best-known licensed casino and betting brands.</p>
+        </Link>
+      </div>
+
+      <h2 className="text-2xl font-bold text-[#111827] mb-6">All Casino Reviews</h2>
       <CategoryArticleList category="Casino Reviews" />
     </div>
   )

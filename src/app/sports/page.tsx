@@ -33,6 +33,18 @@ export default function SportsBettingPage() {
         <Link href="/tanzania" className="text-[#409824] hover:underline">Tanzania</Link>.
         New to the topic? Start with <Link href="/guides/are-prediction-markets-gambling" className="text-[#409824] hover:underline">are prediction markets gambling</Link>.
       </p>
+      <h2 className="text-2xl font-bold text-[#111827] mb-4">Best Sportsbooks by Country</h2>
+      <div className="grid sm:grid-cols-2 gap-4 mb-12">
+        <Link
+          href="/sports/best/kenya"
+          className="block bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 p-5"
+        >
+          <p className="text-xs text-[#409824] uppercase tracking-wide font-semibold mb-1">Kenya</p>
+          <p className="text-[#111827] font-bold">Best Sportsbooks in Kenya</p>
+          <p className="text-gray-500 text-sm mt-1">A ranked comparison of Kenya&apos;s best-known licensed sportsbooks.</p>
+        </Link>
+      </div>
+
       <h2 className="text-2xl font-bold text-[#111827] mb-6">Latest Articles</h2>
       <CategoryArticleList category="Sports Betting" />
     </div>

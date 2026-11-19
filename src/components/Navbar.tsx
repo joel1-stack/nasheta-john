@@ -107,7 +107,6 @@ export default function Navbar() {
                           {item.label}
                           {item.children && <FiChevronRight className="w-3.5 h-3.5" />}
                         </span>
-                        {item.desc && <span className="block text-xs text-[#8A8494] mt-0.5">{item.desc}</span>}
                       </Link>
 
                       {item.children && subOpen === item.href && (
@@ -115,7 +114,6 @@ export default function Navbar() {
                           {item.children.map((child) => (
                             <Link key={child.href} href={child.href} onClick={closeAll} className={itemClass}>
                               <span className="block font-medium text-sm text-[#FCFBFB] group-hover:text-brand-lime transition-colors">{child.label}</span>
-                              {child.desc && <span className="block text-xs text-[#8A8494] mt-0.5">{child.desc}</span>}
                             </Link>
                           ))}
                         </div>

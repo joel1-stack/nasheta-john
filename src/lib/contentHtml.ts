@@ -152,6 +152,19 @@ export function withParagraphs(html: string, dropLeadingHeading?: string): strin
   return demoteH1(out)
 }
 
+/**
+ * Pulls the article's opening paragraph out of the finalized body HTML so it
+ * can run as the on-page intro, between the title and the featured image,
+ * instead of being buried after the first ad banner. Only the single leading
+ * <p> is taken; everything else (including any images/headings before it)
+ * stays in `rest` and renders in its usual place.
+ */
+export function splitLeadParagraph(html: string): { lead: string; rest: string } {
+  const match = html.match(/^\s*<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/i)
+  if (!match) return { lead: "", rest: html }
+  return { lead: match[1], rest: html.slice((match.index || 0) + match[0].length) }
+}
+
 /** A piece of article HTML, optionally followed by a banner slot. */
 export interface BodyPart {
   html: string

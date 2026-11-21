@@ -5,7 +5,7 @@ import Link from "next/link"
 import { getBanners, isBannerLive } from "@/lib/firestoreService"
 import { trackEvent } from "@/lib/analytics"
 import type { Banner, BannerZone } from "@/types"
-import { HouseBoxAd, HouseLeaderboardAd } from "@/components/HouseAds"
+import { HouseBoxAd, HouseGifBanner, type GifBannerKind } from "@/components/HouseAds"
 
 type Position =
   | "leaderboard-top"
@@ -32,7 +32,19 @@ const slots: Record<Position, { zone: BannerZone; index: number }> = {
   "in-content-3": { zone: "in-article", index: 2 },
 }
 
-/** Our own promos, shown in a slot until an advertiser books it. */
+/**
+ * Our animated banners, shown in these leaderboard slots until an advertiser
+ * books them. The two alternate down the page, the way iGaming news sites
+ * run their own house banners above, inside and below the content.
+ */
+const GIF_SLOTS: Partial<Record<Position, GifBannerKind>> = {
+  "leaderboard-top": "advertise",
+  "in-content-1": "guides",
+  "in-content-2": "advertise",
+  "footer-banner": "guides",
+}
+
+/** Our own text promos, for slots without an animated banner. */
 const HOUSE: Partial<Record<Position, { title: string; text: string; cta: string; href: string }>> = {
   "leaderboard-top": {
     title: "Put your brand in front of Africa's iGaming industry",
@@ -74,10 +86,6 @@ function loadBanners(): Promise<Banner[]> {
 }
 
 function HouseLeaderboard({ promo, className }: { promo: NonNullable<(typeof HOUSE)[Position]>; className: string }) {
-  // The advertise promo is the animated 3D banner. The other house promos stay as text cards.
-  if (promo.href === "/advertise" && promo.title.startsWith("Put your brand")) {
-    return <HouseLeaderboardAd className={className} />
-  }
   const external = promo.href.startsWith("http")
   const inner = (
     <div className="max-w-[728px] min-h-[90px] mx-auto bg-brand-ink rounded flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 sm:py-3 overflow-hidden relative">
@@ -146,6 +154,9 @@ export default function AdSlot({ position, className = "" }: AdSlotProps) {
 
   // While loading (undefined) the house promo is already shown, so nothing jumps.
   if (position === "sidebar-1") return <HouseBoxAd className={className} />
+
+  const gif = GIF_SLOTS[position]
+  if (gif) return <HouseGifBanner kind={gif} className={className} />
 
   const promo = HOUSE[position]
   return promo ? <HouseLeaderboard promo={promo} className={className} /> : null

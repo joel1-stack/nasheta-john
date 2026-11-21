@@ -25,6 +25,47 @@ function Logo({ className }: { className: string }) {
   return <img src="/images/igub-logo-transparent.png" alt="iGamingUbuntu" className={className} width={500} height={206} />
 }
 
+/**
+ * Our animated 728x90 house banners (made in the owner's Canva style). Animated
+ * WebP first, GIF for browsers without it. A paid CMS banner still replaces them.
+ */
+export type GifBannerKind = "guides" | "advertise"
+
+const GIF_BANNERS: Record<GifBannerKind, { href: string; label: string; alt: string }> = {
+  guides: {
+    href: "/guides",
+    label: "Read iGamingUbuntu's betting guides for African players",
+    alt: "iGamingUbuntu betting guides for African players: news, regulation and insights",
+  },
+  advertise: {
+    href: "/advertise",
+    label: "Advertise with iGamingUbuntu",
+    alt: "Advertise with iGamingUbuntu and reach bettors across Africa",
+  },
+}
+
+export function HouseGifBanner({ kind, className = "" }: { kind: GifBannerKind; className?: string }) {
+  const b = GIF_BANNERS[kind]
+  return (
+    <div className={className}>
+      <Link href={b.href} aria-label={b.label} className="block max-w-[728px] mx-auto overflow-hidden rounded hover:opacity-95 transition">
+        <picture>
+          <source srcSet={`/images/banners/igub-${kind}-728.webp`} type="image/webp" />
+          <img
+            src={`/images/banners/igub-${kind}-728.gif`}
+            alt={b.alt}
+            width={728}
+            height={90}
+            loading="lazy"
+            decoding="async"
+            className="block w-full h-auto"
+          />
+        </picture>
+      </Link>
+    </div>
+  )
+}
+
 export function HouseLeaderboardAd({ className = "" }: { className?: string }) {
   return (
     <div className={className}>

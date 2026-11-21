@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { getBanners, isBannerLive } from "@/lib/firestoreService"
 import { trackEvent } from "@/lib/analytics"
 import type { Banner } from "@/types"
-import { HouseSideAd } from "@/components/HouseAds"
+import HouseRotator from "@/components/HouseRotator"
 
 /**
  * Tall banners down both edges of the page, like the side skins on other trade
@@ -30,7 +30,7 @@ function Skin({ side, banner }: { side: 0 | 1; banner?: Banner }) {
     return (
       <div className={wrap}>
         <p className="text-[10px] uppercase tracking-wider text-gray-400 text-center mb-1">Advertisement</p>
-        <HouseSideAd side={side} />
+        <HouseRotator format="side" start={side} />
       </div>
     )
   }

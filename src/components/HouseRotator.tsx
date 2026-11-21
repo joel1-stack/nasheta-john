@@ -49,7 +49,8 @@ export default function HouseRotator({
   const [loaded, setLoaded] = useState<number[]>([first])
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    // No reduced-motion opt-out here: the banners animate as images anyway, and
+    // Windows' "animation effects off" setting would otherwise hide two of the three.
     const t = window.setInterval(() => {
       if (document.hidden) return
       setActive((v) => {

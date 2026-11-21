@@ -123,18 +123,19 @@ export function HouseSideAd({ side, className = "" }: { side: 0 | 1; className?:
     <Link
       href="/advertise"
       aria-label={left ? "Book this spot to advertise on iGamingUbuntu" : "Send us your press release for iGamingUbuntu"}
-      className={`hb ${left ? "hb-forest" : "hb-noir"} block w-[160px] h-[600px] ${className}`}
+      className={`block w-[160px] h-[600px] overflow-hidden rounded hover:opacity-95 transition ${className}`}
     >
-      <span className="hb-shine" aria-hidden="true" />
-      <Logo className="absolute left-4 top-5 h-8 w-auto z-[2]" />
-      <Stage className="left-[22px] top-[130px] w-[116px] h-[116px]" />
-      <div className="absolute left-4 right-3 top-[330px] z-[2]">
-        <p className="hb-kicker mb-2">{left ? "Advertise here" : "Press releases"}</p>
-        <p className="hb-serif text-[22px]">
-          {left ? "Your brand in front of Africa's iGaming industry" : "Publish your African iGaming news with us"}
-        </p>
-      </div>
-      <span className="hb-btn absolute left-4 bottom-6 text-[13px] px-3 py-2 z-[2]">{left ? "Book this spot" : "Send it to us"}</span>
+      {/* animated cream-and-gold skins, drawn at 2x for sharp text */}
+      <picture>
+        <source srcSet={`/images/house/igub-side-${left ? "advertise" : "press"}.webp`} type="image/webp" />
+        <img
+          src={`/images/house/igub-side-${left ? "advertise" : "press"}.gif`}
+          alt={left ? "Advertise here: your brand in front of Africa's iGaming industry" : "Press releases: publish your African iGaming news with us"}
+          loading="lazy"
+          decoding="async"
+          className="block w-[160px] h-[600px]"
+        />
+      </picture>
     </Link>
   )
 }

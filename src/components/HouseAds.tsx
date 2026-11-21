@@ -50,15 +50,14 @@ export function HouseGifBanner({ kind, className = "" }: { kind: GifBannerKind; 
     <div className={className}>
       <Link href={b.href} aria-label={b.label} className="block max-w-[728px] mx-auto overflow-hidden rounded hover:opacity-95 transition">
         <picture>
-          <source srcSet={`/images/banners/igub-${kind}-728.webp`} type="image/webp" />
+          {/* plain /images/house/ path: ad-block lists hide anything under /banners/ */}
+          <source srcSet={`/images/house/igub-${kind}.webp`} type="image/webp" />
           <img
-            src={`/images/banners/igub-${kind}-728.gif`}
+            src={`/images/house/igub-${kind}.gif`}
             alt={b.alt}
-            width={728}
-            height={90}
             loading="lazy"
             decoding="async"
-            className="block w-full h-auto"
+            className="block w-full h-auto aspect-[728/90]"
           />
         </picture>
       </Link>

@@ -25,46 +25,6 @@ function Logo({ className }: { className: string }) {
   return <img src="/images/igub-logo-transparent.png" alt="iGamingUbuntu" className={className} width={500} height={206} />
 }
 
-/**
- * Our animated 728x90 house banners (made in the owner's Canva style). Animated
- * WebP first, GIF for browsers without it. A paid CMS banner still replaces them.
- */
-export type GifBannerKind = "guides" | "advertise"
-
-const GIF_BANNERS: Record<GifBannerKind, { href: string; label: string; alt: string }> = {
-  guides: {
-    href: "/guides",
-    label: "Read iGamingUbuntu's betting guides for African players",
-    alt: "iGamingUbuntu betting guides for African players: news, regulation and insights",
-  },
-  advertise: {
-    href: "/advertise",
-    label: "Advertise with iGamingUbuntu",
-    alt: "Advertise with iGamingUbuntu and reach bettors across Africa",
-  },
-}
-
-export function HouseGifBanner({ kind, className = "" }: { kind: GifBannerKind; className?: string }) {
-  const b = GIF_BANNERS[kind]
-  return (
-    <div className={className}>
-      <Link href={b.href} aria-label={b.label} className="block max-w-[728px] mx-auto overflow-hidden rounded hover:opacity-95 transition">
-        <picture>
-          {/* plain /images/house/ path: ad-block lists hide anything under /banners/ */}
-          <source srcSet={`/images/house/igub-${kind}.webp`} type="image/webp" />
-          <img
-            src={`/images/house/igub-${kind}.gif`}
-            alt={b.alt}
-            loading="lazy"
-            decoding="async"
-            className="block w-full h-auto aspect-[728/90]"
-          />
-        </picture>
-      </Link>
-    </div>
-  )
-}
-
 export function HouseLeaderboardAd({ className = "" }: { className?: string }) {
   return (
     <div className={className}>
@@ -80,7 +40,7 @@ export function HouseLeaderboardAd({ className = "" }: { className?: string }) {
           <div className="hb-msgs h-[52px]">
             <div className="hb-msg a">
               <p className="hb-serif text-[15px] sm:text-[17px]">Advertise to Africa&apos;s iGaming industry</p>
-              <p className="hb-sub text-[11px] sm:text-xs mt-1">Banners · Sponsored articles · Press releases</p>
+              <p className="hb-sub text-[11px] sm:text-xs mt-1">Banners Â· Sponsored articles Â· Press releases</p>
             </div>
             <div className="hb-msg b">
               <p className="hb-serif text-[15px] sm:text-[17px]">Reach operators, affiliates and regulators</p>
@@ -114,28 +74,5 @@ export function HouseBoxAd({ className = "" }: { className?: string }) {
         <span className="hb-btn absolute left-4 bottom-4 text-sm px-4 py-2 z-[2]">Book a placement</span>
       </Link>
     </div>
-  )
-}
-
-export function HouseSideAd({ side, className = "" }: { side: 0 | 1; className?: string }) {
-  const left = side === 0
-  return (
-    <Link
-      href="/advertise"
-      aria-label={left ? "Book this spot to advertise on iGamingUbuntu" : "Send us your press release for iGamingUbuntu"}
-      className={`block w-[160px] h-[600px] overflow-hidden rounded hover:opacity-95 transition ${className}`}
-    >
-      {/* animated cream-and-gold skins, drawn at 2x for sharp text */}
-      <picture>
-        <source srcSet={`/images/house/igub-side-${left ? "advertise" : "press"}.webp`} type="image/webp" />
-        <img
-          src={`/images/house/igub-side-${left ? "advertise" : "press"}.gif`}
-          alt={left ? "Advertise here: your brand in front of Africa's iGaming industry" : "Press releases: publish your African iGaming news with us"}
-          loading="lazy"
-          decoding="async"
-          className="block w-[160px] h-[600px]"
-        />
-      </picture>
-    </Link>
   )
 }

@@ -5,7 +5,8 @@ import Link from "next/link"
 import { getBanners, isBannerLive } from "@/lib/firestoreService"
 import { trackEvent } from "@/lib/analytics"
 import type { Banner, BannerZone } from "@/types"
-import { HouseBoxAd, HouseGifBanner, type GifBannerKind } from "@/components/HouseAds"
+import { HouseBoxAd } from "@/components/HouseAds"
+import HouseRotator from "@/components/HouseRotator"
 
 type Position =
   | "leaderboard-top"
@@ -33,15 +34,16 @@ const slots: Record<Position, { zone: BannerZone; index: number }> = {
 }
 
 /**
- * Our animated banners, shown in these leaderboard slots until an advertiser
- * books them. The two alternate down the page, the way iGaming news sites
- * run their own house banners above, inside and below the content.
+ * Leaderboard slots that show our three rotating animated campaigns until an
+ * advertiser books them. The number is which campaign each slot starts on, so
+ * slots further down a page don't all show the same banner at once.
  */
-const GIF_SLOTS: Partial<Record<Position, GifBannerKind>> = {
-  "leaderboard-top": "advertise",
-  "in-content-1": "guides",
-  "in-content-2": "advertise",
-  "footer-banner": "guides",
+const ROTATOR_SLOTS: Partial<Record<Position, number>> = {
+  "leaderboard-top": 0,
+  "in-content-1": 1,
+  "in-content-2": 2,
+  "in-content-3": 0,
+  "footer-banner": 1,
 }
 
 /** Our own text promos, for slots without an animated banner. */
@@ -155,8 +157,8 @@ export default function AdSlot({ position, className = "" }: AdSlotProps) {
   // While loading (undefined) the house promo is already shown, so nothing jumps.
   if (position === "sidebar-1") return <HouseBoxAd className={className} />
 
-  const gif = GIF_SLOTS[position]
-  if (gif) return <HouseGifBanner kind={gif} className={className} />
+  const startAt = ROTATOR_SLOTS[position]
+  if (startAt !== undefined) return <HouseRotator format="lb" start={startAt} className={className} />
 
   const promo = HOUSE[position]
   return promo ? <HouseLeaderboard promo={promo} className={className} /> : null
